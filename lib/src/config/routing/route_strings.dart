@@ -49,7 +49,7 @@ class ATRoutes {
   static const String TRENDING_HASHTAGS_SCREEN = 'trending_hashtags_screen';
   static const String SOCIETY_HASHTAG_SCREEN = 'trending_hashtag_full_screen';
   static const String chooseEventOrShowScreen = 'go_live_welcome_screen';
-  static const String creatorProfileScreen = 'creator_profile';
+  static const String mainProfileScreen = 'main_profile_screen';
   static const String profileMenuScreen = 'profile_menu_screen';
   static const String profileFollowersScreen = 'profile_following_screen';
   static const String updateEmailScreen = 'update_email_screen';
@@ -86,12 +86,12 @@ class ATRoutes {
   static const String editUsername = 'edit_username';
   static const String editBio = 'edit_bio';
   static const String editSocials = 'edit_socials';
-  static const String selectAcctType = 'switch_account';
-  static const String SELECTED_ACCT = 'creator_landing';
-  static const String SELECT_CAT = 'select_category';
-  static const String creatorSubPlanSetup = 'creator_sub_plan';
-  static const String cohostFeeSetup = 'co_host_fee_setup';
-  static const String CREATOR_SUCCESS = 'creator_success';
+  static const String selectAcctTypeScreen = 'switch_account';
+  static const String selectedAcctOnboardScreen = 'creator_landing';
+  static const String selectCategoriesScreen = 'select_category';
+  static const String subPlanSetupScreen = 'creator_sub_plan';
+  static const String cohostFeeSetupScreen = 'co_host_fee_setup';
+  static const String accountUpgradeSuccessScreen = 'creator_success';
   static const String WALLET_ONBOARDING = 'wallet_landing';
   static const String WALLET_PIN_SETUP = 'wallet_pin_setup';
   static const String securityQuestionScreen = 'security_question';

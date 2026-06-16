@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -167,9 +168,9 @@ class _EditNameScreen extends State<EditUsernameScreen> {
               ),
           
               bottomSheet: BlocListener<RemoteUserDataCubit,
-                ATAppState<UserProfileData>>(
-                listener: (_, ATAppState<UserProfileData> state){
-                  if(state is FailureState<UserProfileData>){
+                ATAppState<ProfileData>>(
+                listener: (_, ATAppState<ProfileData> state){
+                  if(state is FailureState<ProfileData>){
                     _buttonNotifier.value = null;
                     showAppNotification2(
                       context: context,
@@ -177,7 +178,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
                       type: NotificationType.failure,
                     );
                   }
-                  else if(state is SuccessState<UserProfileData>){
+                  else if(state is SuccessState<ProfileData>){
                     _buttonNotifier.value = null;
                     context.pop(_cntrl.text.trim());
                   }
@@ -198,7 +199,7 @@ class _EditNameScreen extends State<EditUsernameScreen> {
                         _buttonNotifier.value = true;
                         context.read<RemoteUserDataCubit>()
                           .updateRemoteUserProfile(
-                            userProfileData: UserProfileData(
+                            userProfileData: ProfileData(
                               username: _cntrl.text.trim()));
                       },
                       btnTitle: widget.initialUsername == null

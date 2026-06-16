@@ -5,8 +5,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class ATSlidingRouteTransition<T> extends CustomTransitionPage<T> {
-  ATSlidingRouteTransition({required super.child, this.beginOffset})
-      : super(
+  ATSlidingRouteTransition({
+    required super.child,
+    super.name,
+    this.beginOffset
+  }) : super(
           transitionsBuilder:
               (_, Animation<double> animation, __, Widget child) {
             Animation<Offset> tween = Tween<Offset>(

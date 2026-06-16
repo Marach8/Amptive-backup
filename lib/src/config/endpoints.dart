@@ -21,7 +21,7 @@ class ATEndpoints {
   static const String communities = '/api/v1/communities/';
   static const String joinCommunity = '/api/v1/communities/{community_id}/join';
   static const String resetPassword = '/api/v1/auth/reset-password';
-  static const String users = '/api/v1/shows/users';
+  static const String usersShows = '/api/v1/shows/users';
   static const String homeFeed = '/api/v1/shows/feed/home';
   static const String followedShowsFeed = '/api/v1/shows/feed/following';
   static const String liveUsersFeed = '/api/v1/shows/feed/live-now';
@@ -33,10 +33,10 @@ class ATEndpoints {
   static const String livestreams = '/api/v1/livestreams/';
   static const String getUserprofile = '/api/v1/users/me';
   static const String followers = '/api/v1/users/following';
-  static const String getUsers = '/api/v1/users';
+  static const String users = '/api/v1/users';
   static const String tags = '/api/v1/tags/';
   static const String createHashtag = '${tags}hashtags';
-  static const String updateUserProfile = '/api/v1/users/me';
+  static const String myself = '/api/v1/users/me';
   static const String trendingHashtags = '/api/v1/tags/trending';
   static const String updateEmailAndPhone = '/api/v1/users/me/contact';
   static const String verifyEmailOrPhoneOtp = '/api/v1/users/me/verify-otp';
@@ -55,5 +55,5 @@ class ATEndpoints {
   static const String fundWallet = '/api/v1/payments/wallet/fund';
   static const String getWalletBalance = '/api/v1/payments/wallet/balance';
   static String verifyPayment ='/api/v1/payments/verify';
-  static const String createProfessionalProfile = '/api/v1/users/me/profile';
+  static const String upgradeAccount = '/api/v1/users/me/profile';
 }

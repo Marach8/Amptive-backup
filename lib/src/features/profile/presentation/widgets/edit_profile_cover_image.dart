@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
@@ -20,7 +21,7 @@ import 'package:nested/nested.dart';
 import '../../../../shared/custom_container_widget.dart';
 
 
-typedef _ProfileImages = ({
+typedef ProfileImages = ({
   String? coverImageUrl,
   String? profileImageUrl,
 });
@@ -40,8 +41,8 @@ class _EditProfileCoverImageState extends State<EditProfileCoverImage> {
 
   @override
   Widget build(BuildContext context) {
-    final _ProfileImages profileImages = context
-      .select<LocalUserDataCubit, _ProfileImages>(
+    final ProfileImages profileImages = context
+      .select<LocalUserDataCubit, ProfileImages>(
         (LocalUserDataCubit cubit) => (
           coverImageUrl: cubit.currentUserData?.coverPhoto,
           profileImageUrl: cubit.currentUserData?.profilePhoto)
@@ -54,14 +55,15 @@ class _EditProfileCoverImageState extends State<EditProfileCoverImage> {
 
     return MultiBlocListener(
       listeners: <SingleChildWidget>[
-        BlocListener<RemoteUserDataCubit, ATAppState<UserProfileData>>(
-          listener: (_, ATAppState<UserProfileData> state){
-            if(context.mounted && state is SuccessState<UserProfileData>){
+        BlocListener<RemoteUserDataCubit, ATAppState<ProfileData>>(
+          listener: (_, ATAppState<ProfileData> state){
+            if(context.mounted && state is SuccessState<ProfileData>){
 
               ///After updating the cover photo in BE, update locally.
-              UserProfileData currentLocalData = context
+              ProfileData currentLocalData = context
                 .read<LocalUserDataCubit>().currentUserData
-                  ?? const UserProfileData();
+                  ?? const ProfileData();
+              
               
               if(_uploadType == _UploadType.profilePhoto){
                 currentLocalData = currentLocalData.copyWith(
@@ -79,7 +81,7 @@ class _EditProfileCoverImageState extends State<EditProfileCoverImage> {
 
               setState(() => _uploadType = null);
             }
-            else if(context.mounted && state is FailureState<UserProfileData>){
+            else if(context.mounted && state is FailureState<ProfileData>){
               //If we fail here, reset photo we are uploading and loadingState
               setState((){
                 if(_uploadType == _UploadType.coverPhoto){
@@ -104,7 +106,10 @@ class _EditProfileCoverImageState extends State<EditProfileCoverImage> {
             if(context.mounted && state is SuccessState<String>){
               //After uploading the image, send the image URL to BE
               context.read<RemoteUserDataCubit>().updateRemoteUserProfile(
-                userProfileData: UserProfileData(coverPhoto: state.newData),
+                userProfileData: ProfileData(
+                  coverPhoto: _uploadType == _UploadType.coverPhoto ? state.newData : null,
+                  profilePhoto: _uploadType == _UploadType.profilePhoto ? state.newData : null,
+                ),
               );
             }
             else if(context.mounted && state is FailureState<String>){
@@ -176,11 +181,9 @@ class _EditProfileCoverImageState extends State<EditProfileCoverImage> {
               height: 150,
               width: context.screenWidth,
               alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: ATColors.black.withValues(alpha: 0.5),
-              ),
-              child: const ATLoadingIndicator(size: 50,)
+              color: ATColors.black.withValues(alpha: 0.5),
+              child: ATLoadingIndicator(
+                size: 50, color: ATColors.white,)
             ),
 
             Positioned(

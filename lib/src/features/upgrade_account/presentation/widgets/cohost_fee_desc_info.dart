@@ -1,17 +1,18 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../profile/bloc/fees_setup_bloc.dart';
 
 class CohostFeeDescInfo extends StatelessWidget {
   const CohostFeeDescInfo({
     super.key,
+    required this.onClose,
   });
+  final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CohostFeeDescInfo extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                onTap: () => context.read<CohostFeeSetupBloc>().removeDesc(),
+                onTap: onClose,
                 child: const Icon(Icons.close, size: 15),
               ),
             ),
@@ -38,15 +39,15 @@ class CohostFeeDescInfo extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        ATStrings.WHAT_IS_COHOST_FEE,
-                        style: Theme.of(context)
+                        ATStrings.whatIsCohostFee,
+                        style: context
                             .textTheme
                             .bodySmall
                             ?.copyWith(fontSize: ATSizes.size15),
                       ),
-                      Text(ATStrings.COHOST_FEE_DESC,
+                      Text(ATStrings.cohostFeeDesc,
                           maxLines: 3,
-                          style: Theme.of(context)
+                          style: context
                               .textTheme
                               .titleMedium
                               ?.copyWith(color: ATColors.hexC2C2C2)),
@@ -56,6 +57,7 @@ class CohostFeeDescInfo extends StatelessWidget {
               ],
             )
           ],
-        ));
+        )
+      );
   }
 }

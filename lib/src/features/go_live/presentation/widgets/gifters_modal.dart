@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
@@ -299,7 +300,7 @@ class _SendGiftWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserProfileData? currUserData = context
+    final ProfileData? currUserData = context
       .read<LocalUserDataCubit>().currentUserData;
 
     

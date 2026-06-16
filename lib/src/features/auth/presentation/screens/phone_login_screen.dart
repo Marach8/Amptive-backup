@@ -1,5 +1,7 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/login_cubit.dart';
 import 'package:amptive/src/features/post_auth/post_authentication_widgets/cupertino_phone_code_select.dart';
 import 'package:amptive/src/global_export.dart';
@@ -73,16 +75,16 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> with ATValidators {
             leading: const ATBackBtn(),
             titleText: widget.title ?? '',
           ),
-          body: BlocConsumer<LoginCubit, ATAppState<dynamic>>(
-            listener: (BuildContext context, ATAppState<dynamic> state) {
-              if (state is SuccessState<dynamic>) {
+          body: BlocConsumer<LoginCubit, ATAppState<ProfileData>>(
+            listener: (BuildContext context, ATAppState<ProfileData> state) {
+              if (state is SuccessState<ProfileData>) {
                 context.goNamed(ATRoutes.dashboard);
-              } else if (state is FailureState) {
+              } else if (state is FailureState<ProfileData>) {
                 showAppNotification2(
                   context: context, text: state.message);
               }
             },
-            builder: (BuildContext context, ATAppState<dynamic> state) {
+            builder: (BuildContext context, ATAppState<ProfileData> state) {
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.all(15),
@@ -207,9 +209,9 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> with ATValidators {
             builder: (BuildContext context) {
               final double bottom = MediaQuery.viewInsetsOf(context).bottom;
               final double bottomPadding = bottom == 0 ? 50 : 10;
-              final ATAppState<dynamic> cubitState =
-                  context.watch<LoginCubit>().state;
-              final bool isLoading = cubitState is LoadingState<dynamic>;
+              final ATAppState<ProfileData> cubitState =
+                   context.watch<LoginCubit>().state;
+               final bool isLoading = cubitState is LoadingState<ProfileData>;
               return Padding(
                 padding: EdgeInsets.fromLTRB(15, 10, 15, bottomPadding),
                 child: ValueListenableBuilder<(bool, bool)>(

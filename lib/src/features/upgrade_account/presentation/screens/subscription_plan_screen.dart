@@ -2,14 +2,14 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
+import 'package:amptive/src/features/profile/data/models/request/upgrade_account_data.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/widgets/subscription_plan_widget.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../switch_acct/switch_acct_export.dart';
 
 enum SubPlanScreenEntryPoint { creatorProfileSetup, programCreationSetup }
 
@@ -26,16 +26,16 @@ class SubscriptionPlanData {
   SubscriptionPlanData copyWith({
     double? subAmount,
     double? oneTimePaymentAmount,
-  }) =>
-      SubscriptionPlanData(
-        entryPoint: entryPoint,
-        subAmount: subAmount ?? this.subAmount,
-        oneTimePaymentAmount: oneTimePaymentAmount ?? this.oneTimePaymentAmount,
-      );
+  }) => SubscriptionPlanData(
+    entryPoint: entryPoint,
+    subAmount: subAmount ?? this.subAmount,
+    oneTimePaymentAmount: oneTimePaymentAmount ?? this.oneTimePaymentAmount,
+  );
 }
 
-class CreatorSubPlanScreen extends StatefulWidget {
-  const CreatorSubPlanScreen({
+
+class SubPlanSetupScreen extends StatefulWidget {
+  const SubPlanSetupScreen({
     super.key,
     required this.incomingSubPlan,
   });
@@ -43,10 +43,10 @@ class CreatorSubPlanScreen extends StatefulWidget {
   final SubscriptionPlanData incomingSubPlan;
 
   @override
-  State<CreatorSubPlanScreen> createState() => _CreatorSubPlanScreenState();
+  State<SubPlanSetupScreen> createState() => _SubPlanSetupScreenState();
 }
 
-class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
+class _SubPlanSetupScreenState extends State<SubPlanSetupScreen> {
   late SubscriptionPlanData? _localSubPlan;
 
   @override
@@ -89,15 +89,13 @@ class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
                   });
                 },
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               if (!didComeFromProgramCreationFlow)
                 Text(
                   ATStrings.allowFreeSub,
                   maxLines: 2,
                   style: context.textTheme.titleSmall?.copyWith(
-                    fontSize: ATSizes.size11,
+                    fontSize: 11,
                   ),
                 )
             ],
@@ -114,12 +112,12 @@ class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
                             if (didComeFromProgramCreationFlow) {
                               context.pop(_localSubPlan);
                             } else {
-                              ProfessionalProfileData().copyWith(
+                              UpgradeProfileData().copyWith(
                                 subAmount: _localSubPlan?.subAmount ??
                                     _localSubPlan?.oneTimePaymentAmount,
                               );
                               context.pushNamed(
-                                ATRoutes.cohostFeeSetup,
+                                ATRoutes.cohostFeeSetupScreen,
                                 extra: _localSubPlan,
                               );
                             }
@@ -131,7 +129,15 @@ class _CreatorSubPlanScreenState extends State<CreatorSubPlanScreen> {
                 if (!didComeFromProgramCreationFlow) const SizedBox(height: 15),
                 if (!didComeFromProgramCreationFlow)
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      UpgradeProfileData().copyWith(
+                        subAmount: 0,
+                      );
+                      context.pushNamed(
+                        ATRoutes.cohostFeeSetupScreen,
+                        extra: _localSubPlan,
+                      );
+                    },
                     radius: 5,
                     child: Text(ATStrings.setupLater,
                         style: context.textTheme.bodyLarge),

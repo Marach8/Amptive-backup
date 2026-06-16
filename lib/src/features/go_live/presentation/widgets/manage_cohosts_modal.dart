@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
@@ -163,7 +164,7 @@ class _ResendInviteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserProfileData? currUserData = context
+    final ProfileData? currUserData = context
       .read<LocalUserDataCubit>().currentUserData;
 
     

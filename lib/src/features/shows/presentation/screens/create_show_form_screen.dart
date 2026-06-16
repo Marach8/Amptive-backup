@@ -608,7 +608,8 @@ class __SubWidgetState extends State<_SubWidget> {
                       topLogo: const Icon(Icons.check_circle_sharp, size: 45),
                     );
 
-                    final ButtonPressed? onPressedResult = await context.pushNamed(
+                    final ButtonPressed? onPressedResult = 
+                    await context.pushNamed(
                       ATRoutes.programCreationSuccessScreen,
                       extra: params
                     ) as ButtonPressed?;
@@ -616,7 +617,9 @@ class __SubWidgetState extends State<_SubWidget> {
                     if(context.mounted){
                       if(onPressedResult == ButtonPressed.elevatedBtn){
                         context.pushReplacementNamed(
-                          ATRoutes.createEpisodeForm);
+                          ATRoutes.createEpisodeForm,
+                          extra: state.newData?.showId ?? '',
+                        );
                       } else if(onPressedResult == ButtonPressed.textBtn){
                         context.pushReplacementNamed(
                           ATRoutes.showPreviewScreen,

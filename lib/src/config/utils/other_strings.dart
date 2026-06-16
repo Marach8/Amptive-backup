@@ -27,7 +27,6 @@ class ATStrings {
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';
   static const String subscribersCount = 'subscribers count';
-  static const String isCreator = 'is creator';
   static const String hasTestedMic = 'has tested mic';
   static const String liveProgramData = 'live program data';
   static const String bio = 'Bio';
@@ -102,15 +101,15 @@ class ATStrings {
       'Do you want to save this bank detail to re-use it next time?';
   static const String SAVE_BANK_DETAILS = 'Save Bank Details';
   static const String FACEBOOK = 'Facebook';
-  static const String VISIT_PROFILE = 'Visit profile';
+  static const String visitProfile = 'Visit profile';
   static const String TWITTER = 'X(Twitter)';
   static const String GOOGLE = 'Google';
   static const String ANSWER_SECRET_QUEST = 'Answer Secret Question';
   static const String noMatchingResults = 'No results found for this search!';
-  static const String SELECT_CAT = 'Select your category';
-  static const String CAT_WONT_BE_SHOWN =
+  static const String selectCategory = 'Select your category';
+  static const String selectCategoryDesc =
       'Selected category will not be shown on your public profile and can be changed anytime.';
-  static const String SEARCH_CAT = 'Search for a category';
+  static const String search4Category = 'Search for a category';
   static const String PROCEED = 'Proceed';
   static const String UR_WALLET = 'Your Wallet';
   static const String UR_WAY = 'Your Way';
@@ -159,7 +158,7 @@ class ATStrings {
   static const String want2ChangeUserName =
       'Do you want to change your username?';
   static const String CHANGE = 'Change';
-  static const String DELETE_PLAN = 'Delete plan';
+  static const String deletePlan = 'Delete plan';
   static const String delete = 'Delete';
   static const String SAVE = 'Save';
   static const String TAP_D_RECORD_BTN = 'Tap the record button';
@@ -462,13 +461,13 @@ class ATStrings {
   static const String title = 'Title';
   static const String toggleWhispers = 'Activate or de-activate whispers';
   static const String description = 'Description';
-  static const String SELECT_ACCT_TYPE =
+  static const String selectAcctTypeToProceed =
       'Select your choice account type to proceed.';
-  static const String CREATOR_ACCT = 'Creator Account';
-  static const String BIZ_ACCT = 'Business Account';
-  static const String CREATOR_ACCT_DESC =
+  static const String creatorAccount = 'Creator Account';
+  static const String businessAcct = 'Business Account';
+  static const String creatorAcctDesc =
       'Best for podcasters, artists, influencers, public figures etc.';
-  static const String BIZ_ACCT_DESC =
+  static const String businessAcctDesc =
       'Best for brands, organizations, service providers, local businesses etc.';
   static String setUpAcct(String acct) => "Set up $acct";
   static const String links = 'Links';
@@ -676,17 +675,17 @@ class ATStrings {
   static const String unblock = 'Unblock';
   static const String UNMUTE = 'Unmute';
   static const String aboutEpisode = 'About Episode';
-  static const String AMPTIVE_4_CREATORS = 'Amptive for Creators';
-  static const String AMPTIVE_4_BIZ = 'Amptive for Business';
+  static const String amptiveForCreators = 'Amptive for Creators';
+  static const String amptiveForBusiness = 'Amptive for Business';
   static const String CONNECT_SELL = 'Connect, sell and grow';
   static const String subScriptionPlan = 'Subscription Plan';
-  static const String COHOST_FEE_SETUP = 'Co-host Fee Setup';
-  static const String SETTING_UP_ACCT = 'Setting up account';
-  static const String ALMOST_THERE = 'Almost there';
-  static const String WHAT_IS_COHOST_FEE = 'What is Co-host fee?';
-  static const String COHOST_FEE_DESC =
+  static const String cohostFeeSetup = 'Co-host Fee Setup';
+  static const String settingUpAcct = 'Setting up account';
+  static const String almostThere = 'Almost there';
+  static const String whatIsCohostFee = 'What is Co-host fee?';
+  static const String cohostFeeDesc =
       'This is a fee you will charge creators for co-hosting their events or shows';
-  static const String ALLOW_FREE_COHOSTING =
+  static const String freeCohosting =
       "Click 'Setup later' to co-host for free.";
   static const String addNew = 'Add new';
   static const String AMTPIVE_CHARGES_4_COHOSTING =
@@ -729,13 +728,13 @@ class ATStrings {
   static const String SET_UP_ACCT_DETAILS =
       'Setup your account details like your email address, phone number and country.';
   static const String DEACTIVATE_ACCT = 'Deactivate your account';
-  static const String CAT_SELECETED = 'Category selected';
-  static const String SUB_FEE_SETUP = 'Subscription fee setup';
-  static const String U_R_A_CREATOR = 'You are now a creator';
-  static const String UR_BIZ_IS_READY = 'Your business is ready';
-  static const String EXPAND_UR_BIZ =
+  static const String categorySelected = 'Category selected';
+  static const String subFeeSetUp = 'Subscription fee setup';
+  static const String youAreACreator = 'You are now a creator';
+  static const String yourBusinessIsReady = 'Your business is ready';
+  static const String expandYourBiz =
       'Expand your business and connect with potential customers.';
-  static const String NOW_U_CAN_CREATE =
+  static const String nowYouCanCreate =
       'Now, you can create live audio shows and events.';
   static const String CREATING_WALLET = 'Creating your wallet';
   static const String PREPARING_WALLET = 'Preparing your wallet';
