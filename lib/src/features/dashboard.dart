@@ -246,7 +246,7 @@ class DashboardState extends State<_SubWidget>{
             if (isNotAuthenticated == true) {
               final BuildContext activeContext =
                   navigatorKey.currentContext ?? context;
-              activeContext.read<AuthGuardCubit>().reset();
+              //activeContext.read<AuthGuardCubit>().reset();
               activeContext.goNamed(ATRoutes.temporaryLoginScreen,
                   extra: const LoginScreenEntryParams(
                     title: 'Login',

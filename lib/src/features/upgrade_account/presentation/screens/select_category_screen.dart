@@ -13,7 +13,6 @@ import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../switch_acct/empty.dart';
 
 class SelectCategoryScreen extends StatelessWidget {
   const SelectCategoryScreen({super.key, required this.acctType});
@@ -137,29 +136,31 @@ class SelectCategoryScreen extends StatelessWidget {
   ];
 
   static const List<String> businessCategories = <String>[
-    "AI & Machine Learning",
-    "Media and Entertaninment",
-    "Personal Blog",
-    "Home, Furniture & Appliances",
-    "Food & Beverage",
-    "Gaming",
-    "Machinery & Equipment",
-    "Health & Wellness",
-    "Professional Services",
-    "Pets",
-    "Public Administration",
-    "Real Estate",
-    "Software & Apps",
-    "Restaurant & Bars",
-    "Shopping & Retail",
-    "Sports, Fitness & Outdoors",
-    "Travel & Tourism",
-    "Finance & Investing",
+    "Art & Crafts",
+    "Automotive & Transportation",
+    "Baby",
+    "Beauty",
+    "Clothing & Accessories",
     "Education & Training",
     "Electronics",
-    "Clothing & Accesories",
-    "Baby",
-    "Automotitive & Transportation",
+    "Finance & Investing ",
+    "Food & Beverage",
+    "Gaming",
+    "Health & Wellness",
+    "Home, Furniture & Appliances",
+    "Machinery & Equipment",
+    "Media & Entertainment",
+    "Personal Blog",
+    "Pets",
+    "Professional Services",
+    "Public Administration",
+    "Real Estate",
+    "Restaurants & Bars",
+    "Shopping & Retail",
+    "Software & Apps",
+    "Sports, Fitness & Outdoors",
+    "Travel & Tourism",
+    "Others",
   ];
 
   @override

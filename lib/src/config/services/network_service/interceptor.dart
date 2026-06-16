@@ -72,6 +72,6 @@ class AuthGuardCubit extends Cubit<bool> {
 
   void reset() {
     _hasHandledUnAuthentication = false;
-    emit(false);
+    // emit(false);
   }
 }

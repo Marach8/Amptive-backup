@@ -3,12 +3,17 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/profile/data/models/request/upgrade_account_data.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo_impl.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum UpgradeAccountStage {
   categorySelected(ATStrings.categorySelected),
+  //Creator
   subscriptionFeeSetup(ATStrings.subFeeSetUp),
-  coHostFeeSetup(ATStrings.cohostFeeSetup);
+  coHostFeeSetup(ATStrings.cohostFeeSetup),
+  //Business
+  settingUpAccount(ATStrings.settingUpAcct),
+  almostThere(ATStrings.almostThere);
 
   const UpgradeAccountStage(this.value);
 
@@ -31,7 +36,8 @@ class UpgradeAccountCubit extends Cubit<ATAppState<UpgradeAccountStage>> {
     try {
       await Future.wait<void>(
         <Future<void>>[
-          _runUpgradeStages(),
+          _runUpgradeStages(
+            param.accountType ?? AccountType.creator),
           _performUpgrade(param),
         ],
         eagerError: true,
@@ -44,32 +50,49 @@ class UpgradeAccountCubit extends Cubit<ATAppState<UpgradeAccountStage>> {
     }
   }
 
-  Future<void> _runUpgradeStages() async {
-    const List<UpgradeAccountStage> stages = UpgradeAccountStage.values;
+  Future<void> _runUpgradeStages(AccountType acctType) async {
+    final List<UpgradeAccountStage> stages = <UpgradeAccountStage>[
+          UpgradeAccountStage.categorySelected,
+
+          if (acctType == AccountType.creator) ...<UpgradeAccountStage>[
+            UpgradeAccountStage.subscriptionFeeSetup,
+            UpgradeAccountStage.coHostFeeSetup,
+          ] else ...<UpgradeAccountStage>[
+            UpgradeAccountStage.settingUpAccount,
+            UpgradeAccountStage.almostThere,
+          ],
+
+          UpgradeAccountStage.categorySelected,
+        ];
 
     for (int i = 0; i < stages.length; i++) {
       if (_cancelStagesFuture) return;
 
-      emit(LoadingState<UpgradeAccountStage>(currentData: stages[i]));
+      emit(
+        LoadingState<UpgradeAccountStage>(
+          currentData: stages[i],
+        ),
+      );
 
       if (i < stages.length - 1) {
-        await Future<void>.delayed(const Duration(seconds: 3));
+        await Future<void>.delayed(
+          const Duration(seconds: 3),
+        );
       }
     }
   }
 
   Future<void> _performUpgrade(UpgradeProfileData param) async {
-    await Future<void>.delayed(const Duration(seconds: 4));
-    // final ApiResponse<dynamic> response =
-    //     await profileRepo.upgradeAccount(param: param);
+    final ApiResponse<dynamic> response =
+        await profileRepo.upgradeAccount(param: param);
 
-    // await response.when<Future<void>>(
-    //   successful: (Successful<dynamic> data) async {
-    //     if (data.data == null) return;
-    //   },
-    //   unSuccessful: (Unsuccessful<dynamic> error) async {
-    //     throw error.error.message;
-    //   },
-    // );
+    await response.when<Future<void>>(
+      successful: (Successful<dynamic> data) async {
+        if (data.data == null) return;
+      },
+      unSuccessful: (Unsuccessful<dynamic> error) async {
+        throw error.error.message;
+      },
+    );
   }
 }

@@ -94,7 +94,7 @@ class HomeTabView extends StatelessWidget {
                     //   );
                     // },
                     onTap: () =>
-                        context.pushNamed(ATRoutes.creatorProfileScreen),
+                        context.pushNamed(ATRoutes.mainProfileScreen),
                     //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15),

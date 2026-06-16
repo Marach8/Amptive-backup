@@ -680,8 +680,8 @@ class ATStrings {
   static const String CONNECT_SELL = 'Connect, sell and grow';
   static const String subScriptionPlan = 'Subscription Plan';
   static const String cohostFeeSetup = 'Co-host Fee Setup';
-  static const String SETTING_UP_ACCT = 'Setting up account';
-  static const String ALMOST_THERE = 'Almost there';
+  static const String settingUpAcct = 'Setting up account';
+  static const String almostThere = 'Almost there';
   static const String whatIsCohostFee = 'What is Co-host fee?';
   static const String cohostFeeDesc =
       'This is a fee you will charge creators for co-hosting their events or shows';
@@ -730,11 +730,11 @@ class ATStrings {
   static const String DEACTIVATE_ACCT = 'Deactivate your account';
   static const String categorySelected = 'Category selected';
   static const String subFeeSetUp = 'Subscription fee setup';
-  static const String U_R_A_CREATOR = 'You are now a creator';
-  static const String UR_BIZ_IS_READY = 'Your business is ready';
-  static const String EXPAND_UR_BIZ =
+  static const String youAreACreator = 'You are now a creator';
+  static const String yourBusinessIsReady = 'Your business is ready';
+  static const String expandYourBiz =
       'Expand your business and connect with potential customers.';
-  static const String NOW_U_CAN_CREATE =
+  static const String nowYouCanCreate =
       'Now, you can create live audio shows and events.';
   static const String CREATING_WALLET = 'Creating your wallet';
   static const String PREPARING_WALLET = 'Preparing your wallet';

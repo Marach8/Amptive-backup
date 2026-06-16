@@ -3,6 +3,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/profile/presentation/widgets/edit_profile_cover_image.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -22,6 +23,11 @@ class CreatorProfileCoverImage extends StatelessWidget {
           coverImageUrl: cubit.currentUserData?.coverPhoto,
           profileImageUrl: cubit.currentUserData?.profilePhoto)
       );
+
+    final AccountType accontyType = context
+      .select<LocalUserDataCubit, AccountType?>(
+        (LocalUserDataCubit cubit) => cubit.currentUserData?.accountType
+      ) ?? AccountType.creator;
 
     return Container(
       height: 150,
@@ -88,10 +94,10 @@ class CreatorProfileCoverImage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
               border: Border.all(color: ATColors.black, width: 2),
               child: Text(
-                ATStrings.creator.toUpperCase(),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 10, color: ATColors.black),
-              ),
+                    accontyType.value.toUpperCase(),
+                    style: context.textTheme.bodyMedium?.copyWith(
+                        fontSize: 10, color: ATColors.black),
+                  )
             )
           ),
         ],

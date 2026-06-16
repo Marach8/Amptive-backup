@@ -59,7 +59,6 @@ import 'package:amptive/src/features/upgrade_account/presentation/screens/select
 import 'package:amptive/src/features/upgrade_account/presentation/screens/select_category_screen.dart';
 import 'package:amptive/src/features/upgrade_account/presentation/screens/selected_acct_onboard_screen.dart';
 import 'package:amptive/src/features/upgrade_account/presentation/screens/subscription_plan_screen.dart';
-import 'package:amptive/src/features/upgrade_account/presentation/switch_acct/empty.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
@@ -437,9 +436,12 @@ final GoRouter amptiveAppRouter = GoRouter(
             },
           ),
           GoRoute(
-            name: ATRoutes.creatorProfileScreen,
-            path: ATRoutes.creatorProfileScreen,
-            builder: (_, __) => const MainProfileScreen(),
+            name: ATRoutes.mainProfileScreen,
+            path: ATRoutes.mainProfileScreen.addSlash,
+            pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+              name: st.name,
+              child: const MainProfileScreen(),
+            ),
           ),
           GoRoute(
               name: ATRoutes.editProfile,

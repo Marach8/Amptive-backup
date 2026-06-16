@@ -10,7 +10,6 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../switch_acct/empty.dart';
 
 enum SubPlanScreenEntryPoint { creatorProfileSetup, programCreationSetup }
 

@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -8,6 +9,7 @@ import 'package:amptive/src/features/profile/bloc/creator_or_biz_bloc.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_socials_screen.dart';
 import 'package:amptive/src/features/profile/presentation/widgets/profile_widgets_export.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
@@ -42,6 +44,8 @@ class EditProfileScreen extends StatelessWidget {
             builder: (BuildContext context) {
               final ProfileData? userData =
                 context.watch<LocalUserDataCubit>().currentUserData;
+              final bool hasNotUpgradedAcct = 
+                userData?.accountType == AccountType.regular;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -194,20 +198,21 @@ class EditProfileScreen extends StatelessWidget {
                                      );
                                  }
                                }),
-                          const SizedBox(height: 15),
-                          const ATDivider(),
-                          const SizedBox(height: 15),
-                          const _MenuHeading(text: ATStrings.account),
-                          _MenuItem(
-                              title: ATStrings.switchAccount,
-                              value: context.read<AccountTypeBloc>().state
-                                  ? ATStrings.creator
-                                  : ATStrings.business,
-                              onTap: () async {
-                                context.pushNamed(ATRoutes.selectAcctTypeScreen);
-                              }),
+                          
+                          if(hasNotUpgradedAcct)...<Widget>[
+                            const SizedBox(height: 15),
+                            const ATDivider(),
+                            const SizedBox(height: 15),
+                            const _MenuHeading(text: ATStrings.account),
+                            _MenuItem(
+                                title: 'Upgrage Account',
+                                value: userData?.accountType?.value.capitalize ?? '',
+                                onTap: () async {
+                                  context.pushNamed(ATRoutes.selectAcctTypeScreen);
+                                }),
+                            ],
 
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 50),
                         ],
                       ),
                     ),

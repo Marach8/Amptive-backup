@@ -2,8 +2,8 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/features/profile/bloc/animation_bloc.dart';
-import 'package:amptive/src/features/profile/bloc/creator_or_biz_bloc.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart' show ProfileData;
 import 'package:amptive/src/features/upgrade_account/cubits/upgrade_account_cubit.dart';
 import 'package:amptive/src/features/profile/data/models/request/upgrade_account_data.dart';
 import 'package:amptive/src/features/upgrade_account/presentation/widgets/cohost_fee_desc_info.dart';
@@ -17,8 +17,7 @@ import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../profile/bloc/fees_setup_bloc.dart';
-import '../switch_acct/empty.dart';
+
 
 class CoHostFeeSetupScreen extends StatefulWidget {
   const CoHostFeeSetupScreen({super.key});
@@ -62,6 +61,15 @@ class _CoHostFeeSetupScreenState extends State<CoHostFeeSetupScreen> {
           }
       
           if (state is SuccessState<UpgradeAccountStage>) {
+            final LocalUserDataCubit localUserCubit = 
+              context.read<LocalUserDataCubit>();
+            final ProfileData currentData = localUserCubit
+              .currentUserData ?? const ProfileData();
+            localUserCubit.updateUserDataLocally(
+              currentData.copyWith(
+                accountType: UpgradeProfileData().accountType)
+            );
+            
             context.pushNamed(
               ATRoutes.accountUpgradeSuccessScreen,
               extra: UpgradeProfileData().accountType

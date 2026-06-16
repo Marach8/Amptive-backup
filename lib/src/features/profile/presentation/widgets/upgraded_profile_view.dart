@@ -130,7 +130,18 @@ class CreatorProfileView extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20),
-                       _ProfileDesc(userData: userData),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                        child: Text(
+                          userData?.bio ?? '', maxLines: 3,
+                          textAlign: TextAlign.center,
+                          style: context.textTheme.titleMedium!.copyWith(
+                            fontSize: 13,
+                            color: ATColors.hexC2C2C2,
+                          ),
+                        ),
+                      ),
+                      //_ProfileDesc(userData: userData),
                       const SizedBox(height: 20),
                       const RowOfSocials(),
                       const SizedBox(height: 15),
@@ -197,7 +208,6 @@ class _ProfileDesc extends StatelessWidget {
         textAlign: TextAlign.center,
         textOnTap: (String index) {
           if (index == "1") {
-            print("Hello");
           }
         },
       ),
