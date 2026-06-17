@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
@@ -199,9 +200,9 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                             ),
                             const SizedBox(height: 16),
                             BlocBuilder<LocalUserDataCubit,
-                                ATAppState<UserProfileData>>(
+                                ATAppState<ProfileData>>(
                               builder:
-                                  (_, ATAppState<UserProfileData> userState) {
+                                  (_, ATAppState<ProfileData> userState) {
                                 final bool isHost = context
                                         .read<LocalUserDataCubit>()
                                         .currentUserData

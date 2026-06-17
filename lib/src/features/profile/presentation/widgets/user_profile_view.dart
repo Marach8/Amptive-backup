@@ -1,10 +1,10 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/profile/presentation/profile_prez_export.dart';
-import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -56,11 +56,11 @@ class UserProfileView extends StatelessWidget {
                 backgroundColor: ATColors.black,
                 flexibleSpace: FlexibleSpaceBar(
                   background: BlocBuilder<LocalUserDataCubit,
-                    ATAppState<UserProfileData>>(
+                    ATAppState<ProfileData>>(
                   builder: (BuildContext context,
-                      ATAppState<UserProfileData> state) {
-                    final UserProfileData? userData = context
-                      .read<LocalUserDataCubit>()
+                      ATAppState<ProfileData> state) {
+                    final ProfileData? userData = context
+                      .watch<LocalUserDataCubit>()
                       .currentUserData;
 
                       return Column(

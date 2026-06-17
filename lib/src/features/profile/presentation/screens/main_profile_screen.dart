@@ -1,10 +1,10 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
-import 'package:amptive/src/features/profile/presentation/widgets/creator_profile_view.dart';
+import 'package:amptive/src/features/profile/presentation/widgets/upgraded_profile_view.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,15 +27,18 @@ class MainProfileScreen extends StatelessWidget {
         statusBarColor: ATColors.transparent,
         child: Scaffold(
           body: BlocSelector<LocalUserDataCubit,
-            ATAppState<UserProfileData>, bool?>(
-            selector: (ATAppState<UserProfileData> state) 
+            ATAppState<ProfileData>, AccountType?>(
+            selector: (ATAppState<ProfileData> state) 
               => context.read<LocalUserDataCubit>()
-                .currentUserData?.isCreator,
-            builder: (_, bool? isCreator) {
-              if(isCreator ?? false){
-                return const CreatorProfileView();
-              }
-              return const UserProfileView();
+                .currentUserData?.accountType,
+            builder: (_, AccountType? accountType) {
+              return switch(accountType){
+                AccountType.creator ||
+                AccountType.business 
+                  => const CreatorProfileView(),
+                AccountType.regular || null
+                  => const UserProfileView(),
+              };
             }
           ),
         ),

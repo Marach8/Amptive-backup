@@ -1,12 +1,12 @@
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/subscription_plan_screen.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/radio_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
-import '../../../switch_account/presentation/switch_acct/switch_acct_export.dart';
 
 enum ProgramAccessType { free, paid }
 
@@ -263,7 +263,7 @@ class _PaidAccessWidget extends StatelessWidget {
                 onTap: () async {
                   final SubscriptionPlanData? selectedSubPlan =
                       await context.pushNamed(
-                    ATRoutes.creatorSubPlanSetup,
+                    ATRoutes.subPlanSetupScreen,
                     extra: initialSubPlan,
                   );
                   if (selectedSubPlan != null) {

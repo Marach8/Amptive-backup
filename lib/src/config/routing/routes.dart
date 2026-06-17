@@ -51,13 +51,21 @@ import 'package:amptive/src/features/events/presentation/screens/list_hosted_eve
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/presentation/screens/preview_event_screen.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
-import 'package:amptive/src/features/switch_account/presentation/switch_acct/switch_acct_export.dart';
+import 'package:amptive/src/features/upgrade_account/cubits/select_category_cubit.dart';
+import 'package:amptive/src/features/upgrade_account/cubits/upgrade_account_cubit.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/account_upgrade_success_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/co_host_fee_setup_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_category_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/selected_acct_onboard_screen.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/subscription_plan_screen.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart'
     show Ratio, CustomCropShape;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
@@ -428,9 +436,12 @@ final GoRouter amptiveAppRouter = GoRouter(
             },
           ),
           GoRoute(
-            name: ATRoutes.creatorProfileScreen,
-            path: ATRoutes.creatorProfileScreen,
-            builder: (_, __) => const MainProfileScreen(),
+            name: ATRoutes.mainProfileScreen,
+            path: ATRoutes.mainProfileScreen.addSlash,
+            pageBuilder: (_, GoRouterState st) => ATSlidingRouteTransition<void>(
+              name: st.name,
+              child: const MainProfileScreen(),
+            ),
           ),
           GoRoute(
               name: ATRoutes.editProfile,
@@ -486,41 +497,59 @@ final GoRouter amptiveAppRouter = GoRouter(
                       );
                     }),
                 GoRoute(
-                    name: ATRoutes.selectAcctType,
-                    path: ATRoutes.selectAcctType,
+                    name: ATRoutes.selectAcctTypeScreen,
+                    path: ATRoutes.selectAcctTypeScreen,
                     builder: (_, GoRouterState state) =>
                         const SelectAcctTypeScreen(),
                     routes: <RouteBase>[
                       GoRoute(
-                          name: ATRoutes.SELECTED_ACCT,
-                          path: ATRoutes.SELECTED_ACCT,
-                          builder: (_, GoRouterState state) =>
-                              const SelectedAcctLandingScreen()),
+                          name: ATRoutes.selectedAcctOnboardScreen,
+                          path: ATRoutes.selectedAcctOnboardScreen,
+                          pageBuilder: (_, GoRouterState state) =>
+                            ATSlidingRouteTransition<AccountType>(
+                              beginOffset: const Offset(0, 1),
+                              child: SelectedAcctOnboardScreen(
+                                acctType: state.extra as AccountType,
+                              ),
+                            )),
                     ]),
                 GoRoute(
-                    name: ATRoutes.SELECT_CAT,
-                    path: ATRoutes.SELECT_CAT,
-                    builder: (_, __) => const SelectCategoryScreen()),
+                  name: ATRoutes.selectCategoriesScreen,
+                  path: ATRoutes.selectCategoriesScreen.addSlash,
+                  pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+                    child: BlocProvider<SelectCategoryCubit>(
+                      create: (_) => SelectCategoryCubit(),
+                      child: SelectCategoryScreen(
+                        acctType: state.extra as AccountType),
+                    ),
+                  )),
                 GoRoute(
-                    name: ATRoutes.creatorSubPlanSetup,
-                    path: ATRoutes.creatorSubPlanSetup,
-                    pageBuilder: (_, GoRouterState st) {
-                      final SubscriptionPlanData subPlanData =
-                          st.extra as SubscriptionPlanData;
-                      return ATSlidingRouteTransition<SubscriptionPlanData?>(
-                          child: CreatorSubPlanScreen(
-                              incomingSubPlan: subPlanData));
-                    }),
+                  name: ATRoutes.subPlanSetupScreen,
+                  path: ATRoutes.subPlanSetupScreen.addSlash,
+                  pageBuilder: (_, GoRouterState st) {
+                    final SubscriptionPlanData subPlanData =
+                        st.extra as SubscriptionPlanData;
+                    return ATSlidingRouteTransition<SubscriptionPlanData?>(
+                        child: SubPlanSetupScreen(
+                            incomingSubPlan: subPlanData));
+                  }),
                 GoRoute(
-                    name: ATRoutes.cohostFeeSetup,
-                    path: ATRoutes.cohostFeeSetup,
-                    builder: (_, GoRouterState state) =>
-                        const CoHostFeeSetupScreen()),
+                  name: ATRoutes.cohostFeeSetupScreen,
+                  path: ATRoutes.cohostFeeSetupScreen.addSlash,
+                  pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                    child: BlocProvider<UpgradeAccountCubit>(
+                      create: (_) => UpgradeAccountCubit(),
+                      child: const CoHostFeeSetupScreen(),
+                    ),
+                  )),
                 GoRoute(
-                    name: ATRoutes.CREATOR_SUCCESS,
-                    path: ATRoutes.CREATOR_SUCCESS,
-                    builder: (_, GoRouterState state) =>
-                        const CreatorOrBusinessSetupSuccessScreen()),
+                    name: ATRoutes.accountUpgradeSuccessScreen,
+                    path: ATRoutes.accountUpgradeSuccessScreen,
+                    pageBuilder: (_, GoRouterState state) => 
+                      ATSlidingRouteTransition<void>(
+                        child: AccountUpgradeSuccessScreen(
+                          accountType: state.extra as AccountType))
+                    ),
               ]),
           GoRoute(
               name: ATRoutes.profileMenuScreen,

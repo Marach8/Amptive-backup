@@ -662,20 +662,21 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
 
                   final Episode? episode = context
                     .read<CreateEpisodeCubit>().currentEpisodeDetail;
-                  context.pushReplacementNamed(
-                    ATRoutes.goLiveOnboarding,
-                    extra: LiveProgramData(
-                      roomEntryToken: state.newData?.roomEntryToken ?? '',
-                      roomUrl: state.newData?.roomUrl ?? '',
-                      streamId: state.newData?.streamId ?? '',
-                      roomParticipantId: state.newData?.roomParticipantId ?? '',
-                      programId: episode?.episodeId ?? '',
-                      coverUrl: episode?.thumbnailUrl ?? '',
-                      role: ParticipantRole.host,
-                      programTitle: episode?.title ?? '',
-                      programDesc: episode?.description ?? '',
-                    ),
+                  final LiveProgramData liveProgramData = LiveProgramData(
+                    roomEntryToken: state.newData?.roomEntryToken ?? '',
+                    roomUrl: state.newData?.roomUrl ?? '',
+                    streamId: state.newData?.streamId ?? '',
+                    roomParticipantId: state.newData?.roomParticipantId ?? '',
+                    programId: episode?.episodeId ?? '',
+                    coverUrl: episode?.thumbnailUrl ?? '',
+                    role: ParticipantRole.host,
+                    programTitle: episode?.title ?? '',
+                    programDesc: episode?.description ?? '',
+                    
                   );
+
+                  dashboardKey.currentState
+                    ?.showLiveStreamOverlay(liveProgramData: liveProgramData);
                 }
                 else if(state is FailureState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);

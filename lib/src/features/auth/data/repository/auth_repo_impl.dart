@@ -70,20 +70,17 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<LoginResponseModel>> loginUser({
+  Future<ApiResponse<dynamic>> loginUser({
     required Map<String, dynamic> param,
   }) async {
     try {
       final Response<dynamic> response = await networkService.post(
-        ATEndpoints.login,
-        data: param,
+        ATEndpoints.login, data: param,
       );
 
-      final LoginResponseModel loginResponse =
-          LoginResponseModel.fromJson(response.data);
-      return Successful<LoginResponseModel>(data: loginResponse);
+      return Successful<dynamic>(data: response.data);
     } catch (e) {
-      return Unsuccessful<LoginResponseModel>(
+      return Unsuccessful<dynamic>(
         error: ATException.resolveException(e),
       );
     }

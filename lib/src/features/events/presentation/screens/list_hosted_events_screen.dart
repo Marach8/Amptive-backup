@@ -65,7 +65,7 @@ class __SubWidgetState extends State<_SubWidget> {
   }
 
   void _onEventsScrollToEnd(ScrollController sController) {
-    const double threshHold = 100;
+    const double threshHold = 60;
     if (sController.position.pixels >=
         sController.position.maxScrollExtent + threshHold) {
       context.read<HostedEventsCubit>().fetchHostedEvents();
@@ -94,8 +94,8 @@ class __SubWidgetState extends State<_SubWidget> {
                     }
                     return ImageFiltered(
                       imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                      child: ATImgLoader(
-                          boxFit: BoxFit.fill, imgPath: selectedImgString),
+                      child: ATImgLoader(boxFit: BoxFit.fill,
+                        imgPath: selectedImgString),
                     );
                   }),
                 ),
@@ -191,11 +191,17 @@ class __SubWidgetState extends State<_SubWidget> {
                                   if (state is FailureState<HostedEventsResponseModel>) {
                                     return RenderInitialEventOrShowLoadFailureWidget(
                                       createNewLabel: ATStrings.createNewEvent,
-                                      onCreateNewTapped: (){
-                                        context.pushNamed(
-                                          ATRoutes.createEventFormScreen,
-                                          extra: context.read<HostedEventsCubit>(),
-                                        );
+                                      onCreateNewTapped: ()async{
+                                        final LiveProgramData? liveProgramData = 
+                                          await context.pushNamed(
+                                            ATRoutes.createEventFormScreen,
+                                            extra: context.read<HostedEventsCubit>(),
+                                          ) as LiveProgramData?;
+
+                                        if(liveProgramData != null){
+                                          dashboardKey.currentState?.showLiveStreamOverlay(
+                                            liveProgramData: liveProgramData);
+                                        }
                                       },
                                       onRefresh: (){
                                         context.read<HostedEventsCubit>().fetchHostedEvents();

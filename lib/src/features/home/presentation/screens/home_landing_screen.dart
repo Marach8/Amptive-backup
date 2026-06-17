@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/utils/colors.dart';
@@ -93,14 +94,14 @@ class HomeTabView extends StatelessWidget {
                     //   );
                     // },
                     onTap: () =>
-                        context.pushNamed(ATRoutes.creatorProfileScreen),
+                        context.pushNamed(ATRoutes.mainProfileScreen),
                     //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15),
                       child: BlocBuilder<LocalUserDataCubit,
-                              ATAppState<UserProfileData>>(
-                          builder: (_, ATAppState<UserProfileData> state) {
-                        final UserProfileData? userData = context
+                              ATAppState<ProfileData>>(
+                          builder: (_, ATAppState<ProfileData> state) {
+                        final ProfileData? userData = context
                             .read<LocalUserDataCubit>()
                             .currentUserData;
                         return ClipRRect(

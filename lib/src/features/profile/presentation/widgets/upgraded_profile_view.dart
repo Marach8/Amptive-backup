@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
@@ -89,16 +90,16 @@ class CreatorProfileView extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               stretchModes: const <StretchMode>[StretchMode.fadeTitle],
               background: BlocBuilder<LocalUserDataCubit,
-                  ATAppState<UserProfileData>>(
+                  ATAppState<ProfileData>>(
                 builder: (BuildContext context,
-                    ATAppState<UserProfileData> state) {
-                  final UserProfileData? userData = context
-                      .read<LocalUserDataCubit>()
+                    ATAppState<ProfileData> state) {
+                  final ProfileData? userData = context
+                      .watch<LocalUserDataCubit>()
                       .currentUserData;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      const CreatorProfilePix(),
+                      const CreatorProfileCoverImage(),
                       const SizedBox(height: 50),
                       Text(
                         userData?.name ?? 'Glennon Doyle',
@@ -129,7 +130,18 @@ class CreatorProfileView extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20),
-                       _ProfileDesc(userData: userData),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                        child: Text(
+                          userData?.bio ?? '', maxLines: 3,
+                          textAlign: TextAlign.center,
+                          style: context.textTheme.titleMedium!.copyWith(
+                            fontSize: 13,
+                            color: ATColors.hexC2C2C2,
+                          ),
+                        ),
+                      ),
+                      //_ProfileDesc(userData: userData),
                       const SizedBox(height: 20),
                       const RowOfSocials(),
                       const SizedBox(height: 15),
@@ -176,7 +188,7 @@ class CreatorProfileView extends StatelessWidget {
 
 class _ProfileDesc extends StatelessWidget {
   const _ProfileDesc({required this.userData});
-  final UserProfileData? userData;
+  final ProfileData? userData;
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +208,6 @@ class _ProfileDesc extends StatelessWidget {
         textAlign: TextAlign.center,
         textOnTap: (String index) {
           if (index == "1") {
-            print("Hello");
           }
         },
       ),

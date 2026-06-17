@@ -1,5 +1,5 @@
 export 'program_display.dart';
-export 'creator_profile_cover_image.dart';
+export 'upgraded_profile_cover_image.dart';
 export 'top_creator_badge.dart';
 export 'no_of_followers.dart';
 export 'row_of_socials.dart';

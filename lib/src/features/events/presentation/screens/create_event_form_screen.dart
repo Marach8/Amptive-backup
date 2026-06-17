@@ -865,7 +865,8 @@ class __SubWidgetState extends State<_SubWidget> {
           child: ValueListenableBuilder<(bool?, ScheduleBtnOnTap)>(
               valueListenable: _activateBtn,
               builder: (_, (bool?, ScheduleBtnOnTap) value, __) {
-                final bool shouldGoToGoLive = _activateBtn.value.$2 == ScheduleBtnOnTap.goLive;
+                final bool shouldGoToGoLive = 
+                  value.$2 == ScheduleBtnOnTap.goLive;
       
                 //null for loading, false for disabled, true for enabled for the bool.
                 return ATBlurredBgBtn(
@@ -946,4 +947,3 @@ String getEventAccessTypeDescText({
 
   return accessTypeTextDesc;
 }
-

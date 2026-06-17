@@ -1,8 +1,10 @@
+import 'package:amptive/src/config/services/network_service/interceptor.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/login_cubit.dart';
-import 'package:amptive/src/features/auth/data/models/response/auth_success_response_model.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -111,6 +113,7 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
                       controller: _emailCntrl,
                       hintText: ATStrings.enterYourEmailOrUsername,
                       validator: validateEmail,
+                      maxLines: 1,
                       prefixIcon: const SizedBox(width: 10),
                     ),
                     const SizedBox(height: 30),
@@ -153,20 +156,21 @@ class _LoginScreenState extends State<LoginScreen> with ATValidators {
                   ]),
             ),
           ),
-          bottomSheet: BlocConsumer<LoginCubit, ATAppState<ATUser>>(
-            listener: (BuildContext context, ATAppState<ATUser> state) {
-              if (state is SuccessState<ATUser>) {
+          bottomSheet: BlocConsumer<LoginCubit, ATAppState<ProfileData>>(
+            listener: (BuildContext context, ATAppState<ProfileData> state) {
+              if (state is SuccessState<ProfileData>) {
+                context.read<AuthGuardCubit>().reset();
                 context.goNamed(ATRoutes.dashboard);
-              } else if (state is FailureState<ATUser>) {
+              } else if (state is FailureState<ProfileData>) {
                 showAppNotification2(context: context, text: state.message);
               }
             },
-            builder: (BuildContext context, ATAppState<ATUser> state) {
+            builder: (BuildContext context, ATAppState<ProfileData> state) {
               final double bottom = MediaQuery.viewInsetsOf(context).bottom;
               final double bottomPadding = bottom == 0 ? 50 : 10;
-              final ATAppState<ATUser> cubitState =
+              final ATAppState<ProfileData> cubitState =
                   context.watch<LoginCubit>().state;
-              final bool isLoading = cubitState is LoadingState<ATUser>;
+              final bool isLoading = cubitState is LoadingState<ProfileData>;
 
               return Padding(
                 padding: EdgeInsets.fromLTRB(15, 10, 15, bottomPadding),

@@ -137,7 +137,7 @@ class WalletRepoImpl implements WalletRepo {
   Future<ApiResponse<SecurityQuestionsResponseModel>> getSecurityQuestions() async {
     try {
       final Response<dynamic> response = await networkService.get(
-        ATEndpoints.securityQuestions,
+        ATEndpoints.getSecurityQuestions,
       );
 
       return Successful<SecurityQuestionsResponseModel>(data: SecurityQuestionsResponseModel.fromJson(response.data));

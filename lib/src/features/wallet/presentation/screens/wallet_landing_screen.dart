@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
@@ -69,7 +70,7 @@ class _WalletLandingScreenState extends State<_WalletLandingScreen> {
   @override
   Widget build(BuildContext context) {
     bool shouldShowCommingSoon = false;
-     final UserProfileData? userData =
+     final ProfileData? userData =
         context.read<LocalUserDataCubit>().currentUserData;
 
      return ATAnnotatedRegion(
@@ -152,7 +153,7 @@ class _WalletLandingScreenState extends State<_WalletLandingScreen> {
                return Column(
                   children: List.generate(2, (_) => const Padding(
                     padding: EdgeInsets.only(bottom: 10),
-                    child: TransactionHistoryItem(), // ← the single tile shimmer, not the full ListView
+                    child: TransactionHistoryItem(), // â† the single tile shimmer, not the full ListView
                   )),
                 );
               }
