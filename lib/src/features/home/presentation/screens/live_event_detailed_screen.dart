@@ -266,7 +266,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                       color:
                                           ATColors.white.withValues(alpha: 0.6),
                                       fontSize: ATSizes.size14,
-                                      fontWeight: ATFontWeights.w500,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   const SizedBox(height: 100),
@@ -291,7 +291,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                   final ProfileData? userData = context
                     .read<LocalUserDataCubit>().currentUserData;
                   final String? userId = userData?.userId;
-                  final bool hasTestedMic = userData?.hasTestedMic == 'true';
+                  final bool hasTestedMic = userData?.hasTestedMic == true;
                   final bool isHost = userId == homeFeedItem?.hostId;
 
                   final LiveProgramData liveProgramData = LiveProgramData(

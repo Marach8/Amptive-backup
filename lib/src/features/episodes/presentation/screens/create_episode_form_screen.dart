@@ -672,7 +672,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                     role: ParticipantRole.host,
                     programTitle: episode?.title ?? '',
                     programDesc: episode?.description ?? '',
-                    
+                    community: episode?.community,
                   );
 
                   dashboardKey.currentState
