@@ -30,7 +30,7 @@ Future<bool?> processWalletFundingDialog({
             create: (_) => FundWalletCubit()
               ..fundWallet(
                 amount: amount,
-                channel: paymentMethod.normalizePaymentChannel(paymentMethod),
+                channel: paymentMethod,
                 currency: currency,
               ),
           ),

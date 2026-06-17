@@ -45,6 +45,7 @@ class ATImgStrings {
   static const String BIZ_ACCT_LOGO_MIC = '$_svgPath/Simplification (1).svg';
   static const String CREATOR_ACCT_LOGO = '$_svgPath/Simplification.svg';
   static const String flutterWaveIcon = '$_svgPath/flutter_wave.svg';
+  //static const String paystackIcon = '$_svgPath/paystack.svg';
   static const String appleIcon = '$_svgPath/apple_icon.svg';
   static const String PAYPAL_ICON = '$_svgPath/paypal.svg';
   static const String NAIRA_ICON = '$_svgPath/₦.svg';
@@ -73,6 +74,7 @@ class ATImgStrings {
 
   static const String FB_ICON = '$_pngPath/facebook.png';
   static const String googleIcon = '$_pngPath/google_icon.png';
+  static const String paystackIcon = '$_pngPath/paystack.png';
   static const String noAvatarImage = '$_pngPath/no_avatar_image.png';
   static const String discoverPic1 = '$_pngPath/Frame 156.png';
   static const String OFFICE_LADIES = '$_pngPath/Frame 22.png';
