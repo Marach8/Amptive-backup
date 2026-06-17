@@ -55,5 +55,7 @@ class ATEndpoints {
   static const String fundWallet = '/api/v1/payments/wallet/fund';
   static const String getWalletBalance = '/api/v1/payments/wallet/balance';
   static String verifyPayment ='/api/v1/payments/verify';
+  static const String createProfessionalProfile = '/api/v1/users/me/profile';
+  static const String getSecurityQuestions = '/api/v1/extras/static/security-questions';
   static const String upgradeAccount = '/api/v1/users/me/profile';
 }

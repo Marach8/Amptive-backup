@@ -17,7 +17,8 @@ Future<String?> selectPaymentMethodDialog(
     {required BuildContext context, required String amount}) {
   final Map<String, String> paymentMethods = <String, String>{
     ATImgStrings.appleIcon: ATStrings.applePay,
-    ATImgStrings.flutterWaveIcon: ATStrings.flutterWave,
+   // ATImgStrings.flutterWaveIcon: ATStrings.flutterWave,
+    ATImgStrings.paystackIcon : ATStrings.paystack,
     ATImgStrings.googleIcon: ATStrings.googlePay,
   };
   return showCupertinoModalPopup<String>(
