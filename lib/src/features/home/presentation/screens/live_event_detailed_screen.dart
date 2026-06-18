@@ -39,17 +39,6 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
 
   final HomeFeedItem? homeFeedItem;
 
-  String? get _displayImage {
-    final contentType = homeFeedItem?.contentType?.toLowerCase();
-    if (contentType == 'standalone') {
-      return homeFeedItem?.thumbnailUrl;
-    } else if (contentType == 'episode') {
-      return homeFeedItem?.thumbnailUrl ?? homeFeedItem?.showCoverUrl;
-    } else {
-      return homeFeedItem?.coverUrl;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight =
@@ -73,7 +62,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                   imageFilter: ImageFilter.blur(sigmaX: 250, sigmaY: 250),
                   child: ATImgLoader(
                     boxFit: BoxFit.fill,
-                    imgPath: _displayImage ?? ATImgStrings.JOE_POMP_SHOW,
+                    imgPath: homeFeedItem?.coverUrl ?? '',
                   ),
                 ),
               ),
@@ -107,7 +96,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   CoverPicWithTopRightMoreIcon(
-                                    imgPath: _displayImage ?? '',
+                                    imgPath: homeFeedItem?.coverUrl ?? '',
                                     onMoreTapped: () {},
                                     padding: EdgeInsets.zero,
                                   ),
@@ -300,7 +289,7 @@ class ATLiveEventDetailedScreen extends StatelessWidget {
                     streamId: state.newData?.streamId ?? '',
                     roomParticipantId: state.newData?.roomParticipantId ?? '',
                     programId: homeFeedItem?.id ?? '',
-                    coverUrl: _displayImage ?? '',
+                    coverUrl: homeFeedItem?.coverUrl ?? '',
                     role: isHost
                       ? ParticipantRole.host
                       : ParticipantRole.audience,

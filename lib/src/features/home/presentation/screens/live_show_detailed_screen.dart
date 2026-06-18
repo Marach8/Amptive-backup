@@ -1,8 +1,5 @@
 import 'dart:ui';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
-import 'package:amptive/src/features/dashboard.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
@@ -26,17 +23,6 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
 
   final HomeFeedItem? homeFeedItem;
 
-  String? get _displayImage {
-    final contentType = homeFeedItem?.contentType?.toLowerCase();
-    if (contentType == 'standalone') {
-      return homeFeedItem?.thumbnailUrl;
-    } else if (contentType == 'episode') {
-      return homeFeedItem?.thumbnailUrl ?? homeFeedItem?.showCoverUrl;
-    } else {
-      return homeFeedItem?.coverUrl;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight =
@@ -50,8 +36,7 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                 imageFilter: ImageFilter.blur(sigmaX: 250, sigmaY: 250),
                 child: ATImgLoader(
                   boxFit: BoxFit.fill,
-                  imgPath:
-                      _displayImage ?? ATImgStrings.weCanDoHardThingsBgImage,
+                  imgPath: homeFeedItem?.coverUrl ?? '',
                 ),
               ),
             ),
@@ -84,7 +69,7 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   ATEventOrShowCard(
-                                    imgPath: _displayImage,
+                                    imgPath: homeFeedItem?.coverUrl ?? '',
                                   ),
                                   const SizedBox(height: 24),
                                   const ShowOrEventIndicatorWithTitle(),
@@ -263,4 +248,3 @@ class ATLiveShowDetailedScreen extends StatelessWidget {
     );
   }
 }
-

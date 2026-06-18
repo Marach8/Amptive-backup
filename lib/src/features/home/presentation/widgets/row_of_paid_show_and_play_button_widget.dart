@@ -20,80 +20,80 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
   final IconData? icon;
   final HomeFeedItem? homeFeedItem;
 
-  bool get _isLive => homeFeedItem?.status?.toLowerCase() == 'live';
+  // bool get _isLive => homeFeedItem?.status?.toLowerCase() == 'live';
 
-  bool get _canGoToDetail {
-    if (homeFeedItem == null) return false;
-    if (_isLive && homeFeedItem?.livestreamId != null) return true;
-    return true;
-  }
+  // bool get _canGoToDetail {
+  //   if (homeFeedItem == null) return false;
+  //   if (_isLive && homeFeedItem?.livestreamId != null) return true;
+  //   return true;
+  // }
 
-  String get _showTypeLabel {
-    final String? type = homeFeedItem?.showType?.toLowerCase();
-    if (type == 'paid') return 'PAID SHOW';
-    if (type == 'free') return 'FREE SHOW';
-    if (type == 'premium') return 'PREMIUM';
-    return '';
-  }
+  // String get _showTypeLabel {
+  //   final String? type = homeFeedItem?.showType?.toLowerCase();
+  //   if (type == 'paid') return 'PAID SHOW';
+  //   if (type == 'free') return 'FREE SHOW';
+  //   if (type == 'premium') return 'PREMIUM';
+  //   return '';
+  // }
 
-  void _onPlayTapped(BuildContext context) async{
-    if (homeFeedItem == null) return;
+  // void _onPlayTapped(BuildContext context) async{
+  //   if (homeFeedItem == null) return;
 
-    final String contentType = homeFeedItem!.contentType ?? '';
-    final bool isStandalone = contentType == 'standalone';
+  //   final String contentType = homeFeedItem!.contentType ?? '';
+  //   final bool isStandalone = contentType == 'standalone';
 
-    LiveProgramData? liveProgramData;
+  //   LiveProgramData? liveProgramData;
 
-    if (_isLive) {
-      if (isStandalone) {
-        liveProgramData = await context.pushNamed(
-          ATRoutes.liveEventDetailed,
-          extra: homeFeedItem,
-        ) as LiveProgramData?;
-      } else {
-        liveProgramData = await context.pushNamed(
-          ATRoutes.liveShowDetailed,
-          extra: homeFeedItem,
-        ) as LiveProgramData?;
-      }
+  //   if (_isLive) {
+  //     if (isStandalone) {
+  //       liveProgramData = await context.pushNamed(
+  //         ATRoutes.liveEventDetailed,
+  //         extra: homeFeedItem,
+  //       ) as LiveProgramData?;
+  //     } else {
+  //       liveProgramData = await context.pushNamed(
+  //         ATRoutes.liveShowDetailed,
+  //         extra: homeFeedItem,
+  //       ) as LiveProgramData?;
+  //     }
 
-      if (liveProgramData == null) return;
-      dashboardKey.currentState
-        ?.showLiveStreamOverlay(liveProgramData: liveProgramData);
+  //     if (liveProgramData == null) return;
+  //     dashboardKey.currentState
+  //       ?.showLiveStreamOverlay(liveProgramData: liveProgramData);
 
-    } else {
-      context.pushNamed(
-        ATRoutes.scheduleDetailed,
-        extra: homeFeedItem,
-      );
-    }
-  }
+  //   } else {
+  //     context.pushNamed(
+  //       ATRoutes.scheduleDetailed,
+  //       extra: homeFeedItem,
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final String label = _showTypeLabel;
+    //final String label = _showTypeLabel;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        if (label.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(top: 18),
-            child: Container(
-              padding: const EdgeInsets.all(8.5),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: ATColors.hex0D0D0D),
-              child: Text(label,
-                  style: context.textTheme.titleSmall?.copyWith(
-                      fontWeight: ATFontWeights.w500,
-                      fontSize: ATSizes.size10)),
-            ),
-          ),
+        // if (label.isNotEmpty)
+        //   Padding(
+        //     padding: const EdgeInsets.only(top: 18),
+        //     child: Container(
+        //       padding: const EdgeInsets.all(8.5),
+        //       decoration: BoxDecoration(
+        //           borderRadius: BorderRadius.circular(5),
+        //           color: ATColors.hex0D0D0D),
+        //       child: Text('',
+        //           style: context.textTheme.titleSmall?.copyWith(
+        //               fontWeight: ATFontWeights.w500,
+        //               fontSize: ATSizes.size10)),
+        //     ),
+        //   ),
         SizedBox(
           height: 45,
           width: 45,
           child: GestureDetector(
-            onTap: _canGoToDetail ? () => _onPlayTapped(context) : null,
+            //onTap: _canGoToDetail ? () => _onPlayTapped(context) : null,
             child: CircleAvatar(
               backgroundColor: ATColors.hexB6B6B6,
               child: Icon(icon ?? Icons.play_arrow,

@@ -26,7 +26,7 @@ class RenderHomeFeedItem extends StatelessWidget {
 
   final HomeFeedItem homeFeedItem;
 
-  bool get _isLive => homeFeedItem.status?.toLowerCase() == 'live';
+  //bool get _isLive => homeFeedItem.status?.toLowerCase() == 'live';
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,8 @@ class RenderHomeFeedItem extends StatelessWidget {
             );
           },
           title: homeFeedItem.hostName ?? '',
-          subtitle: _isLive ? 'started a live show' : 'scheduled a live show',
+          subtitle: '',
+          //subtitle: _isLive ? 'started a live show' : 'scheduled a live show',
         ),
         const SizedBox(
           height: 2,
@@ -59,18 +60,18 @@ class RenderHomeFeedItem extends StatelessWidget {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
             child: Stack(
               children: <Widget>[
-                ATImgLoader(
-                  imgPath: homeFeedItem.contentType == 'standalone'
-                      ? homeFeedItem.thumbnailUrl ?? ATImgStrings.jpeg2
-                      : homeFeedItem.contentType == 'episode'
-                          ? homeFeedItem.thumbnailUrl ??
-                              homeFeedItem.showCoverUrl ??
-                              ATImgStrings.jpeg2
-                          : homeFeedItem.coverUrl ?? ATImgStrings.jpeg2,
-                  boxFit: BoxFit.cover,
-                  height: 425,
-                  width: context.screenWidth,
-                ),
+                // ATImgLoader(
+                //   imgPath: homeFeedItem.contentType == 'standalone'
+                //       ? homeFeedItem.thumbnailUrl ?? ATImgStrings.jpeg2
+                //       : homeFeedItem.contentType == 'episode'
+                //           ? homeFeedItem.thumbnailUrl ??
+                //               homeFeedItem.showCoverUrl ??
+                //               ATImgStrings.jpeg2
+                //           : homeFeedItem.coverUrl ?? ATImgStrings.jpeg2,
+                //   boxFit: BoxFit.cover,
+                //   height: 425,
+                //   width: context.screenWidth,
+                // ),
                 Container(
                   width: context.screenWidth,
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -98,8 +99,8 @@ class RenderHomeFeedItem extends StatelessWidget {
                         coHostCount: homeFeedItem.coHostCount,
                       ),
                       const Spacer(),
-                      if (_isLive) const LiveIndicatorWithAnimatingDot(),
-                      if (_isLive) const SizedBox(height: 10),
+                      // if (_isLive) const LiveIndicatorWithAnimatingDot(),
+                      // if (_isLive) const SizedBox(height: 10),
                       Text(
                         maxLines: 2,
                         homeFeedItem.title ?? '',
@@ -110,12 +111,12 @@ class RenderHomeFeedItem extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      PeopleListeningWidget(
-                        viewerProfileUrls: homeFeedItem.avatarUrls,
-                        totalViewerCount: _isLive
-                            ? homeFeedItem.viewerCount
-                            : homeFeedItem.goingCount,
-                      ),
+                      // PeopleListeningWidget(
+                      //   viewerProfileUrls: homeFeedItem.avatarUrls,
+                      //   totalViewerCount: _isLive
+                      //       ? homeFeedItem.viewerCount
+                      //       : homeFeedItem.goingCount,
+                      // ),
                       const SizedBox(height: 10),
                       PaidShowAndPlayBtnWidget(homeFeedItem: homeFeedItem),
                     ],

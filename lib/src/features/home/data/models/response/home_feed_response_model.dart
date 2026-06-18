@@ -26,8 +26,8 @@ class HomeFeedItem {
   HomeFeedItem({
     this.id,
     this.title,
-    this.contentType,
-    this.status,
+    this.contentTypeEnum,
+    this.statusEnum,
     this.hostId,
     this.hostProfileImageUrl,
     this.hostName,
@@ -56,8 +56,8 @@ class HomeFeedItem {
     return HomeFeedItem(
       id: json['id'],
       title: json['title'],
-      contentType: json['content_type'],
-      status: json['status'],
+      contentTypeEnum: ProgramType.fromJson(json['content_type']),
+      statusEnum: ProgramStatus.fromJson(json['status']),
       hostId: json['host_id'],
       hostProfileImageUrl: json['host_profile_image_url'],
       hostName: json['host_name'],
@@ -74,7 +74,7 @@ class HomeFeedItem {
       livestreamId: json['livestream_id'],
       coHostCount: (json['co_hosts'] as List<dynamic>?)?.length ?? 0,
       avatarUrls: (json['avatar_urls'] as List<dynamic>?)
-          ?.map((e) => e as String)
+          ?.map((dynamic e) => e as String)
           .toList(),
       showId: json['show_id'],
       showTitle: json['show_title'],
@@ -87,8 +87,6 @@ class HomeFeedItem {
 
   final String? id,
       title,
-      contentType,
-      status,
       hostId,
       hostProfileImageUrl,
       hostName,
@@ -103,8 +101,43 @@ class HomeFeedItem {
       showCategory,
       thumbnailUrl;
 
+  final ProgramType? contentTypeEnum;
+  final ProgramStatus? statusEnum;
+
+
   final double? price, score;
   final int? viewerCount, goingCount, coHostCount, episodeNumber;
   final bool? requesterFollowsHost, requesterIsGoing;
   final List<String>? avatarUrls;
+}
+
+enum ProgramType {
+  episode('episode'),
+  standalone('standalone');
+
+  const ProgramType(this.value);
+  final String value;
+
+  static ProgramType fromJson(String? json) =>
+      ProgramType.values.firstWhere(
+        (ProgramType e) => e.value == json,
+        orElse: () => ProgramType.standalone,
+      );
+}
+
+enum ProgramStatus {
+  draft('DRAFT'),
+  scheduled('SCHEDULED'),
+  live('LIVE'),
+  ended('ENDED'),
+  cancelled('CANCELLED');
+
+  const ProgramStatus(this.value);
+  final String value;
+
+  static ProgramStatus fromJson(String? json) => 
+    ProgramStatus.values.firstWhere(
+        (ProgramStatus e) => e.value == json,
+        orElse: () => ProgramStatus.draft,
+      );
 }
