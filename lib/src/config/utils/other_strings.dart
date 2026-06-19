@@ -83,6 +83,7 @@ class ATStrings {
   static const String applePay = 'Apple Pay';
   static const String APPLE = 'Apple';
   static const String flutterWave = 'Flutterwave';
+  static const String paystack = 'paystack';
   static const String googlePay = 'Google Pay';
   static const String emailOrUsername = 'Email Or Username';
   static const String live = 'Live';

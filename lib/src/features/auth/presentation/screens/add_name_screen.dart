@@ -44,8 +44,12 @@ class _AddNameScreenState extends State<AddNameScreen> {
       create: (_) => SignupCubit(),
       child: ATAnnotatedRegion(
           child: BlocConsumer<SignupCubit, ATAppState<SignupStage>>(
-              listener: (_, ATAppState<SignupStage> state) {
+              listener: (_, ATAppState<SignupStage> state) async {
         if (state is SuccessState<SignupStage>) {
+               final FlutterSecureStorageServiceImpl storage =
+                  FlutterSecureStorageServiceImpl();
+              await storage.remove('has_set_wallet_pin');
+
           context.goNamed(ATRoutes.addProfilePicScreen);
         }
         if (state is FailureState<SignupStage>) {

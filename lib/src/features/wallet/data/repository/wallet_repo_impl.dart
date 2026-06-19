@@ -5,8 +5,9 @@ import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
-import 'package:amptive/src/features/wallet/data/models/fund_wallet_response_model.dart';
+import 'package:amptive/src/features/wallet/data/models/response/fund_wallet_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.dart';
+import 'package:amptive/src/features/wallet/data/models/response/security_questions_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/response/transaction_history_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/response/verify_payment_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/response/wallet_balance_response_model.dart';
@@ -126,6 +127,23 @@ class WalletRepoImpl implements WalletRepo {
     } catch (e) {
       log('Error verifying payment: $e');
       return Unsuccessful<VerifyPaymentResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+
+  Future<ApiResponse<SecurityQuestionsResponseModel>> getSecurityQuestions() async {
+    try {
+      final Response<dynamic> response = await networkService.get(
+        ATEndpoints.getSecurityQuestions,
+      );
+
+      return Successful<SecurityQuestionsResponseModel>(data: SecurityQuestionsResponseModel.fromJson(response.data));
+    } catch (e) {
+      log('Error getting security questions: $e');
+      return Unsuccessful<SecurityQuestionsResponseModel>(
         error: ATException.resolveException(e),
       );
     }
