@@ -1,3 +1,5 @@
+import 'package:amptive/src/shared/global_model_objects.dart';
+
 class HomeFeedResponseModel {
   HomeFeedResponseModel({
     this.homeFeedItems,
@@ -42,7 +44,6 @@ class HomeFeedItem {
     this.requesterFollowsHost,
     this.requesterIsGoing,
     this.livestreamId,
-    this.coHostCount,
     this.avatarUrls,
     this.showId,
     this.showTitle,
@@ -50,6 +51,7 @@ class HomeFeedItem {
     this.showCategory,
     this.episodeNumber,
     this.thumbnailUrl,
+    this.cohosts,
   });
 
   factory HomeFeedItem.fromJson(Map<String, dynamic> json) {
@@ -68,11 +70,10 @@ class HomeFeedItem {
       coverUrl: json['cover_url'],
       startedAt: json['started_at'],
       scheduledFor: json['scheduled_for'],
-      score: json['score']?.toDouble(),
+      score: json['score'],
       requesterFollowsHost: json['requester_follows_host'],
       requesterIsGoing: json['requester_is_going'],
       livestreamId: json['livestream_id'],
-      coHostCount: (json['co_hosts'] as List<dynamic>?)?.length ?? 0,
       avatarUrls: (json['avatar_urls'] as List<dynamic>?)
           ?.map((dynamic e) => e as String)
           .toList(),
@@ -82,6 +83,9 @@ class HomeFeedItem {
       showCategory: json['show_category'],
       episodeNumber: json['episode_number'],
       thumbnailUrl: json['thumbnail_url'] as String?,
+      cohosts: (json['co_hosts'] as List<dynamic>?)
+          ?.map((dynamic e) => User.fromJson(e))
+          .toList(),
     );
   }
 
@@ -104,7 +108,6 @@ class HomeFeedItem {
     bool? requesterFollowsHost,
     bool? requesterIsGoing,
     String? livestreamId,
-    int? coHostCount,
     List<String>? avatarUrls,
     String? showId,
     String? showTitle,
@@ -135,7 +138,6 @@ class HomeFeedItem {
       requesterIsGoing:
           requesterIsGoing ?? this.requesterIsGoing,
       livestreamId: livestreamId ?? this.livestreamId,
-      coHostCount: coHostCount ?? this.coHostCount,
       avatarUrls: avatarUrls ?? this.avatarUrls,
       showId: showId ?? this.showId,
       showTitle: showTitle ?? this.showTitle,
@@ -165,9 +167,10 @@ class HomeFeedItem {
   final ProgramCategory? programCategory;
   final ProgramStatus? programStatus;
   final double? price, score;
-  final int? viewerCount, goingCount, coHostCount, episodeNumber;
+  final int? viewerCount, goingCount, episodeNumber;
   final bool? requesterFollowsHost, requesterIsGoing;
   final List<String>? avatarUrls;
+  final List<User>? cohosts;
 }
 
 enum ProgramType {

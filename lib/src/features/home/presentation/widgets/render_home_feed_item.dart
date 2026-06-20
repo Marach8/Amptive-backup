@@ -1,6 +1,4 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
@@ -70,12 +68,16 @@ class RenderHomeFeedItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(15)),
             child: Stack(
               children: <Widget>[
-                ATImgLoader(
-                  imgPath: homeFeedItem.coverUrl
+                Hero(
+                  tag: homeFeedItem.coverUrl
                     ?? homeFeedItem.thumbnailUrl ?? '',
-                  boxFit: BoxFit.cover,
-                  height: 425,
-                  width: context.screenWidth,
+                  child: ATImgLoader(
+                    imgPath: homeFeedItem.coverUrl
+                      ?? homeFeedItem.thumbnailUrl ?? '',
+                    boxFit: BoxFit.cover,
+                    height: 425,
+                    width: context.screenWidth,
+                  ),
                 ),
                 Container(
                   width: context.screenWidth,
@@ -101,7 +103,7 @@ class RenderHomeFeedItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       With2OthersWidget(
-                        coHostCount: homeFeedItem.coHostCount,
+                        coHostCount: homeFeedItem.cohosts?.length
                       ),
                       const Spacer(),
                       if (isLive) ...<Widget>[
@@ -181,9 +183,7 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
             ],
           );
         }),
-        const SizedBox(
-          height: 2,
-        ),
+        const SizedBox(height: 2),
         Container(
             height: 425,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),

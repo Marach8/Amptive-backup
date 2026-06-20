@@ -14,9 +14,9 @@ class User extends Equatable{
   });
 
   User.fromJson(Map<String, dynamic> json)
-      : userId = json['user_id'],
+      : userId = json['user_id'] ?? json['id'],
         username = json['username'],
-        profilePicture = json['profile_picture'],
+        profilePicture = json['profile_picture'] ?? json['avatar_url'],
         followersCount = json['followers_count'],
         followingCount = json['following_count'],
         firstName = json['first_name'],

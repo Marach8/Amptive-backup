@@ -204,7 +204,7 @@ Future<void> showFollowAndSubscribeToUserModal({
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           Text(
-                                            ATStrings.SUBSCRIBE,
+                                            ATStrings.subscribe,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium

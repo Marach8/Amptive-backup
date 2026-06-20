@@ -48,4 +48,3 @@ class RenderHashTags extends StatelessWidget {
     .toList());
   }
 }
-

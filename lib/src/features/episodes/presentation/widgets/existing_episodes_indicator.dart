@@ -24,7 +24,10 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 5,
       children: <Widget>[
-        leading ?? ATImgLoader(imgPath: eventOrShowImgPath),
+        leading ?? ATImgLoader(
+          imgPath: eventOrShowImgPath,
+          height: 20, width: 20,
+        ),
         Text(
           title,
           style: context.textTheme.bodyMedium?.copyWith(
@@ -59,7 +62,7 @@ class ExistingEpisodesIndicator extends StatelessWidget {
       onTap: onTappOverride ?? ()async{
         final Episode? editedEpisode = await context.pushNamed(
           ATRoutes.previewEpisodeScreen,
-          extra: activeEpisode ?? Episode(),
+          extra: activeEpisode ?? const Episode(),
         ) as Episode?;
 
         if(context.mounted && editedEpisode != null 
@@ -99,4 +102,3 @@ class ExistingEpisodesIndicator extends StatelessWidget {
     );
   }
 }
-

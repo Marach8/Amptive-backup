@@ -102,3 +102,45 @@ class PeopleListeningOrGoing extends StatelessWidget {
     );
   }
 }
+
+
+class PeopleListeningWithNumberStacked extends StatelessWidget {
+  const PeopleListeningWithNumberStacked({
+    super.key,
+    required this.images,
+    required this.noOfListeners,
+  });
+  final List<String> images;
+  final int noOfListeners;
+
+  @override
+  Widget build(BuildContext context) {
+    final int treatedNo = noOfListeners - 4;
+
+    return Stack(
+      children: <Widget>[
+        ATOverlappingImages(
+          imgPaths: images.take(4).toList(),
+          imgSize: 35,
+          overlapOffset: 25,
+          borderWidth: 1,
+        ),
+        if(treatedNo > 0)Positioned(
+          right: 0,
+          child: Container(
+            alignment: Alignment.center,
+            height: 35, width: 35,
+            decoration: BoxDecoration(
+              color: ATColors.hex2D2D2D,
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              '+${treatedNo.compactFormat}',
+              style: context.textTheme.bodySmall
+                ?.copyWith(fontSize: 13)),
+          )
+        )
+      ]
+    );
+  }
+}
