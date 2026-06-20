@@ -27,29 +27,6 @@ class ATScheduleDetailedScreen extends StatelessWidget {
 
   final HomeFeedItem? homeFeedItem;
 
-  bool get _canMarkAsGoing {
-    final contentType = homeFeedItem?.contentType?.toLowerCase();
-    return contentType == 'standalone' || contentType == 'episode';
-  }
-
-  GoingStatus _getInitialGoingStatus() {
-    return GoingStatus(
-      isGoing: homeFeedItem?.requesterIsGoing ?? false,
-      goingCount: homeFeedItem?.goingCount ?? 0,
-    );
-  }
-
-  String? get _displayImage {
-    final contentType = homeFeedItem?.contentType?.toLowerCase();
-    if (contentType == 'standalone') {
-      return homeFeedItem?.thumbnailUrl;
-    } else if (contentType == 'episode') {
-      return homeFeedItem?.thumbnailUrl ?? homeFeedItem?.showCoverUrl;
-    } else {
-      return homeFeedItem?.coverUrl;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight =
@@ -61,9 +38,6 @@ class ATScheduleDetailedScreen extends StatelessWidget {
           BlocProvider<BlurredHeaderCubit>(
             create: (_) => BlurredHeaderCubit(),
           ),
-          BlocProvider<GoingCubit>(
-            create: (_) => GoingCubit(initialStatus: _getInitialGoingStatus()),
-          ),
         ],
         child: Scaffold(
           body: Stack(
@@ -73,8 +47,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                   imageFilter: ImageFilter.blur(sigmaX: 250, sigmaY: 250),
                   child: ATImgLoader(
                     boxFit: BoxFit.fill,
-                    imgPath:
-                        _displayImage ?? ATImgStrings.weCanDoHardThingsBgImage,
+                    imgPath: homeFeedItem?.coverUrl ?? '',
                   ),
                 ),
               ),
@@ -98,7 +71,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         ATEventOrShowCard(
-                          imgPath: _displayImage,
+                          imgPath: homeFeedItem?.coverUrl ?? '',
                         ),
                         const SizedBox(height: 24),
                         Text(
@@ -180,8 +153,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
               ),
             ],
           ),
-          bottomSheet: _canMarkAsGoing
-              ? BlocBuilder<GoingCubit, dynamic>(
+          bottomSheet: BlocBuilder<GoingCubit, dynamic>(
                   builder: (context, state) {
                     final goingCubit = context.read<GoingCubit>();
                     final isGoing =
@@ -201,15 +173,15 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(15, 25, 15, 15),
                       child: GestureDetector(
                         onTap: () {
-                          final contentType =
-                              homeFeedItem?.contentType?.toLowerCase();
-                          final type = contentType == 'standalone'
-                              ? GoingType.event
-                              : GoingType.episode;
-                          goingCubit.toggleGoing(
-                            contentId: homeFeedItem!.id!,
-                            type: type,
-                          );
+                          // final contentType =
+                          //     homeFeedItem?.contentType?.toLowerCase();
+                          // final type = contentType == 'standalone'
+                          //     ? GoingType.event
+                          //     : GoingType.episode;
+                          // goingCubit.toggleGoing(
+                          //   contentId: homeFeedItem!.id!,
+                          //   type: type,
+                          // );
                         },
                         child: Container(
                           width: double.infinity,
@@ -271,7 +243,6 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                     );
                   },
                 )
-              : null,
         ),
       ),
     );

@@ -21,7 +21,8 @@ class TileWithLeadingImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding ?? const EdgeInsets.fromLTRB(0, 15, 0, 10),
+      padding: padding ?? 
+        const EdgeInsets.fromLTRB(0, 15, 0, 10),
       child: Row(
         children: <Widget>[
           ClipRRect(
@@ -33,41 +34,37 @@ class TileWithLeadingImage extends StatelessWidget {
               boxFit: BoxFit.cover,
             ),
           ),
-          const SizedBox(
-            width: 12,
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                title,
-                style: context.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                subtitle,
-                style: context.textTheme.titleLarge?.copyWith(
-                    color: ATColors.hexC2C2C2,
-                    fontSize: ATSizes.size12,
-                    height: 1.5),
-              ),
-            ],
-          ),
-          const Spacer(),
-          trailingOnPressed == null
-              ? const SizedBox.shrink()
-              : GestureDetector(
-                  onTap: trailingOnPressed,
-                  child: const Icon(
-                    Icons.more_horiz,
-                    size: 30,
+          const SizedBox(width: 12),
+          Flexible(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: context.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
                   ),
-                )
+                ),
+                Text(
+                  subtitle, maxLines: 2,
+                  style: context.textTheme.titleLarge?.copyWith(
+                      color: ATColors.hexC2C2C2,
+                      fontSize: 12,
+                      height: 1.5),
+                ),
+              ],
+            ),
+          ),
+          if(trailingOnPressed != null) IconButton(
+            onPressed: trailingOnPressed,
+            icon: const Icon(
+              Icons.more_horiz,
+              size: 30,
+            ),
+          )
         ],
       ),
     );
   }
 }
-

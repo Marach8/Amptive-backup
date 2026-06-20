@@ -368,7 +368,7 @@ class ATStrings {
   static const String scheduled = 'Scheduled';
   static const String schedule = 'Schedule';
   static const String subscribed = 'Subscribed';
-  static const String SUBSCRIBE = 'Subscribe';
+  static const String subscribe = 'Subscribe';
   static const String DAY_VIEW = 'Day view';
   static const String MONTH_VIEW = 'Month view';
   static const String subscription = 'Subscription';

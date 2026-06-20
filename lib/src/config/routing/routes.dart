@@ -62,11 +62,13 @@ import 'package:amptive/src/features/upgrade_account/presentation/screens/subscr
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
+import 'package:amptive/src/shared/blurred_header.dart';
 import 'package:custom_image_crop/custom_image_crop.dart'
     show Ratio, CustomCropShape;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nested/nested.dart';
 import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
@@ -352,24 +354,46 @@ final GoRouter amptiveAppRouter = GoRouter(
             },
           ),
           GoRoute(
-              name: ATRoutes.liveShowDetailed,
-              path: ATRoutes.liveShowDetailed.addSlash,
-              pageBuilder: (_, GoRouterState state) =>
-                  ATSlidingRouteTransition<void>(
-                      beginOffset: const Offset(0.0, 1.0),
-                      child: ATLiveShowDetailedScreen(
-                        homeFeedItem: state.extra as HomeFeedItem?,
-                      ))),
-          GoRoute(
-              name: ATRoutes.liveEventDetailed,
-              path: ATRoutes.liveEventDetailed.addSlash,
-              pageBuilder: (_, GoRouterState state) =>
-                  ATSlidingRouteTransition<void>(
-                    beginOffset: const Offset(0.0, 1.0),
-                    child: ATLiveEventDetailedScreen(
-                      homeFeedItem: state.extra as HomeFeedItem?,
+            name: ATRoutes.liveShowDetailedScreen,
+            path: ATRoutes.liveShowDetailedScreen.addSlash,
+            pageBuilder: (_, GoRouterState state) =>
+              ATSlidingRouteTransition<void>(
+                beginOffset: const Offset(0.0, 1.0),
+                child: MultiBlocProvider(
+                  providers: <SingleChildWidget>[
+                    BlocProvider<BlurredHeaderCubit>(
+                      create: (_) => BlurredHeaderCubit(),
                     ),
-                  )),
+                    BlocProvider<GetLiveProgramEntryTokenCubit>(
+                      create: (_) => GetLiveProgramEntryTokenCubit(),
+                    ),
+                  ],
+                  child: LiveShowDetailedScreen(
+                    homeFeedItem: state.extra as HomeFeedItem?,
+                  ),
+                )
+              )
+            ),
+          GoRoute(
+            name: ATRoutes.liveEventDetailedScreen,
+            path: ATRoutes.liveEventDetailedScreen.addSlash,
+            pageBuilder: (_, GoRouterState state) =>
+              ATSlidingRouteTransition<void>(
+                beginOffset: const Offset(0.0, 1.0),
+                child: MultiBlocProvider(
+                  providers: <SingleChildWidget>[
+                    BlocProvider<GetLiveProgramEntryTokenCubit>(
+                      create: (_) => GetLiveProgramEntryTokenCubit(),
+                    ),
+                    BlocProvider<BlurredHeaderCubit>(
+                      create: (_) => BlurredHeaderCubit(),
+                    )
+                  ],
+                  child: LiveEventDetailedScreen(
+                    homeFeedItem: state.extra as HomeFeedItem?,
+                  ),
+                ),
+              )),
           GoRoute(
               name: ATRoutes.goLiveOnboarding,
               path: ATRoutes.goLiveOnboarding.addSlash,

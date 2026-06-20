@@ -55,7 +55,7 @@ class ATSubscribedPrograms extends StatelessWidget {
                             padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
                             child: GestureDetector(
                                 onTap: () => context
-                                    .pushNamed(ATRoutes.liveShowDetailed),
+                                    .pushNamed(ATRoutes.liveShowDetailedScreen),
                                 child: const SubscribedProgram()),
                           ))
                 ]),
