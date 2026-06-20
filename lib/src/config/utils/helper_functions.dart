@@ -91,6 +91,37 @@ class ATHelperFuncs {
     return timeList;
   }
 
+  static String formatOrdinalDateTime(String? isoDate) {
+    if(isoDate == null) return 'just now';
+    final DateTime dateTime = DateTime.parse(isoDate).toLocal();
+
+    final String day = _ordinal(dateTime.day);
+
+    final String date =
+        '$day ${DateFormat('MMM').format(dateTime)}, ${dateTime.year}';
+
+    final String time =
+        DateFormat('HH:mm').format(dateTime);
+
+    return '$date|$time';
+  }
+
+  static String _ordinal(int day) {
+    if (day >= 11 && day <= 13) {
+      return '${day}th';
+    }
+    switch (day % 10) {
+      case 1:
+        return '${day}st';
+      case 2:
+        return '${day}nd';
+      case 3:
+        return '${day}rd';
+      default:
+        return '${day}th';
+    }
+  }
+
   static List<List<DateTime?>> getWeeksInAMonth(List<int> args) {
     final int year = args[0];
     final int month = args[1];

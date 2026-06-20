@@ -26,12 +26,12 @@ class HomeFeedItem {
   HomeFeedItem({
     this.id,
     this.title,
-    this.contentTypeEnum,
-    this.statusEnum,
+    this.programCategory,
+    this.programStatus,
     this.hostId,
     this.hostProfileImageUrl,
     this.hostName,
-    this.showType,
+    this.programType,
     this.price,
     this.viewerCount,
     this.goingCount,
@@ -56,12 +56,12 @@ class HomeFeedItem {
     return HomeFeedItem(
       id: json['id'],
       title: json['title'],
-      contentTypeEnum: ProgramType.fromJson(json['content_type']),
-      statusEnum: ProgramStatus.fromJson(json['status']),
+      programCategory: ProgramCategory.fromJson(json['content_type']),
+      programStatus: ProgramStatus.fromJson(json['status']),
       hostId: json['host_id'],
       hostProfileImageUrl: json['host_profile_image_url'],
       hostName: json['host_name'],
-      showType: json['show_type'],
+      programType: ProgramType.fromJson(json['show_type']),
       price: json['price'],
       viewerCount: json['viewer_count'],
       goingCount: json['going_count'],
@@ -85,12 +85,72 @@ class HomeFeedItem {
     );
   }
 
+  HomeFeedItem copyWith({
+    String? id,
+    String? title,
+    ProgramCategory? programCategory,
+    ProgramStatus? programStatus,
+    String? hostId,
+    String? hostProfileImageUrl,
+    String? hostName,
+    ProgramType? programType,
+    double? price,
+    int? viewerCount,
+    int? goingCount,
+    String? coverUrl,
+    String? startedAt,
+    String? scheduledFor,
+    double? score,
+    bool? requesterFollowsHost,
+    bool? requesterIsGoing,
+    String? livestreamId,
+    int? coHostCount,
+    List<String>? avatarUrls,
+    String? showId,
+    String? showTitle,
+    String? showCoverUrl,
+    String? showCategory,
+    int? episodeNumber,
+    String? thumbnailUrl,
+  }) {
+    return HomeFeedItem(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      programCategory: programCategory ?? this.programCategory,
+      programStatus: programStatus ?? this.programStatus,
+      hostId: hostId ?? this.hostId,
+      hostProfileImageUrl:
+          hostProfileImageUrl ?? this.hostProfileImageUrl,
+      hostName: hostName ?? this.hostName,
+      programType: programType ?? this.programType,
+      price: price ?? this.price,
+      viewerCount: viewerCount ?? this.viewerCount,
+      goingCount: goingCount ?? this.goingCount,
+      coverUrl: coverUrl ?? this.coverUrl,
+      startedAt: startedAt ?? this.startedAt,
+      scheduledFor: scheduledFor ?? this.scheduledFor,
+      score: score ?? this.score,
+      requesterFollowsHost:
+          requesterFollowsHost ?? this.requesterFollowsHost,
+      requesterIsGoing:
+          requesterIsGoing ?? this.requesterIsGoing,
+      livestreamId: livestreamId ?? this.livestreamId,
+      coHostCount: coHostCount ?? this.coHostCount,
+      avatarUrls: avatarUrls ?? this.avatarUrls,
+      showId: showId ?? this.showId,
+      showTitle: showTitle ?? this.showTitle,
+      showCoverUrl: showCoverUrl ?? this.showCoverUrl,
+      showCategory: showCategory ?? this.showCategory,
+      episodeNumber: episodeNumber ?? this.episodeNumber,
+      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+    );
+  }
+
   final String? id,
       title,
       hostId,
       hostProfileImageUrl,
       hostName,
-      showType,
       coverUrl,
       startedAt,
       scheduledFor,
@@ -101,10 +161,9 @@ class HomeFeedItem {
       showCategory,
       thumbnailUrl;
 
-  final ProgramType? contentTypeEnum;
-  final ProgramStatus? statusEnum;
-
-
+  final ProgramType? programType;
+  final ProgramCategory? programCategory;
+  final ProgramStatus? programStatus;
   final double? price, score;
   final int? viewerCount, goingCount, coHostCount, episodeNumber;
   final bool? requesterFollowsHost, requesterIsGoing;
@@ -112,8 +171,8 @@ class HomeFeedItem {
 }
 
 enum ProgramType {
-  episode('episode'),
-  standalone('standalone');
+  free('free'),
+  paid('paid');
 
   const ProgramType(this.value);
   final String value;
@@ -121,7 +180,21 @@ enum ProgramType {
   static ProgramType fromJson(String? json) =>
       ProgramType.values.firstWhere(
         (ProgramType e) => e.value == json,
-        orElse: () => ProgramType.standalone,
+        orElse: () => ProgramType.free
+      );
+}
+
+enum ProgramCategory {
+  episode('episode'),
+  standalone('standalone');
+
+  const ProgramCategory(this.value);
+  final String value;
+
+  static ProgramCategory fromJson(String? json) =>
+      ProgramCategory.values.firstWhere(
+        (ProgramCategory e) => e.value == json,
+        orElse: () => ProgramCategory.standalone,
       );
 }
 

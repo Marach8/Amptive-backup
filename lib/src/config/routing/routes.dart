@@ -352,8 +352,8 @@ final GoRouter amptiveAppRouter = GoRouter(
             },
           ),
           GoRoute(
-              name: ATRoutes.liveShowDetailed,
-              path: ATRoutes.liveShowDetailed.addSlash,
+              name: ATRoutes.liveShowDetailedScreen,
+              path: ATRoutes.liveShowDetailedScreen.addSlash,
               pageBuilder: (_, GoRouterState state) =>
                   ATSlidingRouteTransition<void>(
                       beginOffset: const Offset(0.0, 1.0),
@@ -361,8 +361,8 @@ final GoRouter amptiveAppRouter = GoRouter(
                         homeFeedItem: state.extra as HomeFeedItem?,
                       ))),
           GoRoute(
-              name: ATRoutes.liveEventDetailed,
-              path: ATRoutes.liveEventDetailed.addSlash,
+              name: ATRoutes.liveEventDetailedScreen,
+              path: ATRoutes.liveEventDetailedScreen.addSlash,
               pageBuilder: (_, GoRouterState state) =>
                   ATSlidingRouteTransition<void>(
                     beginOffset: const Offset(0.0, 1.0),
