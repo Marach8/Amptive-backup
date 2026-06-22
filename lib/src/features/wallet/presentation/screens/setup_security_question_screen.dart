@@ -11,6 +11,7 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 
 import 'package:amptive/src/features/wallet/cubits/security_questions_cubit.dart';
 
@@ -251,7 +252,9 @@ class ATSecurityQuestionScreen extends StatelessWidget {
               final FlutterSecureStorageServiceImpl storage =
                   FlutterSecureStorageServiceImpl();
 
-              await storage.set('has_set_wallet_pin', 'true');
+              await storage.set(ATStrings.hasSetWalletPin, 'true');
+                await context.read<LocalUserDataCubit>().refreshWalletPinStatus();
+
 
 
               context.goNamed(ATRoutes.walletCreationAnimationScreen);
