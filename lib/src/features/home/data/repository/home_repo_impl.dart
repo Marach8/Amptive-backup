@@ -69,13 +69,13 @@ class HomeRepoImpl implements HomeRepo {
         queryParameters: <String, dynamic>{
           'page': page,
           'page_size': pageSize,
-          'refresh': false,
+          'refresh': refresh
         },
       );
 
       return Successful<HomeFeedResponseModel>(
         data: HomeFeedResponseModel.fromJson(
-            response.data as Map<String, dynamic>),
+            response.data),
       );
     } catch (e) {
       log('Get home feed error: $e');

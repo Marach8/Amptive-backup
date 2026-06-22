@@ -1,8 +1,7 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
@@ -26,18 +25,29 @@ class RenderHomeFeedItem extends StatelessWidget {
 
   final HomeFeedItem homeFeedItem;
 
-  //bool get _isLive => homeFeedItem.status?.toLowerCase() == 'live';
 
   @override
   Widget build(BuildContext context) {
-    final bool hasProfilePic =
-        (homeFeedItem.hostProfileImageUrl ?? '').isNotEmpty;
+    final String? userId = context
+      .read<LocalUserDataCubit>().currentUserData?.userId;
+
+    final String? hostName = homeFeedItem.hostId == userId ? 'You' 
+      : homeFeedItem.hostName;
+    final bool isLive = homeFeedItem.programStatus == ProgramStatus.live;
+    
+    final String description = getProgramActivityDescription(
+      programStatus: homeFeedItem.programStatus,
+      programType: homeFeedItem.programCategory,
+      episodeNumber: homeFeedItem.episodeNumber,
+      scheduledFor: homeFeedItem.scheduledFor,
+      startedAt: homeFeedItem.startedAt,
+    );
+    
     return Column(
       children: <Widget>[
         TileWithLeadingImage(
-          leadingImagePath: hasProfilePic
-              ? homeFeedItem.hostProfileImageUrl!
-              : ATImgStrings.jpeg3,
+          leadingImagePath: 
+            homeFeedItem.hostProfileImageUrl ?? ATImgStrings.noAvatarImage,
           trailingOnPressed: () async {
             final SelectedProgramAction? selectedOption =
                 await showProgramOptions(
@@ -47,76 +57,75 @@ class RenderHomeFeedItem extends StatelessWidget {
               targetUserId: homeFeedItem.hostId ?? '',
             );
           },
-          title: homeFeedItem.hostName ?? '',
-          subtitle: '',
-          //subtitle: _isLive ? 'started a live show' : 'scheduled a live show',
+          title: hostName ?? '',
+          subtitle: description,
         ),
-        const SizedBox(
-          height: 2,
-        ),
+        const SizedBox(height: 2),
         Container(
             height: 425,
             clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15)),
             child: Stack(
               children: <Widget>[
-                // ATImgLoader(
-                //   imgPath: homeFeedItem.contentType == 'standalone'
-                //       ? homeFeedItem.thumbnailUrl ?? ATImgStrings.jpeg2
-                //       : homeFeedItem.contentType == 'episode'
-                //           ? homeFeedItem.thumbnailUrl ??
-                //               homeFeedItem.showCoverUrl ??
-                //               ATImgStrings.jpeg2
-                //           : homeFeedItem.coverUrl ?? ATImgStrings.jpeg2,
-                //   boxFit: BoxFit.cover,
-                //   height: 425,
-                //   width: context.screenWidth,
-                // ),
+                Hero(
+                  tag: homeFeedItem.coverUrl
+                    ?? homeFeedItem.thumbnailUrl ?? '',
+                  child: ATImgLoader(
+                    imgPath: homeFeedItem.coverUrl
+                      ?? homeFeedItem.thumbnailUrl ?? '',
+                    boxFit: BoxFit.cover,
+                    height: 425,
+                    width: context.screenWidth,
+                  ),
+                ),
                 Container(
                   width: context.screenWidth,
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: <Color>[
-                          ATColors.transparent,
-                          ATColors.transparent,
-                          ATColors.transparent,
-                          ATColors.transparent,
-                          ATColors.containerGradientColorB
-                            .withValues(alpha: 0.5),
-                          ATColors.containerGradientColorB,
-                          ATColors.containerGradientColorB,
-                          ATColors.containerGradientColorB,
-                        ]),
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: <Color>[
+                        ATColors.transparent,
+                        ATColors.transparent,
+                        ATColors.transparent,
+                        ATColors.transparent,
+                        ATColors.containerGradientColorB
+                          .withValues(alpha: 0.5),
+                        ATColors.containerGradientColorB,
+                        ATColors.containerGradientColorB,
+                        ATColors.containerGradientColorB,
+                      ]),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       With2OthersWidget(
-                        coHostCount: homeFeedItem.coHostCount,
+                        coHostCount: homeFeedItem.cohosts?.length
                       ),
                       const Spacer(),
-                      // if (_isLive) const LiveIndicatorWithAnimatingDot(),
-                      // if (_isLive) const SizedBox(height: 10),
+                      if (isLive) ...<Widget>[
+                        const LiveIndicatorWithAnimatingDot(),
+                        const SizedBox(height: 10),
+                      ],
+
                       Text(
                         maxLines: 2,
                         homeFeedItem.title ?? '',
                         style: context.textTheme.displayMedium?.copyWith(
-                          fontSize: ATSizes.size24,
-                          fontWeight: ATFontWeights.w600,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
                           height: 1.2,
                         ),
                       ),
-                      const SizedBox(height: 12),
-                      // PeopleListeningWidget(
-                      //   viewerProfileUrls: homeFeedItem.avatarUrls,
-                      //   totalViewerCount: _isLive
-                      //       ? homeFeedItem.viewerCount
-                      //       : homeFeedItem.goingCount,
-                      // ),
+                      
+                      if((homeFeedItem.avatarUrls ?? <String>[]).isNotEmpty) 
+                      ...<Widget>[
+                        const SizedBox(height: 12),
+                        PeopleListeningOrGoing(item: homeFeedItem)
+                      ],
                       const SizedBox(height: 10),
                       PaidShowAndPlayBtnWidget(homeFeedItem: homeFeedItem),
                     ],
@@ -174,9 +183,7 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
             ],
           );
         }),
-        const SizedBox(
-          height: 2,
-        ),
+        const SizedBox(height: 2),
         Container(
             height: 425,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
@@ -267,4 +274,48 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
       ],
     );
   }
+}
+
+
+
+String getProgramActivityDescription({
+  ProgramCategory? programType,
+  ProgramStatus? programStatus,
+  int? episodeNumber,
+  String? scheduledFor,
+  String? startedAt,
+}) {
+  return switch ((programType, programStatus)) {
+    (ProgramCategory.standalone, ProgramStatus.draft) =>
+      'created a draft event',
+
+    (ProgramCategory.standalone, ProgramStatus.scheduled) =>
+      'scheduled an event (${ATHelperFuncs.formatOrdinalDateTime(scheduledFor)})',
+
+    (ProgramCategory.standalone, ProgramStatus.live) =>
+      'started a live event (${ATHelperFuncs.formatOrdinalDateTime(startedAt)})',
+
+    (ProgramCategory.standalone, ProgramStatus.ended) =>
+      'ended an event',
+
+    (ProgramCategory.standalone, ProgramStatus.cancelled) =>
+      'cancelled an event',
+
+    (ProgramCategory.episode, ProgramStatus.draft) =>
+      'created a draft show (episode ${episodeNumber ?? ''})',
+
+    (ProgramCategory.episode, ProgramStatus.scheduled) =>
+      'scheduled a show (episode ${episodeNumber ?? ''} - ${ATHelperFuncs.formatOrdinalDateTime(scheduledFor)})',
+
+    (ProgramCategory.episode, ProgramStatus.live) =>
+      'started a live show (episode ${episodeNumber ?? ''} - ${ATHelperFuncs.formatOrdinalDateTime(startedAt)})',
+
+    (ProgramCategory.episode, ProgramStatus.ended) =>
+      'ended show (episode ${episodeNumber ?? ''})',
+
+    (ProgramCategory.episode, ProgramStatus.cancelled) =>
+      'cancelled show (episode ${episodeNumber ?? ''})',
+
+    _ => '',
+  };
 }

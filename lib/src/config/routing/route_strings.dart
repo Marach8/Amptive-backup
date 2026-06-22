@@ -35,8 +35,8 @@ class ATRoutes {
 
   //MAIN APPLICATION
   static const String dashboard = "main_app_shell";
-  static const String liveShowDetailed = "show_detailed_screen";
-  static const String liveEventDetailed = "event_detailed_screen";
+  static const String liveShowDetailedScreen = "show_detailed_screen";
+  static const String liveEventDetailedScreen = "event_detailed_screen";
   static const String scheduledProgramsScreen =
       'scheduled_events_or_shows';
   static const String subscribedProgramsScreen =
