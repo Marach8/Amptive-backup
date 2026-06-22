@@ -4,7 +4,6 @@ import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:go_router/go_router.dart';
 import '../../wallet_export.dart';
 
@@ -21,16 +20,9 @@ class _ATWalletOnboardScreenState extends State<ATWalletOnboardScreen> {
   @override
   void initState() {
     super.initState();
-    _checkWalletSetup();
   }
 
-  Future<void> _checkWalletSetup() async {
-    final storage = FlutterSecureStorageServiceImpl();
-    final hasPin = await storage.get('has_set_wallet_pin');
-    if (hasPin == 'true' && mounted) {
-      context.goNamed(ATRoutes.walletScreen);
-    }
-  }
+ 
 
   @override
   Widget build(_) {

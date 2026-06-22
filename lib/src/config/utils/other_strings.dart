@@ -23,6 +23,7 @@ class ATStrings {
   static const String dob = 'Date of Birth';
   static const String name = 'Name';
   static const String you = 'You';
+  static const String hasSetWalletPin = 'has_set_wallet_pin';
   static const String isExistingUser = 'is_existing_user';
   static const String followerCount = 'followers count';
   static const String followingCount = 'following count';

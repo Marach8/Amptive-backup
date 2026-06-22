@@ -41,90 +41,98 @@ class HomeTabView extends StatelessWidget {
           floatHeaderSlivers: true,
           key: nestedKey,
           headerSliverBuilder: (_, __) => <Widget>[
-            SliverAppBar(
-              floating: true,
-              snap: true,
-              leadingWidth: 150,
-              leading: const Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: ATHomeDropDown(
-                  offset: Offset(0, 50),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      ATImgLoader(
-                          imgPath: ATImgStrings.amptiveNameLogo,
-                          height: 21,
-                          width: 86),
-                      SizedBox(width: 4.0),
-                      Icon(
-                        Icons.keyboard_arrow_down_outlined,
-                        size: 25,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              actions: <Widget>[
-                GestureDetector(
-                    onTap: () {
-                     context.pushNamed(ATRoutes.walletScreen);
-                     // context.pushNamed(ATRoutes.WALLET_ONBOARDING);
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        const ATImgLoader(
-                          imgPath: ATImgStrings.walletIcon,
-                          height: 30,
-                          width: 30,
-                        ),
-                        Positioned(
-                            top: 5,
-                            right: 0,
-                            child: ATCircleAvatar(
-                                diameter: 8, color: ATColors.hexECO404))
-                      ],
-                    )),
-                const SizedBox(width: 24),
-                GestureDetector(
-                    // onTap: (){
-                    //   context.pushReplacementNamed(
-                    //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
-                    //     extra: GoLiveUserType.audience
-                    //   );
-                    // },
-                    onTap: () =>
-                        context.pushNamed(ATRoutes.mainProfileScreen),
-                    //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: BlocBuilder<LocalUserDataCubit,
-                              ATAppState<ProfileData>>(
-                          builder: (_, ATAppState<ProfileData> state) {
-                        final ProfileData? userData = context
-                            .read<LocalUserDataCubit>()
-                            .currentUserData;
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: ATImgLoader(
-                            imgPath: userData?.profilePhoto
-                              ?? ATImgStrings.noAvatarImage,
-                            height: 30, width: 30,
-                            boxFit: BoxFit.cover,
+                SliverAppBar(
+                  floating: true,
+                  snap: true,
+                  leadingWidth: 150,
+                  leading: const Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: ATHomeDropDown(
+                      offset: Offset(0, 50),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ATImgLoader(
+                              imgPath: ATImgStrings.amptiveNameLogo,
+                              height: 21,
+                              width: 86),
+                          SizedBox(width: 4.0),
+                          Icon(
+                            Icons.keyboard_arrow_down_outlined,
+                            size: 25,
                           ),
-                        );
-                      }),
-                    )),
+                        ],
+                      ),
+                    ),
+                  ),
+                  actions: <Widget>[
+                    GestureDetector(
+                        onTap: () {
+                          final bool hasSetWalletPin = context
+                              .read<LocalUserDataCubit>()
+                              .hasSetWalletPin; 
+                              if(hasSetWalletPin == false){
+                               context.pushNamed(ATRoutes.WALLET_ONBOARDING);
+                              } else {
+                          context.pushNamed(ATRoutes.walletScreen);
+                          // 
+                        }
+                        },
+                        child: Stack(
+                          children: <Widget>[
+                            const ATImgLoader(
+                              imgPath: ATImgStrings.walletIcon,
+                              height: 30,
+                              width: 30,
+                            ),
+                            Positioned(
+                                top: 5,
+                                right: 0,
+                                child: ATCircleAvatar(
+                                    diameter: 8, color: ATColors.hexECO404))
+                          ],
+                        )),
+                    const SizedBox(width: 24),
+                    GestureDetector(
+                        // onTap: (){
+                        //   context.pushReplacementNamed(
+                        //     ATRoutes.MAIN_GO_LIVE_PROGRAM,
+                        //     extra: GoLiveUserType.audience
+                        //   );
+                        // },
+                        onTap: () =>
+                            context.pushNamed(ATRoutes.mainProfileScreen),
+                        //onTap: () => context.pushNamed(ATRoutes.USER_PROFILE_SCREEN),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 15),
+                          child: BlocBuilder<LocalUserDataCubit,
+                                  ATAppState<ProfileData>>(
+                              builder: (_, ATAppState<ProfileData> state) {
+                            final ProfileData? userData = context
+                                .read<LocalUserDataCubit>()
+                                .currentUserData;
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: ATImgLoader(
+                                imgPath: userData?.profilePhoto ??
+                                    ATImgStrings.noAvatarImage,
+                                height: 30,
+                                width: 30,
+                                boxFit: BoxFit.cover,
+                              ),
+                            );
+                          }),
+                        )),
+                  ],
+                ),
+                const SliverToBoxAdapter(child: RowOfLiveUsers()),
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14.0),
+                    child: ATDivider(),
+                  ),
+                )
               ],
-            ),
-            const SliverToBoxAdapter(child: RowOfLiveUsers()),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 14.0),
-                child: ATDivider(),
-              ),
-            )
-          ],
           body: BlocConsumer<HomeFeedCubit, ATAppState<HomeFeedResponseModel>>(
               listener: (_, ATAppState<HomeFeedResponseModel> state) {
             if (state is FailureState<HomeFeedResponseModel>) {

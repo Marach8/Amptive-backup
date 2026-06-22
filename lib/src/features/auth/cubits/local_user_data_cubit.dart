@@ -15,6 +15,8 @@ class LocalUserDataCubit extends Cubit<ATAppState<ProfileData>> {
         super(const InitialState<ProfileData>());
 
   final ATLocalStorageService localStorage;
+   bool _hasSetWalletPin = false;
+  bool get hasSetWalletPin => _hasSetWalletPin;
 
   ProfileData? get currentUserData => switch (state) {
     SuccessState<ProfileData>(:final ProfileData? newData) => newData,
@@ -33,6 +35,8 @@ class LocalUserDataCubit extends Cubit<ATAppState<ProfileData>> {
 
       final ProfileData? userData = json == null ? null
         : ProfileData.fromLocalStorageJson(json);
+         final String? walletPinValue = await localStorage.get(ATStrings.hasSetWalletPin);
+      _hasSetWalletPin = walletPinValue == 'true';
 
       emit(SuccessState<ProfileData>(newData: userData));
     } catch (e) {
@@ -54,4 +58,9 @@ class LocalUserDataCubit extends Cubit<ATAppState<ProfileData>> {
       ));
     }
   }
+   Future<void> refreshWalletPinStatus() async {
+    final String? value = await localStorage.get(ATStrings.hasSetWalletPin);
+    _hasSetWalletPin = value == 'true';
+    emit(state);
+}
 }
