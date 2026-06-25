@@ -7,6 +7,7 @@ import 'package:amptive/src/features/accounts/presentation/screens/update_phone_
 import 'package:amptive/src/features/accounts/presentation/screens/update_name_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_username_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_dob_screen.dart';
+import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/create_new_password_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/forgot_password_email_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/phone_login_screen.dart';
@@ -37,6 +38,7 @@ import 'package:amptive/src/features/home/presentation/screens/schedule_detailed
 import 'package:amptive/src/features/home/presentation/screens/subscribed_screen.dart';
 import 'package:amptive/src/features/dashboard.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
+import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_bio_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_name_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_username_screen.dart';
@@ -470,7 +472,17 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
               name: ATRoutes.editProfile,
               path: ATRoutes.editProfile.addSlash,
-              builder: (_, __) => const EditProfileScreen(),
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                child: MultiBlocProvider(
+                  providers: <SingleChildWidget>[
+                    BlocProvider<RemoteUserDataCubit>(
+                      create: (_) => RemoteUserDataCubit()),
+                    BlocProvider<UploadImageCubit>(
+                      create: (_) => UploadImageCubit())
+                  ],
+                  child: const EditProfileLandingScreen(),
+                ),
+              ),
               routes: <RouteBase>[
                 GoRoute(
                     name: ATRoutes.imageCropperScreen,
