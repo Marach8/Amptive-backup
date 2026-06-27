@@ -3,6 +3,7 @@ import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/data/models/response/going_status.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/home/data/models/response/live_users_response_model.dart';
+import 'package:amptive/src/features/home/data/models/response/whispers_response_model.dart';
 
 abstract class HomeRepo {
   Future<ApiResponse<FollowingStatus>> unFollowTargetUser({
@@ -46,7 +47,7 @@ abstract class HomeRepo {
     required String ticket,
   });
 
-  Future<ApiResponse<dynamic>> fetchLivestreamChat({
+  Future<ApiResponse<WhispersResponseModel>> fetchWhispers({
     required String livestreamId,
     int? limit,
     String? beforeId,

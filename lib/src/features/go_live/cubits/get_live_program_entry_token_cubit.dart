@@ -7,7 +7,10 @@ typedef LiveProgramEntryToken = ({
   String? roomEntryToken,
   String? roomUrl,
   String? streamId,
-  String? roomParticipantId
+  String? roomParticipantId,
+  bool? allowHandRaise,
+  bool? allowWhispers,
+  bool? allowAudienceMic
 });
 
 class GetLiveProgramEntryTokenCubit extends 

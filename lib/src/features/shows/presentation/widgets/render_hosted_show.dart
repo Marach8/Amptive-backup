@@ -77,7 +77,7 @@ class RenderHostedShow extends StatelessWidget {
                         ),
                         Flexible(
                           child: Text(
-                            ATHelperFuncs.formatDate(
+                            ATHelperFuncs.formatDateOrTime(
                                 hostedShow.createdAt ?? ''),
                             style: context.textTheme.titleSmall?.copyWith(
                               color: ATColors.hexA8A8A8,

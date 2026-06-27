@@ -25,18 +25,18 @@ class WhispersResponseModel {
 
 class WhispersData {
   const WhispersData({
-    this.messages,
+    this.whispers,
   });
 
   factory WhispersData.fromJson(Map<String, dynamic> json) {
     return WhispersData(
-      messages: (json['messages'] as List<dynamic>?)
+      whispers: (json['messages'] as List<dynamic>?)
           ?.map((dynamic e) => Whisper.fromJson(e))
           .toList(),
     );
   }
 
-  final List<Whisper>? messages;
+  final List<Whisper>? whispers;
 }
 
 class Whisper {

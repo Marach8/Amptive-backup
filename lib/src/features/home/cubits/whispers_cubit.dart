@@ -1,12 +1,13 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo_impl.dart';
+import 'package:amptive/src/features/home/data/models/response/whispers_response_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LiveWhispersCubit extends Cubit<ATAppState<dynamic>> {
+class LiveWhispersCubit extends Cubit<ATAppState<List<Whisper>>> {
   LiveWhispersCubit({HomeRepo? mockHomeRepo})
       : homeRepo = mockHomeRepo ?? HomeRepoImpl(),
-        super(const InitialState<dynamic>());
+        super(const InitialState<List<Whisper>>());
 
   final HomeRepo homeRepo;
 
@@ -15,25 +16,38 @@ class LiveWhispersCubit extends Cubit<ATAppState<dynamic>> {
     int? limit,
     String? beforeId,
   }) async {
-    emit(LoadingState<dynamic>());
+    emit(const LoadingState<List<Whisper>>());
 
     try {
-      final ApiResponse<dynamic> response = await homeRepo.fetchLivestreamChat(
+      final ApiResponse<WhispersResponseModel> response = 
+      await homeRepo.fetchWhispers(
         livestreamId: livestreamId,
+        limit: limit,
+        beforeId: beforeId,
       );
 
-      response.when(
-        successful: (Successful<dynamic> data) {
-          emit(SuccessState<dynamic>(newData: data.data));
+      await response.when(
+        successful: (Successful<WhispersResponseModel> data) {
+          if(isClosed) return;
+          emit(
+            SuccessState<List<Whisper>>(
+              newData: data.data?.data?.whispers
+            ),
+          );
         },
         unSuccessful: (Unsuccessful<dynamic> error) {
-          emit(FailureState<dynamic>(
-            error.error.message,
-          ));
+          if(isClosed) return;
+          emit(
+            FailureState<List<Whisper>>(
+              error.error.message,
+            ),
+          );
         },
       );
-    } catch (e) {
-      emit(FailureState<dynamic>('Unable to get chat: $e'));
+    } catch (_) {
+      if(isClosed) return;
+      emit(const FailureState<List<Whisper>>(
+        'Unable to get chat:'));
     }
   }
 }

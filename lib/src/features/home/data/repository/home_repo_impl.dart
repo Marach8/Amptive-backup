@@ -7,6 +7,7 @@ import 'package:amptive/src/config/services/network_service/dio_network_service_
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/data/models/response/going_status.dart';
+import 'package:amptive/src/features/home/data/models/response/whispers_response_model.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
@@ -206,7 +207,7 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<ApiResponse<dynamic>> fetchLivestreamChat({
+  Future<ApiResponse<WhispersResponseModel>> fetchWhispers({
     required String livestreamId,
     int? limit,
     String? beforeId,
@@ -222,10 +223,11 @@ class HomeRepoImpl implements HomeRepo {
         },
       );
 
-      return Successful<dynamic>(data: response.data);
+      return Successful<WhispersResponseModel>(
+        data: WhispersResponseModel.fromJson(response.data));
     } catch (e) {
       log('Fetch livestream chat error: $e');
-      return Unsuccessful<dynamic>(
+      return Unsuccessful<WhispersResponseModel>(
         error: ATException.resolveException(e),
       );
     }
