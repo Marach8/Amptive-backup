@@ -409,7 +409,7 @@ class ATStrings {
       'Are you sure you want to end your live show?';
 
   static const String TECHNOLOGY = 'Technology';
-  static const String GOT_TICKET_ID = 'Got a Ticket ID? (coming soon)';
+  static const String gotATicketID = 'Got a Ticket ID?';
   static const String ADDED_2_CALL = 'Added to calender';
   static const String REMOVED_4RM_CAL = 'Removed from calender';
   static const String VIEW = 'View';

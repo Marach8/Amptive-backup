@@ -1,3 +1,5 @@
+import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
+import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
@@ -23,7 +25,8 @@ import '../../../../shared/row_of_people_listening_widget.dart';
 import '../widgets/whispers_list.dart';
 import '../../data/models/response/home_feed_response_model.dart';
 
-class LiveEventDetailedScreen extends StatelessWidget {
+
+class LiveEventDetailedScreen extends StatefulWidget {
   const LiveEventDetailedScreen({
     super.key,
     this.homeFeedItem,
@@ -32,9 +35,32 @@ class LiveEventDetailedScreen extends StatelessWidget {
   final HomeFeedItem? homeFeedItem;
 
   @override
+  State<LiveEventDetailedScreen> createState() => _LiveEventDetailedScreenState();
+}
+
+class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
+  final ValueNotifier<bool> _canJoinNotifier = ValueNotifier<bool>(false);
+  @override 
+  void initState(){
+    super.initState();
+    _canJoinNotifier.value = 
+      widget.homeFeedItem?.programType == ProgramType.free;
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_){
+        if(!mounted) return;
+        context.read<LiveWhispersCubit>().fetchWhispers(
+          livestreamId: widget.homeFeedItem?.livestreamId ?? '');
+      }
+    );
+  }
+  @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight =
         kToolbarHeight + MediaQuery.paddingOf(context).top;
+    
+    final bool isPaidEvent = widget.homeFeedItem?.programType
+      == ProgramType.paid;
     return ATAnnotatedRegion(
       statusBarColor: ATColors.transparent,
       child: Scaffold(
@@ -45,8 +71,8 @@ class LiveEventDetailedScreen extends StatelessWidget {
                 imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
                 child: ATImgLoader(
                   boxFit: BoxFit.fill,
-                  imgPath: homeFeedItem?.coverUrl 
-                    ?? homeFeedItem?.thumbnailUrl ?? '',
+                  imgPath: widget.homeFeedItem?.coverUrl 
+                    ?? widget.homeFeedItem?.thumbnailUrl ?? '',
                 ),
               ),
             ),
@@ -70,6 +96,9 @@ class LiveEventDetailedScreen extends StatelessWidget {
                       )
                     ],
                     body: SingleChildScrollView(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.viewInsetsOf(context).bottom,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -82,13 +111,13 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                   alignment: Alignment.center,
                                   children: <Widget>[
                                     Hero(
-                                      tag: homeFeedItem?.coverUrl
-                                        ?? homeFeedItem?.thumbnailUrl ?? '',
+                                      tag: widget.homeFeedItem?.coverUrl
+                                        ?? widget.homeFeedItem?.thumbnailUrl ?? '',
                                       child: ClipRRect(
                                         borderRadius: BorderRadiusGeometry.circular(16),
                                         child: ATImgLoader(
-                                          imgPath: homeFeedItem?.coverUrl
-                                            ?? homeFeedItem?.thumbnailUrl ?? '',
+                                          imgPath: widget.homeFeedItem?.coverUrl
+                                            ?? widget.homeFeedItem?.thumbnailUrl ?? '',
                                           boxFit: BoxFit.cover,
                                           height: 360,
                                           width: context.screenWidth,
@@ -112,7 +141,7 @@ class LiveEventDetailedScreen extends StatelessWidget {
 
                                 Text(
                                   maxLines: 2,
-                                  homeFeedItem?.title ?? '',
+                                  widget.homeFeedItem?.title ?? '',
                                   overflow: TextOverflow.clip,
                                   style: context.textTheme.displayMedium
                                       ?.copyWith(
@@ -153,15 +182,15 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                 TileWithLeadingImage(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 9),
-                                  title: homeFeedItem?.hostName ?? '',
+                                  title: widget.homeFeedItem?.hostName ?? '',
                                   subtitle: 'Host',
                                   diameter: 35,
                                   leadingImagePath:
-                                      (homeFeedItem?.hostProfileImageUrl ?? '').isNotEmpty ? 
-                                      homeFeedItem!.hostProfileImageUrl! :
+                                      (widget.homeFeedItem?.hostProfileImageUrl ?? '').isNotEmpty ? 
+                                      widget.homeFeedItem!.hostProfileImageUrl! :
                                         ATImgStrings.noAvatarImage,
                                 ),
-                                ...(homeFeedItem?.cohosts ?? <User>[]).map(
+                                ...(widget.homeFeedItem?.cohosts ?? <User>[]).map(
                                   (User cohost) => TileWithLeadingImage(
                                     padding: const EdgeInsets.symmetric(vertical: 9),
                                     title: cohost.username ?? '',
@@ -174,7 +203,7 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                 const SizedBox(height: 30),
 
                                 Text(
-                                  '${homeFeedItem?.viewerCount ?? 0} Listening',
+                                  '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
                                   style: context.textTheme.bodySmall
                                       ?.copyWith(fontSize: ATSizes.size17),
                                 ),
@@ -183,11 +212,11 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                       ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 const SizedBox(height: 10),
-                                if((homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
+                                if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
                                   ...<Widget>[
                                     PeopleListeningWithNumberStacked(
-                                      images: homeFeedItem!.avatarUrls!,
-                                      noOfListeners: homeFeedItem?.viewerCount ?? 0,
+                                      images: widget.homeFeedItem!.avatarUrls!,
+                                      noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
                                     ),
                                     const SizedBox(height: 20),
                                   ],
@@ -202,13 +231,13 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                 Text(
                                   'About Event',
                                   style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: ATSizes.size17),
+                                      ?.copyWith(fontSize: 17),
                                 ),
                                 Divider(
                                   color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 ReadMoreText(
-                                  homeFeedItem?.title ?? '',
+                                  widget.homeFeedItem?.title ?? '',
                                   trimMode: TrimMode.Length,
                                   trimExpandedText: ATStrings.showLess,
                                   trimCollapsedText: ATStrings.showMore,
@@ -225,7 +254,7 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                 Text(
                                   ATStrings.whispers,
                                   style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: ATSizes.size17),
+                                      ?.copyWith(fontSize: 17),
                                 ),
                                 Divider(
                                   color:
@@ -234,45 +263,66 @@ class LiveEventDetailedScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const ATWhispersWidget(),
+                          const WhispersWidget(),
                           const SizedBox(height: 30),
-                          Padding(
+                          if(isPaidEvent)Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 15),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  ATStrings.GOT_TICKET_ID,
+                                  ATStrings.gotATicketID,
                                   style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: ATSizes.size17),
+                                      ?.copyWith(fontSize: 17),
                                 ),
                                 Divider(
                                   color:
                                       ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 const SizedBox(height: 5),
-                                ATTextFormField(
-                                    controller: TextEditingController(),
-                                    hintText: 'Enter your Ticked ID',
-                                    maxLines: 1,
-                                    prefixIcon: const SizedBox(
-                                      width: 15,
-                                    ),
-                                    suffixIcon: const Align(
-                                      alignment: Alignment.center,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 15),
-                                        child: ATLoadingIndicator(
-                                          size: 18,
-                                        ),
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(14),
-                                        borderSide: BorderSide(
-                                            color: ATColors.transparent))),
+                                BlocConsumer<ValidateTicketCubit, ATAppState<dynamic>>(
+                                  listener: (_, ATAppState<dynamic> state){
+                                    if(state is SuccessState<dynamic>){
+                                      _canJoinNotifier.value = true;
+                                    }
+                                    else if (state is FailureState<dynamic>){
+                                      showAppNotification2(
+                                        context: context,
+                                        text: state.message,
+                                        type: NotificationType.failure,
+                                      );
+                                    }
+                                  },
+                                  builder: (_, ATAppState<dynamic> state) {
+                                    final bool isLoading = state is LoadingState<dynamic>;
+                                    return ATTextFormField(
+                                        hintText: 'Enter your Ticked ID',
+                                        maxLines: 1,
+                                        enabled: !isLoading,
+                                        prefixIcon: const SizedBox( width: 15),
+                                        suffixIcon: isLoading ? const Align(
+                                          alignment: Alignment.center,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(right: 15),
+                                            child: ATLoadingIndicator(size: 18),
+                                          ),
+                                        ) : const SizedBox.shrink(),
+                                        onFieldSubmitted: (String text){
+                                          context.read<ValidateTicketCubit>().validateTicket(
+                                            eventId: widget.homeFeedItem?.id ?? '',
+                                            ticket: text.trim(),
+                                          );
+                                        },
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(14),
+                                          borderSide: BorderSide(
+                                            color: ATColors.transparent
+                                        )
+                                      )
+                                    );
+                                  }
+                                ),
                                 const SizedBox(height: 10),
                                 ReadMoreText(
                                   'If you already paid for this event on our website, you should have received a Ticket ID. Kindly enter your Ticket Id in the input field about to access the event...',
@@ -285,14 +335,14 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                   style: TextStyle(
                                     color:
                                         ATColors.white.withValues(alpha: 0.6),
-                                    fontSize: ATSizes.size14,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                const SizedBox(height: 150),
                               ],
                             ),
                           ),
+                          const SizedBox(height: 250,),
                         ],
                       ),
                     ),
@@ -304,28 +354,29 @@ class LiveEventDetailedScreen extends StatelessWidget {
         ),
         
         resizeToAvoidBottomInset: false,
-        bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
+        bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit,
+          ATAppState<LiveProgramEntryToken>>(
           listener: (_, ATAppState<LiveProgramEntryToken> state)async{
             if(state is SuccessState<LiveProgramEntryToken>){
               final ProfileData? userData = context
                 .read<LocalUserDataCubit>().currentUserData;
               final String? userId = userData?.userId;
               final bool hasTestedMic = userData?.hasTestedMic == true;
-              final bool isHost = userId == homeFeedItem?.hostId;
+              final bool isHost = userId == widget.homeFeedItem?.hostId;
             
               final LiveProgramData liveProgramData = LiveProgramData(
                 roomEntryToken: state.newData?.roomEntryToken ?? '',
                 roomUrl: state.newData?.roomUrl ?? '',
                 streamId: state.newData?.streamId ?? '',
                 roomParticipantId: state.newData?.roomParticipantId ?? '',
-                programId: homeFeedItem?.id ?? '',
-                coverUrl: homeFeedItem?.coverUrl
-                  ?? homeFeedItem?.thumbnailUrl ?? '',
+                programId: widget.homeFeedItem?.id ?? '',
+                coverUrl: widget.homeFeedItem?.coverUrl
+                  ?? widget.homeFeedItem?.thumbnailUrl ?? '',
                 role: isHost
                   ? ParticipantRole.host
                   : ParticipantRole.audience,
                 community: Community(name: 'Test Community'),
-                programTitle: homeFeedItem?.title ?? '',
+                programTitle: widget.homeFeedItem?.title ?? '',
                 programDesc: 'New program'
               );
               
@@ -352,47 +403,59 @@ class LiveEventDetailedScreen extends StatelessWidget {
             }
           },
           builder: (BuildContext ctx, ATAppState<LiveProgramEntryToken> state) {
-            final bool isPaid = homeFeedItem?.programType == ProgramType.paid;
-            return ATBlurredBgBtn(
-              onPressed: (){
-                ctx.read<GetLiveProgramEntryTokenCubit>()
-                .getLiveProgramEntryToken(
-                  homeFeedItem?.livestreamId ?? '',
-                );
-              },
-              isLoading: state is LoadingState<LiveProgramEntryToken>,
-              bgColor: ATColors.white,
-              fgColor: ATColors.black,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  if(isPaid) ...<Widget>[
+            //final bool isPaid = widget.homeFeedItem?.programType == ProgramType.paid;
+            return ValueListenableBuilder<bool>(
+              valueListenable: _canJoinNotifier,
+              builder: (_, bool canJoin, __) {
+                final bool isPaid = canJoin == false;
+                return ATBlurredBgBtn(
+                  onPressed: (){
+                    if(canJoin){
+                      ctx.read<GetLiveProgramEntryTokenCubit>()
+                      .getLiveProgramEntryToken(
+                        widget.homeFeedItem?.livestreamId ?? '',
+                      );
+                    }
+                    else{
+                      //From here, redirect to payment flow. when you come back,
+                      //set the "canJoin" notifier to true.
+                    }
+                  },
+                  isLoading: state is LoadingState<LiveProgramEntryToken>,
+                  bgColor: ATColors.white,
+                  fgColor: ATColors.black,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      if(isPaid) ...<Widget>[
+                          Text(
+                          ATStrings.pay,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: ATColors.hex0D0D0D,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        CircleAvatar(
+                          radius: 2.5,
+                          backgroundColor: ATColors.hex0D0D0D,
+                        ),
+                        const SizedBox(width: 5),
+                      ],
+                        
                       Text(
-                      ATStrings.pay,
-                      style: TextStyle(
-                        fontSize: ATSizes.size16,
-                        fontWeight: ATFontWeights.w600,
-                        color: ATColors.hex0D0D0D,
+                        isPaid ? '${ATStrings.nairaText}${widget.homeFeedItem?.price}' : 'Join live event',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: ATColors.hex0D0D0D,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    CircleAvatar(
-                      radius: 2.5,
-                      backgroundColor: ATColors.hex0D0D0D,
-                    ),
-                    const SizedBox(width: 5),
-                  ],
-        
-                  Text(
-                    isPaid ? '${ATStrings.nairaText}${homeFeedItem?.price}' : 'Join live event',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: ATFontWeights.w600,
-                      color: ATColors.hex0D0D0D,
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              }
             );
           }
         ),

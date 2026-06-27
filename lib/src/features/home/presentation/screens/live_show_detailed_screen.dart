@@ -235,7 +235,7 @@ class LiveShowDetailedScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const ATWhispersWidget(),
+                          const WhispersWidget(),
                           const SizedBox(height: 130),
                         ],
                       ),
@@ -315,7 +315,7 @@ class LiveShowDetailedScreen extends StatelessWidget {
                       ATStrings.subscribe,
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: ATFontWeights.w600,
+                        fontWeight: FontWeight.w600,
                         color: ATColors.hex0D0D0D,
                       ),
                     ),

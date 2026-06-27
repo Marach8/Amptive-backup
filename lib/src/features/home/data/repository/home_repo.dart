@@ -40,4 +40,15 @@ abstract class HomeRepo {
     required String contentId,
     required GoingType type,
   });
+
+  Future<ApiResponse<dynamic>> validateTicket({
+    required String eventId,
+    required String ticket,
+  });
+
+  Future<ApiResponse<dynamic>> fetchLivestreamChat({
+    required String livestreamId,
+    int? limit,
+    String? beforeId,
+  });
 }

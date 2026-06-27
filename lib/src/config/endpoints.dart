@@ -37,6 +37,7 @@ class ATEndpoints {
   static const String tags = '/api/v1/tags/';
   static const String createHashtag = '${tags}hashtags';
   static const String myself = '/api/v1/users/me';
+  static const String eventTicket = '/api/v1/tickets/events';
   static const String trendingHashtags = '/api/v1/tags/trending';
   static const String updateEmailAndPhone = '/api/v1/users/me/contact';
   static const String verifyEmailOrPhoneOtp = '/api/v1/users/me/verify-otp';

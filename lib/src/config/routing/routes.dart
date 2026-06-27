@@ -32,6 +32,8 @@ import 'package:amptive/src/features/events/presentation/screens/edit_event_form
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
+import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
@@ -389,6 +391,12 @@ final GoRouter amptiveAppRouter = GoRouter(
                     ),
                     BlocProvider<BlurredHeaderCubit>(
                       create: (_) => BlurredHeaderCubit(),
+                    ),
+                    BlocProvider<ValidateTicketCubit>(
+                      create: (_) => ValidateTicketCubit()
+                    ),
+                    BlocProvider<LiveWhispersCubit>(
+                      create: (_) => LiveWhispersCubit(),
                     )
                   ],
                   child: LiveEventDetailedScreen(

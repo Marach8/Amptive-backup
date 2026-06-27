@@ -41,12 +41,13 @@ class ATTextFormField extends StatelessWidget {
     this.filled,
     this.readOnly,
     this.onTap,
+    this.onFieldSubmitted,
     this.onTapOutside,
     this.autoValidateMode,
   });
 
   final TextEditingController? controller;
-  final void Function(String)? onChanged;
+  final void Function(String)? onChanged, onFieldSubmitted;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
@@ -94,6 +95,7 @@ class ATTextFormField extends StatelessWidget {
       buildCounter: buildCounter,
       textInputAction: textInputAction,
       onSaved: onSaved,
+      onFieldSubmitted: onFieldSubmitted,
       readOnly: readOnly ?? false,
       cursorColor:
           disableBlueBorder ?? false ? ATColors.white : ATColors.hex307FE2,

@@ -182,4 +182,52 @@ class HomeRepoImpl implements HomeRepo {
       );
     }
   }
+
+  @override
+  Future<ApiResponse<dynamic>> validateTicket({
+    required String eventId,
+    required String ticket,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        '${ATEndpoints.eventTicket}/$eventId/tickets/validate',
+        queryParameters: <String, dynamic>{
+          'ticket_code': ticket,
+        },
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Validate tickets error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> fetchLivestreamChat({
+    required String livestreamId,
+    int? limit,
+    String? beforeId,
+  }) async {
+    try {
+      final String endpoint = '${ATEndpoints.livestreams}$livestreamId/chat';
+
+      final Response<dynamic> response = await networkService.get(
+        endpoint,
+        queryParameters: <String, dynamic>{
+          if(limit != null)'limit': limit,
+          if(beforeId != null)'before_id': beforeId,
+        },
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Fetch livestream chat error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 }
