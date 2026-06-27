@@ -105,6 +105,8 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
     _messageQueue.clear();
 
     for (final Map<String, dynamic> msg in snapshot) {
+      final Object? ackId = msg['_ack_id'];
+      if (ackId is String && _pendingAcks.containsKey(ackId)) continue;
       _sendWithAckTracking(msg, jsonEncode(msg));
     }
   }
@@ -408,12 +410,6 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
       } catch (_) {
         _enqueue(entry.data);
       }
-      entry.timer = Timer(
-        Duration(milliseconds: _ackTimeoutMs),
-        () => _retryAck(ackId),
-      );
-    } else {
-      _enqueue(entry.data);
       entry.timer = Timer(
         Duration(milliseconds: _ackTimeoutMs),
         () => _retryAck(ackId),
