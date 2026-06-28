@@ -261,6 +261,10 @@ class LiveShowDetailedScreen extends StatelessWidget {
                 roomEntryToken: state.newData?.roomEntryToken ?? '',
                 roomUrl: state.newData?.roomUrl ?? '',
                 streamId: state.newData?.streamId ?? '',
+                allowAudienceMic: state.newData?.allowAudienceMic ?? false,
+                allowComments: state.newData?.allowComments ?? false,
+                allowHandRaise: state.newData?.allowHandRaise ?? false,
+                allowWhispers: state.newData?.allowWhispers ?? false,
                 roomParticipantId: state.newData?.roomParticipantId ?? '',
                 programId: homeFeedItem?.id ?? '',
                 coverUrl: homeFeedItem?.coverUrl

@@ -33,22 +33,22 @@ class ProfileData extends Equatable {
   factory ProfileData.fromLocalStorageJson(
     Map<String, dynamic> json,
   ) {
-    Sentinel<LiveProgramData?>? liveProgramData;
+    // Sentinel<LiveProgramData?>? liveProgramData;
 
-    if (json.containsKey(ATStrings.liveProgramData)) {
-      final dynamic value = json[ATStrings.liveProgramData];
+    // if (json.containsKey(ATStrings.liveProgramData)) {
+    //   final dynamic value = json[ATStrings.liveProgramData];
 
-      liveProgramData = Sentinel<LiveProgramData?>.of(
-        value == null
-            ? null
-            : LiveProgramData.fromJson(
-                Map<String, dynamic>.from(value),
-              ),
-      );
-    } else {
-      liveProgramData =
-          const Sentinel<LiveProgramData?>.absent();
-    }
+    //   liveProgramData = Sentinel<LiveProgramData?>.of(
+    //     value == null
+    //         ? null
+    //         : LiveProgramData.fromJson(
+    //             Map<String, dynamic>.from(value),
+    //           ),
+    //   );
+    // } else {
+    //   liveProgramData =
+    //       const Sentinel<LiveProgramData?>.absent();
+    // }
 
     return ProfileData(
       userId: json[ATStrings.userId] as String?,
@@ -72,7 +72,7 @@ class ProfileData extends Equatable {
       hasHostedShows: json[ATStrings.hasHostedShows],
       subscribersCount: json[ATStrings.subscribersCount],
       accountType: AccountType.fromJson(json[ATStrings.account]),
-      liveProgramData: liveProgramData,
+      //liveProgramData: liveProgramData,
     );
   }
 
@@ -196,11 +196,11 @@ class ProfileData extends Equatable {
       ATStrings.account: accountType?.toJson(),
     };
 
-    if (liveProgramData != null &&
-        liveProgramData!.hasValue) {
-      json[ATStrings.liveProgramData] =
-          liveProgramData!.value?.toJson();
-    }
+    // if (liveProgramData != null &&
+    //     liveProgramData!.hasValue) {
+    //   json[ATStrings.liveProgramData] =
+    //       liveProgramData!.value?.toJson();
+    // }
 
     return json;
   }

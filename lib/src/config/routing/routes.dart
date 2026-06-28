@@ -371,6 +371,9 @@ final GoRouter amptiveAppRouter = GoRouter(
                     BlocProvider<GetLiveProgramEntryTokenCubit>(
                       create: (_) => GetLiveProgramEntryTokenCubit(),
                     ),
+                    BlocProvider<LiveWhispersCubit>(
+                      create: (_) => LiveWhispersCubit(),
+                    )
                   ],
                   child: LiveShowDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,

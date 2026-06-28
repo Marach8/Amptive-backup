@@ -14,7 +14,6 @@ import 'package:amptive/src/features/go_live/data/models/sequential_queue.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
-
 import '../data/models/deconstruct_inbound_events.dart';
 
 class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
@@ -390,6 +389,12 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
     wsNotificationService.sendMessage(<String, dynamic>{
       'type': 'end_stream',
     });
+
+  void toggleAllowComments(){}
+
+  void toggleAllowAudienceMic(){}
+
+  void toggleHandRais(){}
 
   void muteListener(String listenerId) =>
       wsNotificationService.sendMessage(<String, dynamic>{

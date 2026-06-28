@@ -1,7 +1,5 @@
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async';
-import 'dart:developer';
-import 'dart:io';
 import 'package:amptive/src/config/services/network_service/interceptor.dart'
     show AuthGuardCubit;
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -26,13 +24,11 @@ import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import '../global_export.dart';
-import '../services/go_live_service/go_live_service.dart';
 import '../services/notification/push_notification_service.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 
@@ -108,6 +104,10 @@ class DashboardState extends State<_SubWidget>{
                   programTitle: liveProgramData?.programTitle,
                   programDesc: liveProgramData?.programDesc,
                   myRole: liveProgramData?.role,
+                  allowAudienceMic: liveProgramData?.allowAudienceMic,
+                  allowComments: liveProgramData?.allowComments,
+                  allowHandRaise: liveProgramData?.allowHandRaise,
+                  allowWhispers: liveProgramData?.allowWhispers,
                 )
               ),
             ),

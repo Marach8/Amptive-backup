@@ -368,6 +368,10 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                 roomEntryToken: state.newData?.roomEntryToken ?? '',
                 roomUrl: state.newData?.roomUrl ?? '',
                 streamId: state.newData?.streamId ?? '',
+                allowAudienceMic: state.newData?.allowAudienceMic ?? false,
+                allowComments: state.newData?.allowComments ?? false,
+                allowHandRaise: state.newData?.allowHandRaise ?? false,
+                allowWhispers: state.newData?.allowWhispers ?? false,
                 roomParticipantId: state.newData?.roomParticipantId ?? '',
                 programId: widget.homeFeedItem?.id ?? '',
                 coverUrl: widget.homeFeedItem?.coverUrl
