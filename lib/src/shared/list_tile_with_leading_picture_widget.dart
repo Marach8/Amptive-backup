@@ -35,7 +35,7 @@ class TileWithLeadingImage extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          Flexible(
+          Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

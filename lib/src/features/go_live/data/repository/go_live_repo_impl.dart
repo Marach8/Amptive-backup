@@ -25,7 +25,7 @@ class GoLiveRepoImpl implements GoLiveRepo {
       final dynamic data = response.data['data'];
       final dynamic tokenObject = data?['token'];
 
-      final LiveProgramEntryToken entryToken = (
+      final LiveProgramEntryToken entryToken = LiveProgramEntryToken(
         roomEntryToken: tokenObject?['token'],
         roomUrl: tokenObject?['livekit_url'],
         streamId: data?['livestream_id'] ?? tokenObject?['room'],
@@ -83,15 +83,32 @@ class GoLiveRepoImpl implements GoLiveRepo {
       );
 
       final dynamic data = response.data['data'];
+      final dynamic token = data?['token'];
+      final dynamic roomSettings = data?['room_settings'];
 
-      final LiveProgramEntryToken entryToken = (
-        roomEntryToken: data?['token'],
-        roomUrl: data?['livekit_url'],
-        streamId: data?['livestream_id'] ?? data?['room'],
-        roomParticipantId: data?['identity'],
+      final LiveProgramEntryToken entryToken = LiveProgramEntryToken(
+        roomEntryToken: token?['token'],
+        roomUrl: token?['livekit_url'],
+        streamId: data?['livestream_id'] ?? token?['room'],
+        roomParticipantId: token?['identity'],
+        allowHandRaise: roomSettings?['hand_raising'],
+        allowWhispers: roomSettings?['allow_whispers'],
       );
 
+      // final dynamic data = response.data['data'];
+      // final dynamic roomSettings = response.data['room_settings'];
+
+      // final LiveProgramEntryToken entryToken = LiveProgramEntryToken(
+      //   roomEntryToken: data?['token'],
+      //   roomUrl: data?['livekit_url'],
+      //   streamId: data?['livestream_id'] ?? data?['room'],
+      //   roomParticipantId: data?['identity'],
+      //   allowHandRaise: roomSettings?['hand_raising'],
+      //   allowWhispers: roomSettings?['allow_whispers'],
+      // );
+
       return Successful<LiveProgramEntryToken>(data: entryToken);
+
     } catch (e) {
       log('Get live program entry token error: $e');
       return Unsuccessful<LiveProgramEntryToken>(

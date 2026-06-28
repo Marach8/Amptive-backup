@@ -3,15 +3,24 @@ import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-typedef LiveProgramEntryToken = ({
-  String? roomEntryToken,
-  String? roomUrl,
-  String? streamId,
-  String? roomParticipantId,
-  bool? allowHandRaise,
-  bool? allowWhispers,
-  bool? allowAudienceMic
-});
+class LiveProgramEntryToken {
+  const LiveProgramEntryToken({
+    this.roomEntryToken,
+    this.roomUrl,
+    this.streamId,
+    this.roomParticipantId,
+    this.allowHandRaise,
+    this.allowWhispers,
+    this.allowAudienceMic,
+    this.allowComments,
+  });
+
+  final String? roomEntryToken,
+    roomUrl, streamId, roomParticipantId;
+  final bool? allowHandRaise, allowWhispers,
+    allowAudienceMic, allowComments;
+}
+
 
 class GetLiveProgramEntryTokenCubit extends 
   Cubit<ATAppState<LiveProgramEntryToken>> {
