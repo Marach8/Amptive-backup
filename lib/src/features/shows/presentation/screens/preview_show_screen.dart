@@ -4,6 +4,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/calender/calender_export.dart';
 import 'package:amptive/src/features/episodes/cubits/episodes_of_a_show_cubit.dart';
+import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
@@ -275,11 +276,17 @@ class _SubWidgetState extends State<_SubWidget> {
           ),
 
           bottomSheet: ATBlurredBgBtn(
-            onPressed: () {
-              context.pushNamed(
+            onPressed: ()async{
+              final LiveProgramData? liveProgramData = 
+              await context.pushNamed(
                 ATRoutes.createEpisodeForm,
                 extra: widget.hostedShow.showId ?? ''
-              );
+              ) as LiveProgramData?;
+
+              if(context.mounted && liveProgramData != null){
+                dashboardKey.currentState
+                  ?.showLiveStreamOverlay(liveProgramData: liveProgramData);
+              }
             },
             btnTitle: hasEpisodes ? 'Add Episode' : 'Create Episode',
           ),

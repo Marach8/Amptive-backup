@@ -390,11 +390,11 @@ class LiveStreamCubit1 extends Cubit<LiveStreamState1> {
       'type': 'end_stream',
     });
 
-  void toggleAllowComments(){}
+  void toggleAllowComments(bool shouldAllow){}
 
-  void toggleAllowAudienceMic(){}
+  void toggleAllowAudienceMic(bool shouldAllow){}
 
-  void toggleHandRais(){}
+  void toggleAllowHandRaise(bool shouldAllow){}
 
   void muteListener(String listenerId) =>
       wsNotificationService.sendMessage(<String, dynamic>{

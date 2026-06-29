@@ -49,11 +49,16 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_){
         if(!mounted) return;
+        // if(widget.homeFeedItem?.allowWhispers ?? false){
+        //   context.read<LiveWhispersCubit>().fetchWhispers(
+        //     livestreamId: widget.homeFeedItem?.livestreamId ?? '');
+        // }
         context.read<LiveWhispersCubit>().fetchWhispers(
           livestreamId: widget.homeFeedItem?.livestreamId ?? '');
       }
     );
   }
+  
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight =

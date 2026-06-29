@@ -112,7 +112,7 @@ class _HostModerationControlsState extends State<HostModerationControls> {
               onTap: () {
                 showHostModerationToolsDialog(
                   context: context,
-                  hostModeratioCubit: context.read<HostModerationCubit>(),
+                  liveStreamCubit: context.read<LiveStreamCubit1>(),
                 );
               },
               child: const Icon(Icons.settings, size: 20),

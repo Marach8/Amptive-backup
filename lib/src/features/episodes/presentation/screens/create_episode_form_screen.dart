@@ -91,8 +91,8 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
   final StreamController<String> _descStreamCntrl = StreamController<String>();
 
   String selectedDescription = ATStrings.tellListenersAboutYourShow;
-  HandRaisingPermission? selectedHandRaisePermission;
-  WhispersPermission? selectedWhispersPermission;
+  HandRaisingPermission? _selectedHandRaisePermission;
+  WhispersPermission? _selectedWhispersPermission;
 
   Community? selectedCommunity;
   List<User>? selectedCohosts;
@@ -536,9 +536,9 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                             builder:(_, StateSetter setter) {
                               String descriptionText = ATStrings.choose2AllowHandRasing;
   
-                              if (selectedHandRaisePermission == HandRaisingPermission.allow) {
+                              if (_selectedHandRaisePermission == HandRaisingPermission.allow) {
                                 descriptionText = ATStrings.allow;
-                              } else if (selectedHandRaisePermission
+                              } else if (_selectedHandRaisePermission
                                 == HandRaisingPermission.dontAllow) {
                                 descriptionText = ATStrings.dontAllow;
                               }
@@ -552,9 +552,9 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                                   final HandRaisingPermission? newPermission =
                                     await showHandRaisingPermissionModal(
                                       context: context,
-                                      initialPermission: selectedHandRaisePermission
+                                      initialPermission: _selectedHandRaisePermission
                                     );
-                                  setter(() => selectedHandRaisePermission = newPermission);
+                                  setter(() => _selectedHandRaisePermission = newPermission);
                                 },
                               );
                           }),
@@ -597,9 +597,9 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                             builder:(_, StateSetter setter) {
                               String descriptionText = ATStrings.choose2AllowWhispers;
   
-                              if (selectedWhispersPermission == WhispersPermission.allow) {
+                              if (_selectedWhispersPermission == WhispersPermission.allow) {
                                 descriptionText = ATStrings.turnedOn;
-                              } else if (selectedWhispersPermission == WhispersPermission.dontAllow) {
+                              } else if (_selectedWhispersPermission == WhispersPermission.dontAllow) {
                                 descriptionText = ATStrings.turnedOff;
                               }
   
@@ -612,9 +612,9 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                                   final WhispersPermission? newPermission =
                                     await showWhispersPermissionModal(
                                       context: context,
-                                      initialPermission: selectedWhispersPermission
+                                      initialPermission: _selectedWhispersPermission
                                     );
-                                  setter(() => selectedWhispersPermission = newPermission);
+                                  setter(() => _selectedWhispersPermission = newPermission);
                                 },
                               );
                           }),
@@ -679,8 +679,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                     community: episode?.community,
                   );
 
-                  dashboardKey.currentState
-                    ?.showLiveStreamOverlay(liveProgramData: liveProgramData);
+                  context.pop(liveProgramData);
                 }
                 else if(state is FailureState<LiveProgramEntryToken>){
                   _activateBtn.value = (true, _activateBtn.value.$2);
@@ -713,7 +712,7 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                         .map((HashTag tag) => tag.id ?? '')
                         .toList(),
                       coHostIds: (selectedCohosts ?? <User>[])
-                        .map((User cohost) => cohost.userId ?? '')
+                        .map((User cohost) => cohost.userId)
                         .toList(),
                       title: _titleCntrl.text.trim(),
                       description: selectedDescription,
@@ -724,9 +723,10 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                         == ProgramAccessType.free ? 'free' : 'paid',
                       priceOverride: accessTypeData.subscriptionAmount 
                         ?? accessTypeData.oneTimePaymentAmount ?? 0.01,
-                      allowHandRaising: selectedHandRaisePermission
+                      allowHandRaising: _selectedHandRaisePermission
                         == HandRaisingPermission.allow,
-                      allowWhispers: whispersDesc == ATStrings.turnedOn,
+                      allowWhispers: _selectedWhispersPermission 
+                        == WhispersPermission.allow,
                       scheduledFor: _scheduleDate?.toUtc().toIso8601String(),
                     ),
                   );
@@ -816,12 +816,12 @@ class _CreateShowFormScreenState extends State<_SubWidget> {
                       errorMessage = 'Please select at least 1 cohost';
                     } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
                       errorMessage = 'Please select at least 1 hashtag';
-                    } else if(selectedHandRaisePermission == null) {
+                    } else if(_selectedHandRaisePermission == null) {
                       errorMessage = 'Please choose whether to allow hand-raising for this episode';
                     } else if(accessTypeData.accessType == null) {
                       errorMessage = 'Please choose whether this episode is free or paid';
                     }
-                    else if(selectedWhispersPermission == null) {
+                    else if(_selectedWhispersPermission == null) {
                       errorMessage = 'Please choose whether to allow whispers for this episode';
                     }
                     final ScheduleBtnOnTap currentOnTap = _activateBtn.value.$2;

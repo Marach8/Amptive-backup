@@ -5,6 +5,7 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/global_export.dart';
@@ -23,7 +24,7 @@ import '../widgets/whispers_list.dart';
 import '../../data/models/response/home_feed_response_model.dart';
 
 
-class LiveShowDetailedScreen extends StatelessWidget {
+class LiveShowDetailedScreen extends StatefulWidget {
   const LiveShowDetailedScreen({
     super.key,
     this.homeFeedItem,
@@ -31,6 +32,34 @@ class LiveShowDetailedScreen extends StatelessWidget {
 
   final HomeFeedItem? homeFeedItem;
 
+  @override
+  State<LiveShowDetailedScreen> createState() => _LiveShowDetailedScreenState();
+}
+
+class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
+  final ValueNotifier<bool> _canJoinNotifier = ValueNotifier<bool>(false);
+  late bool _allowWhispers;
+
+  @override 
+  void initState(){
+    super.initState();
+    _canJoinNotifier.value = 
+      widget.homeFeedItem?.programType == ProgramType.free;
+      _allowWhispers = widget.homeFeedItem?.allowWhispers ?? false;
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_){
+        if(!mounted) return;
+        // if(_allowWhispers){
+        //   context.read<LiveWhispersCubit>().fetchWhispers(
+        //     livestreamId: widget.homeFeedItem?.livestreamId ?? '');
+        // }
+        context.read<LiveWhispersCubit>().fetchWhispers(
+          livestreamId: widget.homeFeedItem?.livestreamId ?? '');
+      }
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     final double blurredHeaderHeight =
@@ -44,8 +73,8 @@ class LiveShowDetailedScreen extends StatelessWidget {
                 imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
                 child: ATImgLoader(
                   boxFit: BoxFit.fill,
-                  imgPath: homeFeedItem?.coverUrl 
-                    ?? homeFeedItem?.thumbnailUrl ?? '',
+                  imgPath: widget.homeFeedItem?.coverUrl 
+                    ?? widget.homeFeedItem?.thumbnailUrl ?? '',
                 ),
               ),
             ),
@@ -81,13 +110,13 @@ class LiveShowDetailedScreen extends StatelessWidget {
                                   alignment: Alignment.center,
                                   children: <Widget>[
                                     Hero(
-                                      tag: homeFeedItem?.coverUrl
-                                        ?? homeFeedItem?.thumbnailUrl ?? '',
+                                      tag: widget.homeFeedItem?.coverUrl
+                                        ?? widget.homeFeedItem?.thumbnailUrl ?? '',
                                       child: ClipRRect(
                                         borderRadius: BorderRadiusGeometry.circular(16),
                                         child: ATImgLoader(
-                                          imgPath: homeFeedItem?.coverUrl
-                                            ?? homeFeedItem?.thumbnailUrl ?? '',
+                                          imgPath: widget.homeFeedItem?.coverUrl
+                                            ?? widget.homeFeedItem?.thumbnailUrl ?? '',
                                           boxFit: BoxFit.cover,
                                           height: 360,
                                           width: context.screenWidth,
@@ -108,12 +137,14 @@ class LiveShowDetailedScreen extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 24),
-                                const ShowOrEventIndicatorWithTitle(),
+                                ShowOrEventIndicatorWithTitle(
+                                  title: widget.homeFeedItem?.showTitle ?? '',
+                                ),
                                 const SizedBox(height: 15),
 
                                 Text(
                                   maxLines: 2,
-                                  homeFeedItem?.title ?? '',
+                                  widget.homeFeedItem?.title ?? '',
                                   overflow: TextOverflow.clip,
                                   style: context.textTheme.displayMedium
                                       ?.copyWith(
@@ -122,11 +153,13 @@ class LiveShowDetailedScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 20),
-                                const Row(
+                                Row(
                                   spacing: 20,
                                   children: <Widget>[
-                                    LiveIndicatorWithAnimatinWifiIcon(),
-                                    Flexible(child: RenderCommunityName(communityName: 'Test Community'))
+                                    const LiveIndicatorWithAnimatinWifiIcon(),
+                                    Flexible(child: RenderCommunityName(
+                                      communityName: widget.homeFeedItem?.community?.name
+                                    ))
                                   ],
                                 ),
                                 const SizedBox(height: 30),
@@ -139,7 +172,11 @@ class LiveShowDetailedScreen extends StatelessWidget {
                                   color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 const SizedBox(height: 5),
-                                const RenderHashTags(),
+                                RenderHashTags(
+                                  hashtags: widget.homeFeedItem?.hashTagNames?.map(
+                                    (String item) => HashTag(name: item)
+                                  ).toList(),
+                                ),
                                 const SizedBox(height: 20),
 
                                 Text(
@@ -154,15 +191,15 @@ class LiveShowDetailedScreen extends StatelessWidget {
                                 TileWithLeadingImage(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 9),
-                                  title: homeFeedItem?.hostName ?? '',
+                                  title: widget.homeFeedItem?.hostName ?? '',
                                   subtitle: 'Host',
                                   diameter: 35,
                                   leadingImagePath:
-                                      (homeFeedItem?.hostProfileImageUrl ?? '').isNotEmpty ? 
-                                      homeFeedItem!.hostProfileImageUrl! :
+                                      (widget.homeFeedItem?.hostProfileImageUrl ?? '').isNotEmpty ? 
+                                      widget.homeFeedItem!.hostProfileImageUrl! :
                                         ATImgStrings.noAvatarImage,
                                 ),
-                                ...(homeFeedItem?.cohosts ?? <User>[]).map(
+                                ...(widget.homeFeedItem?.cohosts ?? <User>[]).map(
                                   (User cohost) => TileWithLeadingImage(
                                     padding: const EdgeInsets.symmetric(vertical: 9),
                                     title: cohost.username ?? '',
@@ -175,7 +212,7 @@ class LiveShowDetailedScreen extends StatelessWidget {
                                 const SizedBox(height: 30),
 
                                 Text(
-                                  '${homeFeedItem?.viewerCount ?? 0} Listening',
+                                  '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
                                   style: context.textTheme.bodySmall
                                       ?.copyWith(fontSize: ATSizes.size17),
                                 ),
@@ -184,11 +221,11 @@ class LiveShowDetailedScreen extends StatelessWidget {
                                       ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 const SizedBox(height: 10),
-                                if((homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
+                                if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
                                   ...<Widget>[
                                     PeopleListeningWithNumberStacked(
-                                      images: homeFeedItem!.avatarUrls!,
-                                      noOfListeners: homeFeedItem?.viewerCount ?? 0,
+                                      images: widget.homeFeedItem!.avatarUrls!,
+                                      noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
                                     ),
                                     const SizedBox(height: 20),
                                   ],
@@ -209,7 +246,7 @@ class LiveShowDetailedScreen extends StatelessWidget {
                                   color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 ReadMoreText(
-                                  homeFeedItem?.title ?? '',
+                                  widget.homeFeedItem?.title ?? '',
                                   trimMode: TrimMode.Length,
                                   trimExpandedText: ATStrings.showLess,
                                   trimCollapsedText: ATStrings.showMore,
@@ -222,20 +259,23 @@ class LiveShowDetailedScreen extends StatelessWidget {
                                     fontWeight: ATFontWeights.w500,
                                   ),
                                 ),
-                                const SizedBox(height: 30),
-                                Text(
-                                  ATStrings.whispers,
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: ATSizes.size17),
-                                ),
-                                Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
-                                ),
+
+                                if(_allowWhispers) ...<Widget>[
+                                  const SizedBox(height: 30),
+                                  Text(
+                                    ATStrings.whispers,
+                                    style: context.textTheme.bodySmall
+                                        ?.copyWith(fontSize: ATSizes.size17),
+                                  ),
+                                  Divider(
+                                    color:
+                                        ATColors.white.withValues(alpha: 0.1),
+                                  ),
+                                ]
                               ],
                             ),
                           ),
-                          const WhispersWidget(),
+                          if(_allowWhispers) const WhispersWidget(),
                           const SizedBox(height: 130),
                         ],
                       ),
@@ -255,7 +295,7 @@ class LiveShowDetailedScreen extends StatelessWidget {
                 .read<LocalUserDataCubit>().currentUserData;
               final String? userId = userData?.userId;
               final bool hasTestedMic = userData?.hasTestedMic == true;
-              final bool isHost = userId == homeFeedItem?.hostId;
+              final bool isHost = userId == widget.homeFeedItem?.hostId;
             
               final LiveProgramData liveProgramData = LiveProgramData(
                 roomEntryToken: state.newData?.roomEntryToken ?? '',
@@ -266,15 +306,15 @@ class LiveShowDetailedScreen extends StatelessWidget {
                 allowHandRaise: state.newData?.allowHandRaise ?? false,
                 allowWhispers: state.newData?.allowWhispers ?? false,
                 roomParticipantId: state.newData?.roomParticipantId ?? '',
-                programId: homeFeedItem?.id ?? '',
-                coverUrl: homeFeedItem?.coverUrl
-                  ?? homeFeedItem?.thumbnailUrl ?? '',
+                programId: widget.homeFeedItem?.id ?? '',
+                coverUrl: widget.homeFeedItem?.coverUrl
+                  ?? widget.homeFeedItem?.thumbnailUrl ?? '',
                 role: isHost
                   ? ParticipantRole.host
                   : ParticipantRole.audience,
-                community: Community(name: 'Test Community'),
-                programTitle: homeFeedItem?.title ?? '',
-                programDesc: 'New program'
+                community: widget.homeFeedItem?.community,
+                programTitle: widget.homeFeedItem?.title ?? '',
+                programDesc: 'Test Description',
               );
               
               if(!isHost || hasTestedMic){
@@ -300,12 +340,12 @@ class LiveShowDetailedScreen extends StatelessWidget {
             }
           },
           builder: (BuildContext ctx, ATAppState<LiveProgramEntryToken> state) {
-            final bool isPaid = homeFeedItem?.programType == ProgramType.paid;
+            final bool isPaid = widget.homeFeedItem?.programType == ProgramType.paid;
             return ATBlurredBgBtn(
               onPressed: (){
                 ctx.read<GetLiveProgramEntryTokenCubit>()
                 .getLiveProgramEntryToken(
-                  homeFeedItem?.livestreamId ?? '',
+                  widget.homeFeedItem?.livestreamId ?? '',
                 );
               },
               isLoading: state is LoadingState<LiveProgramEntryToken>,
@@ -333,7 +373,7 @@ class LiveShowDetailedScreen extends StatelessWidget {
         
                   Text(
                     isPaid
-                        ? '₦${homeFeedItem!.price}/month'
+                        ? '₦${widget.homeFeedItem!.price}/month'
                         : 'Join live show',
                     style: context.textTheme.bodyMedium
                         ?.copyWith(fontSize: 17, color: ATColors.black),

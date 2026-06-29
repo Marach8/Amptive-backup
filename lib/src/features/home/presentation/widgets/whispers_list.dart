@@ -38,7 +38,8 @@ class WhispersWidget extends StatelessWidget {
               icon: const Icon(Icons.refresh),
             )
           ),
-          SuccessState<List<Whisper>>(:final List<Whisper>? newData) => SizedBox(
+          SuccessState<List<Whisper>>(:final List<Whisper>? newData)
+          => SizedBox(
             height: 230,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,

@@ -67,8 +67,6 @@ import 'package:amptive/src/features/wallet/presentation/screens/wallet_transact
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
 import 'package:amptive/src/shared/blurred_header.dart';
-import 'package:custom_image_crop/custom_image_crop.dart'
-    show Ratio, CustomCropShape;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
