@@ -1,34 +1,39 @@
-import 'package:amptive/src/models/host.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/config/utils/extensions/integer_extensions.dart';
+import 'package:amptive/src/features/shows/data/models/response/followed_shows_response_model.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
-import '../../../../services/create_show/create_show_service.dart';
 import '../../../../config/utils/colors.dart';
-import '../../../../config/utils/other_strings.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class FollowedProgram extends StatelessWidget {
-  const FollowedProgram({
-    super.key,
-  });
+  const FollowedProgram({super.key, this.showItem});
+  final FollowedShowItem? showItem;
 
   @override
   Widget build(BuildContext context) {
+    final bool isLive = showItem?.status?.toUpperCase() == 'LIVE';
+
+    final int coHostCount = showItem?.coHosts?.length ?? 0;
+
+    final String programLabel = getProgramLabel(
+      type: showItem?.showType,
+      category: showItem?.contentType,
+    );
+
     return Column(
       children: <Widget>[
         TileWithLeadingImage(
-          leadingImagePath: ATImgStrings.jpeg3,
-          trailingOnPressed: () {
-            //showProgramOptions(context);
-          },
-          title: 'glennodoyle',
-          subtitle: 'scheduled a live show',
+          leadingImagePath: showItem?.hostProfileImageUrl ?? '',
+          trailingOnPressed: () {},
+          title: showItem?.hostName ?? '',
+          subtitle: 'started a ${isLive ? 'live show' : 'show'}',
         ),
         const SizedBox(height: 2),
         ATContainer(
@@ -37,7 +42,12 @@ class FollowedProgram extends StatelessWidget {
           radius: 15,
           child: Stack(
             children: <Widget>[
-              const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
+              ATImgLoader(
+                imgPath: showItem?.showCoverUrl ?? '',
+                boxFit: BoxFit.cover,
+                height: 425,
+                width: context.screenWidth,
+              ),
               ATContainer(
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15,
@@ -57,21 +67,16 @@ class FollowedProgram extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const With2OthersWidget(),
+                    With2OthersWidget(coHostCount: coHostCount),
                     const Spacer(),
-                    Text(
-                      '15 Jul 2024 at 17:00',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(fontSize: ATSizes.size16),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    if (isLive) ...<Widget>[
+                      const LiveIndicatorWithAnimatingDot(),
+                      const SizedBox(height: 10),
+                    ],
+
                     Text(
                       maxLines: 2,
-                      "Don't Forget Who You Are ft. Jacob Scipio",
+                      showItem?.showTitle ?? " ",
                       overflow: TextOverflow.clip,
                       style:
                           Theme.of(context).textTheme.displayMedium?.copyWith(
@@ -79,60 +84,58 @@ class FollowedProgram extends StatelessWidget {
                                 fontWeight: ATFontWeights.w600,
                               ),
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
+                    const SizedBox(height: 12),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         ATOverlappingImages(
-                          imgPaths: getHostList()
-                              .take(3)
-                              .map((ObjectWithNotifier<Host> host) =>
-                                  host.obj.profilePicture ?? '')
-                              .toList(),
+                          imgPaths:
+                              (showItem?.avatarUrls ?? <String>[]).take(3).toList(),
                           imgSize: 30,
                           overlapOffset: 18,
                         ),
                         const SizedBox(
                           width: 8,
                         ),
-                        Text('656 listening',
+                        Text(
+                            '${showItem?.viewerCount?.compactFormat ?? 0} listening',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(fontSize: ATSizes.size13)),
                       ],
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
+                    const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        ATContainer(
-                          color: ATColors.hex0D0D0D,
-                          radius: 5,
+                        Container(
                           padding: const EdgeInsets.all(8.5),
-                          child: Text(ATStrings.paidShow.toUpperCase(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(
-                                      fontWeight: ATFontWeights.w500,
-                                      fontSize: ATSizes.size10)),
+                          margin: const EdgeInsets.only(top: 18),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: ATColors.hex0D0D0D),
+                          child: Text(
+                            programLabel,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                                    fontWeight: FontWeight.w500, fontSize: 10),
+                          ),
                         ),
-                        ATContainer(
-                            onTap: () {},
-                            height: 45,
-                            width: 45,
-                            radius: 30,
-                            color: ATColors.hexB6B6B6,
+                        GestureDetector(
+                          onTap: () {},
+                          child: CircleAvatar(
+                            radius: 22.5,
+                            backgroundColor: ATColors.hexB6B6B6,
                             child: Icon(
                               Icons.play_arrow,
                               color: ATColors.hex0D0D0D,
                               size: 30,
-                            ))
+                            ),
+                          ),
+                        )
                       ],
                     )
                   ],
@@ -144,4 +147,20 @@ class FollowedProgram extends StatelessWidget {
       ],
     );
   }
+}
+
+String getProgramLabel({
+  String? type,
+  String? category,
+}) {
+  final String upperType = type?.toUpperCase() ?? 'PAID';
+  final String upperCategory = category?.toUpperCase() ?? 'EPISODE';
+
+  return switch ((upperCategory, upperType)) {
+    ('EPISODE', 'FREE') => 'SHOW',
+    ('EPISODE', 'PAID') => '\$PAID SHOW',
+    ('STANDALONE', 'FREE') => 'EVENT',
+    ('STANDALONE', 'PAID') => '\$PAID EVENT',
+    _ => 'SHOW',
+  };
 }

@@ -1,5 +1,3 @@
-import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/services/create_show/create_show_service.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
@@ -10,12 +8,14 @@ import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
-import '../../../../config/utils/dialogs/added_or_removed_from_calender_dialog.dart';
 import '../../../../shared/image_loader_widget.dart';
 
+import 'package:amptive/src/features/shows/data/models/response/followed_shows_response_model.dart';
+import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
+
 class ScheduledProgram extends StatefulWidget {
-  const ScheduledProgram({super.key, this.scheduleDateAndTime});
-  final String? scheduleDateAndTime;
+  const ScheduledProgram({super.key, this.showItem});
+  final FollowedShowItem? showItem;
 
   @override
   State<ScheduledProgram> createState() => _ScheduledProgramState();
@@ -29,12 +29,10 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
     return Column(
       children: <Widget>[
         TileWithLeadingImage(
-          leadingImagePath: ATImgStrings.jpeg3,
-          trailingOnPressed: () {
-            //showProgramOptions(context);
-          },
-          title: 'glennodoyle',
-          subtitle: 'scheduled a live show',
+          leadingImagePath: widget.showItem?.hostProfileImageUrl ?? ATImgStrings.jpeg3,
+          trailingOnPressed: () {},
+          title: widget.showItem?.hostName ?? '',
+          subtitle: 'scheduled a ${widget.showItem?.contentType ?? 'show'}',
         ),
         const SizedBox(height: 2),
         ATContainer(
@@ -43,7 +41,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
           radius: 15,
           child: Stack(
             children: <Widget>[
-              const ATImgLoader(imgPath: ATImgStrings.weCanDoHardThingsBgImage),
+              ATImgLoader(imgPath: widget.showItem?.showCoverUrl ?? ATImgStrings.weCanDoHardThingsBgImage),
               ATContainer(
                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                 radius: 15,
@@ -66,53 +64,42 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                     const With2OthersWidget(),
                     const Spacer(),
                     Text(
-                      '15 Jul 2024 at 17:00',
+                      widget.showItem?.scheduledFor?.toFormattedDate ?? '',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
                           ?.copyWith(fontSize: ATSizes.size16),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     Text(
                       maxLines: 2,
-                      "Don't Forget Who You Are ft. Jacob Scipio",
+                      widget.showItem?.showTitle ?? " ",
                       overflow: TextOverflow.clip,
-                      style:
-                          Theme.of(context).textTheme.displayMedium?.copyWith(
-                                fontSize: ATSizes.size24,
-                                fontWeight: ATFontWeights.w600,
-                              ),
+                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                            fontSize: ATSizes.size24,
+                            fontWeight: ATFontWeights.w600,
+                          ),
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
+                    const SizedBox(height: 12),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         ATOverlappingImages(
-                          imgPaths: getHostList()
+                          imgPaths: (widget.showItem?.avatarUrls ?? <String>[])
                               .take(3)
-                              .map((ObjectWithNotifier<Host> host) =>
-                                  host.obj.profilePicture ?? '')
                               .toList(),
                           imgSize: 30,
                           overlapOffset: 18,
                         ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text('656 going',
+                        const SizedBox(width: 8),
+                        Text('${widget.showItem?.goingCount ?? 0} going',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium
                                 ?.copyWith(fontSize: ATSizes.size13)),
                       ],
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
+                    const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -120,7 +107,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                           color: ATColors.hex0D0D0D,
                           radius: 5,
                           padding: const EdgeInsets.all(8.5),
-                          child: Text(ATStrings.paidShow.toUpperCase(),
+                          child: Text(widget.showItem?.showType?.toUpperCase() ?? ATStrings.paidShow.toUpperCase(),
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall
@@ -128,30 +115,8 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                                       fontWeight: ATFontWeights.w500,
                                       fontSize: ATSizes.size10)),
                         ),
-                        StatefulBuilder(builder: (_, setter) {
-                          return ATContainer(
-                              onTap: () {
-                                showAddedOrRemovedSnackbar(
-                                        context: context,
-                                        content: isAdded2Calender
-                                            ? ATStrings.REMOVED_4RM_CAL
-                                            : ATStrings.ADDED_2_CALL)
-                                    .then((bool? result) {});
-                                setter(
-                                    () => isAdded2Calender = !isAdded2Calender);
-                              },
-                              height: 45,
-                              width: 45,
-                              radius: 30,
-                              color: ATColors.hexB6B6B6,
-                              child: Icon(
-                                isAdded2Calender ? Icons.check : Icons.add,
-                                color: ATColors.hex0D0D0D,
-                                size: 30,
-                              ));
-                        })
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
