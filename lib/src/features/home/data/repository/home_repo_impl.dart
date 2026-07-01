@@ -85,30 +85,7 @@ class HomeRepoImpl implements HomeRepo {
     }
   }
 
-  @override
-  Future<ApiResponse<dynamic>> fetchFollowedShows({
-    required int page,
-    required int pageSize,
-    required bool refresh,
-  }) async {
-    try {
-      final Response<dynamic> response = await networkService.get(
-        ATEndpoints.followedShowsFeed,
-        queryParameters: <String, dynamic>{
-          'page': page,
-          'page_size': pageSize,
-          'refresh': refresh,
-        },
-      );
 
-      return Successful<dynamic>(data: response.data);
-    } catch (e) {
-      log('Get followed shows error: $e');
-      return Unsuccessful<dynamic>(
-        error: ATException.resolveException(e),
-      );
-    }
-  }
 
   @override
   Future<ApiResponse<LiveUsersResponseModel>> fetchLiveUsers({
