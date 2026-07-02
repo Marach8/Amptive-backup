@@ -232,4 +232,23 @@ class HomeRepoImpl implements HomeRepo {
       );
     }
   }
+
+  @override
+  Future<ApiResponse<dynamic>> fetchLiveListeners({
+    required String liveStreamId,
+  }) async {
+    try {
+      final String endpoint =
+          '${ATEndpoints.livestreams}$liveStreamId/participants';
+
+      final Response<dynamic> response = await networkService.get(endpoint);
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Fetch livestream listeners error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
 }

@@ -32,6 +32,7 @@ import 'package:amptive/src/features/events/presentation/screens/edit_event_form
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
 import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
 import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
@@ -364,14 +365,13 @@ final GoRouter amptiveAppRouter = GoRouter(
                 child: MultiBlocProvider(
                   providers: <SingleChildWidget>[
                     BlocProvider<BlurredHeaderCubit>(
-                      create: (_) => BlurredHeaderCubit(),
-                    ),
+                      create: (_) => BlurredHeaderCubit()),
                     BlocProvider<GetLiveProgramEntryTokenCubit>(
-                      create: (_) => GetLiveProgramEntryTokenCubit(),
-                    ),
+                      create: (_) => GetLiveProgramEntryTokenCubit()),
                     BlocProvider<LiveWhispersCubit>(
-                      create: (_) => LiveWhispersCubit(),
-                    )
+                      create: (_) => LiveWhispersCubit()),
+                    BlocProvider<LiveListenersCubit>(
+                      create: (_) => LiveListenersCubit())
                   ],
                   child: LiveShowDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,
@@ -388,17 +388,15 @@ final GoRouter amptiveAppRouter = GoRouter(
                 child: MultiBlocProvider(
                   providers: <SingleChildWidget>[
                     BlocProvider<GetLiveProgramEntryTokenCubit>(
-                      create: (_) => GetLiveProgramEntryTokenCubit(),
-                    ),
+                      create: (_) => GetLiveProgramEntryTokenCubit()),
                     BlocProvider<BlurredHeaderCubit>(
-                      create: (_) => BlurredHeaderCubit(),
-                    ),
+                      create: (_) => BlurredHeaderCubit()),
                     BlocProvider<ValidateTicketCubit>(
-                      create: (_) => ValidateTicketCubit()
-                    ),
+                      create: (_) => ValidateTicketCubit()),
                     BlocProvider<LiveWhispersCubit>(
-                      create: (_) => LiveWhispersCubit(),
-                    )
+                      create: (_) => LiveWhispersCubit()),
+                    BlocProvider<LiveListenersCubit>(
+                      create: (_) => LiveListenersCubit())
                   ],
                   child: LiveEventDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,

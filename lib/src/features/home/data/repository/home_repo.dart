@@ -52,4 +52,8 @@ abstract class HomeRepo {
     int? limit,
     String? beforeId,
   });
+
+  Future<ApiResponse<dynamic>> fetchLiveListeners({
+    required String liveStreamId,
+  });
 }

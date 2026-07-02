@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
@@ -22,8 +23,8 @@ class ATBlurredHeaderWidget extends StatelessWidget {
     final double blurredHeaderHeight =
           kToolbarHeight + MediaQuery.paddingOf(context).top;
     return ClipRect(
-      child:
-          BlocBuilder<BlurredHeaderCubit, bool>(builder: (_, bool shouldBlur) {
+      child: BlocBuilder<BlurredHeaderCubit, bool>(
+        builder: (_, bool shouldBlur) {
         return RepaintBoundary(
           child: BackdropFilter(
             filter: shouldBlur
@@ -45,6 +46,51 @@ class ATBlurredHeaderWidget extends StatelessWidget {
   }
 }
 
+
+class BlurredHeaderWidget2 extends StatelessWidget {
+  const BlurredHeaderWidget2({
+    super.key,
+    this.child,
+    this.onDismissOverride,
+  });
+
+  final Widget? child;
+  final VoidCallback? onDismissOverride;
+
+  @override
+  Widget build(BuildContext context) {
+    final double blurredHeaderHeight =
+          kToolbarHeight + MediaQuery.paddingOf(context).top;
+    return ClipRect(
+      child: BlocBuilder<BlurredHeaderCubit, bool>(
+        builder: (_, bool shouldBlur) {
+        return RepaintBoundary(
+          child: BackdropFilter(
+            filter: shouldBlur
+                ? ImageFilter.blur(sigmaX: 53, sigmaY: 53)
+                : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+            child: SizedBox(
+              height: blurredHeaderHeight,
+              width: context.screenWidth,
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Positioned(
+                    bottom: 10,
+                    child: child ?? ATModalDismisser(
+                      onDismissOverride: onDismissOverride),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
 class BlurredHeaderCubit extends Cubit<bool> {
   BlurredHeaderCubit() : super(false);
 
@@ -52,12 +98,17 @@ class BlurredHeaderCubit extends Cubit<bool> {
     if (notification is ScrollUpdateNotification &&
         notification.metrics.axis == Axis.vertical) {
       final double extentBefore = notification.metrics.extentBefore;
+      log('This is the xtent before $extentBefore');
+      log('This is the metric.pixels ${notification.metrics.pixels}');
+      log('This is the dragdetails.delta: ${notification.dragDetails?.delta}');
+      log('This is the dept: ${notification.depth}');
+
       if (extentBefore > 0.0 && !state) {
-        // log('backdrop is shown');
-        // log(notification.metrics.extentInside.toString());
+        log('backdrop is shown');
+        log(notification.metrics.extentInside.toString());
         emit(true);
       } else if (extentBefore == 0.0 && state) {
-        //log('Backdrop is hidden');
+        log('Backdrop is hidden');
         emit(false);
       }
     }

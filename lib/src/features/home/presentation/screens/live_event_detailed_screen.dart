@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
 import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
 import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
@@ -40,21 +41,30 @@ class LiveEventDetailedScreen extends StatefulWidget {
 
 class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
   final ValueNotifier<bool> _canJoinNotifier = ValueNotifier<bool>(false);
+  late bool _allowWhispers;
+
   @override 
   void initState(){
     super.initState();
     _canJoinNotifier.value = 
       widget.homeFeedItem?.programType == ProgramType.free;
+    _allowWhispers = widget.homeFeedItem?.allowWhispers ?? false;
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_){
         if(!mounted) return;
-        // if(widget.homeFeedItem?.allowWhispers ?? false){
-        //   context.read<LiveWhispersCubit>().fetchWhispers(
-        //     livestreamId: widget.homeFeedItem?.livestreamId ?? '');
-        // }
-        context.read<LiveWhispersCubit>().fetchWhispers(
-          livestreamId: widget.homeFeedItem?.livestreamId ?? '');
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_){
+            if(!mounted) return;
+            if(_allowWhispers){
+              context.read<LiveWhispersCubit>().fetchWhispers(
+                livestreamId: widget.homeFeedItem?.livestreamId ?? '');
+            }
+
+            context.read<LiveListenersCubit>().fetchLiveListeners(
+              liveStreamId: widget.homeFeedItem?.livestreamId ?? '');
+          }
+        );
       }
     );
   }
@@ -95,9 +105,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                         delegate: ATSliverHDelegate(
                             maxExt: blurredHeaderHeight,
                             minExt: blurredHeaderHeight,
-                            child: SizedBox(
-                                height: blurredHeaderHeight,
-                                child: const ATBlurredHeaderWidget())),
+                            child: const BlurredHeaderWidget2()),
                       )
                     ],
                     body: SingleChildScrollView(
@@ -155,11 +163,13 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: 20),
-                                const Row(
+                                Row(
                                   spacing: 20,
                                   children: <Widget>[
-                                    LiveIndicatorWithAnimatinWifiIcon(),
-                                    Flexible(child: RenderCommunityName(communityName: 'Test Community'))
+                                    const LiveIndicatorWithAnimatinWifiIcon(),
+                                    Flexible(child: RenderCommunityName(
+                                      communityName: widget.homeFeedItem?.community?.name
+                                    ))
                                   ],
                                 ),
                                 const SizedBox(height: 30),
@@ -172,7 +182,11 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                   color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 const SizedBox(height: 5),
-                                const RenderHashTags(),
+                                RenderHashTags(
+                                  hashtags: widget.homeFeedItem?.hashTagNames?.map(
+                                    (String item) => HashTag(name: item)
+                                  ).toList(),
+                                ),
                                 const SizedBox(height: 20),
 
                                 Text(
@@ -207,30 +221,47 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                 ),
                                 const SizedBox(height: 30),
 
-                                Text(
-                                  '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: ATSizes.size17),
-                                ),
-                                Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
-                                ),
-                                const SizedBox(height: 10),
-                                if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
-                                  ...<Widget>[
-                                    PeopleListeningWithNumberStacked(
-                                      images: widget.homeFeedItem!.avatarUrls!,
-                                      noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
-                                    ),
-                                    const SizedBox(height: 20),
-                                  ],
-                                Text(
-                                  'daniel, jessica, gerald, peter and 652 more',
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(
-                                          color: ATColors.white
-                                              .withValues(alpha: 0.6)),
+                                BlocConsumer<LiveListenersCubit, ATAppState<dynamic>>(
+                                  listener: (_, ATAppState<dynamic> state){
+                                    if(state is FailureState<dynamic>){
+                                      showAppNotification2(
+                                        text: state.message,
+                                        type: NotificationType.failure,
+                                      );
+                                    }
+                                  },
+                                  builder: (_, ATAppState<dynamic> state) {
+                                    return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                      Text(
+                                        '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
+                                        style: context.textTheme.bodySmall
+                                            ?.copyWith(fontSize: ATSizes.size17),
+                                      ),
+                                      Divider(
+                                        color:
+                                            ATColors.white.withValues(alpha: 0.1),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
+                                        ...<Widget>[
+                                          PeopleListeningWithNumberStacked(
+                                            images: widget.homeFeedItem!.avatarUrls!,
+                                            noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
+                                          ),
+                                          const SizedBox(height: 20),
+                                        ],
+                                      Text(
+                                          'daniel, jessica, gerald, peter and 652 more',
+                                          style: context.textTheme.bodySmall
+                                              ?.copyWith(
+                                                  color: ATColors.white
+                                                      .withValues(alpha: 0.6)),
+                                        ),
+                                      ],
+                                    );
+                                  }
                                 ),
                                 const SizedBox(height: 35),
                                 Text(
@@ -252,23 +283,26 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                     color:
                                         ATColors.white.withValues(alpha: 0.6),
                                     fontSize: 14,
-                                    fontWeight: ATFontWeights.w500,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                const SizedBox(height: 30),
-                                Text(
-                                  ATStrings.whispers,
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: 17),
-                                ),
-                                Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
-                                ),
+
+                                if(_allowWhispers) ...<Widget>[
+                                  const SizedBox(height: 30),
+                                  Text(
+                                    ATStrings.whispers,
+                                    style: context.textTheme.bodySmall
+                                        ?.copyWith(fontSize: 17),
+                                  ),
+                                  Divider(
+                                    color:
+                                        ATColors.white.withValues(alpha: 0.1),
+                                  ),
+                                ]
                               ],
                             ),
                           ),
-                          const WhispersWidget(),
+                          if(_allowWhispers) const WhispersWidget(),
                           const SizedBox(height: 30),
                           if(isPaidEvent)Padding(
                             padding:
@@ -347,7 +381,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 250,),
+                          if(isPaidEvent)const SizedBox(height: 250,),
                         ],
                       ),
                     ),

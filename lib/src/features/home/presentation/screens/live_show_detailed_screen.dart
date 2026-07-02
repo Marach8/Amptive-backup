@@ -5,6 +5,7 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
 import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
@@ -14,6 +15,7 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
@@ -45,17 +47,19 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
     super.initState();
     _canJoinNotifier.value = 
       widget.homeFeedItem?.programType == ProgramType.free;
-      _allowWhispers = widget.homeFeedItem?.allowWhispers ?? false;
+    _allowWhispers = widget.homeFeedItem?.allowWhispers ?? false;
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_){
         if(!mounted) return;
-        // if(_allowWhispers){
-        //   context.read<LiveWhispersCubit>().fetchWhispers(
-        //     livestreamId: widget.homeFeedItem?.livestreamId ?? '');
-        // }
-        context.read<LiveWhispersCubit>().fetchWhispers(
-          livestreamId: widget.homeFeedItem?.livestreamId ?? '');
+        if(_allowWhispers){
+          context.read<LiveWhispersCubit>().fetchWhispers(
+            livestreamId: widget.homeFeedItem?.livestreamId ?? '');
+        }
+
+        context.read<LiveListenersCubit>().fetchLiveListeners(
+          liveStreamId: widget.homeFeedItem?.livestreamId ?? '');
       }
     );
   }
@@ -92,9 +96,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                         delegate: ATSliverHDelegate(
                             maxExt: blurredHeaderHeight,
                             minExt: blurredHeaderHeight,
-                            child: SizedBox(
-                                height: blurredHeaderHeight,
-                                child: const ATBlurredHeaderWidget())),
+                            child: const BlurredHeaderWidget2()),
                       )
                     ],
                     body: SingleChildScrollView(
@@ -210,37 +212,53 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                                   )
                                 ),
                                 const SizedBox(height: 30),
-
-                                Text(
-                                  '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: ATSizes.size17),
-                                ),
-                                Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
-                                ),
-                                const SizedBox(height: 10),
-                                if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
-                                  ...<Widget>[
-                                    PeopleListeningWithNumberStacked(
-                                      images: widget.homeFeedItem!.avatarUrls!,
-                                      noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
-                                    ),
-                                    const SizedBox(height: 20),
-                                  ],
-                                Text(
-                                  'daniel, jessica, gerald, peter and 652 more',
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(
-                                          color: ATColors.white
-                                              .withValues(alpha: 0.6)),
+                                BlocConsumer<LiveListenersCubit, ATAppState<dynamic>>(
+                                  listener: (_, ATAppState<dynamic> state){
+                                    if(state is FailureState<dynamic>){
+                                      showAppNotification2(
+                                        text: state.message,
+                                        type: NotificationType.failure,
+                                      );
+                                    }
+                                  },
+                                  builder: (_, ATAppState<dynamic> state) {
+                                    return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                      Text(
+                                        '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
+                                        style: context.textTheme.bodySmall
+                                            ?.copyWith(fontSize: ATSizes.size17),
+                                      ),
+                                      Divider(
+                                        color:
+                                            ATColors.white.withValues(alpha: 0.1),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
+                                        ...<Widget>[
+                                          PeopleListeningWithNumberStacked(
+                                            images: widget.homeFeedItem!.avatarUrls!,
+                                            noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
+                                          ),
+                                          const SizedBox(height: 20),
+                                        ],
+                                      Text(
+                                          'daniel, jessica, gerald, peter and 652 more',
+                                          style: context.textTheme.bodySmall
+                                              ?.copyWith(
+                                                  color: ATColors.white
+                                                      .withValues(alpha: 0.6)),
+                                        ),
+                                      ],
+                                    );
+                                  }
                                 ),
                                 const SizedBox(height: 35),
                                 Text(
-                                  'About Event',
+                                  'About Show',
                                   style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: ATSizes.size17),
+                                      ?.copyWith(fontSize: 17),
                                 ),
                                 Divider(
                                   color: ATColors.white.withValues(alpha: 0.1),
@@ -256,7 +274,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                                     color:
                                         ATColors.white.withValues(alpha: 0.6),
                                     fontSize: 14,
-                                    fontWeight: ATFontWeights.w500,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
 
@@ -265,7 +283,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                                   Text(
                                     ATStrings.whispers,
                                     style: context.textTheme.bodySmall
-                                        ?.copyWith(fontSize: ATSizes.size17),
+                                        ?.copyWith(fontSize: 17),
                                   ),
                                   Divider(
                                     color:
@@ -288,7 +306,8 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
         ),
 
          resizeToAvoidBottomInset: false,
-        bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
+        bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit, 
+          ATAppState<LiveProgramEntryToken>>(
           listener: (_, ATAppState<LiveProgramEntryToken> state)async{
             if(state is SuccessState<LiveProgramEntryToken>){
               final ProfileData? userData = context
@@ -341,6 +360,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
           },
           builder: (BuildContext ctx, ATAppState<LiveProgramEntryToken> state) {
             final bool isPaid = widget.homeFeedItem?.programType == ProgramType.paid;
+
             return ATBlurredBgBtn(
               onPressed: (){
                 ctx.read<GetLiveProgramEntryTokenCubit>()
