@@ -35,7 +35,7 @@ class MainProfileScreen extends StatelessWidget {
               return switch(accountType){
                 AccountType.creator ||
                 AccountType.business 
-                  => const CreatorProfileView(),
+                  => const UpgradedProfileView(),
                 AccountType.regular || null
                   => const UserProfileView(),
               };

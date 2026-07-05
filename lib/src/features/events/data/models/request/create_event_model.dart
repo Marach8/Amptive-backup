@@ -15,9 +15,10 @@ class CreateEventPayload {
     required this.capacity,
   });
 
-  final String title, description, thumbnailUrl, category, eventType,
-    communityId, capacity;
+  final String title, description, thumbnailUrl,
+    category, eventType, communityId;
   final double price;
+  final int? capacity;
   final String? scheduledFor;
   final List<String> tagIds, coHostIds;
   final bool handRaising, allowWhispers;

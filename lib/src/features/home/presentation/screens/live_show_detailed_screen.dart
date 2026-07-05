@@ -84,223 +84,221 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
             ),
             ColoredBox(
               color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
-              child: Builder(builder: (BuildContext blocContext) {
-                return NotificationListener<ScrollNotification>(
-                  onNotification: blocContext
-                      .read<BlurredHeaderCubit>()
-                      .onScrollNotification,
-                  child: NestedScrollView(
-                    headerSliverBuilder: (_, __) => <Widget>[
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: ATSliverHDelegate(
-                            maxExt: blurredHeaderHeight,
-                            minExt: blurredHeaderHeight,
-                            child: const BlurredHeaderWidget2()),
-                      )
-                    ],
-                    body: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: <Widget>[
-                                    Hero(
-                                      tag: widget.homeFeedItem?.coverUrl
-                                        ?? widget.homeFeedItem?.thumbnailUrl ?? '',
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadiusGeometry.circular(16),
-                                        child: ATImgLoader(
-                                          imgPath: widget.homeFeedItem?.coverUrl
-                                            ?? widget.homeFeedItem?.thumbnailUrl ?? '',
-                                          boxFit: BoxFit.cover,
-                                          height: 360,
-                                          width: context.screenWidth,
-                                        ),
+              child: NotificationListener<ScrollNotification>(
+                onNotification: context
+                    .read<BlurredHeaderCubit>()
+                    .onScrollNotification,
+                child: NestedScrollView(
+                  headerSliverBuilder: (_, __) => <Widget>[
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: ATSliverHDelegate(
+                          maxExt: blurredHeaderHeight,
+                          minExt: blurredHeaderHeight,
+                          child: const BlurredHeaderWidget2()),
+                    )
+                  ],
+                  body: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Stack(
+                                alignment: Alignment.center,
+                                children: <Widget>[
+                                  Hero(
+                                    tag: widget.homeFeedItem?.coverUrl
+                                      ?? widget.homeFeedItem?.thumbnailUrl ?? '',
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadiusGeometry.circular(16),
+                                      child: ATImgLoader(
+                                        imgPath: widget.homeFeedItem?.coverUrl
+                                          ?? widget.homeFeedItem?.thumbnailUrl ?? '',
+                                        boxFit: BoxFit.cover,
+                                        height: 360,
+                                        width: context.screenWidth,
                                       ),
                                     ),
-                                    Positioned(
-                                      top: 8, right: 8,
-                                      child: ATContainer(
-                                        height: 32,
-                                        width: 32,
-                                        onTap: (){},
-                                        boxShape: BoxShape.circle,
-                                        color: ATColors.hex0D0D0D.withValues(alpha: 0.7),
-                                        child: const Icon(Icons.more_horiz),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 24),
-                                ShowOrEventIndicatorWithTitle(
-                                  title: widget.homeFeedItem?.showTitle ?? '',
-                                ),
-                                const SizedBox(height: 15),
-
-                                Text(
-                                  maxLines: 2,
-                                  widget.homeFeedItem?.title ?? '',
-                                  overflow: TextOverflow.clip,
-                                  style: context.textTheme.displayMedium
-                                      ?.copyWith(
-                                    fontSize: ATSizes.size24,
-                                    fontWeight: ATFontWeights.w600,
                                   ),
+                                  Positioned(
+                                    top: 8, right: 8,
+                                    child: ATContainer(
+                                      height: 32,
+                                      width: 32,
+                                      onTap: (){},
+                                      boxShape: BoxShape.circle,
+                                      color: ATColors.hex0D0D0D.withValues(alpha: 0.7),
+                                      child: const Icon(Icons.more_horiz),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 24),
+                              ShowOrEventIndicatorWithTitle(
+                                title: widget.homeFeedItem?.showTitle ?? '',
+                              ),
+                              const SizedBox(height: 15),
+
+                              Text(
+                                maxLines: 2,
+                                widget.homeFeedItem?.title ?? '',
+                                overflow: TextOverflow.clip,
+                                style: context.textTheme.displayMedium
+                                    ?.copyWith(
+                                  fontSize: ATSizes.size24,
+                                  fontWeight: ATFontWeights.w600,
                                 ),
-                                const SizedBox(height: 20),
-                                Row(
-                                  spacing: 20,
-                                  children: <Widget>[
-                                    const LiveIndicatorWithAnimatinWifiIcon(),
-                                    Flexible(child: RenderCommunityName(
-                                      communityName: widget.homeFeedItem?.community?.name
-                                    ))
-                                  ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                spacing: 20,
+                                children: <Widget>[
+                                  const LiveIndicatorWithAnimatinWifiIcon(),
+                                  Flexible(child: RenderCommunityName(
+                                    communityName: widget.homeFeedItem?.community?.name
+                                  ))
+                                ],
+                              ),
+                              const SizedBox(height: 30),
+                              Text(
+                                ATStrings.hashtags,
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: 17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              const SizedBox(height: 5),
+                              RenderHashTags(
+                                hashtags: widget.homeFeedItem?.hashTagNames?.map(
+                                  (String item) => HashTag(name: item)
+                                ).toList(),
+                              ),
+                              const SizedBox(height: 20),
+
+                              Text(
+                                ATStrings.hostedBy,
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: ATSizes.size17),
+                              ),
+                              Divider(
+                                color:
+                                    ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              TileWithLeadingImage(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 9),
+                                title: widget.homeFeedItem?.hostName ?? '',
+                                subtitle: 'Host',
+                                diameter: 35,
+                                leadingImagePath:
+                                    (widget.homeFeedItem?.hostProfileImageUrl ?? '').isNotEmpty ? 
+                                    widget.homeFeedItem!.hostProfileImageUrl! :
+                                      ATImgStrings.noAvatarImage,
+                              ),
+                              ...(widget.homeFeedItem?.cohosts ?? <User>[]).map(
+                                (User cohost) => TileWithLeadingImage(
+                                  padding: const EdgeInsets.symmetric(vertical: 9),
+                                  title: cohost.username ?? '',
+                                  subtitle: 'Cohost',
+                                  diameter: 42,
+                                  leadingImagePath: cohost.profilePicture
+                                    ?? ATImgStrings.noAvatarImage,
+                                )
+                              ),
+                              const SizedBox(height: 30),
+                              BlocConsumer<LiveListenersCubit, ATAppState<dynamic>>(
+                                listener: (_, ATAppState<dynamic> state){
+                                  if(state is FailureState<dynamic>){
+                                    showAppNotification2(
+                                      text: state.message,
+                                      type: NotificationType.failure,
+                                    );
+                                  }
+                                },
+                                builder: (_, ATAppState<dynamic> state) {
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                    Text(
+                                      '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
+                                      style: context.textTheme.bodySmall
+                                          ?.copyWith(fontSize: ATSizes.size17),
+                                    ),
+                                    Divider(
+                                      color:
+                                          ATColors.white.withValues(alpha: 0.1),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
+                                      ...<Widget>[
+                                        PeopleListeningWithNumberStacked(
+                                          images: widget.homeFeedItem!.avatarUrls!,
+                                          noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
+                                        ),
+                                        const SizedBox(height: 20),
+                                      ],
+                                    Text(
+                                        'daniel, jessica, gerald, peter and 652 more',
+                                        style: context.textTheme.bodySmall
+                                            ?.copyWith(
+                                                color: ATColors.white
+                                                    .withValues(alpha: 0.6)),
+                                      ),
+                                    ],
+                                  );
+                                }
+                              ),
+                              const SizedBox(height: 35),
+                              Text(
+                                'About Show',
+                                style: context.textTheme.bodySmall
+                                    ?.copyWith(fontSize: 17),
+                              ),
+                              Divider(
+                                color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              ReadMoreText(
+                                widget.homeFeedItem?.title ?? '',
+                                trimMode: TrimMode.Length,
+                                trimExpandedText: ATStrings.showLess,
+                                trimCollapsedText: ATStrings.showMore,
+                                colorClickableText: ATColors.white,
+                                trimLength: 100,
+                                style: TextStyle(
+                                  color:
+                                      ATColors.white.withValues(alpha: 0.6),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
                                 ),
+                              ),
+
+                              if(_allowWhispers) ...<Widget>[
                                 const SizedBox(height: 30),
                                 Text(
-                                  ATStrings.hashtags,
+                                  ATStrings.whispers,
                                   style: context.textTheme.bodySmall
                                       ?.copyWith(fontSize: 17),
-                                ),
-                                Divider(
-                                  color: ATColors.white.withValues(alpha: 0.1),
-                                ),
-                                const SizedBox(height: 5),
-                                RenderHashTags(
-                                  hashtags: widget.homeFeedItem?.hashTagNames?.map(
-                                    (String item) => HashTag(name: item)
-                                  ).toList(),
-                                ),
-                                const SizedBox(height: 20),
-
-                                Text(
-                                  ATStrings.hostedBy,
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: ATSizes.size17),
                                 ),
                                 Divider(
                                   color:
                                       ATColors.white.withValues(alpha: 0.1),
                                 ),
-                                TileWithLeadingImage(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 9),
-                                  title: widget.homeFeedItem?.hostName ?? '',
-                                  subtitle: 'Host',
-                                  diameter: 35,
-                                  leadingImagePath:
-                                      (widget.homeFeedItem?.hostProfileImageUrl ?? '').isNotEmpty ? 
-                                      widget.homeFeedItem!.hostProfileImageUrl! :
-                                        ATImgStrings.noAvatarImage,
-                                ),
-                                ...(widget.homeFeedItem?.cohosts ?? <User>[]).map(
-                                  (User cohost) => TileWithLeadingImage(
-                                    padding: const EdgeInsets.symmetric(vertical: 9),
-                                    title: cohost.username ?? '',
-                                    subtitle: 'Cohost',
-                                    diameter: 42,
-                                    leadingImagePath: cohost.profilePicture
-                                      ?? ATImgStrings.noAvatarImage,
-                                  )
-                                ),
-                                const SizedBox(height: 30),
-                                BlocConsumer<LiveListenersCubit, ATAppState<dynamic>>(
-                                  listener: (_, ATAppState<dynamic> state){
-                                    if(state is FailureState<dynamic>){
-                                      showAppNotification2(
-                                        text: state.message,
-                                        type: NotificationType.failure,
-                                      );
-                                    }
-                                  },
-                                  builder: (_, ATAppState<dynamic> state) {
-                                    return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                      Text(
-                                        '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
-                                        style: context.textTheme.bodySmall
-                                            ?.copyWith(fontSize: ATSizes.size17),
-                                      ),
-                                      Divider(
-                                        color:
-                                            ATColors.white.withValues(alpha: 0.1),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
-                                        ...<Widget>[
-                                          PeopleListeningWithNumberStacked(
-                                            images: widget.homeFeedItem!.avatarUrls!,
-                                            noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
-                                          ),
-                                          const SizedBox(height: 20),
-                                        ],
-                                      Text(
-                                          'daniel, jessica, gerald, peter and 652 more',
-                                          style: context.textTheme.bodySmall
-                                              ?.copyWith(
-                                                  color: ATColors.white
-                                                      .withValues(alpha: 0.6)),
-                                        ),
-                                      ],
-                                    );
-                                  }
-                                ),
-                                const SizedBox(height: 35),
-                                Text(
-                                  'About Show',
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: 17),
-                                ),
-                                Divider(
-                                  color: ATColors.white.withValues(alpha: 0.1),
-                                ),
-                                ReadMoreText(
-                                  widget.homeFeedItem?.title ?? '',
-                                  trimMode: TrimMode.Length,
-                                  trimExpandedText: ATStrings.showLess,
-                                  trimCollapsedText: ATStrings.showMore,
-                                  colorClickableText: ATColors.white,
-                                  trimLength: 100,
-                                  style: TextStyle(
-                                    color:
-                                        ATColors.white.withValues(alpha: 0.6),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-
-                                if(_allowWhispers) ...<Widget>[
-                                  const SizedBox(height: 30),
-                                  Text(
-                                    ATStrings.whispers,
-                                    style: context.textTheme.bodySmall
-                                        ?.copyWith(fontSize: 17),
-                                  ),
-                                  Divider(
-                                    color:
-                                        ATColors.white.withValues(alpha: 0.1),
-                                  ),
-                                ]
-                              ],
-                            ),
+                              ]
+                            ],
                           ),
-                          if(_allowWhispers) const WhispersWidget(),
-                          const SizedBox(height: 130),
-                        ],
-                      ),
+                        ),
+                        if(_allowWhispers) const WhispersWidget(),
+                        const SizedBox(height: 130),
+                      ],
                     ),
                   ),
-                );
-              }),
+                ),
+              ),
             ),
           ],
         ),

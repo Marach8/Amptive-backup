@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:ui';
-
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +75,7 @@ class BlurredHeaderWidget2 extends StatelessWidget {
                 alignment: Alignment.center,
                 children: <Widget>[
                   Positioned(
-                    bottom: 10,
+                    bottom: 10, right: 0, left: 0,
                     child: child ?? ATModalDismisser(
                       onDismissOverride: onDismissOverride),
                   )
@@ -98,17 +97,17 @@ class BlurredHeaderCubit extends Cubit<bool> {
     if (notification is ScrollUpdateNotification &&
         notification.metrics.axis == Axis.vertical) {
       final double extentBefore = notification.metrics.extentBefore;
-      log('This is the xtent before $extentBefore');
-      log('This is the metric.pixels ${notification.metrics.pixels}');
-      log('This is the dragdetails.delta: ${notification.dragDetails?.delta}');
-      log('This is the dept: ${notification.depth}');
+      // log('This is the xtent before $extentBefore');
+      // log('This is the metric.pixels ${notification.metrics.pixels}');
+      // log('This is the dragdetails.delta: ${notification.dragDetails?.delta}');
+      // log('This is the dept: ${notification.depth}');
 
       if (extentBefore > 0.0 && !state) {
-        log('backdrop is shown');
-        log(notification.metrics.extentInside.toString());
+        // log('backdrop is shown');
+        // log(notification.metrics.extentInside.toString());
         emit(true);
       } else if (extentBefore == 0.0 && state) {
-        log('Backdrop is hidden');
+        //log('Backdrop is hidden');
         emit(false);
       }
     }

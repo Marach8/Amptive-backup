@@ -28,13 +28,16 @@ import 'package:amptive/src/features/discover/presentation/views/society_screen.
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/screens/edit_episode_form_screen.dart';
+import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
 import 'package:amptive/src/features/events/presentation/screens/edit_event_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
+import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
 import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
+import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
@@ -755,9 +758,31 @@ final GoRouter amptiveAppRouter = GoRouter(
             pageBuilder: (_, GoRouterState state) {
               HostedEvent hostedEvent = state.extra as HostedEvent;
               return ATSlidingRouteTransition<void>(
-                  child: PreviewEventScreen(
-                hostedEvent: hostedEvent,
-              ));
+                  child: MultiBlocProvider(
+                    providers: <SingleChildWidget>[
+                      BlocProvider<EventDetailCubit>(
+                        create: (_) => EventDetailCubit(
+                          initialEvent: hostedEvent,
+                        ),
+                      ),
+                      BlocProvider<BlurredHeaderCubit>(
+                          create: (_) => BlurredHeaderCubit()),
+                      BlocProvider<ToggleFollowingCubit>(
+                          create: (_) => ToggleFollowingCubit(
+                            initialStatus: FollowingStatus(
+                            isFollowing: true,
+                            followerCount: hostedEvent.followerCount ?? 0,
+                          )
+                        )
+                      ),
+                      BlocProvider<StartLiveProgramCubit>(
+                        create: (_) => StartLiveProgramCubit()),
+                    ],
+                    child: PreviewEventScreen(
+                      hostedEvent: hostedEvent,
+                    ),
+                  )
+                );
             },
           ),
 

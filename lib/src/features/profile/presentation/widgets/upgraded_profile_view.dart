@@ -16,8 +16,8 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import '../widgets/profile_widgets_export.dart';
 
-class CreatorProfileView extends StatelessWidget {
-  const CreatorProfileView({super.key});
+class UpgradedProfileView extends StatelessWidget {
+  const UpgradedProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -96,62 +96,64 @@ class CreatorProfileView extends StatelessWidget {
                   final ProfileData? userData = context
                       .watch<LocalUserDataCubit>()
                       .currentUserData;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      const CreatorProfileCoverImage(),
-                      const SizedBox(height: 50),
-                      Text(
-                        userData?.name ?? 'Glennon Doyle',
-                        style: context.textTheme.bodyLarge
-                            ?.copyWith(height: 0.6),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        userData?.username ?? 'Glennondoyle',
-                        style: context.textTheme.titleMedium?.copyWith(
-                          color: ATColors.hexC2C2C2,
-                          height: 0.8,
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const CreatorProfileCoverImage(),
+                        const SizedBox(height: 50),
+                        Text(
+                          userData?.name ?? 'Glennon Doyle',
+                          style: context.textTheme.bodyLarge
+                              ?.copyWith(height: 0.6),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      const TopCreatorBadge(),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 20,
-                        children: <Widget>[
-                          NoOfFollowers(
-                            noOfFollowers:userData?.followersCount
-                          ),
-                          NoOfSubscribers(
-                            noOfSubscribers: userData?.subscribersCount
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        child: Text(
-                          userData?.bio ?? '', maxLines: 3,
-                          textAlign: TextAlign.center,
-                          style: context.textTheme.titleMedium!.copyWith(
-                            fontSize: 13,
+                        const SizedBox(height: 8),
+                        Text(
+                          userData?.username ?? 'Glennondoyle',
+                          style: context.textTheme.titleMedium?.copyWith(
                             color: ATColors.hexC2C2C2,
+                            height: 0.8,
                           ),
                         ),
-                      ),
-                      //_ProfileDesc(userData: userData),
-                      const SizedBox(height: 20),
-                      const RowOfSocials(),
-                      const SizedBox(height: 15),
-                      const EditProfileAndSubscriptionRow(),
-                      const SizedBox(height: 15),
-                      Divider(
-                        thickness: 1,
-                        color: ATColors.white.withValues(alpha: 0.1),
-                      ),
-                    ],
+                        const SizedBox(height: 20),
+                        const TopCreatorBadge(),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 20,
+                          children: <Widget>[
+                            NoOfFollowers(
+                              noOfFollowers:userData?.followersCount
+                            ),
+                            NoOfSubscribers(
+                              noOfSubscribers: userData?.subscribersCount
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          child: Text(
+                            userData?.bio ?? '', maxLines: 3,
+                            textAlign: TextAlign.center,
+                            style: context.textTheme.titleMedium!.copyWith(
+                              fontSize: 13,
+                              color: ATColors.hexC2C2C2,
+                            ),
+                          ),
+                        ),
+                        //_ProfileDesc(userData: userData),
+                        const SizedBox(height: 20),
+                        const RowOfSocials(),
+                        const SizedBox(height: 15),
+                        const EditProfileAndSubscriptionRow(),
+                        const SizedBox(height: 15),
+                        Divider(
+                          thickness: 1,
+                          color: ATColors.white.withValues(alpha: 0.1),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),

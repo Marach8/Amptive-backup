@@ -4,9 +4,6 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
-import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
-import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
-import 'package:amptive/src/features/go_live/cubits/start_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
@@ -18,67 +15,34 @@ import 'package:amptive/src/features/home/presentation/widgets/program_actions_m
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
-import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/shared/live_indicators.dart';
-import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:nested/nested.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
 
-class PreviewEventScreen extends StatelessWidget {
-  const PreviewEventScreen({
-    super.key,
-    required this.hostedEvent,
-  });
-  final HostedEvent hostedEvent;
 
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: <SingleChildWidget>[
-        BlocProvider<EventDetailCubit>(
-          create: (_) => EventDetailCubit(
-            initialEvent: hostedEvent,
-          ),
-        ),
-        BlocProvider<BlurredHeaderCubit>(
-            create: (_) => BlurredHeaderCubit()),
-        BlocProvider<ToggleFollowingCubit>(
-            create: (_) => ToggleFollowingCubit(
-              initialStatus: FollowingStatus(
-              isFollowing: true,
-              followerCount: hostedEvent.followerCount ?? 0,
-            )
-          )
-        ),
-        BlocProvider<StartLiveProgramCubit>(
-          create: (_) => StartLiveProgramCubit()),
-      ],
-      child: _EventSubWidget(hostedEvent: hostedEvent),
-    );
-  }
-}
-
-class _EventSubWidget extends StatefulWidget {
-  const _EventSubWidget({required this.hostedEvent});
+class PreviewEventScreen extends StatefulWidget {
+  const PreviewEventScreen({super.key, required this.hostedEvent});
 
   final HostedEvent hostedEvent;
 
   @override
-  State<_EventSubWidget> createState() => _EventSubWidgetState();
+  State<PreviewEventScreen> createState() => _PreviewEventScreenState();
 }
 
-class _EventSubWidgetState extends State<_EventSubWidget> {
+class _PreviewEventScreenState extends State<PreviewEventScreen> {
+  String? _scheduledFor;
+
   @override
   void initState() {
     super.initState();
+
+    _scheduledFor = widget.hostedEvent.scheduledFor;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         context.read<EventDetailCubit>().fetchEventDetails();
@@ -120,6 +84,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                   }),
                 ),
               ),
+
               ColoredBox(
                 color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
                 child: NotificationListener<ScrollNotification>(
@@ -132,9 +97,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                         delegate: ATSliverHDelegate(
                           maxExt: blurredHeaderHeight,
                           minExt: blurredHeaderHeight,
-                          child: const ATBlurredHeaderWidget(
-                            paddingFromTop: 50,
-                          ),
+                          child: const BlurredHeaderWidget2(),
                         ),
                       )
                     ],
@@ -150,28 +113,55 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                             type: NotificationType.failure,
                           );
                         }
-                      }, builder: (_, ATAppState<HostedEvent> state) {
+                      },
+                      builder: (_, ATAppState<HostedEvent> state) {
                         final HostedEvent? event =
                             context.read<EventDetailCubit>().currentEventDetail;
                         final int goingCount = event?.goingCount ?? 0;
+                        _scheduledFor = event?.scheduledFor;
+                        final bool isHost = context.read<LocalUserDataCubit>()
+                          .currentUserData?.userId == event?.host?.userId;
+
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Hero(
-                              tag: event?.eventId ?? '',
-                              child: CoverPicWithTopRightMoreIcon(
-                                  imgPath: event?.coverUrl ?? '',
-                                  onMoreTapped: () async {
-                                    final SelectedProgramAction? foo =
-                                        await showProgramOptions(
-                                      context: context,
-                                      toggleFollowingCubit:
-                                          context.read<ToggleFollowingCubit>(),
-                                      targetUserName:
-                                          event?.host?.username ?? '',
-                                      targetUserId: event?.host?.userId ?? '',
-                                    );
-                                  }),
+                            Stack(
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                                Hero(
+                                  tag: widget.hostedEvent.coverUrl ?? '',
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadiusGeometry.circular(16),
+                                    child: ATImgLoader(
+                                      imgPath: widget.hostedEvent.coverUrl ?? '',
+                                      boxFit: BoxFit.cover,
+                                      height: 360,
+                                      width: context.screenWidth,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 8, right: 8,
+                                  child: ATContainer(
+                                    height: 32,
+                                    width: 32,
+                                    onTap: ()async{
+                                      final SelectedProgramAction? foo =
+                                          await showProgramOptions(
+                                        context: context,
+                                        toggleFollowingCubit:
+                                            context.read<ToggleFollowingCubit>(),
+                                        targetUserName:
+                                            event?.host?.username ?? '',
+                                        targetUserId: event?.host?.userId ?? '',
+                                      );
+                                    },
+                                    boxShape: BoxShape.circle,
+                                    color: ATColors.hex0D0D0D.withValues(alpha: 0.7),
+                                    child: const Icon(Icons.more_horiz),
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 24),
 
@@ -190,44 +180,60 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                             Row(
                               spacing: 20,
                               children: <Widget>[
+                                if(_scheduledFor != null)
                                 EpisodeScheduleDateIndicator(
-                                  text1: formatScheduleDate(
-                                      event?.scheduledFor ?? ''),
+                                  text1: formatScheduleDate(_scheduledFor ?? ''),
                                 ),
                                 RenderCommunityName(
                                     communityName: event?.community?.name)
                               ],
                             ),
-                            const SizedBox(height: 16),
-                            BlocBuilder<LocalUserDataCubit,
-                                ATAppState<ProfileData>>(
-                              builder:
-                                  (_, ATAppState<ProfileData> userState) {
-                                final bool isHost = context
-                                        .read<LocalUserDataCubit>()
-                                        .currentUserData
-                                        ?.userId ==
-                                    event?.host?.userId;
-                                if (!isHost) return const SizedBox.shrink();
-                                return Row(
-                                  children: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        // context.pushReplacementNamed(
-                                        //   ATRoutes.liveProgramScreen,
-                                        //   extra: GoLiveProgramParams(
-                                        //     streamId: event?.livestreamId ?? '',
-                                        //     userType: GoLiveUserType.host,
-                                        //     contentId: event?.eventId,
-                                        //   ),
-                                        // );
-                                      },
-                                      child: const Text('Go Live'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
+
+                            // if(isHost) ...<Widget>[
+                            //   const SizedBox(height: 16),
+                            //   BlocConsumer<StartLiveProgramCubit, 
+                            //     ATAppState<LiveProgramEntryToken>>(
+                            //     listener: (_, ATAppState<LiveProgramEntryToken> state){
+                            //       if(state is SuccessState<LiveProgramEntryToken>){
+                            //         final HostedEvent? updatedEvent =
+                            //             context.read<EventDetailCubit>().currentEventDetail;
+                            //         context.pushReplacementNamed(
+                            //           ATRoutes.goLiveOnboarding,
+                            //           extra: LiveProgramData(
+                            //             roomEntryToken: state.newData?.roomEntryToken ?? '',
+                            //             roomUrl: state.newData?.roomUrl ?? '',
+                            //             streamId: state.newData?.streamId ?? '',
+                            //             allowAudienceMic: state.newData?.allowAudienceMic ?? false,
+                            //             allowComments: state.newData?.allowComments ?? false,
+                            //             allowHandRaise: state.newData?.allowHandRaise ?? false,
+                            //             allowWhispers: state.newData?.allowWhispers ?? false,
+                            //             roomParticipantId: state.newData?.roomParticipantId ?? '',
+                            //             programId: updatedEvent?.eventId ?? '',
+                            //             coverUrl: updatedEvent?.coverUrl ?? '',
+                            //             role: ParticipantRole.host,
+                            //             community: updatedEvent?.community,
+                            //             programTitle: updatedEvent?.title ?? '',
+                            //             programDesc: updatedEvent?.description ?? '',
+                            //           )
+                            //         );
+                            //       }
+                            //     },
+                            //     builder: (_, ATAppState<LiveProgramEntryToken> state) {
+
+                            //       return ATBlurredBgBtn(
+                            //         onPressed: () async {
+                            //           final HostedEvent? updatedEvent =
+                            //             context.read<EventDetailCubit>().currentEventDetail;
+                            //           context.read<StartLiveProgramCubit>().startLiveProgram(
+                            //             contentId: updatedEvent?.eventId ?? '',
+                            //           );
+                            //         },
+                            //         btnTitle: 'Edit Event'
+                            //       );
+                            //     }
+                            //   ),
+                            // ],
+
                             const SizedBox(height: 40),
                             Text(
                               ATStrings.hashtags,
@@ -334,68 +340,28 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
             ],
           ),
 
-          bottomSheet: BlocConsumer<StartLiveProgramCubit, 
-              ATAppState<LiveProgramEntryToken>>(
-              listener: (_, ATAppState<LiveProgramEntryToken> state){
-                if(state is SuccessState<LiveProgramEntryToken>){
-                  final HostedEvent? updatedEvent =
-                      context.read<EventDetailCubit>().currentEventDetail;
-                  context.pushReplacementNamed(
-                    ATRoutes.goLiveOnboarding,
-                    extra: LiveProgramData(
-                      roomEntryToken: state.newData?.roomEntryToken ?? '',
-                      roomUrl: state.newData?.roomUrl ?? '',
-                      streamId: state.newData?.streamId ?? '',
-                      allowAudienceMic: state.newData?.allowAudienceMic ?? false,
-                      allowComments: state.newData?.allowComments ?? false,
-                      allowHandRaise: state.newData?.allowHandRaise ?? false,
-                      allowWhispers: state.newData?.allowWhispers ?? false,
-                      roomParticipantId: state.newData?.roomParticipantId ?? '',
-                      programId: updatedEvent?.eventId ?? '',
-                      coverUrl: updatedEvent?.coverUrl ?? '',
-                      role: ParticipantRole.host,
-                      community: updatedEvent?.community,
-                      programTitle: updatedEvent?.title ?? '',
-                      programDesc: updatedEvent?.description ?? '',
-                    )
-                  );
-                }
-              },
-              builder: (_, state) {
-                return ATBlurredBgBtn(
-                  onPressed: () async {
-                    final HostedEvent? updatedEvent =
-                      context.read<EventDetailCubit>().currentEventDetail;
-                    context.read<StartLiveProgramCubit>().startLiveProgram(
-                      contentId: updatedEvent?.eventId ?? '',
-                    );
-                  },
-                  btnTitle: 'Edit Event'
+
+          bottomSheet: ATBlurredBgBtn(
+            onPressed: () async {
+              final HostedEvent? updatedEvent =
+                  context.read<EventDetailCubit>().currentEventDetail;
+              final HostedEvent? editedEvent = await context.pushNamed(
+                  ATRoutes.editEventScreen,
+                  extra: updatedEvent ?? widget.hostedEvent);
+              if (context.mounted &&
+                  editedEvent != null &&
+                  editedEvent != updatedEvent) {
+                context.read<EventDetailCubit>().updateEvent(editedEvent);
+                showAppNotification2(
+                  context: context,
+                  text: 'Event detail updated.',
+                  type: NotificationType.success,
                 );
               }
-            ),
+            },
+            btnTitle: 'Edit Event'
           ),
-
-          // bottomSheet: ATBlurredBgBtn(
-          //   onPressed: () async {
-          //     final HostedEvent? updatedEvent =
-          //         context.read<EventDetailCubit>().currentEventDetail;
-          //     final HostedEvent? editedEvent = await context.pushNamed(
-          //         ATRoutes.editEventScreen,
-          //         extra: updatedEvent ?? widget.hostedEvent);
-          //     if (context.mounted &&
-          //         editedEvent != null &&
-          //         editedEvent != updatedEvent) {
-          //       context.read<EventDetailCubit>().updateEvent(editedEvent);
-          //       showAppNotification2(
-          //         context: context,
-          //         text: 'Event detail updated.',
-          //         type: NotificationType.success,
-          //       );
-          //     }
-          //   },
-          //   btnTitle: 'Edit Event'
-          // ),
+        )
       ),
     );
   }

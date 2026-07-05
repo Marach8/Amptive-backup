@@ -114,30 +114,27 @@ class __SubWidgetState extends State<_SubWidget> {
                           delegate: ATSliverHDelegate(
                               maxExt: blurredHeaderHeight,
                               minExt: blurredHeaderHeight,
-                              child: SizedBox(
-                                  height: blurredHeaderHeight,
-                                  child: ATBlurredHeaderWidget(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 5),
-                                          child: ATRoundedBackBtn(
-                                            bgColor: ATColors.transparent,
-                                          ),
-                                        ),
-                                        Text(
-                                          ATStrings.chooseEvent,
-                                          style: context.textTheme.bodyMedium,
-                                        ),
-                                        const SizedBox(width: 30)
-                                      ],
+                              child: BlurredHeaderWidget2(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5),
+                                      child: ATRoundedBackBtn(
+                                        bgColor: ATColors.transparent,
+                                      ),
                                     ),
-                                  )
-                                )
-                              ),
-                              ),
+                                    Text(
+                                      ATStrings.chooseEvent,
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                    const SizedBox(width: 30)
+                                  ],
+                                ),
+                              )
+                            ),
+                          ),
                               SliverToBoxAdapter(
                                 child: Padding(
                                   padding:
