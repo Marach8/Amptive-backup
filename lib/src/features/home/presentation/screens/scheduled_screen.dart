@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+
 import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/followed_shows_response_model.dart';
 import 'package:amptive/src/global_export.dart';
@@ -59,6 +60,8 @@ class ATScheduledPrograms extends StatelessWidget {
                     FailureState<FollowedShowsResponseModel>() ||
                     SuccessState<FollowedShowsResponseModel>() =>
                       Builder(builder: (_) {
+
+
                         final List<FollowedShowItem> scheduledItems = 
                             context.read<FollowedShowsCubit>().scheduledShowsItems;
 
@@ -261,7 +264,3 @@ class ScheduledProgramItem extends StatelessWidget {
     );
   }
 }
-
-
-
-
