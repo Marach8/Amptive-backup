@@ -403,7 +403,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
               builder: (_, bool canJoin, __) {
                 final bool isPaid = canJoin == false;
                 return ATBlurredBgBtn(
-                  onPressed: (){
+                  onPressed: ()async{
                     if(canJoin){
                       ctx.read<GetLiveProgramEntryTokenCubit>()
                       .getLiveProgramEntryToken(
@@ -411,8 +411,24 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                       );
                     }
                     else{
-                      //From here, redirect to payment flow. when you come back,
-                      //set the "canJoin" notifier to true.
+                      final String? selectedPaymentMethod = 
+                      await selectOneTimePaymentMethodDialog(
+                        context: context,
+                        amount: '${widget.homeFeedItem?.price ?? 0}',
+                      );
+
+                      if (!context.mounted || selectedPaymentMethod == null) {
+                        return;
+                      }
+
+                      final bool? paymentSuccess = await oneTimePaymentDialog(
+                        context: context,
+                        paymentMethod: selectedPaymentMethod,
+                        contentId: widget.homeFeedItem?.id ?? '',
+                        amount: int.tryParse('${widget.homeFeedItem?.price ?? 0}') ?? 0,
+                      );
+
+                      _canJoinNotifier.value = paymentSuccess ?? false;
                     }
                   },
                   isLoading: state is LoadingState<LiveProgramEntryToken>,
