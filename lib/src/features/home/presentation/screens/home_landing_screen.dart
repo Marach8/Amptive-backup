@@ -156,7 +156,7 @@ class HomeTabView extends StatelessWidget {
 
                   if (homeFeedItems.isEmpty) {
                     if (state is LoadingState<HomeFeedResponseModel>) {
-                      return const _InitialLoadingShimmer();
+                      return const InitialLoadingShimmer();
                     }
                     if (state is FailureState<HomeFeedResponseModel>) {
                       return Center(
@@ -217,8 +217,8 @@ class HomeTabView extends StatelessWidget {
   }
 }
 
-class _InitialLoadingShimmer extends StatelessWidget {
-  const _InitialLoadingShimmer();
+class InitialLoadingShimmer extends StatelessWidget {
+  const InitialLoadingShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {

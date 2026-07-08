@@ -1,27 +1,30 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
+import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../shared/back_button.dart';
-import '../../../../shared/custom_container_widget.dart';
 import '../widgets/scheduled_program.dart';
 
 class ATScheduledPrograms extends StatelessWidget {
-  const ATScheduledPrograms({
-    super.key,
-  });
+  const ATScheduledPrograms({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ATAnnotatedRegion(
-      child: Scaffold(
-        body: SafeArea(
-          child: NestedScrollView(
+    return BlocProvider<FollowedShowsCubit>(
+      create: (_) => FollowedShowsCubit()..fetchFollowedShows(),
+      child: ATAnnotatedRegion(
+        child: Scaffold(
+          body: SafeArea(
+            child: NestedScrollView(
               floatHeaderSlivers: true,
               headerSliverBuilder: (_, __) => <Widget>[
                     SliverAppBar(
@@ -65,6 +68,7 @@ class ATScheduledPrograms extends StatelessWidget {
               )),
         ),
       ),
+    )
     );
   }
 }
