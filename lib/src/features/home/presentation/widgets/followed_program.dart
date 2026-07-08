@@ -8,6 +8,7 @@ import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
+import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../shared/image_loader_widget.dart';
