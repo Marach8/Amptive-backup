@@ -7,6 +7,7 @@ import 'package:amptive/src/config/services/network_service/dio_network_service_
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/wallet/data/models/response/fund_wallet_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/request/set_pin_request.dart';
+import 'package:amptive/src/features/wallet/data/models/response/one_time_payment_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/response/security_questions_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/response/transaction_history_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/response/verify_payment_response_model.dart';
@@ -148,4 +149,28 @@ class WalletRepoImpl implements WalletRepo {
       );
     }
   }
+
+  @override
+ Future<ApiResponse<OneTimePaymentResponseModel>> oneTimePayment ({
+  required String contentId,
+  required String channel
+ })  async {
+  try {
+    final Response<dynamic> response = await  networkService.post(
+      ATEndpoints.oneTimePayment,
+      data: <String, Object>{
+        'content_id': contentId,
+        'channel': channel,
+      },
+    );
+    return Successful<OneTimePaymentResponseModel>(
+      data: OneTimePaymentResponseModel.fromJson(response.data as Map<String, dynamic>),
+    );
+  } catch (e) {
+    log('Error making payment: $e');
+    return Unsuccessful<OneTimePaymentResponseModel>(
+      error: ATException.resolveException(e),
+    );
+  }
+ }
 }

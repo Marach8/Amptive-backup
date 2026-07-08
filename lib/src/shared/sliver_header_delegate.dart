@@ -44,7 +44,7 @@ class ATSliverHDelegate extends SliverPersistentHeaderDelegate {
       }
     }
 
-    return child;
+    return SizedBox.expand(child: child);
   }
 
   @override

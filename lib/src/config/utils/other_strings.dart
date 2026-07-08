@@ -86,6 +86,7 @@ class ATStrings {
   static const String flutterWave = 'Flutterwave';
   static const String paystack = 'paystack';
   static const String googlePay = 'Google Pay';
+  static const String wallet = 'wallet';
   static const String emailOrUsername = 'Email Or Username';
   static const String live = 'Live';
   static const String ALL = 'All';
@@ -215,6 +216,7 @@ class ATStrings {
       'Funds will be transferred directly to your bank account';
   static const String PAYPAL = 'Paypal';
   static const String backToSite = 'Back to wallet';
+  static const String goToLive = 'Go to live show';
   static const String fundingWallet = 'Funding wallet...';
   static const String walletFundingSuccess = 'Wallet Funded Successfully';
   static const String walletFundingFailed = 'Wallet Funding Failed';
