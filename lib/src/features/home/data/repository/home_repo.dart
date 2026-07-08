@@ -22,11 +22,7 @@ abstract class HomeRepo {
     required bool refresh,
   });
 
-  Future<ApiResponse<dynamic>> fetchFollowedShows({
-    required int page,
-    required int pageSize,
-    required bool refresh,
-  });
+ 
 
   Future<ApiResponse<LiveUsersResponseModel>> fetchLiveUsers({
     required int page,

@@ -92,7 +92,7 @@ class AvailableBalanceWidget extends StatelessWidget {
                             const Spacer(),
                             ATCircularImage(
                               imagePath:
-                                  userData?.profilePhoto ?? ATImgStrings.jpeg2,
+                                  userData?.profilePhoto ??'',
                             )
                           ],
                         ),

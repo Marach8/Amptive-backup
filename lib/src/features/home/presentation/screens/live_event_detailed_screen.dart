@@ -1,6 +1,7 @@
 import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
 import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
 import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
+import 'package:amptive/src/config/utils/dialogs/dialog_export.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_live_listeners.dart';
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
@@ -11,6 +12,8 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/one_time_process_payment_dialog.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/select_one_time_payment_method.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -128,7 +131,8 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                       tag: widget.homeFeedItem?.coverUrl
                                         ?? widget.homeFeedItem?.thumbnailUrl ?? '',
                                       child: ClipRRect(
-                                        borderRadius: BorderRadiusGeometry.circular(16),
+                                        borderRadius:
+                                            BorderRadiusGeometry.circular(16),
                                         child: ATImgLoader(
                                           imgPath: widget.homeFeedItem?.coverUrl
                                             ?? widget.homeFeedItem?.thumbnailUrl ?? '',
@@ -139,26 +143,27 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                       ),
                                     ),
                                     Positioned(
-                                      top: 8, right: 8,
+                                      top: 8,
+                                      right: 8,
                                       child: ATContainer(
                                         height: 32,
                                         width: 32,
-                                        onTap: (){},
+                                        onTap: () {},
                                         boxShape: BoxShape.circle,
-                                        color: ATColors.hex0D0D0D.withValues(alpha: 0.7),
+                                        color: ATColors.hex0D0D0D
+                                            .withValues(alpha: 0.7),
                                         child: const Icon(Icons.more_horiz),
                                       ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(height: 15),
-
                                 Text(
                                   maxLines: 2,
                                   widget.homeFeedItem?.title ?? '',
                                   overflow: TextOverflow.clip,
-                                  style: context.textTheme.displayMedium
-                                      ?.copyWith(
+                                  style:
+                                      context.textTheme.displayMedium?.copyWith(
                                     fontSize: ATSizes.size24,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -189,15 +194,13 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                   ).toList(),
                                 ),
                                 const SizedBox(height: 20),
-
                                 Text(
                                   ATStrings.hostedBy,
                                   style: context.textTheme.bodySmall
                                       ?.copyWith(fontSize: ATSizes.size17),
                                 ),
                                 Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
+                                  color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 TileWithLeadingImage(
                                   padding:
@@ -266,8 +269,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                       ?.copyWith(fontSize: 17),
                                 ),
                                 Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
+                                  color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 const SizedBox(height: 5),
                                 BlocConsumer<ValidateTicketCubit, ATAppState<dynamic>>(
@@ -341,7 +343,6 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
             ),
           ],
         ),
-        
         resizeToAvoidBottomInset: false,
         bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit,
           ATAppState<LiveProgramEntryToken>>(

@@ -59,4 +59,5 @@ class ATEndpoints {
   static const String createProfessionalProfile = '/api/v1/users/me/profile';
   static const String getSecurityQuestions = '/api/v1/extras/static/security-questions';
   static const String upgradeAccount = '/api/v1/users/me/profile';
+  static const String oneTimePayment = '/api/v1/payments/content/pay';
 }
