@@ -65,13 +65,12 @@ Future<bool?> processWalletFundingDialog({
                     );
                   } else if (state
                       is SuccessState<VerifyPaymentResponseModel>) {
-                    final String? status = state.newData?.data?.data?.status;
-                    if (status != 'success') {
+                    final String? status =
+                        state.newData?.data?.transaction?.status;
+                    if (status != 'successful') {
                       showAppNotification2(
                         context: context,
-                        text: state.newData?.data?.data?.gatewayResponse ??
-                            state.newData?.data?.data?.message ??
-                            state.newData?.message ??
+                        text: state.newData?.message ??
                             'Payment was not successful',
                         type: NotificationType.failure,
                       );
@@ -98,24 +97,24 @@ Future<bool?> processWalletFundingDialog({
 
                   final bool paymentVerified =
                       verifyState is SuccessState<VerifyPaymentResponseModel> &&
-                          verifyState.newData?.data?.data?.status == 'success';
+                          verifyState.newData?.data?.transaction?.status ==
+                              'successful';
 
-                  final bool verificationFailed = verifyState
-                          is FailureState<VerifyPaymentResponseModel> ||
-                      (verifyState
-                              is SuccessState<VerifyPaymentResponseModel> &&
-                          verifyState.newData?.data?.data?.status != 'success');
+                  final bool verificationFailed =
+                      verifyState is FailureState<VerifyPaymentResponseModel> ||
+                          (verifyState
+                                  is SuccessState<VerifyPaymentResponseModel> &&
+                              verifyState.newData?.data?.transaction?.status !=
+                                  'successful');
 
                   final String? verificationErrorMessage = verifyState
                           is FailureState<VerifyPaymentResponseModel>
                       ? verifyState.message
                       : (verifyState
                                   is SuccessState<VerifyPaymentResponseModel> &&
-                              verifyState.newData?.data?.data?.status !=
-                                  'success')
-                          ? verifyState.newData?.data?.data?.gatewayResponse ??
-                              verifyState.newData?.data?.data?.message ??
-                              verifyState.newData?.message ??
+                              verifyState.newData?.data?.transaction?.status !=
+                                  'successful')
+                          ? verifyState.newData?.message ??
                               'Payment was not successful'
                           : null;
 

@@ -8,9 +8,9 @@ class VerifyPaymentResponseModel {
 
   factory VerifyPaymentResponseModel.fromJson(Map<String, dynamic> json) {
     return VerifyPaymentResponseModel(
-      status: json['status'] as bool?,
-      statusCode: json['status_code'] as int?,
-      message: json['message'] as String?,
+      status: json['status'] ,
+      statusCode: json['status_code'] ,
+      message: json['message'] ,
       data: json['data'] != null
           ? VerifyPaymentData.fromJson(json['data'] as Map<String, dynamic>)
           : null,

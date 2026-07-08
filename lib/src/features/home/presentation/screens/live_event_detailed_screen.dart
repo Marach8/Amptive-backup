@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/dialogs/dialog_export.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
@@ -7,6 +8,8 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/one_time_process_payment_dialog.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/select_one_time_payment_method.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -45,8 +48,9 @@ class LiveEventDetailedScreen extends StatelessWidget {
                 imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
                 child: ATImgLoader(
                   boxFit: BoxFit.fill,
-                  imgPath: homeFeedItem?.coverUrl 
-                    ?? homeFeedItem?.thumbnailUrl ?? '',
+                  imgPath: homeFeedItem?.coverUrl ??
+                      homeFeedItem?.thumbnailUrl ??
+                      '',
                 ),
               ),
             ),
@@ -82,13 +86,16 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                   alignment: Alignment.center,
                                   children: <Widget>[
                                     Hero(
-                                      tag: homeFeedItem?.coverUrl
-                                        ?? homeFeedItem?.thumbnailUrl ?? '',
+                                      tag: homeFeedItem?.coverUrl ??
+                                          homeFeedItem?.thumbnailUrl ??
+                                          '',
                                       child: ClipRRect(
-                                        borderRadius: BorderRadiusGeometry.circular(16),
+                                        borderRadius:
+                                            BorderRadiusGeometry.circular(16),
                                         child: ATImgLoader(
-                                          imgPath: homeFeedItem?.coverUrl
-                                            ?? homeFeedItem?.thumbnailUrl ?? '',
+                                          imgPath: homeFeedItem?.coverUrl ??
+                                              homeFeedItem?.thumbnailUrl ??
+                                              '',
                                           boxFit: BoxFit.cover,
                                           height: 360,
                                           width: context.screenWidth,
@@ -96,26 +103,27 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Positioned(
-                                      top: 8, right: 8,
+                                      top: 8,
+                                      right: 8,
                                       child: ATContainer(
                                         height: 32,
                                         width: 32,
-                                        onTap: (){},
+                                        onTap: () {},
                                         boxShape: BoxShape.circle,
-                                        color: ATColors.hex0D0D0D.withValues(alpha: 0.7),
+                                        color: ATColors.hex0D0D0D
+                                            .withValues(alpha: 0.7),
                                         child: const Icon(Icons.more_horiz),
                                       ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(height: 15),
-
                                 Text(
                                   maxLines: 2,
                                   homeFeedItem?.title ?? '',
                                   overflow: TextOverflow.clip,
-                                  style: context.textTheme.displayMedium
-                                      ?.copyWith(
+                                  style:
+                                      context.textTheme.displayMedium?.copyWith(
                                     fontSize: ATSizes.size24,
                                     fontWeight: ATFontWeights.w600,
                                   ),
@@ -125,7 +133,9 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                   spacing: 20,
                                   children: <Widget>[
                                     LiveIndicatorWithAnimatinWifiIcon(),
-                                    Flexible(child: RenderCommunityName(communityName: 'Test Community'))
+                                    Flexible(
+                                        child: RenderCommunityName(
+                                            communityName: 'Test Community'))
                                   ],
                                 ),
                                 const SizedBox(height: 30),
@@ -140,15 +150,13 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 const RenderHashTags(),
                                 const SizedBox(height: 20),
-
                                 Text(
                                   ATStrings.hostedBy,
                                   style: context.textTheme.bodySmall
                                       ?.copyWith(fontSize: ATSizes.size17),
                                 ),
                                 Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
+                                  color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 TileWithLeadingImage(
                                   padding:
@@ -157,46 +165,46 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                   subtitle: 'Host',
                                   diameter: 35,
                                   leadingImagePath:
-                                      (homeFeedItem?.hostProfileImageUrl ?? '').isNotEmpty ? 
-                                      homeFeedItem!.hostProfileImageUrl! :
-                                        ATImgStrings.noAvatarImage,
+                                      (homeFeedItem?.hostProfileImageUrl ?? '')
+                                              .isNotEmpty
+                                          ? homeFeedItem!.hostProfileImageUrl!
+                                          : ATImgStrings.noAvatarImage,
                                 ),
-                                ...(homeFeedItem?.cohosts ?? <User>[]).map(
-                                  (User cohost) => TileWithLeadingImage(
-                                    padding: const EdgeInsets.symmetric(vertical: 9),
-                                    title: cohost.username ?? '',
-                                    subtitle: 'Cohost',
-                                    diameter: 42,
-                                    leadingImagePath: cohost.profilePicture
-                                      ?? ATImgStrings.noAvatarImage,
-                                  )
-                                ),
+                                ...(homeFeedItem?.cohosts ?? <User>[])
+                                    .map((User cohost) => TileWithLeadingImage(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 9),
+                                          title: cohost.username ?? '',
+                                          subtitle: 'Cohost',
+                                          diameter: 42,
+                                          leadingImagePath:
+                                              cohost.profilePicture ??
+                                                  ATImgStrings.noAvatarImage,
+                                        )),
                                 const SizedBox(height: 30),
-
                                 Text(
                                   '${homeFeedItem?.viewerCount ?? 0} Listening',
                                   style: context.textTheme.bodySmall
                                       ?.copyWith(fontSize: ATSizes.size17),
                                 ),
                                 Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
+                                  color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 const SizedBox(height: 10),
-                                if((homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
-                                  ...<Widget>[
-                                    PeopleListeningWithNumberStacked(
-                                      images: homeFeedItem!.avatarUrls!,
-                                      noOfListeners: homeFeedItem?.viewerCount ?? 0,
-                                    ),
-                                    const SizedBox(height: 20),
-                                  ],
+                                if ((homeFeedItem?.avatarUrls ?? <String>[])
+                                    .isNotEmpty) ...<Widget>[
+                                  PeopleListeningWithNumberStacked(
+                                    images: homeFeedItem!.avatarUrls!,
+                                    noOfListeners:
+                                        homeFeedItem?.viewerCount ?? 0,
+                                  ),
+                                  const SizedBox(height: 20),
+                                ],
                                 Text(
                                   'daniel, jessica, gerald, peter and 652 more',
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(
-                                          color: ATColors.white
-                                              .withValues(alpha: 0.6)),
+                                  style: context.textTheme.bodySmall?.copyWith(
+                                      color: ATColors.white
+                                          .withValues(alpha: 0.6)),
                                 ),
                                 const SizedBox(height: 35),
                                 Text(
@@ -228,8 +236,7 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                       ?.copyWith(fontSize: ATSizes.size17),
                                 ),
                                 Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
+                                  color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                               ],
                             ),
@@ -237,8 +244,7 @@ class LiveEventDetailedScreen extends StatelessWidget {
                           const ATWhispersWidget(),
                           const SizedBox(height: 30),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 15),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -248,8 +254,7 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                       ?.copyWith(fontSize: ATSizes.size17),
                                 ),
                                 Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
+                                  color: ATColors.white.withValues(alpha: 0.1),
                                 ),
                                 const SizedBox(height: 5),
                                 ATTextFormField(
@@ -269,8 +274,7 @@ class LiveEventDetailedScreen extends StatelessWidget {
                                       ),
                                     ),
                                     enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(14),
+                                        borderRadius: BorderRadius.circular(14),
                                         borderSide: BorderSide(
                                             color: ATColors.transparent))),
                                 const SizedBox(height: 10),
@@ -302,100 +306,119 @@ class LiveEventDetailedScreen extends StatelessWidget {
             ),
           ],
         ),
-        
         resizeToAvoidBottomInset: false,
-        bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit, ATAppState<LiveProgramEntryToken>>(
-          listener: (_, ATAppState<LiveProgramEntryToken> state)async{
-            if(state is SuccessState<LiveProgramEntryToken>){
-              final ProfileData? userData = context
-                .read<LocalUserDataCubit>().currentUserData;
-              final String? userId = userData?.userId;
-              final bool hasTestedMic = userData?.hasTestedMic == true;
-              final bool isHost = userId == homeFeedItem?.hostId;
-            
-              final LiveProgramData liveProgramData = LiveProgramData(
+        bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit,
+                ATAppState<LiveProgramEntryToken>>(
+            listener: (_, ATAppState<LiveProgramEntryToken> state) async {
+          if (state is SuccessState<LiveProgramEntryToken>) {
+            final ProfileData? userData =
+                context.read<LocalUserDataCubit>().currentUserData;
+            final String? userId = userData?.userId;
+            final bool hasTestedMic = userData?.hasTestedMic == true;
+            final bool isHost = userId == homeFeedItem?.hostId;
+
+            final LiveProgramData liveProgramData = LiveProgramData(
                 roomEntryToken: state.newData?.roomEntryToken ?? '',
                 roomUrl: state.newData?.roomUrl ?? '',
                 streamId: state.newData?.streamId ?? '',
                 roomParticipantId: state.newData?.roomParticipantId ?? '',
                 programId: homeFeedItem?.id ?? '',
-                coverUrl: homeFeedItem?.coverUrl
-                  ?? homeFeedItem?.thumbnailUrl ?? '',
-                role: isHost
-                  ? ParticipantRole.host
-                  : ParticipantRole.audience,
+                coverUrl:
+                    homeFeedItem?.coverUrl ?? homeFeedItem?.thumbnailUrl ?? '',
+                role: isHost ? ParticipantRole.host : ParticipantRole.audience,
                 community: Community(name: 'Test Community'),
                 programTitle: homeFeedItem?.title ?? '',
-                programDesc: 'New program'
+                programDesc: 'New program');
+
+            if (!isHost || hasTestedMic) {
+              context.pop(liveProgramData);
+            } else {
+              await context.pushNamed(
+                ATRoutes.goLiveOnboarding,
+                extra: liveProgramData,
               );
-              
-              if(!isHost || hasTestedMic){
+
+              if (context.mounted) {
                 context.pop(liveProgramData);
               }
-              else{
-                await context.pushNamed(
-                  ATRoutes.goLiveOnboarding,
-                  extra: liveProgramData,
-                );
-                
-                if(context.mounted){
-                  context.pop(liveProgramData);
-                }
-              }
             }
-            else if(state is FailureState<LiveProgramEntryToken>){
-              showAppNotification2(
-                context: context,
-                text: state.message,
-                type: NotificationType.failure,
-              );
-            }
-          },
-          builder: (BuildContext ctx, ATAppState<LiveProgramEntryToken> state) {
-            final bool isPaid = homeFeedItem?.programType == ProgramType.paid;
-            return ATBlurredBgBtn(
-              onPressed: (){
-                ctx.read<GetLiveProgramEntryTokenCubit>()
-                .getLiveProgramEntryToken(
-                  homeFeedItem?.livestreamId ?? '',
-                );
-              },
-              isLoading: state is LoadingState<LiveProgramEntryToken>,
-              bgColor: ATColors.white,
-              fgColor: ATColors.black,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  if(isPaid) ...<Widget>[
-                      Text(
-                      ATStrings.pay,
-                      style: TextStyle(
-                        fontSize: ATSizes.size16,
-                        fontWeight: ATFontWeights.w600,
-                        color: ATColors.hex0D0D0D,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    CircleAvatar(
-                      radius: 2.5,
-                      backgroundColor: ATColors.hex0D0D0D,
-                    ),
-                    const SizedBox(width: 5),
-                  ],
-        
+          } else if (state is FailureState<LiveProgramEntryToken>) {
+            showAppNotification2(
+              context: context,
+              text: state.message,
+              type: NotificationType.failure,
+            );
+          }
+        }, builder:
+                (BuildContext ctx, ATAppState<LiveProgramEntryToken> state) {
+          final bool isPaid = homeFeedItem?.programType == ProgramType.paid;
+          return ATBlurredBgBtn(
+            onPressed: () async {
+  String? selectedPaymentMethod;
+
+  if (isPaid) {
+    selectedPaymentMethod = await selectOneTimePaymentMethodDialog(
+      context: context,
+      amount: '${homeFeedItem?.price ?? 0}',
+    );
+
+    if (!context.mounted || selectedPaymentMethod == null) {
+      return;
+    }
+
+    final bool? paymentSuccess = await oneTimePaymentDialog(
+      context: context,
+      paymentMethod: selectedPaymentMethod,
+      contentId: homeFeedItem?.id ?? '',
+      amount: int.tryParse('${homeFeedItem?.price ?? 0}') ?? 0,
+    );
+
+    if (paymentSuccess != true) {
+      return;  
+    }
+  }
+
+
+  ctx.read<GetLiveProgramEntryTokenCubit>().getLiveProgramEntryToken(
+    homeFeedItem?.livestreamId ?? '',
+  );
+},
+            isLoading: state is LoadingState<LiveProgramEntryToken>,
+            bgColor: ATColors.white,
+            fgColor: ATColors.black,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                if (isPaid) ...<Widget>[
                   Text(
-                    isPaid ? '${ATStrings.nairaText}${homeFeedItem?.price}' : 'Join live event',
+                    ATStrings.pay,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: ATSizes.size16,
                       fontWeight: ATFontWeights.w600,
                       color: ATColors.hex0D0D0D,
                     ),
                   ),
+                  const SizedBox(width: 5),
+                  CircleAvatar(
+                    radius: 2.5,
+                    backgroundColor: ATColors.hex0D0D0D,
+                  ),
+                  const SizedBox(width: 5),
                 ],
-              ),
-            );
-          }
-        ),
+                Text(
+                  isPaid
+                      ? '${ATStrings.nairaText}${homeFeedItem?.price}'
+                      : 'Join live event',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: ATFontWeights.w600,
+                    color: ATColors.hex0D0D0D,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
