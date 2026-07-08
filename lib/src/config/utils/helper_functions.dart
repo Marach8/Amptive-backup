@@ -162,11 +162,16 @@ class ATHelperFuncs {
     return weeks;
   }
 
-  static String formatDate(String isoString) {
-    final DateTime parsed = DateTime.parse(isoString);
-    final DateFormat formatter = DateFormat('d MMMM yyyy');
+  static String formatDateOrTime(
+    String? isoString,
+    {String? formatString}
+  ) {
+    if((isoString ?? '').isEmpty) return '';
+    final DateTime parsed = DateTime.parse(isoString!);
+    final DateFormat formatter = DateFormat(formatString ?? 'd MMMM yyyy');
     return formatter.format(parsed);
   }
+  
 
   static Map<String, List<List<DateTime?>>> generateCalendarData(
       List<int> args) {

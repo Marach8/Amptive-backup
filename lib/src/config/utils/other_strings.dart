@@ -411,7 +411,7 @@ class ATStrings {
       'Are you sure you want to end your live show?';
 
   static const String TECHNOLOGY = 'Technology';
-  static const String GOT_TICKET_ID = 'Got a Ticket ID? (coming soon)';
+  static const String gotATicketID = 'Got a Ticket ID?';
   static const String ADDED_2_CALL = 'Added to calender';
   static const String REMOVED_4RM_CAL = 'Removed from calender';
   static const String VIEW = 'View';
@@ -612,10 +612,10 @@ class ATStrings {
   static const String moderationTools = 'Moderation Tools';
   static const String TOP_CREATOR_IN = 'Top Creator in';
   static const String allowComments = 'Allow comments';
-  static const String NEED_2_ENABLE_LISTENERS_MIC =
+  static const String YouWillEnableListenersMic =
       "You will still need to enable the Listeners's mic";
   static const String allowAudienceMic = 'Allow audience mic';
-  static const String ALLOW_HANDRAISING = 'Allow hand raising';
+  static const String allowHandRaising = 'Allow hand raising';
   static const String whispersEnabled =
       'Whispers will be enabled for your event.';
   static const String whispersDisabled =

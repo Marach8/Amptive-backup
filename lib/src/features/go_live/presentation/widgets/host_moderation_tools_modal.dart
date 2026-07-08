@@ -1,6 +1,8 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
+import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -11,7 +13,7 @@ import '../../../../shared/switch_widget.dart';
 
 Future<void> showHostModerationToolsDialog({
   required BuildContext context,
-  required HostModerationCubit hostModeratioCubit
+  required LiveStreamCubit1 liveStreamCubit
 }) async {
   return await showModalBottomSheet(
       backgroundColor: ATColors.hex202020,
@@ -25,11 +27,11 @@ Future<void> showHostModerationToolsDialog({
         topLeft: Radius.circular(15),
         topRight: Radius.circular(15),
       )),
-      builder: (BuildContext context) {
+      builder: (_) {
         return MultiBlocProvider(
           providers: <SingleChildWidget>[
-            BlocProvider<HostModerationCubit>.value(
-              value: hostModeratioCubit,
+            BlocProvider<LiveStreamCubit1>.value(
+              value: liveStreamCubit,
             ),
           ],
           child: const _SubWidget(),
@@ -42,6 +44,8 @@ class _SubWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveStreamState1 state = 
+      context.watch<LiveStreamCubit1>().state;
     return Container(
       width: context.screenWidth,
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 10),
@@ -63,115 +67,130 @@ class _SubWidget extends StatelessWidget {
             _CustomRow(
               title: ATStrings.allowComments,
               icon: Iconsax.message,
-              trailing: BlocConsumer<HostModerationCubit,
-                      List<bool>>(
-                  listenWhen: (List<bool> prev, List<bool> curr) =>
-                      prev.first != curr.first,
-                  buildWhen: (List<bool> prev, List<bool> curr) =>
-                      prev.first != curr.first,
-                  listener: (_, List<bool> state) {
-                    if (state[1]) {
-                      showAppNotification(
-                          context: context,
-                          text: ATStrings.allowedComments,
-                          icon: const Icon(
-                            Iconsax.message,
-                          ));
-                    } else {
-                      showAppNotification(
-                          context: context,
-                          text: ATStrings.disabledComments,
-                          icon: const Icon(Iconsax.message));
-                    }
-                  },
-                  builder: (_, List<bool> state) {
-                    return ATSwitch(
-                        value: state.first,
-                        onChanged: (bool value) => value
-                            ? context
-                                .read<
-                                    HostModerationCubit>()
-                                .allowComments()
-                            : context
-                                .read<
-                                    HostModerationCubit>()
-                                .disableComments());
-                  }),
+              trailing: ATSwitch(
+                value: state.allowComments ?? false,
+                onChanged: (bool value) => context
+                  .read<LiveStreamCubit1>().toggleAllowComments(value)
+              ),
+              // trailing: BlocConsumer<HostModerationCubit,
+              //         List<bool>>(
+              //     listenWhen: (List<bool> prev, List<bool> curr) =>
+              //         prev.first != curr.first,
+              //     buildWhen: (List<bool> prev, List<bool> curr) =>
+              //         prev.first != curr.first,
+              //     listener: (_, List<bool> state) {
+              //       if (state[1]) {
+              //         showAppNotification(
+              //             context: context,
+              //             text: ATStrings.allowedComments,
+              //             icon: const Icon(
+              //               Iconsax.message,
+              //             ));
+              //       } else {
+              //         showAppNotification(
+              //             context: context,
+              //             text: ATStrings.disabledComments,
+              //             icon: const Icon(Iconsax.message));
+              //       }
+              //     },
+              //     builder: (_, List<bool> state) {
+              //       return ATSwitch(
+              //           value: state.first,
+              //           onChanged: (bool value) => value
+              //               ? context
+              //                   .read<
+              //                       HostModerationCubit>()
+              //                   .allowComments()
+              //               : context
+              //                   .read<
+              //                       HostModerationCubit>()
+              //                   .disableComments());
+              //     }),
             ),
             const SizedBox(height: 10),
             _CustomRow(
               title: ATStrings.allowAudienceMic,
               icon: Icons.mic,
-              subtitle: ATStrings.NEED_2_ENABLE_LISTENERS_MIC,
-              trailing: BlocConsumer<HostModerationCubit,
-                      List<bool>>(
-                  listenWhen: (List<bool> prev, List<bool> curr) =>
-                      prev[1] != curr[1],
-                  buildWhen: (List<bool> prev, List<bool> curr) =>
-                      prev[1] != curr[1],
-                  listener: (_, List<bool> state) {
-                    if (state[1]) {
-                      showAppNotification(
-                          context: context,
-                          text: ATStrings.ALLOWED_AUD_MIC,
-                          icon: const Icon(Icons.mic));
-                    } else {
-                      showAppNotification(
-                          context: context,
-                          text: ATStrings.DISABLED_AUD_MIC,
-                          icon: const Icon(Icons.mic));
-                    }
-                  },
-                  builder: (_, List<bool> state) {
-                    return ATSwitch(
-                        value: state[1],
-                        onChanged: (bool value) => value
-                            ? context
-                                .read<
-                                    HostModerationCubit>()
-                                .allowAudienceMic()
-                            : context
-                                .read<
-                                    HostModerationCubit>()
-                                .disableAudienceMic());
-                  }),
+              subtitle: ATStrings.YouWillEnableListenersMic,
+              trailing: ATSwitch(
+                value: state.allowAudienceMic ?? false,
+                onChanged: (bool value) => context
+                  .read<LiveStreamCubit1>().toggleAllowAudienceMic(value),
+              ),
+              // trailing: BlocConsumer<HostModerationCubit,
+              //         List<bool>>(
+              //     listenWhen: (List<bool> prev, List<bool> curr) =>
+              //         prev[1] != curr[1],
+              //     buildWhen: (List<bool> prev, List<bool> curr) =>
+              //         prev[1] != curr[1],
+              //     listener: (_, List<bool> state) {
+              //       if (state[1]) {
+              //         showAppNotification(
+              //             context: context,
+              //             text: ATStrings.ALLOWED_AUD_MIC,
+              //             icon: const Icon(Icons.mic));
+              //       } else {
+              //         showAppNotification(
+              //             context: context,
+              //             text: ATStrings.DISABLED_AUD_MIC,
+              //             icon: const Icon(Icons.mic));
+              //       }
+              //     },
+              //     builder: (_, List<bool> state) {
+              //       return ATSwitch(
+              //           value: state[1],
+              //           onChanged: (bool value) => value
+              //               ? context
+              //                   .read<
+              //                       HostModerationCubit>()
+              //                   .allowAudienceMic()
+              //               : context
+              //                   .read<
+              //                       HostModerationCubit>()
+              //                   .disableAudienceMic());
+              //     }),
             ),
             const SizedBox(height: 10),
             _CustomRow(
-              title: ATStrings.ALLOW_HANDRAISING,
+              title: ATStrings.allowHandRaising,
               icon: Icons.front_hand_outlined,
-              trailing: BlocConsumer<HostModerationCubit,
-                      List<bool>>(
-                  listenWhen: (List<bool> prev, List<bool> curr) =>
-                      prev.last != curr.last,
-                  buildWhen: (List<bool> prev, List<bool> curr) =>
-                      prev.last != curr.last,
-                  listener: (_, List<bool> state) {
-                    if (state.last) {
-                      showAppNotification(
-                          context: context,
-                          text: ATStrings.ALLOWED_HAND_RAISING,
-                          icon: const Icon(Icons.front_hand_outlined));
-                    } else {
-                      showAppNotification(
-                          context: context,
-                          text: ATStrings.DISABLED_HAND_RAISING,
-                          icon: const Icon(Icons.front_hand_outlined));
-                    }
-                  },
-                  builder: (_, List<bool> state) {
-                    return ATSwitch(
-                        value: state.last,
-                        onChanged: (bool value) => value
-                            ? context
-                                .read<
-                                    HostModerationCubit>()
-                                .allowHandRaising()
-                            : context
-                                .read<
-                                    HostModerationCubit>()
-                                .disableHandRaising());
-                  }),
+              trailing: ATSwitch(
+                value: state.allowHandRaise ?? false,
+                onChanged: (bool value) => context
+                  .read<LiveStreamCubit1>().toggleAllowHandRaise(value)
+              ),
+              // trailing: BlocConsumer<HostModerationCubit,
+              //         List<bool>>(
+              //     listenWhen: (List<bool> prev, List<bool> curr) =>
+              //         prev.last != curr.last,
+              //     buildWhen: (List<bool> prev, List<bool> curr) =>
+              //         prev.last != curr.last,
+              //     listener: (_, List<bool> state) {
+              //       if (state.last) {
+              //         showAppNotification(
+              //             context: context,
+              //             text: ATStrings.ALLOWED_HAND_RAISING,
+              //             icon: const Icon(Icons.front_hand_outlined));
+              //       } else {
+              //         showAppNotification(
+              //             context: context,
+              //             text: ATStrings.DISABLED_HAND_RAISING,
+              //             icon: const Icon(Icons.front_hand_outlined));
+              //       }
+              //     },
+              //     builder: (_, List<bool> state) {
+              //       return ATSwitch(
+              //           value: state.last,
+              //           onChanged: (bool value) => value
+              //               ? context
+              //                   .read<
+              //                       HostModerationCubit>()
+              //                   .allowHandRaising()
+              //               : context
+              //                   .read<
+              //                       HostModerationCubit>()
+              //                   .disableHandRaising());
+              //     }),
             ),
           ]),
     );
@@ -213,7 +232,7 @@ class _CustomRow extends StatelessWidget {
                   ),
                 if (subtitle != null)
                   Text(
-                    subtitle!,
+                    subtitle!, maxLines: 2,
                     style: context.textTheme.bodySmall?.copyWith(
                         fontSize: ATSizes.size12,
                         color: ATColors.white.withValues(alpha: 0.4)),
@@ -228,4 +247,3 @@ class _CustomRow extends StatelessWidget {
     );
   }
 }
-

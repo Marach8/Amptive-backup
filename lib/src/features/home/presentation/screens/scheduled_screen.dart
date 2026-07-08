@@ -5,7 +5,7 @@ import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/followed_shows_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
-import 'package:amptive/src/shared/refresh_indicator.dart';
+import 'package:amptive/src/shared/refresh_widgets.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

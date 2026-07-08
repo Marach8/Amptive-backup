@@ -1,7 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';

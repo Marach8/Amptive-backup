@@ -11,7 +11,6 @@ import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/image_loader_widget.dart';
 import '../widgets/go_live_widget_in_home.dart';
 import 'package:amptive/src/shared/live_user_animation.dart';
-import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 
 class RowOfLiveUsers extends StatelessWidget {
@@ -51,11 +50,9 @@ class RowOfLiveUsers extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 14),
                     child: Center(
-                      child: Builder(
-                        builder: (_) => Text(
-                          'No live users available yet...',
-                          style: TextStyle(color: ATColors.hexA8A8A8),
-                        ),
+                      child: Text(
+                        'No live users available yet...',
+                        style: TextStyle(color: ATColors.hexA8A8A8),
                       ),
                     ),
                   ),
@@ -129,7 +126,8 @@ class LiveUserWidget extends StatelessWidget {
           children: <Widget>[
             LiveUserAnimationWidget(
               child: ATImgLoader(
-                imgPath: user.profileImageUrl ?? ATImgStrings.jpeg3,
+                imgPath: user.profileImageUrl 
+                  ?? ATImgStrings.noAvatarImage,
                 boxFit: BoxFit.cover,
                 height: 60,
                 width: 60,
@@ -142,7 +140,10 @@ class LiveUserWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        Text('emmanuel', style: Theme.of(context).textTheme.titleSmall),
+        Text(
+          user.username ?? '',
+          style: context.textTheme.titleSmall
+        ),
       ],
     );
   }
@@ -173,7 +174,7 @@ class _LiveIndicator extends StatelessWidget {
           )),
       child: Text(ATStrings.live.toUpperCase(),
           style: context.textTheme.titleSmall
-              ?.copyWith(fontWeight: ATFontWeights.w600)),
+              ?.copyWith(fontWeight: FontWeight.w600)),
     );
   }
 }

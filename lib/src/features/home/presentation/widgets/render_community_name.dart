@@ -21,7 +21,7 @@ class RenderCommunityName extends StatelessWidget {
         Text(
           (communityName ?? ATStrings.society).toUpperCase(),
           style: context.textTheme.bodyMedium
-              ?.copyWith(color: ATColors.hexA8A8A8, fontSize: ATSizes.size14),
+              ?.copyWith(color: ATColors.hexA8A8A8, fontSize:14),
         ),
       ],
     );

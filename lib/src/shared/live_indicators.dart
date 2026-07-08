@@ -75,23 +75,18 @@ class _LiveIndicatorWithAnimatinWifiIconState
           ),
           onEnd: () => setState(() => isDone = !isDone),
           builder: (_, Color? color, __) {
-            return ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                color ?? ATColors.hexA8A8A8,
-                BlendMode.srcATop,
-              ),
-              child: const ATImgLoader(
-                imgPath: ATImgStrings.wifiIcon,
-                height: 24,
-                width: 24,
-              ),
+            return ATImgLoader(
+              imgPath: ATImgStrings.wifiIcon,
+              height: 24,
+              width: 24,
+              color: color ?? ATColors.hexA8A8A8,
             );
           }
         ),
         Text(
           ATStrings.live.toUpperCase(),
           style: context.textTheme.bodyMedium
-              ?.copyWith(color: ATColors.hexA8A8A8, fontSize: ATSizes.size14),
+              ?.copyWith(color: ATColors.hexA8A8A8, fontSize: 14),
         ),
       ],
     );

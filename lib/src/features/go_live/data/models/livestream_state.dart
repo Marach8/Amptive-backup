@@ -1,9 +1,7 @@
 import 'package:amptive/src/config/services/ws_notif_service/ws_channel_service_impl.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
-import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
-import 'package:amptive/src/shared/sentinel.dart';
 import 'package:equatable/equatable.dart';
 
 
@@ -36,6 +34,10 @@ class LiveStreamState1 extends Equatable {
     this.allParticipantsIds,
     this.liveStreamEnded,
     this.myRole,
+    this.allowAudienceMic,
+    this.allowComments,
+    this.allowHandRaise,
+    this.allowWhispers,
   });
 
   final AudioConnectionStatus audioConnectionStatus;
@@ -59,7 +61,9 @@ class LiveStreamState1 extends Equatable {
     unMutedParticipantIds, allParticipantsIds;
   final ParticipantRole? myRole;
   final int viewerCount;
-  final bool? myHandIsRaised, liveStreamEnded;
+  final bool? myHandIsRaised, liveStreamEnded, allowHandRaise,
+    allowWhispers, allowAudienceMic, allowComments;
+  
 
   /// Creates a new state object with updated values.
   LiveStreamState1 copyWith({
@@ -90,6 +94,10 @@ class LiveStreamState1 extends Equatable {
     List<String>? allParticipantsIds,
     ParticipantRole? myRole,
     bool? liveStreamEnded,
+    bool? allowAudienceMic,
+    bool? allowComments,
+    bool? allowHandRaise,
+    bool? allowWhispers
   }) {
     return LiveStreamState1(
       audioConnectionStatus: audioConnectionStatus 
@@ -125,6 +133,10 @@ class LiveStreamState1 extends Equatable {
       allParticipantsIds: allParticipantsIds ?? this.allParticipantsIds,
       myRole: myRole ?? this.myRole,
       liveStreamEnded: liveStreamEnded ?? this.liveStreamEnded,
+      allowAudienceMic: allowAudienceMic ?? this.allowAudienceMic,
+      allowComments: allowComments ?? this.allowComments,
+      allowHandRaise: allowHandRaise ?? this.allowHandRaise,
+      allowWhispers: allowWhispers ?? this.allowWhispers,
     );
   }
 
@@ -157,6 +169,10 @@ class LiveStreamState1 extends Equatable {
         allParticipantsIds,
         myRole,
         liveStreamEnded,
+        allowWhispers,
+        allowHandRaise,
+        allowAudienceMic,
+        allowComments,
       ];
 }
 

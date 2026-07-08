@@ -42,6 +42,7 @@ class EventsRepoImpl implements EventsRepo {
     required CreateEventPayload createEventModel,
   }) async {
     try {
+      log(createEventModel.toJson().toString());
       final Response<dynamic> response = await networkService.post(
         ATEndpoints.events,
         data: createEventModel.toJson(),

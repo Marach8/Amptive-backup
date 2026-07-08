@@ -29,10 +29,10 @@ class RenderHostedEvent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Hero(
-                  tag: hostedEvent.eventId ?? '',
+              Hero(
+                tag: hostedEvent.coverUrl ?? '',
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
                   child: ATImgLoader(
                     boxFit: BoxFit.fill,
                     height: kst.maxHeight * 0.65,
@@ -58,7 +58,7 @@ class RenderHostedEvent extends StatelessWidget {
                         Text(
                           'Created',
                           style: context.textTheme.titleSmall?.copyWith(
-                            fontSize: ATSizes.size13,
+                            fontSize: 13,
                             color: ATColors.hexA8A8A8,
                           ),
                         ),
@@ -75,7 +75,7 @@ class RenderHostedEvent extends StatelessWidget {
                         ),
                         Flexible(
                           child: Text(
-                            ATHelperFuncs.formatDate(
+                            ATHelperFuncs.formatDateOrTime(
                                 hostedEvent.createdAt ?? ''),
                             style: context.textTheme.titleSmall?.copyWith(
                               color: ATColors.hexA8A8A8,
@@ -94,4 +94,3 @@ class RenderHostedEvent extends StatelessWidget {
     });
   }
 }
-

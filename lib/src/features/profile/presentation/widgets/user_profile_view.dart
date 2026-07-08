@@ -63,45 +63,47 @@ class UserProfileView extends StatelessWidget {
                       .watch<LocalUserDataCubit>()
                       .currentUserData;
 
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          const UserBgProfileCoverImage(),
-                          const SizedBox(height: 50),
-                          Text(userData?.name ?? '',
-                              style: context.textTheme.bodyLarge?.copyWith(
-                                height: 0.6,
-                              )),
-                          const SizedBox(height: 8),
-                          Text(
-                            userData?.username ?? '',
-                            style: context.textTheme.titleMedium?.copyWith(
-                                color: ATColors.hexC2C2C2, height: 0.8),
-                          ),
-                          const SizedBox(height: 20),
-                          NoOfFollowers(noOfFollowers: userData?.followersCount),
-                          const SizedBox(height: 15),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: ATContainer(
-                              onTap: () => context.pushNamed(ATRoutes.editProfile),
-                              alignment: Alignment.center,
-                              radius: 50,
-                              padding: const EdgeInsets.only(top: 10, bottom: 10),
-                              color: ATColors.white.withValues(alpha: 0.2),
-                              child: Text(ATStrings.editProfile,
-                                style: context.textTheme.bodyMedium
-                                  ?.copyWith(fontSize: ATSizes.size14
-                                )
-                              )
+                      return SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            const UserBgProfileCoverImage(),
+                            const SizedBox(height: 50),
+                            Text(userData?.name ?? '',
+                                style: context.textTheme.bodyLarge?.copyWith(
+                                  height: 0.6,
+                                )),
+                            const SizedBox(height: 8),
+                            Text(
+                              userData?.username ?? '',
+                              style: context.textTheme.titleMedium?.copyWith(
+                                  color: ATColors.hexC2C2C2, height: 0.8),
                             ),
-                          ),
-                          const SizedBox(height: 15),
-                          Divider(
-                            thickness: 1,
-                            color: ATColors.white.withValues(alpha: 0.1),
-                          ),
-                        ],
+                            const SizedBox(height: 20),
+                            NoOfFollowers(noOfFollowers: userData?.followersCount),
+                            const SizedBox(height: 15),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              child: ATContainer(
+                                onTap: () => context.pushNamed(ATRoutes.editProfile),
+                                alignment: Alignment.center,
+                                radius: 50,
+                                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                color: ATColors.white.withValues(alpha: 0.2),
+                                child: Text(ATStrings.editProfile,
+                                  style: context.textTheme.bodyMedium
+                                    ?.copyWith(fontSize: ATSizes.size14
+                                  )
+                                )
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            Divider(
+                              thickness: 1,
+                              color: ATColors.white.withValues(alpha: 0.1),
+                            ),
+                          ],
+                        ),
                       );
                     }
                   ),

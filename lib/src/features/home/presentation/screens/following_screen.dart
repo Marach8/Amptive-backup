@@ -6,7 +6,7 @@ import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
 import 'package:amptive/src/features/home/presentation/screens/home_landing_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/followed_shows_response_model.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
-import 'package:amptive/src/shared/refresh_indicator.dart';
+import 'package:amptive/src/shared/refresh_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

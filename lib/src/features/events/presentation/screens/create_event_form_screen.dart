@@ -89,7 +89,7 @@ class __SubWidgetState extends State<_SubWidget> {
       ValueNotifier<(bool?, ScheduleBtnOnTap)>((false, ScheduleBtnOnTap.goLive));
 
   String selectedDescription = ATStrings.tellListenersAboutYourEvent;
-  String selectedCapacity = 'Unlimited';
+  int? _selectedCapacity;
   HandRaisingPermission? selectedPermission;
   WhispersPermission? selectedWhispersPermission;
 
@@ -615,14 +615,15 @@ class __SubWidgetState extends State<_SubWidget> {
                             child: StatefulBuilder(
                               builder:(_, StateSetter setter) {
                                 return CreateProgramSelectionItem(
-                                  description: selectedCapacity,
+                                  description: _selectedCapacity == null ? 'Unlimited'
+                                    : _selectedCapacity.toString(),
                                   descStyle: context.textTheme.bodySmall,
                                   onTap: () async {
-                                    final String? newCapacity = await showEventCapacitySelectionDialog(
+                                    final int? newCapacity = await showEventCapacitySelectionDialog(
                                       context: context,
-                                      currentCapacity: selectedCapacity == 'Unlimited' ? null : selectedCapacity,
+                                      currentCapacity: _selectedCapacity,
                                     );
-                                    setter(() => selectedCapacity = newCapacity ?? 'Unlimited');
+                                    setter(() => _selectedCapacity = newCapacity ?? 0);
                                   },
                                 );
                             }),
@@ -729,6 +730,10 @@ class __SubWidgetState extends State<_SubWidget> {
                     roomEntryToken: state.newData?.roomEntryToken ?? '',
                     roomUrl: state.newData?.roomUrl ?? '',
                     streamId: state.newData?.streamId ?? '',
+                    allowAudienceMic: state.newData?.allowAudienceMic ?? false,
+                    allowComments: state.newData?.allowComments ?? false,
+                    allowHandRaise: state.newData?.allowHandRaise ?? false,
+                    allowWhispers: state.newData?.allowWhispers ?? false,
                     roomParticipantId: state.newData?.roomParticipantId ?? '',
                     programId: hostedEvent?.eventId ?? '',
                     coverUrl: hostedEvent?.coverUrl ?? '',
@@ -772,7 +777,7 @@ class __SubWidgetState extends State<_SubWidget> {
             BlocListener<UploadImageCubit, ATAppState<String>>(
               listener: (_, ATAppState<String> state) {
                 if (state is SuccessState<String>) {
-                  //If we upload image successfully, create the episode.
+                  //If we upload image successfully, create the event.
                   context.read<CreateEventCubit>().createEvent(
                     createEventModel: CreateEventPayload(
                       tagIds: (selectedHashtags ?? <HashTag>[])
@@ -791,7 +796,7 @@ class __SubWidgetState extends State<_SubWidget> {
                         == ProgramAccessType.free ? 'free' : 'paid',
                       handRaising: selectedPermission == HandRaisingPermission.allow,
                       price: accessTypeData.subscriptionAmount ?? 0.01,
-                      capacity: selectedCapacity,
+                      capacity: _selectedCapacity,
                       scheduledFor: _scheduleDate?.toUtc().toIso8601String(),
                     ),
                   );

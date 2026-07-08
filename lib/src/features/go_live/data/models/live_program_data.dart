@@ -35,27 +35,31 @@ class LiveProgramData {
     required this.coverUrl,
     required this.programTitle,
     required this.programDesc,
+    required this.allowAudienceMic,
+    required this.allowComments,
+    required this.allowHandRaise,
+    required this.allowWhispers,
     this.community,
   });
 
-  factory LiveProgramData.fromJson(Map<String, dynamic> json) {
-    return LiveProgramData(
-      roomEntryToken: json['room_entry_token'] ?? '',
-      roomUrl: json['room_url'] ?? '',
-      streamId: json['stream_id'] ?? '',
-      roomParticipantId: json['room_participant_id'] ?? '',
-      role: ParticipantRole.fromJson(json['role']),
-      programId: json['program_id'] ?? '',
-      coverUrl: json['cover_url'] ?? '',
-      programTitle: json['program_title'] ?? '',
-      programDesc: json['program_desc'] ?? '',
-      community: json['community'] == null
-          ? null
-          : Community.fromJson(
-              Map<String, dynamic>.from(json['community']),
-            ),
-    );
-  }
+  // factory LiveProgramData.fromJson(Map<String, dynamic> json) {
+  //   return LiveProgramData(
+  //     roomEntryToken: json['room_entry_token'] ?? '',
+  //     roomUrl: json['room_url'] ?? '',
+  //     streamId: json['stream_id'] ?? '',
+  //     roomParticipantId: json['room_participant_id'] ?? '',
+  //     role: ParticipantRole.fromJson(json['role']),
+  //     programId: json['program_id'] ?? '',
+  //     coverUrl: json['cover_url'] ?? '',
+  //     programTitle: json['program_title'] ?? '',
+  //     programDesc: json['program_desc'] ?? '',
+  //     community: json['community'] == null
+  //         ? null
+  //         : Community.fromJson(
+  //             Map<String, dynamic>.from(json['community']),
+  //           ),
+  //   );
+  // }
 
   final String roomEntryToken,
       roomUrl,
@@ -68,19 +72,21 @@ class LiveProgramData {
 
   final ParticipantRole role;
   final Community? community;
+  final bool allowHandRaise, allowWhispers,
+    allowAudienceMic, allowComments;
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'room_entry_token': roomEntryToken,
-      'room_url': roomUrl,
-      'stream_id': streamId,
-      'room_participant_id': roomParticipantId,
-      'role': role.value,
-      'program_id': programId,
-      'cover_url': coverUrl,
-      'program_title': programTitle,
-      'program_desc': programDesc,
-      'community': community?.toJson(),
-    };
-  }
+  // Map<String, dynamic> toJson() {
+  //   return <String, dynamic>{
+  //     'room_entry_token': roomEntryToken,
+  //     'room_url': roomUrl,
+  //     'stream_id': streamId,
+  //     'room_participant_id': roomParticipantId,
+  //     'role': role.value,
+  //     'program_id': programId,
+  //     'cover_url': coverUrl,
+  //     'program_title': programTitle,
+  //     'program_desc': programDesc,
+  //     'community': community?.toJson(),
+  //   };
+  //}
 }

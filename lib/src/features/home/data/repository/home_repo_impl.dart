@@ -7,10 +7,12 @@ import 'package:amptive/src/config/services/network_service/dio_network_service_
 import 'package:amptive/src/config/services/network_service/network_service.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/data/models/response/going_status.dart';
+import 'package:amptive/src/features/home/data/models/response/whispers_response_model.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/home/data/models/response/live_users_response_model.dart';
+import 'package:amptive/src/features/home/data/models/response/live_listeners_response_model.dart';
 import 'package:dio/dio.dart' show Response;
 
 class HomeRepoImpl implements HomeRepo {
@@ -155,6 +157,76 @@ class HomeRepoImpl implements HomeRepo {
     } catch (e) {
       log('Unmark going error: $e');
       return Unsuccessful<GoingStatus>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> validateTicket({
+    required String eventId,
+    required String ticket,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        '${ATEndpoints.eventTicket}/$eventId/tickets/validate',
+        queryParameters: <String, dynamic>{
+          'ticket_code': ticket,
+        },
+      );
+
+      return Successful<dynamic>(data: response.data);
+    } catch (e) {
+      log('Validate tickets error: $e');
+      return Unsuccessful<dynamic>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<WhispersResponseModel>> fetchWhispers({
+    required String livestreamId,
+    int? limit,
+    String? beforeId,
+  }) async {
+    try {
+      final String endpoint = '${ATEndpoints.livestreams}$livestreamId/chat';
+
+      final Response<dynamic> response = await networkService.get(
+        endpoint,
+        queryParameters: <String, dynamic>{
+          if(limit != null)'limit': limit,
+          if(beforeId != null)'before_id': beforeId,
+        },
+      );
+
+      return Successful<WhispersResponseModel>(
+        data: WhispersResponseModel.fromJson(response.data));
+    } catch (e) {
+      log('Fetch livestream chat error: $e');
+      return Unsuccessful<WhispersResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<LiveListenersResponseModel>> fetchLiveListeners({
+    required String liveStreamId,
+  }) async {
+    try {
+      final String endpoint =
+          '${ATEndpoints.livestreams}$liveStreamId/participants';
+
+      final Response<dynamic> response = await networkService.get(endpoint);
+
+      return Successful<LiveListenersResponseModel>(
+        data: LiveListenersResponseModel.fromJson(response.data),
+      );
+    } catch (e) {
+      log('Fetch livestream listeners error: $e');
+      return Unsuccessful<LiveListenersResponseModel>(
         error: ATException.resolveException(e),
       );
     }

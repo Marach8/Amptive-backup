@@ -51,7 +51,10 @@ class HomeFeedItem {
     this.showCategory,
     this.episodeNumber,
     this.thumbnailUrl,
+    this.allowWhispers,
     this.cohosts,
+    this.hashTagNames,
+    this.community,
   });
 
   factory HomeFeedItem.fromJson(Map<String, dynamic> json) {
@@ -77,12 +80,18 @@ class HomeFeedItem {
       avatarUrls: (json['avatar_urls'] as List<dynamic>?)
           ?.map((dynamic e) => e as String)
           .toList(),
+      hashTagNames: (json['tags'] as List<dynamic>?)
+          ?.map((dynamic e) => e as String)
+          .toList(),
       showId: json['show_id'],
       showTitle: json['show_title'],
       showCoverUrl: json['show_cover_url'],
       showCategory: json['show_category'],
       episodeNumber: json['episode_number'],
-      thumbnailUrl: json['thumbnail_url'] as String?,
+      thumbnailUrl: json['thumbnail_url'],
+      allowWhispers: json['allow_whispers'],
+      community: json['community'] == null ? 
+        null : Community.fromJson(json['community']),
       cohosts: (json['co_hosts'] as List<dynamic>?)
           ?.map((dynamic e) => User.fromJson(e))
           .toList(),
@@ -109,12 +118,15 @@ class HomeFeedItem {
     bool? requesterIsGoing,
     String? livestreamId,
     List<String>? avatarUrls,
+    List<String>? hashTagNames,
     String? showId,
     String? showTitle,
     String? showCoverUrl,
     String? showCategory,
     int? episodeNumber,
     String? thumbnailUrl,
+    bool? allowWhispers,
+    Community? community,
   }) {
     return HomeFeedItem(
       id: id ?? this.id,
@@ -145,6 +157,9 @@ class HomeFeedItem {
       showCategory: showCategory ?? this.showCategory,
       episodeNumber: episodeNumber ?? this.episodeNumber,
       thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      allowWhispers: allowWhispers ?? this.allowWhispers,
+      community: community ?? this.community,
+      hashTagNames: hashTagNames ?? this.hashTagNames,
     );
   }
 
@@ -168,9 +183,11 @@ class HomeFeedItem {
   final ProgramStatus? programStatus;
   final double? price, score;
   final int? viewerCount, goingCount, episodeNumber;
-  final bool? requesterFollowsHost, requesterIsGoing;
-  final List<String>? avatarUrls;
+  final bool? requesterFollowsHost, requesterIsGoing,
+    allowWhispers;
+  final List<String>? avatarUrls, hashTagNames;
   final List<User>? cohosts;
+  final Community? community;
 }
 
 enum ProgramType {

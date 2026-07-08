@@ -1,4 +1,6 @@
+import 'package:amptive/src/config/routing/routes.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/custom_container_widget.dart';
@@ -40,11 +42,14 @@ Future<dynamic> showAppNotification(
 enum NotificationType { normal, success, failure }
 
 Future<dynamic> showAppNotification2({
-  required BuildContext context,
+  BuildContext? context,
   required String text,
   NotificationType type = NotificationType.normal,
   int? duration,
 }) async {
+  final BuildContext? ctx = navigatorKey.currentContext ?? context;
+  if(ctx == null) return;
+
   return await Flushbar<dynamic>(
     backgroundColor: ATColors.transparent,
     flushbarPosition: FlushbarPosition.TOP,
@@ -80,12 +85,12 @@ Future<dynamic> showAppNotification2({
               child: Text(
                 text,
                 maxLines: 2,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: ctx.textTheme.bodySmall,
               ),
             ),
           ],
         ),
       ),
     ),
-  ).show(context);
+  ).show(ctx);
 }

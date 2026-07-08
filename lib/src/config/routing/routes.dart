@@ -7,6 +7,7 @@ import 'package:amptive/src/features/accounts/presentation/screens/update_phone_
 import 'package:amptive/src/features/accounts/presentation/screens/update_name_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_username_screen.dart';
 import 'package:amptive/src/features/accounts/presentation/screens/update_dob_screen.dart';
+import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/create_new_password_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/forgot_password_email_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/phone_login_screen.dart';
@@ -27,16 +28,23 @@ import 'package:amptive/src/features/discover/presentation/views/society_screen.
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/screens/edit_episode_form_screen.dart';
+import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
 import 'package:amptive/src/features/events/presentation/screens/edit_event_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
+import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
+import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
+import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
+import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
+import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/subscribed_screen.dart';
 import 'package:amptive/src/features/dashboard.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
+import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_bio_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_name_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_username_screen.dart';
@@ -59,12 +67,12 @@ import 'package:amptive/src/features/upgrade_account/presentation/screens/select
 import 'package:amptive/src/features/upgrade_account/presentation/screens/select_category_screen.dart';
 import 'package:amptive/src/features/upgrade_account/presentation/screens/selected_acct_onboard_screen.dart';
 import 'package:amptive/src/features/upgrade_account/presentation/screens/subscription_plan_screen.dart';
+import 'package:amptive/src/features/wallet/cubits/one_time_payment_cubit.dart';
+import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
 import 'package:amptive/src/shared/blurred_header.dart';
-import 'package:custom_image_crop/custom_image_crop.dart'
-    show Ratio, CustomCropShape;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -86,7 +94,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: ATRoutes.onboardingScreen.addSlash,
-  //redirect: tgRedirect,
+  redirect: tgRedirect,
 
   routes: <RouteBase>[
     GoRoute(
@@ -362,11 +370,17 @@ final GoRouter amptiveAppRouter = GoRouter(
                 child: MultiBlocProvider(
                   providers: <SingleChildWidget>[
                     BlocProvider<BlurredHeaderCubit>(
-                      create: (_) => BlurredHeaderCubit(),
-                    ),
+                      create: (_) => BlurredHeaderCubit()),
                     BlocProvider<GetLiveProgramEntryTokenCubit>(
-                      create: (_) => GetLiveProgramEntryTokenCubit(),
-                    ),
+                      create: (_) => GetLiveProgramEntryTokenCubit()),
+                    BlocProvider<LiveWhispersCubit>(
+                      create: (_) => LiveWhispersCubit()),
+                    BlocProvider<LiveListenersCubit>(
+                      create: (_) => LiveListenersCubit()),
+                    BlocProvider<OneTimePaymentCubit>(
+                      create: (_) => OneTimePaymentCubit()),
+                    BlocProvider<VerifyPaymentCubit>(
+                      create: (_) => VerifyPaymentCubit()),
                   ],
                   child: LiveShowDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,
@@ -383,11 +397,19 @@ final GoRouter amptiveAppRouter = GoRouter(
                 child: MultiBlocProvider(
                   providers: <SingleChildWidget>[
                     BlocProvider<GetLiveProgramEntryTokenCubit>(
-                      create: (_) => GetLiveProgramEntryTokenCubit(),
-                    ),
+                      create: (_) => GetLiveProgramEntryTokenCubit()),
                     BlocProvider<BlurredHeaderCubit>(
-                      create: (_) => BlurredHeaderCubit(),
-                    )
+                      create: (_) => BlurredHeaderCubit()),
+                    BlocProvider<ValidateTicketCubit>(
+                      create: (_) => ValidateTicketCubit()),
+                    BlocProvider<LiveWhispersCubit>(
+                      create: (_) => LiveWhispersCubit()),
+                    BlocProvider<LiveListenersCubit>(
+                      create: (_) => LiveListenersCubit()),
+                    BlocProvider<OneTimePaymentCubit>(
+                      create: (_) => OneTimePaymentCubit()),
+                    BlocProvider<VerifyPaymentCubit>(
+                      create: (_) => VerifyPaymentCubit()),
                   ],
                   child: LiveEventDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,
@@ -419,7 +441,17 @@ final GoRouter amptiveAppRouter = GoRouter(
               name: ATRoutes.listHostedEventsScreen,
               path: ATRoutes.listHostedEventsScreen.addSlash,
               pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                    child: const ListHostedEventsScreen(),
+                    child: MultiBlocProvider(
+                      providers: <SingleChildWidget>[
+                        BlocProvider<BlurredHeaderCubit>(
+                          create: (_) => BlurredHeaderCubit(),
+                        ),
+                        BlocProvider<HostedEventSelectionCubit>(
+                            create: (_) => HostedEventSelectionCubit()),
+                        BlocProvider<HostedEventsCubit>(create: (_) => HostedEventsCubit())
+                      ],
+                      child: const ListHostedEventsScreen(),
+                    ),
                   )),
           GoRoute(
               name: ATRoutes.createShowFormScreen,
@@ -470,7 +502,17 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
               name: ATRoutes.editProfile,
               path: ATRoutes.editProfile.addSlash,
-              builder: (_, __) => const EditProfileScreen(),
+              pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+                child: MultiBlocProvider(
+                  providers: <SingleChildWidget>[
+                    BlocProvider<RemoteUserDataCubit>(
+                      create: (_) => RemoteUserDataCubit()),
+                    BlocProvider<UploadImageCubit>(
+                      create: (_) => UploadImageCubit())
+                  ],
+                  child: const EditProfileLandingScreen(),
+                ),
+              ),
               routes: <RouteBase>[
                 GoRoute(
                     name: ATRoutes.imageCropperScreen,
@@ -736,9 +778,31 @@ final GoRouter amptiveAppRouter = GoRouter(
             pageBuilder: (_, GoRouterState state) {
               HostedEvent hostedEvent = state.extra as HostedEvent;
               return ATSlidingRouteTransition<void>(
-                  child: PreviewEventScreen(
-                hostedEvent: hostedEvent,
-              ));
+                  child: MultiBlocProvider(
+                    providers: <SingleChildWidget>[
+                      BlocProvider<EventDetailCubit>(
+                        create: (_) => EventDetailCubit(
+                          initialEvent: hostedEvent,
+                        ),
+                      ),
+                      BlocProvider<BlurredHeaderCubit>(
+                          create: (_) => BlurredHeaderCubit()),
+                      BlocProvider<ToggleFollowingCubit>(
+                          create: (_) => ToggleFollowingCubit(
+                            initialStatus: FollowingStatus(
+                            isFollowing: true,
+                            followerCount: hostedEvent.followerCount ?? 0,
+                          )
+                        )
+                      ),
+                      BlocProvider<StartLiveProgramCubit>(
+                        create: (_) => StartLiveProgramCubit()),
+                    ],
+                    child: PreviewEventScreen(
+                      hostedEvent: hostedEvent,
+                    ),
+                  )
+                );
             },
           ),
 

@@ -1,5 +1,3 @@
-import 'dart:developer' show log;
-
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/data/repository/go_live_repo.dart';

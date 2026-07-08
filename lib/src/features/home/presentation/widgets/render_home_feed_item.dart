@@ -46,8 +46,8 @@ class RenderHomeFeedItem extends StatelessWidget {
     return Column(
       children: <Widget>[
         TileWithLeadingImage(
-          leadingImagePath: 
-            homeFeedItem.hostProfileImageUrl ?? ATImgStrings.noAvatarImage,
+          leadingImagePath: (homeFeedItem.hostProfileImageUrl ?? '').isNotEmpty
+            ? homeFeedItem.hostProfileImageUrl!  : ATImgStrings.noAvatarImage,
           trailingOnPressed: () async {
             final SelectedProgramAction? selectedOption =
                 await showProgramOptions(
@@ -186,7 +186,8 @@ class RenderHomeFeedItemShimmer extends StatelessWidget {
         const SizedBox(height: 2),
         Container(
             height: 425,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15)),
             child: Stack(
               children: <Widget>[
                 const ATShimmer(

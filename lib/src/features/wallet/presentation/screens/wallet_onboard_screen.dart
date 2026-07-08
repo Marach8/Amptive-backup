@@ -22,8 +22,6 @@ class _ATWalletOnboardScreenState extends State<ATWalletOnboardScreen> {
     super.initState();
   }
 
- 
-
   @override
   Widget build(_) {
     return Builder(builder: (BuildContext context) {
