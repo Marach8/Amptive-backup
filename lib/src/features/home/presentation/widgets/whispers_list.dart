@@ -16,7 +16,10 @@ import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 class WhispersWidget extends StatelessWidget {
   const WhispersWidget({
     super.key,
+    this.emptyStateDescription,
   });
+
+  final String? emptyStateDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +62,9 @@ class WhispersWidget extends StatelessWidget {
                       Divider(
                         color: ATColors.white.withValues(alpha: 0.1),
                       ),
-                      const EmptyStateWidget(
-                        description: 'Random comments from this live event will appear here.',
+                      EmptyStateWidget(
+                        description: emptyStateDescription ??
+                          'Random comments from this live event will appear here.',
                       ),
                     ],
                   );

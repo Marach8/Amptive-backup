@@ -3,6 +3,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
 import 'package:amptive/src/features/home/data/models/response/live_listeners_response_model.dart';
+import 'package:amptive/src/shared/refresh_widgets.dart';
 import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +30,10 @@ class RenderLiveListeners extends StatelessWidget {
           InitialState<LiveListenersResponseModel>() ||
           LoadingState<LiveListenersResponseModel>() => const _LiveListenersLoading(),
           FailureState<LiveListenersResponseModel>() => Center(
-            child: IconButton(
-              onPressed: (){
+            child: RetryWidget(
+              onRetry: (){
                 context.read<LiveListenersCubit>().fetchLiveListeners();
               },
-              icon: const Icon(Icons.refresh, size: 30),
             ),
           ),
           SuccessState<LiveListenersResponseModel>(

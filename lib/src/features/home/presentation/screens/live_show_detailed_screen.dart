@@ -236,23 +236,12 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-
-                              if(_allowWhispers) ...<Widget>[
-                                const SizedBox(height: 30),
-                                Text(
-                                  ATStrings.whispers,
-                                  style: context.textTheme.bodySmall
-                                      ?.copyWith(fontSize: 17),
-                                ),
-                                Divider(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.1),
-                                ),
-                              ]
                             ],
                           ),
                         ),
-                        if(_allowWhispers) const WhispersWidget(),
+                        if(_allowWhispers) const WhispersWidget(
+                          emptyStateDescription: 'Random comments from this live show will appear here.',
+                        ),
                         const SizedBox(height: 130),
                       ],
                     ),
@@ -263,7 +252,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
           ],
         ),
 
-         resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit, 
           ATAppState<LiveProgramEntryToken>>(
           listener: (_, ATAppState<LiveProgramEntryToken> state)async{
