@@ -12,6 +12,8 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/wallet/cubits/one_time_payment_cubit.dart';
+import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/one_time_process_payment_dialog.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/select_one_time_payment_method.dart';
 import 'package:amptive/src/global_export.dart';
@@ -50,25 +52,31 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
   @override 
   void initState(){
     super.initState();
-    _canJoinNotifier.value = 
-      widget.homeFeedItem?.programType == ProgramType.free;
     _allowWhispers = widget.homeFeedItem?.allowWhispers ?? false;
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_){
         if(!mounted) return;
-        WidgetsBinding.instance.addPostFrameCallback(
-          (_){
-            if(!mounted) return;
-            if(_allowWhispers){
-              context.read<LiveWhispersCubit>().fetchWhispers(
-                livestreamId: widget.homeFeedItem?.livestreamId ?? '');
-            }
-
-            context.read<LiveListenersCubit>().fetchLiveListeners(
-              liveStreamId: widget.homeFeedItem?.livestreamId ?? '');
-          }
+        
+        final String? myUserId = context.read<LocalUserDataCubit>()
+          .currentUserData?.userId;
+        final bool isFreeProgram = widget.homeFeedItem?.programType 
+          == ProgramType.free;
+        final bool isMyProgram = widget.homeFeedItem?.hostId == myUserId;
+          
+        final bool iAmACohost = (widget.homeFeedItem?.cohosts ?? <User>[]).any(
+          (User cohost) => cohost.userId == myUserId,
         );
+
+        _canJoinNotifier.value = isMyProgram || iAmACohost || isFreeProgram;
+
+        if(_allowWhispers){
+          context.read<LiveWhispersCubit>().fetchWhispers(
+            livestreamId: widget.homeFeedItem?.livestreamId ?? '');
+        }
+
+        context.read<LiveListenersCubit>().fetchLiveListeners(
+          liveStreamId: widget.homeFeedItem?.livestreamId ?? '');
       }
     );
   }
@@ -343,6 +351,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
             ),
           ],
         ),
+
         resizeToAvoidBottomInset: false,
         bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit,
           ATAppState<LiveProgramEntryToken>>(
@@ -369,7 +378,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                 role: isHost
                   ? ParticipantRole.host
                   : ParticipantRole.audience,
-                community: Community(name: 'Test Community'),
+                community: widget.homeFeedItem?.community,
                 programTitle: widget.homeFeedItem?.title ?? '',
                 programDesc: 'New program'
               );
@@ -397,14 +406,13 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
             }
           },
           builder: (BuildContext ctx, ATAppState<LiveProgramEntryToken> state) {
-            //final bool isPaid = widget.homeFeedItem?.programType == ProgramType.paid;
             return ValueListenableBuilder<bool>(
               valueListenable: _canJoinNotifier,
               builder: (_, bool canJoin, __) {
-                final bool isPaid = canJoin == false;
+                final bool isPaidProgram = canJoin == false;
                 return ATBlurredBgBtn(
                   onPressed: ()async{
-                    if(canJoin){
+                    if(!canJoin){
                       ctx.read<GetLiveProgramEntryTokenCubit>()
                       .getLiveProgramEntryToken(
                         widget.homeFeedItem?.livestreamId ?? '',
@@ -412,10 +420,10 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                     }
                     else{
                       final String? selectedPaymentMethod = 
-                      await selectOneTimePaymentMethodDialog(
-                        context: context,
-                        amount: '${widget.homeFeedItem?.price ?? 0}',
-                      );
+                        await selectOneTimePaymentMethodDialog(
+                          context: context,
+                          amount: '${widget.homeFeedItem?.price ?? 0}',
+                        );
 
                       if (!context.mounted || selectedPaymentMethod == null) {
                         return;
@@ -425,6 +433,8 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                         context: context,
                         paymentMethod: selectedPaymentMethod,
                         contentId: widget.homeFeedItem?.id ?? '',
+                        oneTimePaymentCubit: context.read<OneTimePaymentCubit>(),
+                        verifyPaymentCubit: context.read<VerifyPaymentCubit>(),
                         amount: int.tryParse('${widget.homeFeedItem?.price ?? 0}') ?? 0,
                       );
 
@@ -437,7 +447,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      if(isPaid) ...<Widget>[
+                      if(isPaidProgram) ...<Widget>[
                           Text(
                           ATStrings.pay,
                           style: TextStyle(
@@ -455,7 +465,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                       ],
                         
                       Text(
-                        isPaid ? '${ATStrings.nairaText}${widget.homeFeedItem?.price}' : 'Join live event',
+                        isPaidProgram ? '${ATStrings.nairaText}${widget.homeFeedItem?.price}' : 'Join live event',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

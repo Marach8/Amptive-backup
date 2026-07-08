@@ -19,6 +19,8 @@ Future<bool?> oneTimePaymentDialog({
   required BuildContext context,
   required String paymentMethod, // 'wallet', 'paystack', etc.
   required String contentId,
+  required OneTimePaymentCubit oneTimePaymentCubit,
+  required VerifyPaymentCubit verifyPaymentCubit,
   required int amount,
 }) {
   final bool isWalletPayment = paymentMethod.toLowerCase() == 'wallet';
@@ -29,15 +31,12 @@ Future<bool?> oneTimePaymentDialog({
     builder: (BuildContext dialogContext) {
       return MultiBlocProvider(
         providers: <SingleChildWidget>[
-          BlocProvider<OneTimePaymentCubit>(
-            create: (_) => OneTimePaymentCubit()
-              ..oneTimePayment(
-                channel: paymentMethod,
-                contentId: contentId,
-              ),
+          BlocProvider<OneTimePaymentCubit>.value(
+            value: oneTimePaymentCubit..oneTimePayment(
+              contentId: contentId, channel: paymentMethod),
           ),
-          BlocProvider<VerifyPaymentCubit>(
-            create: (_) => VerifyPaymentCubit(),
+          BlocProvider<VerifyPaymentCubit>.value(
+            value: verifyPaymentCubit,
           ),
         ],
         child: Builder(builder: (BuildContext context) {

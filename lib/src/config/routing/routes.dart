@@ -67,6 +67,8 @@ import 'package:amptive/src/features/upgrade_account/presentation/screens/select
 import 'package:amptive/src/features/upgrade_account/presentation/screens/select_category_screen.dart';
 import 'package:amptive/src/features/upgrade_account/presentation/screens/selected_acct_onboard_screen.dart';
 import 'package:amptive/src/features/upgrade_account/presentation/screens/subscription_plan_screen.dart';
+import 'package:amptive/src/features/wallet/cubits/one_time_payment_cubit.dart';
+import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
@@ -374,7 +376,11 @@ final GoRouter amptiveAppRouter = GoRouter(
                     BlocProvider<LiveWhispersCubit>(
                       create: (_) => LiveWhispersCubit()),
                     BlocProvider<LiveListenersCubit>(
-                      create: (_) => LiveListenersCubit())
+                      create: (_) => LiveListenersCubit()),
+                    BlocProvider<OneTimePaymentCubit>(
+                      create: (_) => OneTimePaymentCubit()),
+                    BlocProvider<VerifyPaymentCubit>(
+                      create: (_) => VerifyPaymentCubit()),
                   ],
                   child: LiveShowDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,
@@ -399,7 +405,11 @@ final GoRouter amptiveAppRouter = GoRouter(
                     BlocProvider<LiveWhispersCubit>(
                       create: (_) => LiveWhispersCubit()),
                     BlocProvider<LiveListenersCubit>(
-                      create: (_) => LiveListenersCubit())
+                      create: (_) => LiveListenersCubit()),
+                    BlocProvider<OneTimePaymentCubit>(
+                      create: (_) => OneTimePaymentCubit()),
+                    BlocProvider<VerifyPaymentCubit>(
+                      create: (_) => VerifyPaymentCubit()),
                   ],
                   child: LiveEventDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,

@@ -777,7 +777,7 @@ class __SubWidgetState extends State<_SubWidget> {
             BlocListener<UploadImageCubit, ATAppState<String>>(
               listener: (_, ATAppState<String> state) {
                 if (state is SuccessState<String>) {
-                  //If we upload image successfully, create the episode.
+                  //If we upload image successfully, create the event.
                   context.read<CreateEventCubit>().createEvent(
                     createEventModel: CreateEventPayload(
                       tagIds: (selectedHashtags ?? <HashTag>[])

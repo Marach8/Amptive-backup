@@ -10,6 +10,10 @@ import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_live_listeners.dart';
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/wallet/cubits/one_time_payment_cubit.dart';
+import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/one_time_process_payment_dialog.dart';
+import 'package:amptive/src/features/wallet/presentation/widgets/select_one_time_payment_method.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
@@ -253,7 +257,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
         ),
 
         resizeToAvoidBottomInset: false,
-        bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit, 
+        bottomSheet: BlocConsumer<GetLiveProgramEntryTokenCubit,
           ATAppState<LiveProgramEntryToken>>(
           listener: (_, ATAppState<LiveProgramEntryToken> state)async{
             if(state is SuccessState<LiveProgramEntryToken>){
@@ -280,7 +284,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                   : ParticipantRole.audience,
                 community: widget.homeFeedItem?.community,
                 programTitle: widget.homeFeedItem?.title ?? '',
-                programDesc: 'Test Description',
+                programDesc: 'New program'
               );
               
               if(!isHost || hasTestedMic){
@@ -306,47 +310,75 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
             }
           },
           builder: (BuildContext ctx, ATAppState<LiveProgramEntryToken> state) {
-            final bool isPaid = widget.homeFeedItem?.programType == ProgramType.paid;
+            return ValueListenableBuilder<bool>(
+              valueListenable: _canJoinNotifier,
+              builder: (_, bool canJoin, __) {
+                final bool isPaidProgram = canJoin == false;
+                return ATBlurredBgBtn(
+                  onPressed: ()async{
+                    if(canJoin){
+                      ctx.read<GetLiveProgramEntryTokenCubit>()
+                      .getLiveProgramEntryToken(
+                        widget.homeFeedItem?.livestreamId ?? '',
+                      );
+                    }
+                    else{
+                      final String? selectedPaymentMethod = 
+                        await selectOneTimePaymentMethodDialog(
+                          context: context,
+                          amount: '${widget.homeFeedItem?.price ?? 0}',
+                        );
 
-            return ATBlurredBgBtn(
-              onPressed: (){
-                ctx.read<GetLiveProgramEntryTokenCubit>()
-                .getLiveProgramEntryToken(
-                  widget.homeFeedItem?.livestreamId ?? '',
-                );
-              },
-              isLoading: state is LoadingState<LiveProgramEntryToken>,
-              bgColor: ATColors.white,
-              fgColor: ATColors.black,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  if(isPaid) ...<Widget>[
-                      Text(
-                      ATStrings.subscribe,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: ATColors.hex0D0D0D,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    CircleAvatar(
-                      radius: 2.5,
-                      backgroundColor: ATColors.hex0D0D0D,
-                    ),
-                    const SizedBox(width: 5),
-                  ],
-        
-                  Text(
-                    isPaid
-                        ? '₦${widget.homeFeedItem!.price}/month'
-                        : 'Join live show',
-                    style: context.textTheme.bodyMedium
-                        ?.copyWith(fontSize: 17, color: ATColors.black),
+                      if (!context.mounted || selectedPaymentMethod == null) {
+                        return;
+                      }
+
+                      final bool? paymentSuccess = await oneTimePaymentDialog(
+                        context: context,
+                        paymentMethod: selectedPaymentMethod,
+                        contentId: widget.homeFeedItem?.id ?? '',
+                        oneTimePaymentCubit: context.read<OneTimePaymentCubit>(),
+                        verifyPaymentCubit: context.read<VerifyPaymentCubit>(),
+                        amount: int.tryParse('${widget.homeFeedItem?.price ?? 0}') ?? 0,
+                      );
+
+                      _canJoinNotifier.value = paymentSuccess ?? false;
+                    }
+                  },
+                  isLoading: state is LoadingState<LiveProgramEntryToken>,
+                  bgColor: ATColors.white,
+                  fgColor: ATColors.black,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        if(isPaidProgram) ...<Widget>[
+                            Text(
+                            ATStrings.subscribe,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: ATColors.hex0D0D0D,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          CircleAvatar(
+                            radius: 2.5,
+                            backgroundColor: ATColors.hex0D0D0D,
+                          ),
+                          const SizedBox(width: 5),
+                        ],
+              
+                        Text(
+                          isPaidProgram
+                              ? '₦${widget.homeFeedItem!.price}/month'
+                              : 'Join live show',
+                          style: context.textTheme.bodyMedium
+                              ?.copyWith(fontSize: 17, color: ATColors.black),
+                        ),
+                      ],
                   ),
-                ],
-              ),
+                );
+              }
             );
           }
         ),
