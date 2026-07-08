@@ -8,6 +8,7 @@ import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/refresh_indicator.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../shared/back_button.dart';
 import '../widgets/scheduled_program.dart';
 
@@ -131,7 +132,7 @@ class ScheduledProgramItem extends StatelessWidget {
   const ScheduledProgramItem({super.key});
 
  @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return Column(
       spacing: 5,
       children: <Widget>[
@@ -205,16 +206,15 @@ class ScheduledProgramItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: ATColors.black.withValues(alpha: 0.7)),
-                        child:
-                            const ATShimmer(height: 10, width: 70, radius: 3),
-                      ),
+                      // Container(
+                      //   padding: const EdgeInsets.all(6),
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(6),
+                      //       color: ATColors.black.withValues(alpha: 0.7)),
+                      //   child:
+                      //       const ATShimmer(height: 10, width: 70, radius: 3),
+                      // ),
                       const Spacer(),
-                     
                       const SizedBox(height: 10),
                       ATShimmer(
                         height: 20,
@@ -261,6 +261,7 @@ class ScheduledProgramItem extends StatelessWidget {
               ],
             ))
       ],
-    );
+      );
+  
   }
 }
