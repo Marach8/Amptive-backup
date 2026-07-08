@@ -2,6 +2,7 @@ import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
 import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
 import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_live_listeners.dart';
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
@@ -159,7 +160,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                   style: context.textTheme.displayMedium
                                       ?.copyWith(
                                     fontSize: ATSizes.size24,
-                                    fontWeight: ATFontWeights.w600,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 const SizedBox(height: 20),
@@ -221,49 +222,9 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                 ),
                                 const SizedBox(height: 30),
 
-                                BlocConsumer<LiveListenersCubit, ATAppState<dynamic>>(
-                                  listener: (_, ATAppState<dynamic> state){
-                                    if(state is FailureState<dynamic>){
-                                      showAppNotification2(
-                                        text: state.message,
-                                        type: NotificationType.failure,
-                                      );
-                                    }
-                                  },
-                                  builder: (_, ATAppState<dynamic> state) {
-                                    return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                      Text(
-                                        '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
-                                        style: context.textTheme.bodySmall
-                                            ?.copyWith(fontSize: ATSizes.size17),
-                                      ),
-                                      Divider(
-                                        color:
-                                            ATColors.white.withValues(alpha: 0.1),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
-                                        ...<Widget>[
-                                          PeopleListeningWithNumberStacked(
-                                            images: widget.homeFeedItem!.avatarUrls!,
-                                            noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
-                                          ),
-                                          const SizedBox(height: 20),
-                                        ],
-                                      Text(
-                                          'daniel, jessica, gerald, peter and 652 more',
-                                          style: context.textTheme.bodySmall
-                                              ?.copyWith(
-                                                  color: ATColors.white
-                                                      .withValues(alpha: 0.6)),
-                                        ),
-                                      ],
-                                    );
-                                  }
-                                ),
+                                const RenderLiveListeners(),
                                 const SizedBox(height: 35),
+                                
                                 Text(
                                   'About Event',
                                   style: context.textTheme.bodySmall

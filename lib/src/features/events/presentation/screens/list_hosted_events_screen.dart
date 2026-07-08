@@ -6,7 +6,6 @@ import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/events/presentation/widgets/render_a_hosted_event.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
-import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/shows/presentation/screens/list_hosted_shows_screen.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/render_hosted_show.dart';
@@ -15,37 +14,18 @@ import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListHostedEventsScreen extends StatelessWidget {
+
+class ListHostedEventsScreen extends StatefulWidget {
   const ListHostedEventsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: <SingleChildWidget>[
-        BlocProvider<BlurredHeaderCubit>(
-          create: (_) => BlurredHeaderCubit(),
-        ),
-        BlocProvider<HostedEventSelectionCubit>(
-            create: (_) => HostedEventSelectionCubit()),
-        BlocProvider<HostedEventsCubit>(create: (_) => HostedEventsCubit())
-      ],
-      child: const _SubWidget(),
-    );
-  }
+  State<ListHostedEventsScreen> createState() => _ListHostedEventsScreenState();
 }
 
-class _SubWidget extends StatefulWidget {
-  const _SubWidget();
-
-  @override
-  State<_SubWidget> createState() => __SubWidgetState();
-}
-
-class __SubWidgetState extends State<_SubWidget> {
+class _ListHostedEventsScreenState extends State<ListHostedEventsScreen> {
   final GlobalKey<NestedScrollViewState> _nestedKey =
       GlobalKey<NestedScrollViewState>();
 
@@ -263,27 +243,28 @@ class __SubWidgetState extends State<_SubWidget> {
                 ),
               ],
             );
-          }),
+          }
+        ),
 
-          resizeToAvoidBottomInset: false,
-          bottomSheet: BlocBuilder<HostedEventSelectionCubit, HostedEvent?>(
-              builder: (_, HostedEvent? selectedEvent) {
-            final bool shouldActivate = selectedEvent != null;
-            return ATBlurredBgBtn(
-              btnTitle: ATStrings.next,
-              onPressed: shouldActivate
-                  ? () async{
-                      final HostedEvent? editedEvent = await context.pushNamed(
-                        ATRoutes.eventPreviewScreen,
-                        extra: selectedEvent,
-                      ) as HostedEvent?;
+        resizeToAvoidBottomInset: false,
+        bottomSheet: BlocBuilder<HostedEventSelectionCubit, HostedEvent?>(
+            builder: (_, HostedEvent? selectedEvent) {
+          final bool shouldActivate = selectedEvent != null;
+          return ATBlurredBgBtn(
+            btnTitle: ATStrings.next,
+            onPressed: shouldActivate
+                ? () async{
+                    final HostedEvent? editedEvent = await context.pushNamed(
+                      ATRoutes.eventPreviewScreen,
+                      extra: selectedEvent,
+                    ) as HostedEvent?;
 
-                      if(context.mounted && editedEvent != null
-                        && editedEvent != selectedEvent){
-                        context.read<HostedEventsCubit>().updateAnEvent(editedEvent);
-                      }
+                    if(context.mounted && editedEvent != null
+                      && editedEvent != selectedEvent){
+                      context.read<HostedEventsCubit>().updateAnEvent(editedEvent);
                     }
-                  : null,
+                  }
+                : null,
             );
           }
         )

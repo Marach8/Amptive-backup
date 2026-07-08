@@ -431,7 +431,17 @@ final GoRouter amptiveAppRouter = GoRouter(
               name: ATRoutes.listHostedEventsScreen,
               path: ATRoutes.listHostedEventsScreen.addSlash,
               pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
-                    child: const ListHostedEventsScreen(),
+                    child: MultiBlocProvider(
+                      providers: <SingleChildWidget>[
+                        BlocProvider<BlurredHeaderCubit>(
+                          create: (_) => BlurredHeaderCubit(),
+                        ),
+                        BlocProvider<HostedEventSelectionCubit>(
+                            create: (_) => HostedEventSelectionCubit()),
+                        BlocProvider<HostedEventsCubit>(create: (_) => HostedEventsCubit())
+                      ],
+                      child: const ListHostedEventsScreen(),
+                    ),
                   )),
           GoRoute(
               name: ATRoutes.createShowFormScreen,

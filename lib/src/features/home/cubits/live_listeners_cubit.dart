@@ -9,15 +9,18 @@ class LiveListenersCubit extends Cubit<ATAppState<dynamic>> {
         super(const InitialState<dynamic>());
 
   final HomeRepo homeRepo;
+  String? _cachedLiveStreamId;
 
   Future<void> fetchLiveListeners({
-    required String liveStreamId,
+    String? liveStreamId,
   }) async {
+    _cachedLiveStreamId = liveStreamId;
     emit(const LoadingState<dynamic>());
 
     try {
-      final ApiResponse<dynamic> response =
-          await homeRepo.fetchLiveListeners(liveStreamId: liveStreamId);
+      final ApiResponse<dynamic> response = 
+      await homeRepo.fetchLiveListeners(
+        liveStreamId: liveStreamId ?? _cachedLiveStreamId ?? '');
 
       await response.when(
         successful: (Successful<dynamic> data) {
@@ -28,7 +31,7 @@ class LiveListenersCubit extends Cubit<ATAppState<dynamic>> {
         },
       );
     } catch (e) {
-      emit(FailureState<dynamic>('Unable to get live listeners: $e'));
+      emit(FailureState<dynamic>('Unable to get live listeners'));
     }
   }
 }
