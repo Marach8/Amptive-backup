@@ -134,5 +134,8 @@ class ATImgStrings {
   static const String onboard3b = '$_webpPath/onboard3b.webp';
   static const String onboard3c = '$_webpPath/onboard3c.webp';
 
+  static const String retryImage = '$_webpPath/refresh_image.webp';
+  static const String emptyStateImage = '$_webpPath/empty_state_image.webp';
+
   static const String manageCohostsIcon = '$_svgPath/manage_cohosts_icon.svg';
 }

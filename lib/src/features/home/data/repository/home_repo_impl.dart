@@ -12,6 +12,7 @@ import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/home/data/models/response/live_users_response_model.dart';
+import 'package:amptive/src/features/home/data/models/response/live_listeners_response_model.dart';
 import 'package:dio/dio.dart' show Response;
 
 class HomeRepoImpl implements HomeRepo {
@@ -234,7 +235,7 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<ApiResponse<dynamic>> fetchLiveListeners({
+  Future<ApiResponse<LiveListenersResponseModel>> fetchLiveListeners({
     required String liveStreamId,
   }) async {
     try {
@@ -243,10 +244,12 @@ class HomeRepoImpl implements HomeRepo {
 
       final Response<dynamic> response = await networkService.get(endpoint);
 
-      return Successful<dynamic>(data: response.data);
+      return Successful<LiveListenersResponseModel>(
+        data: LiveListenersResponseModel.fromJson(response.data),
+      );
     } catch (e) {
       log('Fetch livestream listeners error: $e');
-      return Unsuccessful<dynamic>(
+      return Unsuccessful<LiveListenersResponseModel>(
         error: ATException.resolveException(e),
       );
     }

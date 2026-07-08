@@ -5,6 +5,8 @@ import 'package:amptive/src/features/home/data/models/response/home_feed_respons
 import 'package:amptive/src/features/home/data/models/response/live_users_response_model.dart';
 import 'package:amptive/src/features/home/data/models/response/whispers_response_model.dart';
 
+import 'package:amptive/src/features/home/data/models/response/live_listeners_response_model.dart';
+
 abstract class HomeRepo {
   Future<ApiResponse<FollowingStatus>> unFollowTargetUser({
     required String targetUserId,
@@ -53,7 +55,7 @@ abstract class HomeRepo {
     String? beforeId,
   });
 
-  Future<ApiResponse<dynamic>> fetchLiveListeners({
+  Future<ApiResponse<LiveListenersResponseModel>> fetchLiveListeners({
     required String liveStreamId,
   });
 }

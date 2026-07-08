@@ -247,23 +247,12 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-
-                                if(_allowWhispers) ...<Widget>[
-                                  const SizedBox(height: 30),
-                                  Text(
-                                    ATStrings.whispers,
-                                    style: context.textTheme.bodySmall
-                                        ?.copyWith(fontSize: 17),
-                                  ),
-                                  Divider(
-                                    color:
-                                        ATColors.white.withValues(alpha: 0.1),
-                                  ),
-                                ]
                               ],
                             ),
                           ),
+
                           if(_allowWhispers) const WhispersWidget(),
+                          
                           const SizedBox(height: 30),
                           if(isPaidEvent)Padding(
                             padding:

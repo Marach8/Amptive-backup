@@ -8,6 +8,7 @@ import 'package:amptive/src/features/go_live/data/models/live_program_data.dart'
 import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
 import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_live_listeners.dart';
 import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
@@ -15,7 +16,6 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
@@ -210,50 +210,11 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                                     ?? ATImgStrings.noAvatarImage,
                                 )
                               ),
+
                               const SizedBox(height: 30),
-                              BlocConsumer<LiveListenersCubit, ATAppState<dynamic>>(
-                                listener: (_, ATAppState<dynamic> state){
-                                  if(state is FailureState<dynamic>){
-                                    showAppNotification2(
-                                      text: state.message,
-                                      type: NotificationType.failure,
-                                    );
-                                  }
-                                },
-                                builder: (_, ATAppState<dynamic> state) {
-                                  return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                    Text(
-                                      '${widget.homeFeedItem?.viewerCount ?? 0} Listening',
-                                      style: context.textTheme.bodySmall
-                                          ?.copyWith(fontSize: ATSizes.size17),
-                                    ),
-                                    Divider(
-                                      color:
-                                          ATColors.white.withValues(alpha: 0.1),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    if((widget.homeFeedItem?.avatarUrls ?? <String>[]).isNotEmpty)
-                                      ...<Widget>[
-                                        PeopleListeningWithNumberStacked(
-                                          images: widget.homeFeedItem!.avatarUrls!,
-                                          noOfListeners: widget.homeFeedItem?.viewerCount ?? 0,
-                                        ),
-                                        const SizedBox(height: 20),
-                                      ],
-                                    Text(
-                                        'daniel, jessica, gerald, peter and 652 more',
-                                        style: context.textTheme.bodySmall
-                                            ?.copyWith(
-                                                color: ATColors.white
-                                                    .withValues(alpha: 0.6)),
-                                      ),
-                                    ],
-                                  );
-                                }
-                              ),
+                              const RenderLiveListeners(),
                               const SizedBox(height: 35),
+                              
                               Text(
                                 'About Show',
                                 style: context.textTheme.bodySmall
