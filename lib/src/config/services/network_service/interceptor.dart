@@ -179,15 +179,20 @@ class ATInterceptorClass extends Interceptor {
     }
 
     try {
-      final Dio tokenDio = Dio(BaseOptions(baseUrl: baseUrl));
+      final Dio tokenDio = Dio(BaseOptions(
+        baseUrl: baseUrl,
+        contentType: 'application/json',
+      ));
       final Response<dynamic> response = await tokenDio.post(
         '/api/v1/auth/refresh',
         data: <String, dynamic>{'refresh_token': refreshToken},
       );
 
-      final String? newAccessToken = response.data['access_token'];
-      final String? newRefreshToken = response.data['refresh_token'];
+      final Map<String, dynamic> responseData = response.data is Map ? response.data : {};
+      final String? newAccessToken = responseData['access_token'] ?? responseData['data']?['access_token'];
+      final String? newRefreshToken = responseData['refresh_token'] ?? responseData['data']?['refresh_token'];
       if (newAccessToken == null || newRefreshToken == null) {
+        debugPrint('REFRESH TOKEN FAILED: Missing tokens in response. Data: ${response.data}');
         return false;
       }
 
