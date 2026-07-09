@@ -33,9 +33,10 @@ class CreateEpisodePayload {
       'price_override': priceOverride,
       'tag_ids': tagIds,
       'co_host_ids': coHostIds,
+      'co_hosts': coHostIds,
       "community_id": communityId,
       'hand_raising': allowHandRaising,
-      'whispers': allowWhispers,
+      'allow_whispers': allowWhispers,
     };
   }
 }

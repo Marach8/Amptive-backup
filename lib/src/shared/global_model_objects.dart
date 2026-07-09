@@ -10,23 +10,26 @@ class User extends Equatable{
     this.firstName,
     this.lastName,
     this.name,
+    this.bio,
     this.isVerified,
   });
 
+  // Some endpoints (e.g. search) return the id as 'id' rather than 'user_id'.
   User.fromJson(Map<String, dynamic> json)
-      : userId = json['user_id'],
+      : userId = json['user_id'] ?? json['id'] ?? '',
         username = json['username'],
-        profilePicture = json['profile_picture'],
+        profilePicture = json['profile_picture'] ?? json['avatar_url'] ?? json['avatar'] ?? json['profile_image_url'] ?? json['image'],
         followersCount = json['followers_count'],
         followingCount = json['following_count'],
         firstName = json['first_name'],
         lastName = json['last_name'],
-        name = json['name'],
+        name = json['name'] ?? json['display_name'],
+        bio = json['bio'],
         isVerified = json['is_verified'];
 
   final String userId;
   final String? username, profilePicture,
-    firstName, lastName, name;
+    firstName, lastName, name, bio;
   final int? followersCount, followingCount;
   final bool? isVerified;
 
@@ -49,6 +52,7 @@ class Host extends User {
     super.firstName,
     super.lastName,
     super.name,
+    super.bio,
     super.isVerified,
   });
 
@@ -71,6 +75,7 @@ class CoHost extends User {
     super.firstName,
     super.lastName,
     super.name,
+    super.bio,
     super.isVerified,
   });
 

@@ -69,7 +69,7 @@ class HomeRepoImpl implements HomeRepo {
         queryParameters: <String, dynamic>{
           'page': page,
           'page_size': pageSize,
-          'refresh': false,
+          'refresh': refresh,
         },
       );
 

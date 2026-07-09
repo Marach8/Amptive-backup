@@ -9,6 +9,7 @@ import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -43,6 +44,7 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
             body: Form(
               key: _formKey,
               child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   spacing: 10,
@@ -86,9 +88,10 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
                                       const ATLoadingIndicator(
                                         size: 20,
                                       ),
-                                    SuccessState<bool>() => Icon(
-                                        Icons.check,
-                                        color: ATColors.successColor,
+                                    SuccessState<bool>() => const ATImgLoader(
+                                        imgPath: 'assets/images/svg_images/success_check.svg',
+                                        width: 20,
+                                        height: 20,
                                       ),
                                     FailureState<bool>() => Icon(
                                         Icons.close,
@@ -150,7 +153,15 @@ class _AddUsernameScreenState extends State<AddUsernameScreen>
                               }
                             }
                           : null,
-                      btnTitle: ATStrings.next);
+                      btnTitle: ATStrings.next,
+                      bgColor: Colors.white,
+                      fgColor: Colors.black,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
+                  );
                 }),
               );
             }),

@@ -19,6 +19,7 @@ class ATTextFormField extends StatelessWidget {
     this.decoration,
     this.constraints,
     this.suffixIcon,
+    this.obscuringCharacter,
     this.obscureText,
     this.prefixIcon,
     this.fillColor,
@@ -26,6 +27,7 @@ class ATTextFormField extends StatelessWidget {
     this.suffixConstraints,
     this.focusNode,
     this.hintStyle,
+    this.style,
     this.onSaved,
     this.disableBlueBorder,
     this.prefixConstraints,
@@ -43,14 +45,17 @@ class ATTextFormField extends StatelessWidget {
     this.onTap,
     this.onTapOutside,
     this.autoValidateMode,
+    this.onFieldSubmitted,
+    this.textCapitalization,
   });
 
   final TextEditingController? controller;
   final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
-  final String? hintText, counterText;
+  final String? hintText, counterText, obscuringCharacter;
   final TextAlign? textAlign;
   final double? cursorHeight;
   final Widget? suffixIcon, prefixIcon, prefix, suffix;
@@ -66,8 +71,10 @@ class ATTextFormField extends StatelessWidget {
   final InputBorder? enabledBorder, focusedBorder, disabledBorder;
   final FocusNode? focusNode;
   final TextStyle? hintStyle;
+  final TextStyle? style;
   final TextInputAction? textInputAction;
   final int? maxLines, maxLength;
+  final TextCapitalization? textCapitalization;
   final EdgeInsetsGeometry? contentPadding;
   final AutovalidateMode? autoValidateMode;
   final VoidCallback? onTap;
@@ -84,28 +91,31 @@ class ATTextFormField extends StatelessWidget {
       onTapOutside: onTapOutside ?? (_) => FocusScope.of(context).unfocus(),
       enabled: enabled,
       textAlign: textAlign ?? TextAlign.start,
+      textCapitalization: textCapitalization ?? TextCapitalization.none,
       validator: validator,
-      maxLines: maxLines,
+      maxLines: maxLines ?? 1,
       focusNode: focusNode,
-      autovalidateMode: autoValidateMode ?? AutovalidateMode.onUserInteraction,
+      autovalidateMode: autoValidateMode,
       onChanged: onChanged,
       maxLength: maxLength,
       onTap: onTap,
       buildCounter: buildCounter,
       textInputAction: textInputAction,
+      onFieldSubmitted: onFieldSubmitted,
       onSaved: onSaved,
       readOnly: readOnly ?? false,
-      cursorColor:
-          disableBlueBorder ?? false ? ATColors.white : ATColors.hex307FE2,
+      cursorColor: disableBlueBorder ?? false ? ATColors.white : ATColors.white,
+      obscuringCharacter: obscuringCharacter ?? '•',
       obscureText: obscureText ?? false,
       cursorHeight: cursorHeight,
       cursorErrorColor: ATColors.textRedColor,
       keyboardType: keyboardType,
-      style: TextStyle(
-        fontWeight: ATFontWeights.w400,
-        fontSize: ATSizes.size16,
-        color: ATColors.white,
-      ),
+      style: style ??
+          TextStyle(
+            fontWeight: ATFontWeights.w400,
+            fontSize: ATSizes.size16,
+            color: ATColors.white,
+          ),
       decoration: decoration ??
           InputDecoration(
             counterText: counterText,
@@ -117,11 +127,15 @@ class ATTextFormField extends StatelessWidget {
             filled: filled ?? true,
             contentPadding: contentPadding ?? EdgeInsets.zero,
             focusedBorder: focusedBorder ??
-                (disableBlueBorder ?? false
-                    ? OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(14),
-                        borderSide: BorderSide(color: ATColors.transparent))
-                    : null),
+                OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: ATColors.transparent),
+                ),
+            enabledBorder: enabledBorder ??
+                OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: ATColors.transparent),
+                ),
             hintStyle: hintStyle,
             suffixIcon: suffixIcon,
             prefixIcon: prefixIcon ?? const ATSearchIcon(),
@@ -131,7 +145,6 @@ class ATTextFormField extends StatelessWidget {
                 const BoxConstraints(maxHeight: 35, maxWidth: 35),
             suffixIconConstraints: suffixConstraints ??
                 const BoxConstraints(maxHeight: 35, maxWidth: 35),
-            enabledBorder: enabledBorder,
             disabledBorder: disabledBorder,
           ),
     );

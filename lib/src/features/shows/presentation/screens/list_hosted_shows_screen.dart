@@ -1,13 +1,14 @@
-import 'dart:ui';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/dominant_color_extractor.dart';
 import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/shows/data/repository/shows_repo_impl.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/render_hosted_show.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
-import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/mesh_gradient_background.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
@@ -27,6 +28,7 @@ class ListHostedShowsScreen extends StatelessWidget {
         ),
         BlocProvider<HostedShowSelectionCubit>(
             create: (_) => HostedShowSelectionCubit()),
+        BlocProvider<DominantColorCubit>(create: (_) => DominantColorCubit()),
         BlocProvider<HostedShowsCubit>(create: (_) => HostedShowsCubit())
       ],
       child: const _SubWidget(),
@@ -48,16 +50,14 @@ class __SubWidgetState extends State<_SubWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_){
-        final ScrollController? sController =
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final ScrollController? sController =
           _nestedKey.currentState?.innerController;
-        if (sController != null) {
-          sController.addListener(() => _onShowsScrollToEnd(sController));
-        }
-        context.read<HostedShowsCubit>().fetchHostedShows();
+      if (sController != null) {
+        sController.addListener(() => _onShowsScrollToEnd(sController));
       }
-    );
+      context.read<HostedShowsCubit>().fetchHostedShows();
+    });
   }
 
   void _onShowsScrollToEnd(ScrollController sController) {
@@ -80,65 +80,58 @@ class __SubWidgetState extends State<_SubWidget> {
             return Stack(
               children: <Widget>[
                 Positioned.fill(
-                  child: BlocBuilder<HostedShowSelectionCubit, HostedShow?>(
-                      builder: (_, HostedShow? selected) {
-                    final String? selectedImgString = selected?.coverUrl;
-                    if (selectedImgString == null) {
-                      return ATContainer(
-                        color: ATColors.black,
-                      );
-                    }
-                    return ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                      child: ATImgLoader(
-                          boxFit: BoxFit.fill, imgPath: selectedImgString),
-                    );
-                  }),
+                  child: BlocBuilder<DominantColorCubit, DominantColorState>(
+                    builder: (_, DominantColorState state) =>
+                        ATMeshGradientBackground(
+                      state: state,
+                      child: const SizedBox.expand(),
+                    ),
+                  ),
                 ),
                 ATContainer(
-                  color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
+                  color: ATColors.black.withValues(alpha: 0.12),
                   child: NotificationListener<ScrollNotification>(
                     onNotification: blocContext
                         .read<BlurredHeaderCubit>()
                         .onScrollNotification,
                     child: NestedScrollView(
-                      key: _nestedKey,
-                      headerSliverBuilder: (_, __) => <Widget>[
-                        SliverPersistentHeader(
-                          pinned: true,
-                          delegate: ATSliverHDelegate(
-                              maxExt: blurredHeaderHeight,
-                              minExt: blurredHeaderHeight,
-                              child: SizedBox(
-                                  height: blurredHeaderHeight,
-                                  child: ATBlurredHeaderWidget(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 5),
-                                          child: ATRoundedBackBtn(
-                                            bgColor: ATColors.transparent,
+                        key: _nestedKey,
+                        physics: const NeverScrollableScrollPhysics(),
+                        headerSliverBuilder: (_, __) => <Widget>[
+                              SliverPersistentHeader(
+                                pinned: true,
+                                delegate: ATSliverHDelegate(
+                                    maxExt: blurredHeaderHeight,
+                                    minExt: blurredHeaderHeight,
+                                    child: SizedBox(
+                                        height: blurredHeaderHeight,
+                                        child: ATBlurredHeaderWidget(
+                                          child: Row(
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 4),
+                                                child: ATBackBtn(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  leadingText:
+                                                      ATStrings.chooseShow,
+                                                  leadingStyle: context
+                                                      .textTheme.bodyMedium
+                                                      ?.copyWith(
+                                                    fontSize: ATSizes.size23,
+                                                    letterSpacing: -0.39,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        Text(
-                                          ATStrings.chooseShow,
-                                          style: context
-                                              .textTheme.bodyMedium,
-                                        ),
-                                        const SizedBox(width: 30)
-                                      ],
-                                    ),
-                                  )
-                                )
-                              ),
+                                        ))),
                               ),
                               SliverToBoxAdapter(
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(15, 10, 15, 20),
+                                      const EdgeInsets.fromLTRB(12, 12, 12, 20),
                                   child: Text(
                                     maxLines: 3,
                                     ATStrings.chooseOrCreateShowDesc,
@@ -148,8 +141,10 @@ class __SubWidgetState extends State<_SubWidget> {
                                 ),
                               ),
                             ],
-                        body: BlocConsumer<HostedShowsCubit, ATAppState<HostedShowsResponseModel>>(
-                            listener: (_, ATAppState<HostedShowsResponseModel> state) {
+                        body: BlocConsumer<HostedShowsCubit,
+                                ATAppState<HostedShowsResponseModel>>(
+                            listener: (_,
+                                ATAppState<HostedShowsResponseModel> state) {
                           if (state is FailureState<HostedShowsResponseModel>) {
                             showAppNotification2(
                               context: context,
@@ -157,7 +152,8 @@ class __SubWidgetState extends State<_SubWidget> {
                               type: NotificationType.failure,
                             );
                           }
-                        }, builder: (_, ATAppState<HostedShowsResponseModel> state) {
+                        }, builder: (_,
+                                ATAppState<HostedShowsResponseModel> state) {
                           return switch (state) {
                             InitialState<HostedShowsResponseModel>() ||
                             LoadingState<HostedShowsResponseModel>() ||
@@ -173,28 +169,34 @@ class __SubWidgetState extends State<_SubWidget> {
                                         <HostedShow>[];
 
                                 if (hostedShows.isEmpty) {
-                                  if (state is LoadingState<HostedShowsResponseModel>) {
+                                  if (state is LoadingState<
+                                      HostedShowsResponseModel>) {
                                     return RenderEventOrShowInitialLoadingShimmer(
                                       createNewLabel: ATStrings.createNewShow,
-                                      onCreateNewTapped: (){
+                                      onCreateNewTapped: () {
                                         context.pushNamed(
                                           ATRoutes.createShowFormScreen,
-                                          extra: context.read<HostedShowsCubit>(),
+                                          extra:
+                                              context.read<HostedShowsCubit>(),
                                         );
                                       },
                                     );
                                   }
-                                  if (state is FailureState<HostedShowsResponseModel>) {
+                                  if (state is FailureState<
+                                      HostedShowsResponseModel>) {
                                     return RenderInitialEventOrShowLoadFailureWidget(
                                       createNewLabel: ATStrings.createNewShow,
-                                      onCreateNewTapped: (){
+                                      onCreateNewTapped: () {
                                         context.pushNamed(
                                           ATRoutes.createShowFormScreen,
-                                          extra: context.read<HostedShowsCubit>(),
+                                          extra:
+                                              context.read<HostedShowsCubit>(),
                                         );
                                       },
-                                      onRefresh: (){
-                                        context.read<HostedShowsCubit>().fetchHostedShows();
+                                      onRefresh: () {
+                                        context
+                                            .read<HostedShowsCubit>()
+                                            .fetchHostedShows();
                                       },
                                     );
                                   }
@@ -203,48 +205,42 @@ class __SubWidgetState extends State<_SubWidget> {
                                 final bool hasMoreItems =
                                     hostedShowsData?.hasMore ?? true;
                                 final int count = hostedShows.length;
+                                final bool showPaginationLoader =
+                                    hasMoreItems &&
+                                        state is LoadingState<
+                                            HostedShowsResponseModel>;
 
-                                return GridView.builder(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        15, 0, 15, 100),
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            childAspectRatio: 0.7,
-                                            crossAxisSpacing: 20,
-                                            mainAxisSpacing: 20),
-                                    itemCount:
-                                        hasMoreItems ? count + 2 : count + 1,
+                                return HostedProgramsGrid(
+                                    itemCount: count +
+                                        1 +
+                                        (showPaginationLoader ? 1 : 0),
                                     itemBuilder: (_, int gridIndex) {
-                                      if (gridIndex == 0) {
+                                      if (gridIndex < count) {
+                                        final HostedShow hostedShow =
+                                            hostedShows[gridIndex];
+                                        return RenderHostedShow(
+                                            hostedShow: hostedShow);
+                                      }
+                                      if (gridIndex == count) {
                                         return CreateNewEventOrShowWidget(
                                           label: ATStrings.createNewShow,
-                                          onTap: (){
+                                          onTap: () {
                                             context.pushNamed(
                                               ATRoutes.createShowFormScreen,
-                                              extra: context.read<HostedShowsCubit>(),
+                                              extra: context
+                                                  .read<HostedShowsCubit>(),
                                             );
                                           },
                                         );
                                       }
-
-                                      final int adjustedIndex = gridIndex - 1;
-                                      if (adjustedIndex < count) {
-                                        final HostedShow hostedShow = hostedShows[adjustedIndex];
-                                        return RenderHostedShow(hostedShow: hostedShow);
-                                      }
-                                      if (state is LoadingState<HostedShowsResponseModel>) {
+                                      if (showPaginationLoader) {
                                         return const RenderAHostedEventOrShowShimmer();
                                       }
                                       return const SizedBox.shrink();
-                                    }
-                                  );
-                              }
-                            )
+                                    });
+                              })
                           };
-                        }
-                      )
-                    ),
+                        })),
                   ),
                 ),
               ],
@@ -257,31 +253,34 @@ class __SubWidgetState extends State<_SubWidget> {
             return ATBlurredBgBtn(
               btnTitle: ATStrings.next,
               onPressed: shouldActivate
-                  ? () async{
-                    final HostedShow? editedShow = await context.pushNamed(
-                      ATRoutes.showPreviewScreen,
-                      extra: selectedShow,
-                    ) as HostedShow?;
+                  ? () async {
+                      final HostedShow? editedShow = await context.pushNamed(
+                        ATRoutes.showPreviewScreen,
+                        extra: selectedShow,
+                      ) as HostedShow?;
 
-                    if(context.mounted && editedShow != null
-                      && editedShow != selectedShow){
-                      context.read<HostedShowsCubit>().updateAShow(editedShow);
-                    }
-                      // context.pushNamed(
-                      //   ATRoutes.showPreviewScreen,
-                      //   extra: selectedShow,
-                      // );
+                      if (context.mounted) {
+                        final String showId = selectedShow.showId ?? '';
+                        final HostedShow? cachedShow =
+                            ShowsRepoImpl.getCachedShow(showId);
+                        if (cachedShow != null && cachedShow != selectedShow) {
+                          context
+                              .read<HostedShowsCubit>()
+                              .updateAShow(cachedShow);
+                        } else if (editedShow != null &&
+                            editedShow != selectedShow) {
+                          context
+                              .read<HostedShowsCubit>()
+                              .updateAShow(editedShow);
+                        }
+                      }
                     }
                   : null,
             );
-          }
-        )
-      ),
+          })),
     );
   }
 }
-
-
 
 class RenderEventOrShowInitialLoadingShimmer extends StatelessWidget {
   const RenderEventOrShowInitialLoadingShimmer({
@@ -295,24 +294,21 @@ class RenderEventOrShowInitialLoadingShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
-        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+        physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 0.7,
             crossAxisSpacing: 20,
             mainAxisSpacing: 20),
-        itemCount: 9,
+        itemCount: 4,
         itemBuilder: (_, int gridIndex) {
-          if (gridIndex == 0) {
+          if (gridIndex == 3) {
             return CreateNewEventOrShowWidget(
-              label: createNewLabel,
-              onTap: onCreateNewTapped
-            );
+                label: createNewLabel, onTap: onCreateNewTapped);
           }
           return const RenderAHostedEventOrShowShimmer();
-        }
-      );
+        });
   }
 }
 
@@ -331,7 +327,7 @@ class RenderInitialEventOrShowLoadFailureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
-        physics: const BouncingScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 0.7,

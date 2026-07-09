@@ -21,21 +21,29 @@ class ATBackBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: alignment ?? Alignment.center,
-      child: InkWell(
-        onTap: () => context.pop(),
-        borderRadius: BorderRadius.circular(10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(Icons.arrow_back_ios, size: iconSize ?? 20),
-            leadingWidget ??
-                Text(
-                  leadingText ?? ATStrings.BACK,
-                  style: leadingStyle ?? context.textTheme.titleMedium,
-                )
-          ],
+    return GestureDetector(
+      onTap: () => context.pop(),
+      behavior: HitTestBehavior.opaque, // Touch area covers the full constrained box
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+        child: Align(
+          alignment: alignment ?? Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                leadingWidget ?? Icon(Icons.arrow_back_ios, size: iconSize ?? 22),
+                if (leadingText != null) ...[
+                  const SizedBox(width: 6), // Add spacing between arrow and text
+                  Text(
+                    leadingText!,
+                    style: leadingStyle ?? const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -90,8 +98,8 @@ class ATXBackBtn extends StatelessWidget {
         splashColor: ATColors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(30),
         child: const SizedBox(
-          height: 30,
-          width: 30,
+          height: 44,
+          width: 44,
           child: Icon(Icons.close),
         ),
       ),

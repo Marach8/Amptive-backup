@@ -21,6 +21,14 @@ class EventDetailCubit extends Cubit<ATAppState<HostedEvent>> {
   };
 
   Future<void> fetchEventDetails() async {
+    final String eventId = currentEventDetail?.eventId ?? '';
+    
+    final HostedEvent? cachedEvent = EventsRepoImpl.getCachedEvent(eventId);
+    if (cachedEvent != null) {
+      emit(SuccessState<HostedEvent>(newData: cachedEvent));
+      return;
+    }
+
     if (state is LoadingState<HostedEvent>) return;
     emit(LoadingState<HostedEvent>(currentData: currentEventDetail));
     try {

@@ -21,6 +21,9 @@ class CohostWithCheckIconWidget extends StatelessWidget {
     return ATContainer(
       radius: 10,
       onTap: () => onTap(isSelected),
+      // No tap flash — the check animation is the feedback.
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       padding: const EdgeInsets.all(15),
       child: Row(
         children: <Widget>[
@@ -30,11 +33,15 @@ class CohostWithCheckIconWidget extends StatelessWidget {
               height: 50,
               width: 50,
               boxFit: BoxFit.cover,
-              imgPath: cohost.profilePicture ?? ATImgStrings.jpeg1,
+              // People without a photo get the universal default avatar, the
+              // same one the search results use.
+              imgPath: (cohost.profilePicture?.isNotEmpty ?? false)
+                  ? cohost.profilePicture!
+                  : ATImgStrings.noAvatarImage,
             ),
           ),
           const SizedBox(
-            width: 10,
+            width: 8,
           ),
           Expanded(
             child: Column(
@@ -42,12 +49,16 @@ class CohostWithCheckIconWidget extends StatelessWidget {
               children: <Widget>[
                 ATFilterWidget<SearchkeyCubit>(
                     title: cohost.name ?? '',
-                    style: context.textTheme.bodySmall
+                    style: context.textTheme.bodyMedium
                         ?.copyWith(fontSize: ATSizes.size15)),
+                const SizedBox(height: 5),
                 ATFilterWidget<SearchkeyCubit>(
                   title: cohost.username ?? '',
-                  style: context.textTheme.bodySmall
-                      ?.copyWith(color: ATColors.hexC2C2C2),
+                  style: context.textTheme.titleSmall?.copyWith(
+                    color: ATColors.hexC2C2C2,
+                    fontWeight: ATFontWeights.w500,
+                    fontSize: ATSizes.size13,
+                  ),
                 ),
               ],
             ),
@@ -56,7 +67,7 @@ class CohostWithCheckIconWidget extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               decoration: BoxDecoration(
                 color: isSelected ? ATColors.white : ATColors.transparent,
-                border: Border.all(color: ATColors.white),
+                border: Border.all(color: ATColors.white, width: 2),
                 shape: BoxShape.circle,
               ),
               height: 24,

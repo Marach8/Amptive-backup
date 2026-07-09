@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../config/utils/colors.dart';
 
 class ATLoadingIndicator extends StatelessWidget {
@@ -12,10 +13,11 @@ class ATLoadingIndicator extends StatelessWidget {
     return SizedBox(
       height: size,
       width: size,
-      child: CircularProgressIndicator(
-        color: color ?? ATColors.hex307FE2,
-        backgroundColor: (color ?? ATColors.hex307FE2).withValues(alpha: 0.5),
-        strokeWidth: strokeWidth,
+      child: Center(
+        child: CupertinoActivityIndicator(
+          radius: size / 2,
+          color: color ?? ATColors.white,
+        ),
       ),
     );
   }

@@ -141,6 +141,8 @@ class __SubWidgetState extends State<_SubWidget> {
                                     : count,
                                 controller: scrollController,
                                 cacheExtent: 450,
+                                // Bottom padding so last row isn't clipped by the bottomSheet button
+                                padding: const EdgeInsets.only(bottom: 100),
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisSpacing: 4,
@@ -156,6 +158,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                       community: community,
                                     );
                                   }
+                                  // Show spinner in extra slots during pagination load
                                   if (state is LoadingState<
                                       CommunitiesResponseModel>) {
                                     return const Center(
@@ -168,6 +171,25 @@ class __SubWidgetState extends State<_SubWidget> {
                           )
                       };
                     }),
+                    // Full-screen loading overlay — blocks interaction while initial load is in progress
+                    BlocBuilder<CommunitiesCubit,
+                        ATAppState<CommunitiesResponseModel>>(
+                      builder: (_, ATAppState<CommunitiesResponseModel> state) {
+                        if (state is LoadingState<CommunitiesResponseModel> &&
+                            (context
+                                    .read<CommunitiesCubit>()
+                                    .currentCommunities
+                                    ?.communities
+                                    ?.isEmpty ??
+                                true)) {
+                          return const ColoredBox(
+                            color: Colors.transparent,
+                            child: Center(child: ATLoadingIndicator()),
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -181,6 +203,13 @@ class __SubWidgetState extends State<_SubWidget> {
               context.goNamed(ATRoutes.allowNotificationsScreen);
             },
             btnTitle: ATStrings.next,
+            bgColor: Colors.white,
+            fgColor: Colors.black,
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
           ),
         ),
       )),

@@ -1,6 +1,7 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:flutter/material.dart';
 import '../../../../shared/image_loader_widget.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class RenderCommunityName extends StatelessWidget {
   const RenderCommunityName({super.key, this.communityName});
@@ -9,18 +10,28 @@ class RenderCommunityName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color metadataColor = Colors.white.withValues(alpha: 0.6);
     return Row(
-      spacing: 5,
+      spacing: 6,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-         const ATImgLoader(
-          imgPath: ATImgStrings.groupIcon,
-          height: 24,
-          width: 24,
+        SvgPicture.asset(
+          ATImgStrings.groupIcon,
+          height: 25,
+          width: 25,
+          colorFilter: ColorFilter.mode(
+            metadataColor,
+            BlendMode.srcIn,
+          ),
         ),
         Text(
           (communityName ?? ATStrings.society).toUpperCase(),
-          style: context.textTheme.bodyMedium
-              ?.copyWith(color: ATColors.hexA8A8A8, fontSize: ATSizes.size14),
+          style: context.textTheme.bodySmall?.copyWith(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            height: 1,
+            color: metadataColor,
+          ),
         ),
       ],
     );
@@ -37,21 +48,33 @@ class EpisodeScheduleDateIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color metadataColor = Colors.white.withValues(alpha: 0.6);
     return Row(
       mainAxisSize: MainAxisSize.min,
-      spacing: 5,
+      spacing: 6,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        const ATImgLoader(
-          imgPath: ATImgStrings.filledCalenderIcon,
-          height: 20,
-          width: 20,
-          boxFit: BoxFit.scaleDown,
+        Transform.translate(
+          offset: const Offset(0, -0.5),
+          child: SvgPicture.asset(
+            ATImgStrings.detailCalendarFilledIcon,
+            height: 20,
+            width: 20,
+            colorFilter: ColorFilter.mode(
+              metadataColor,
+              BlendMode.srcIn,
+            ),
+          ),
         ),
         Flexible(
           child: Text(
-            text1,
-            style: context.textTheme.bodyMedium
-                ?.copyWith(color: ATColors.hexA8A8A8, fontSize: ATSizes.size14),
+            text1.toUpperCase(),
+            style: context.textTheme.bodySmall?.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              height: 1,
+              color: metadataColor,
+            ),
           ),
         ),
       ],

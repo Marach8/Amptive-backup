@@ -40,18 +40,16 @@ class ATShowOrEventInfo extends StatelessWidget {
                     imgPath: ATImgStrings.weCanDoHardThingsBgImage),
                 ATContainer(
                   width: ATHelperFuncs.getScreenWidth(context),
-                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                  padding: const EdgeInsets.fromLTRB(17, 15, 17, 15),
                   radius: 15,
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
+                      stops: const <double>[0.0, 0.5, 0.65, 0.75, 1.0],
                       colors: <Color>[
                         ATColors.transparent,
                         ATColors.transparent,
-                        ATColors.transparent,
-                        ATColors.transparent,
-                        ATColors.containerGradientColorB.withValues(alpha: 0.5),
-                        ATColors.containerGradientColorB,
+                        ATColors.containerGradientColorB.withValues(alpha: 0.95),
                         ATColors.containerGradientColorB,
                         ATColors.containerGradientColorB,
                       ]),

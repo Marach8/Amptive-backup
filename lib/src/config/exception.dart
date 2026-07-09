@@ -60,6 +60,16 @@ class ATException implements Exception {
         case DioExceptionType.badResponse:
         case DioExceptionType.badCertificate:
         case DioExceptionType.unknown:
+          String? extractMsg(dynamic data) {
+            if (data == null) return null;
+            if (data is String) return data;
+            if (data is Map) {
+              return (data['detail'] ?? data['message'] ?? data['error'])
+                  ?.toString();
+            }
+            return data.toString();
+          }
+
           switch (err.response?.statusCode) {
             case 500:
             case 502:
@@ -70,7 +80,7 @@ class ATException implements Exception {
             case 400:
             case 403:
               return OtherExceptions(
-                err.response?.data['message'],
+                extractMsg(err.response?.data),
                 err.response?.statusCode,
               );
             case 401:
@@ -83,12 +93,12 @@ class ATException implements Exception {
               return OtherExceptions(kFileTooLarge, err.response?.statusCode);
             case 409:
               return OtherExceptions(
-                err.response?.data['message'],
+                extractMsg(err.response?.data),
                 err.response?.statusCode,
               );
             default:
               return OtherExceptions(
-                err.response?.data['message'],
+                extractMsg(err.response?.data),
                 err.response?.statusCode,
               );
           }

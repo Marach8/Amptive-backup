@@ -33,5 +33,7 @@ class ATSizes {
 
   static double size25 = 25.0;
 
+  static double size26 = 26.0;
+
   static double size30 = 30.0;
 }

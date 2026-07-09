@@ -70,7 +70,12 @@ class _RenderACommunity extends StatelessWidget {
           SizedBox(
             height: 50,
             width: 70,
-            child: ATImgLoader(imgPath: community?.coverPic ?? ''),
+            child: ATImgLoader(
+              imgPath: community?.coverPic ?? '',
+              width: 70,
+              height: 50,
+              boxFit: BoxFit.cover,
+            ),
           ),
           const SizedBox(width: 10),
           Expanded(

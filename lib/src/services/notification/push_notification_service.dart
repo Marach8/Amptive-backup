@@ -26,14 +26,21 @@ class PushNotificationService {
     print('Permission: ${settings.authorizationStatus}');
 
     // Get FCM token
-    String? token = await _messaging.getToken();
-    print("FCM Token: $token");
+    String? token;
+    try {
+      token = await _messaging.getToken();
+      print("FCM Token: $token");
+    } catch (e) {
+      log("Error fetching FCM token: $e", level: LogLevel.warn);
+    }
 
-    String? result = await saveToken(token!);
-
-    if(result == null){
-      log("Token save failed", level: LogLevel.error);
-      return;
+    if (token == null) {
+      log("FCM Token is null. Skipping token registration (this is normal on simulator).", level: LogLevel.warn);
+    } else {
+      String? result = await saveToken(token);
+      if (result == null) {
+        log("Token save failed", level: LogLevel.error);
+      }
     }
 
     // Listen for foreground messages

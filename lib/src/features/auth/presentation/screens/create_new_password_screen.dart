@@ -87,7 +87,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen>
             },
             builder: (BuildContext context, ATAppState<dynamic> state) {
               return SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(15),
                 child: Form(
                   key: _formKey,
@@ -192,6 +192,13 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen>
                             }
                           : null,
                       btnTitle: ATStrings.finish,
+                      bgColor: Colors.white,
+                      fgColor: Colors.black,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                     );
                   },
                 ),

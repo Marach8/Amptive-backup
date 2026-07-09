@@ -35,6 +35,7 @@ class _AddDOBScreenState extends State<AddDOBScreen> with ATValidators {
         body: Form(
           key: _formKey,
           child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(15),
             child: Column(
               spacing: 10,
@@ -104,6 +105,13 @@ class _AddDOBScreenState extends State<AddDOBScreen> with ATValidators {
                               }
                             }
                           : null,
+                      bgColor: Colors.white,
+                      fgColor: Colors.black,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                     );
                   }));
         }),
@@ -120,46 +128,61 @@ Future<dynamic> _selectDOBModal({
   final DateTime now = DateTime.now();
   final DateTime maxDate = DateTime(now.year - 13, now.month, now.day);
 
-  // 🔥 If initialDate exists and is valid, use it.
-  // Otherwise default to maxDate.
   DateTime datePickedByUser =
       (initialDate != null && !initialDate.isAfter(maxDate))
           ? initialDate
           : maxDate;
 
-  return await showModalBottomSheet<dynamic>(
+  return await showCupertinoModalPopup<dynamic>(
     context: context,
     builder: (BuildContext context) {
-      return SizedBox(
-        height: 250,
-        child: Column(
-          children: <Widget>[
-            Container(
-              color: ATColors.grey2Color,
-              alignment: Alignment.centerRight,
-              child: CupertinoButton(
-                child: Text(
-                  ATStrings.done,
-                  style: context.textTheme.bodyMedium,
+      return Container(
+        height: 300,
+        decoration: BoxDecoration(
+          color: ATColors.black,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+        ),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            children: <Widget>[
+              // Authentic iOS Toolbar
+              Container(
+                decoration: BoxDecoration(
+                  color: ATColors.grey2Color.withValues(alpha: 0.5),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
                 ),
-                onPressed: () {
-                  if (datePickedByUser.isAfter(maxDate)) {
-                    context.pop(olderThan13Years);
-                    return;
-                  }
-
-                  context.pop(datePickedByUser);
-                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    CupertinoButton(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      child: const Text(
+                        ATStrings.done,
+                        style: TextStyle(
+                          color: CupertinoColors.activeBlue,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                      onPressed: () {
+                        if (datePickedByUser.isAfter(maxDate)) {
+                          Navigator.of(context).pop(olderThan13Years);
+                          return;
+                        }
+                        Navigator.of(context).pop(datePickedByUser);
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Divider(
-              color: ATColors.hex0D0D0D,
-              height: 0,
-              thickness: 1,
-            ),
-            Expanded(
-              child: Container(
-                color: ATColors.hex0D0D0D,
+              Expanded(
                 child: CupertinoTheme(
                   data: const CupertinoThemeData(
                     brightness: Brightness.dark,
@@ -174,8 +197,8 @@ Future<dynamic> _selectDOBModal({
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     },

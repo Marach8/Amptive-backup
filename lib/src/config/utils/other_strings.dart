@@ -522,12 +522,12 @@ class ATStrings {
       'Continue from your already running shows or create a new one';
   static const String chooseOrCreateEventDesc =
       'Continue from your already running events or create a new one';
-  static const String createNewShow = 'Create new show';
-  static const String createNewEvent = 'Create new event';
+  static const String createNewShow = 'Create New Show';
+  static const String createNewEvent = 'Create New Event';
   static const String chooseShow = 'Choose Show';
   static const String chooseEvent = 'Choose Event';
-  static const String CREATE_UR_SHOW = 'Create your show';
-  static const String CREATE_UR_EVENT = 'Create your event';
+  static const String CREATE_UR_SHOW = 'Create your Show';
+  static const String CREATE_UR_EVENT = 'Create your Event';
   static const String addCommunity = 'Add Community';
   static const String addCohost = 'Add Co-host';
   static const String editCohost = 'Edit cohost';
@@ -535,7 +535,7 @@ class ATStrings {
   static const String ACCT_PRIVATE = 'Your account is now private';
   static const String USERS_CAN_SEE_UR_CALENDER = 'Users can see your calender';
   static const String addHashtagsDesc =
-      'You can add up to 5 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters';
+      'You can add up to 5 hashtags, with each hashtag not more that 25 characaters long, without spaces or special characters.';
   static const String SELECTED = 'Selected';
   static const String addCommunityDesc =
       'Communities will help your Shows and Events reach more listeners. Your audience can also use communites to find your Shows and Events easily. ';
@@ -574,9 +574,8 @@ class ATStrings {
       'Choose who can access this event';
   static const String capacity = 'Capacity';
   static const String choose2AllowHandRasing =
-      'Choose whether to allow hand-rasing';
-  static const String choose2AllowWhispers =
-      'Choose whether to allow whispers';
+      'Select audience interaction';
+  static const String choose2AllowWhispers = 'Choose whether to allow whispers';
   static const String AUDIENCE_INTERACTION = 'Select audience interaction';
   static const String youWillHaveAccessToModerationTools =
       "While you're live, you'll have full access to your moderation tools so you can control and manage audience interactions throughout the session.";
@@ -587,7 +586,8 @@ class ATStrings {
   static const String maxCapacityLimit =
       'Once maximun capacity is reached, other users will not be allowed to join or pay for your event';
   static const String setCapacity = 'Set capacity';
-  static const String setCapacityDesc = 'Set the maximum number of listeners that can access your event. Once this limit is reached, no other additional participants can join or pay';
+  static const String setCapacityDesc =
+      'Set the maximum number of listeners that can access your event. Once this limit is reached, no other additional participants can join or pay';
   static const String remove = 'Remove';
   static const String sendGiftToHost = 'Send a gift to the host';
   static const String whispersDesc =
@@ -619,13 +619,13 @@ class ATStrings {
       "While you're live, you'll have full access to your moderation tools, allowing you to manage interactions and maintain control throughout the session.";
   static const String DISALLOW = "Don't Allow";
   static const String audienceCanRaiseHand =
-      'Audience can raise their hands during your live.';
+      'Audience can raise their hands.';
   static const String audienceCannotRaiseHand =
-      'Audience cannot raise their hands during your live.';
+      'Audience cannot raise their hands.';
   static const String promptToSetupSubPlan =
-      "You will be prompted to setup subscription plan if you haven't set it up yet";
+      "You will be prompted to setup subscription plan if you haven't set it up yet.";
   static const String eventAudienceAccessDesc =
-      'You will be prompted to setup payment fee for your event';
+      'You will be prompted to setup payment fee for your event.';
   static const String enterAmountToChargeForEvent =
       'Enter the amount you would want to charge users for your event. This amount will determine your event\'s tier.';
   static const String PAID = 'Paid';

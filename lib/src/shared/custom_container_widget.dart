@@ -11,6 +11,7 @@ class ATContainer extends StatelessWidget {
     this.height,
     this.width,
     this.splashColor,
+    this.highlightColor,
     this.radius,
     this.border,
     this.margin,
@@ -30,7 +31,7 @@ class ATContainer extends StatelessWidget {
   });
 
   final EdgeInsetsGeometry? padding, margin;
-  final Color? color, splashColor;
+  final Color? color, splashColor, highlightColor;
   final double? height, width, radius;
   final BoxBorder? border;
   final Widget? child;
@@ -57,6 +58,7 @@ class ATContainer extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         splashColor: splashColor ?? ATColors.white.withValues(alpha: 0.5),
+        highlightColor: highlightColor,
         borderRadius: BorderRadius.circular(radius ?? 10),
         child: AnimatedContainer(
           duration: Duration(milliseconds: duration ?? 500),

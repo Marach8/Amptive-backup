@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:amptive/src/shared/animated_expandable_text.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/episodes/cubits/episode_detail_cubit.dart';
@@ -147,6 +148,12 @@ class _SubWidgetState extends State<_SubWidget> {
                                             episode?.host?.username ?? '',
                                         targetUserId:
                                             episode?.host?.userId ?? '',
+                                        targetUserProfileUrl:
+                                            episode?.host?.profilePicture,
+                                        programType: 'episode',
+                                        contentId: episode?.episodeId,
+                                        programTitle: episode?.title,
+                                        coverUrl: episode?.thumbnailUrl,
                                       );
                                     }),
                                 const SizedBox(height: 24),
@@ -310,20 +317,10 @@ class _SubWidgetState extends State<_SubWidget> {
                                 Divider(
                                   color: ATColors.white.withValues(alpha: 0.1),
                                 ),
-                                ReadMoreText(
-                                  episode?.description ?? '',
-                                  trimMode: TrimMode.Length,
-                                  trimExpandedText: ATStrings.showLess,
-                                  trimCollapsedText: ATStrings.showMore,
-                                  colorClickableText: ATColors.white,
-                                  trimLength: 100,
-                                  style: TextStyle(
-                                    color:
-                                        ATColors.white.withValues(alpha: 0.6),
-                                    fontSize: ATSizes.size14,
-                                    fontWeight: ATFontWeights.w500,
-                                  ),
-                                ),
+                                AnimatedExpandableText(
+                                text: episode?.description ?? '',
+                                trimLines: 4,
+                              ),
                                 const SizedBox(height: 150),
                               ],
                             ),

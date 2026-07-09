@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import '../../../switch_account/presentation/switch_acct/switch_acct_export.dart';
+import 'package:figma_squircle/figma_squircle.dart';
 
 enum ProgramAccessType { free, paid }
 
@@ -28,27 +29,33 @@ Future<ProgramAccessTypeSelectionData?> showAudienceAccessTypeModal({
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    backgroundColor: ATColors.hex202020,
+    backgroundColor: Colors.transparent,
     barrierColor: ATColors.black.withValues(alpha: 0.5),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(15),
-        topRight: Radius.circular(15),
-      ),
-    ),
     builder: (BuildContext dContext) {
-      return DraggableScrollableSheet(
+      return Stack(
+        children: <Widget>[
+          DraggableScrollableSheet(
         expand: false,
         initialChildSize: 0.8,
+        minChildSize: 0.5,
+        maxChildSize: 0.94,
         builder: (_, ScrollController controller) {
-          return _SubWidget(
-            initialOneTimePaymentAmount:
-                initialAccessTypeData.oneTimePaymentAmount,
-            initialSubAmount: initialAccessTypeData.subscriptionAmount,
-            initialAccessType: initialAccessTypeData.accessType,
-            controller: controller,
+          return ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+            child: Material(
+              color: const Color(0xFF1C1C1E),
+              child: _SubWidget(
+                initialOneTimePaymentAmount:
+                    initialAccessTypeData.oneTimePaymentAmount,
+                initialSubAmount: initialAccessTypeData.subscriptionAmount,
+                initialAccessType: initialAccessTypeData.accessType,
+                controller: controller,
+              ),
+            ),
           );
         },
+          ),
+        ],
       );
     },
   );
@@ -87,37 +94,52 @@ class _SubWidgetState extends State<_SubWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const ATModalDismisser(),
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              ATStrings.audienceAccess,
-              style: context.textTheme.bodyLarge,
+    return Stack(
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(height: 10),
+            Center(
+              child: Container(
+                width: 38,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.18),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Text(
-            maxLines: 5,
-            ATStrings.promptToSetupSubPlan,
-            style: context.textTheme.labelSmall
-                ?.copyWith(color: ATColors.hexC2C2C2.withValues(alpha: 0.76)),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Expanded(
+            const SizedBox(height: 14),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  ATStrings.audienceAccess,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                      fontSize: ATSizes.size18, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: Text(
+                ATStrings.promptToSetupSubPlan,
+                maxLines: 5,
+                style: context.textTheme.labelSmall
+                    ?.copyWith(color: ATColors.hexC2C2C2.withValues(alpha: 0.76)),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Expanded(
               child: SingleChildScrollView(
-            controller: widget.controller,
-            child: Column(
-              spacing: 15,
-              children: <Widget>[
+                controller: widget.controller,
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 100),
+                child: Column(
+                  spacing: 15,
+                  children: <Widget>[
                 _FreeAccessWidget(
                   isFreeSelected: _localAccessType == ProgramAccessType.free,
                   onFreeTapped: (bool isFree) {
@@ -143,14 +165,17 @@ class _SubWidgetState extends State<_SubWidget> {
                     });
                   },
                 ),
-              ],
+                  ],
+                ),
+              ),
             ),
-          )),
-          const SizedBox(
-            height: 15,
-          ),
-          ATPlainElevatedBtn(
-            height: 50,
+          ],
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: ATBlurredBgBtn(
             onPressed: _localAccessType == null
                 ? null
                 : () {
@@ -178,11 +203,8 @@ class _SubWidgetState extends State<_SubWidget> {
                   },
             btnTitle: ATStrings.cContinue,
           ),
-          const SizedBox(
-            height: 54,
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -223,14 +245,18 @@ class _PaidAccessWidget extends StatelessWidget {
       duration: 100,
       color: ATColors.hex2D2D2D,
       border: Border.all(
-          width: 2, color: isPaid ? ATColors.hex307FE2 : ATColors.transparent),
+          width: 2, color: isPaid ? ATColors.white.withValues(alpha: 0.1) : ATColors.transparent),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Row(
             children: <Widget>[
-              const ATImgLoader(imgPath: ATImgStrings.padlock),
+              const ATImgLoader(
+                imgPath: ATImgStrings.padlockHighRes,
+                width: 32,
+                height: 32,
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
@@ -250,7 +276,20 @@ class _PaidAccessWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 15),
-              ATRadioBtn(isSelected: isPaid),
+              AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  decoration: BoxDecoration(
+                    color: isPaid ? ATColors.white : ATColors.transparent,
+                    border: Border.all(color: ATColors.white, width: 2),
+                    shape: BoxShape.circle,
+                  ),
+                  height: 24,
+                  width: 24,
+                  child: Icon(Icons.check,
+                      size: 20,
+                      color: isPaid
+                          ? ATColors.hex0D0D0D
+                          : ATColors.transparent)),
             ],
           ),
           const SizedBox(height: 15),
@@ -258,7 +297,8 @@ class _PaidAccessWidget extends StatelessWidget {
           const SizedBox(height: 15),
           Row(
             children: <Widget>[
-              ATContainer(
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () async {
                   final SubscriptionPlanData? selectedSubPlan =
                       await context.pushNamed(
@@ -269,15 +309,28 @@ class _PaidAccessWidget extends StatelessWidget {
                     onSubscriptionPlanSet(selectedSubPlan);
                   }
                 },
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                color: ATColors.white.withValues(alpha: 0.1),
-                radius: 5,
-                child: Text(
-                    hasExistingSubPlan
-                        ? ATStrings.editSubPlan
-                        : ATStrings.setupSubPlan,
-                    style: context.textTheme.labelSmall?.copyWith(
-                        color: ATColors.white.withValues(alpha: 0.7))),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6), // Expanded touch area
+                  child: ClipSmoothRect(
+                    radius: SmoothBorderRadius(
+                        cornerRadius: 6, cornerSmoothing: 0.8),
+                    child: ColoredBox(
+                      color: ATColors.white.withValues(alpha: 0.1),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 10),
+                        child: Text(
+                          hasExistingSubPlan
+                              ? ATStrings.editSubPlan
+                              : ATStrings.setupSubPlan,
+                          style: context.textTheme.labelSmall?.copyWith(
+                              color: ATColors.white.withValues(alpha: 0.7),
+                              height: 1.1),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -319,10 +372,14 @@ class _FreeAccessWidget extends StatelessWidget {
       color: ATColors.hex2D2D2D,
       border: Border.all(
           width: 2,
-          color: isFreeSelected ? ATColors.hex307FE2 : ATColors.transparent),
+          color: isFreeSelected ? ATColors.white.withValues(alpha: 0.1) : ATColors.transparent),
       child: Row(
         children: <Widget>[
-          const ATImgLoader(imgPath: ATImgStrings.people),
+          const ATImgLoader(
+            imgPath: ATImgStrings.peopleHighRes,
+            width: 32,
+            height: 32,
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -342,7 +399,20 @@ class _FreeAccessWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 15),
-          ATRadioBtn(isSelected: isFreeSelected),
+          AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              decoration: BoxDecoration(
+                color: isFreeSelected ? ATColors.white : ATColors.transparent,
+                border: Border.all(color: ATColors.white, width: 2),
+                shape: BoxShape.circle,
+              ),
+              height: 24,
+              width: 24,
+              child: Icon(Icons.check,
+                  size: 20,
+                  color: isFreeSelected
+                      ? ATColors.hex0D0D0D
+                      : ATColors.transparent)),
         ],
       ),
     );

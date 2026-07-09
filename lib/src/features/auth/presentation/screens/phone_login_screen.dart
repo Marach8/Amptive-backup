@@ -71,7 +71,7 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> with ATValidators {
         child: Scaffold(
           appBar: ATAppBar(
             leading: const ATBackBtn(),
-            titleText: widget.title ?? '',
+            titleText: widget.title ?? 'Sign In',
           ),
           body: BlocConsumer<LoginCubit, ATAppState<dynamic>>(
             listener: (BuildContext context, ATAppState<dynamic> state) {
@@ -84,7 +84,7 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> with ATValidators {
             },
             builder: (BuildContext context, ATAppState<dynamic> state) {
               return SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(15),
                 child: Form(
                   key: _formKey,
@@ -232,6 +232,13 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> with ATValidators {
                             }
                           : null,
                       btnTitle: ATStrings.SIGN_IN,
+                      bgColor: Colors.white,
+                      fgColor: Colors.black,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                     );
                   },
                 ),

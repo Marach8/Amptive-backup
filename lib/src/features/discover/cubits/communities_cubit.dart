@@ -9,7 +9,13 @@ class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
   CommunitiesCubit({
     DiscoverRepo? mockDiscoverRepo,
   })  : discoverRepo = mockDiscoverRepo ?? DiscoverRepoImpl(),
-        super(const InitialState<CommunitiesResponseModel>());
+        super(
+          _cachedData == null
+              ? const InitialState<CommunitiesResponseModel>()
+              : SuccessState<CommunitiesResponseModel>(newData: _cachedData),
+        );
+
+  static CommunitiesResponseModel? _cachedData;
 
   final DiscoverRepo discoverRepo;
 
@@ -32,9 +38,10 @@ class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
           oldData,
       };
 
-  Future<void> fetchCommunities() async {
+  Future<void> fetchCommunities({bool refresh = false}) async {
     final bool hasMore = currentCommunities?.hasMore ?? true;
-    if (state is LoadingState<CommunitiesResponseModel> || !hasMore) {
+    if (state is LoadingState<CommunitiesResponseModel> ||
+        (!refresh && !hasMore)) {
       return;
     }
 
@@ -43,7 +50,7 @@ class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
     try {
       final ApiResponse<CommunitiesResponseModel> response =
           await discoverRepo.fetchCommunities(
-        pageNo: (currentCommunities?.page ?? 0) + 1,
+        pageNo: refresh ? 1 : (currentCommunities?.page ?? 0) + 1,
         pageSize: 20,
       );
 
@@ -52,15 +59,19 @@ class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
           final Map<String, Community>? newCommunities = data.data?.communities;
           final List<String>? newCommunityIds = data.data?.communityIds;
 
-          final Map<String, Community> mergedCommunities = <String, Community>{
-            ...?currentCommunities?.communities,
-            ...?newCommunities,
-          };
+          final Map<String, Community> mergedCommunities = refresh
+              ? <String, Community>{...?newCommunities}
+              : <String, Community>{
+                  ...?currentCommunities?.communities,
+                  ...?newCommunities,
+                };
 
-          final List<String> mergedCommunityIds = <String>[
-            ...?currentCommunities?.communityIds,
-            ...?newCommunityIds,
-          ];
+          final List<String> mergedCommunityIds = refresh
+              ? <String>[...?newCommunityIds]
+              : <String>[
+                  ...?currentCommunities?.communityIds,
+                  ...?newCommunityIds,
+                ];
 
           final CommunitiesResponseModel? newCommunitiesData =
               currentCommunities?.copyWith(
@@ -73,18 +84,26 @@ class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
                   ) ??
                   data.data;
 
+          _cachedData = newCommunitiesData;
           emit(SuccessState<CommunitiesResponseModel>(
-              newData: newCommunitiesData));
+            newData: newCommunitiesData,
+          ));
         },
         unSuccessful: (Unsuccessful<CommunitiesResponseModel> error) {
           emit(
-            FailureState<CommunitiesResponseModel>(error.error.message),
+            FailureState<CommunitiesResponseModel>(
+              error.error.message,
+              oldData: currentCommunities,
+            ),
           );
         },
       );
     } catch (e) {
       emit(
-        FailureState<CommunitiesResponseModel>('Unable to get communities: $e'),
+        FailureState<CommunitiesResponseModel>(
+          'Unable to get communities: $e',
+          oldData: currentCommunities,
+        ),
       );
     }
   }

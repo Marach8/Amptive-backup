@@ -11,9 +11,19 @@ abstract class ShowsRepo {
     required CreateShowPayload createShowModel,
   });
 
+  Future<ApiResponse<HostedShow>> updateShow({
+    required String showId,
+    required CreateShowPayload payload,
+  });
+
   Future<ApiResponse<HostedShowsResponseModel>> fetchHostedShows({
     required int page,
     required int pageSize,
     required bool refresh,
+  });
+
+  Future<ApiResponse<HostedShow>> cancelShow({
+    required String showId,
+    required String reason,
   });
 }

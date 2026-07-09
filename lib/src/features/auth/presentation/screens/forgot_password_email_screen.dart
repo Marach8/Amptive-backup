@@ -58,6 +58,7 @@ class _ATForgotPasswordEmailScreenState
             body: Form(
               key: _formKey,
               child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,6 +139,13 @@ class _ATForgotPasswordEmailScreenState
                                 }
                               : null,
                           btnTitle: ATStrings.sendCode,
+                          bgColor: Colors.white,
+                          fgColor: Colors.black,
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
                         );
                       },
                     );

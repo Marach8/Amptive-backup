@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:amptive/src/shared/animated_expandable_text.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
@@ -29,6 +30,8 @@ import 'package:nested/nested.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
+import 'package:amptive/src/shared/mesh_gradient_background.dart';
+import '../../../../config/utils/dominant_color_extractor.dart';
 
 class PreviewEventScreen extends StatelessWidget {
   const PreviewEventScreen({
@@ -58,6 +61,10 @@ class PreviewEventScreen extends StatelessWidget {
         ),
         BlocProvider<StartLiveProgramCubit>(
           create: (_) => StartLiveProgramCubit()),
+        BlocProvider<DominantColorCubit>(
+          create: (_) => DominantColorCubit()
+            ..extractColor(hostedEvent.coverUrl ?? ATImgStrings.weCanDoHardThingsBgImage)
+        ),
       ],
       child: _EventSubWidget(hostedEvent: hostedEvent),
     );
@@ -102,24 +109,11 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
       child: ATAnnotatedRegion(
         statusBarColor: ATColors.transparent,
         child: Scaffold(
-          body: Stack(
-            children: <Widget>[
-              Positioned.fill(
-                child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                  child: BlocBuilder<EventDetailCubit, ATAppState<HostedEvent>>(
-                      builder: (_, __) {
-                    final String? coverUrl = context
-                        .read<EventDetailCubit>()
-                        .currentEventDetail
-                        ?.coverUrl;
-                    return ATImgLoader(
-                        boxFit: BoxFit.fill, imgPath: coverUrl ?? '');
-                  }),
-                ),
-              ),
-              ColoredBox(
-                color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
+          backgroundColor: Colors.transparent,
+          body: BlocBuilder<DominantColorCubit, DominantColorState>(
+            builder: (context, state) {
+              return ATMeshGradientBackground(
+                state: state,
                 child: NotificationListener<ScrollNotification>(
                   onNotification:
                       context.read<BlurredHeaderCubit>().onScrollNotification,
@@ -137,6 +131,7 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                       )
                     ],
                     body: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
                       child: BlocConsumer<EventDetailCubit,
                               ATAppState<HostedEvent>>(
@@ -168,6 +163,11 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                       targetUserName:
                                           event?.host?.username ?? '',
                                       targetUserId: event?.host?.userId ?? '',
+                                      targetUserProfileUrl: event?.host?.profilePicture,
+                                      programType: 'event',
+                                      contentId: event?.eventId,
+                                      programTitle: event?.title,
+                                      coverUrl: event?.coverUrl,
                                     );
                                   }),
                             ),
@@ -180,8 +180,9 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                               event?.title ?? '',
                               overflow: TextOverflow.clip,
                               style: context.textTheme.displayMedium?.copyWith(
-                                fontSize: ATSizes.size24,
-                                fontWeight: ATFontWeights.w600,
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                height: 34 / 26,
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -229,8 +230,10 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                             const SizedBox(height: 40),
                             Text(
                               ATStrings.hashtags,
-                              style: context.textTheme.bodySmall
-                                  ?.copyWith(fontSize: ATSizes.size17),
+                              style: context.textTheme.titleMedium?.copyWith(
+                                fontSize: ATSizes.size17,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             Divider(
                               color: ATColors.white.withValues(alpha: 0.1),
@@ -240,8 +243,10 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                             const SizedBox(height: 30),
                             Text(
                               ATStrings.hostedBy,
-                              style: context.textTheme.bodySmall
-                                  ?.copyWith(fontSize: ATSizes.size17),
+                              style: context.textTheme.titleMedium?.copyWith(
+                                fontSize: ATSizes.size17,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             Divider(
                               color: ATColors.white.withValues(alpha: 0.1),
@@ -250,9 +255,8 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                               padding: const EdgeInsets.symmetric(vertical: 9),
                               title: event?.host?.username ?? '',
                               subtitle: 'Host',
-                              diameter: 42,
-                              leadingImagePath: event?.host?.profilePicture ??
-                                  ATImgStrings.jpeg1,
+                              diameter: 40,
+                              leadingImagePath: event?.host?.profilePicture ?? '',
                             ),
                             ...(event?.coHosts ?? <CoHost>[])
                                 .map((CoHost cohost) => TileWithLeadingImage(
@@ -260,15 +264,16 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                                           vertical: 9),
                                       title: cohost.username ?? '',
                                       subtitle: 'Host',
-                                      diameter: 42,
-                                      leadingImagePath: cohost.profilePicture ??
-                                          ATImgStrings.jpeg1,
+                                      diameter: 40,
+                                      leadingImagePath: cohost.profilePicture ?? '',
                                     )),
                             const SizedBox(height: 30),
                             Text(
                               '$goingCount Going',
-                              style: context.textTheme.bodySmall
-                                  ?.copyWith(fontSize: ATSizes.size17),
+                              style: context.textTheme.titleMedium?.copyWith(
+                                fontSize: ATSizes.size17,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             Divider(
                               color: ATColors.white.withValues(alpha: 0.1),
@@ -302,25 +307,18 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
 
                             Text(
                               'About Event',
-                              style: context.textTheme.bodySmall
-                                  ?.copyWith(fontSize: ATSizes.size17),
+                              style: context.textTheme.titleMedium?.copyWith(
+                                fontSize: ATSizes.size17,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             Divider(
                               color: ATColors.white.withValues(alpha: 0.1),
                             ),
-                            ReadMoreText(
-                              event?.description ?? '',
-                              trimMode: TrimMode.Length,
-                              trimExpandedText: ATStrings.showLess,
-                              trimCollapsedText: ATStrings.showMore,
-                              colorClickableText: ATColors.white,
-                              trimLength: 100,
-                              style: TextStyle(
-                                color: ATColors.white.withValues(alpha: 0.6),
-                                fontSize: ATSizes.size14,
-                                fontWeight: ATFontWeights.w500,
+                            AnimatedExpandableText(
+                                text: event?.description ?? '',
+                                trimLines: 4,
                               ),
-                            ),
                             const SizedBox(height: 150),
                           ],
                         );
@@ -328,10 +326,9 @@ class _EventSubWidgetState extends State<_EventSubWidget> {
                     ),
                   ),
                 ),
-              ),
-            ],
+              );
+            },
           ),
-
           bottomSheet: BlocConsumer<StartLiveProgramCubit, 
               ATAppState<LiveProgramEntryToken>>(
               listener: (_, ATAppState<LiveProgramEntryToken> state){

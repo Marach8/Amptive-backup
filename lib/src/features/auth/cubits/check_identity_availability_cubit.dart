@@ -42,4 +42,7 @@ class CheckIdentityAvailabilityCubit extends Cubit<ATAppState<bool>> {
       );
     }
   }
+
+  /// Resets state to initial (clears the suffix icon)
+  void reset() => emit(const InitialState<bool>());
 }

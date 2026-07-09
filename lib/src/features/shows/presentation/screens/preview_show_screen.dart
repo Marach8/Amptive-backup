@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:amptive/src/shared/animated_expandable_text.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/calender/calender_export.dart';
@@ -9,19 +9,19 @@ import 'package:amptive/src/features/home/presentation/widgets/event_or_show_car
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/existing_episodes_indicator.dart';
+import 'package:amptive/src/features/episodes/presentation/screens/scheduled_episodes_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
-import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
-import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/live_indicators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
-import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
+import 'package:amptive/src/shared/mesh_gradient_background.dart';
+import '../../../../config/utils/dominant_color_extractor.dart';
 
 class PreviewShowScreen extends StatelessWidget {
   const PreviewShowScreen({
@@ -50,7 +50,11 @@ class PreviewShowScreen extends StatelessWidget {
               followerCount: hostedShow.followerCount ?? 0,
             )
           )
-        )
+        ),
+        BlocProvider<DominantColorCubit>(
+          create: (_) => DominantColorCubit()
+            ..extractColor(hostedShow.coverUrl ?? ATImgStrings.weCanDoHardThingsBgImage)
+        ),
       ],
       child: _SubWidget(hostedShow: hostedShow),
     );
@@ -92,18 +96,11 @@ class _SubWidgetState extends State<_SubWidget> {
       return ATAnnotatedRegion(
         statusBarColor: ATColors.transparent,
         child: Scaffold(
-          body: Stack(
-            children: <Widget>[
-              Positioned.fill(
-                child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                  child: ATImgLoader(
-                      boxFit: BoxFit.fill,
-                      imgPath: widget.hostedShow.coverUrl ?? ''),
-                ),
-              ),
-              Container(
-                color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
+          backgroundColor: Colors.transparent,
+          body: BlocBuilder<DominantColorCubit, DominantColorState>(
+            builder: (BuildContext context, DominantColorState state) {
+              return ATMeshGradientBackground(
+                state: state,
                 child: NotificationListener<ScrollNotification>(
                   onNotification:
                       context.read<BlurredHeaderCubit>().onScrollNotification,
@@ -120,6 +117,7 @@ class _SubWidgetState extends State<_SubWidget> {
                     ],
 
                     body: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
                       child: BlocConsumer<ShowDetailCubit, ATAppState<HostedShow>>(
                         listener: (_, ATAppState<HostedShow> state){
@@ -133,6 +131,13 @@ class _SubWidgetState extends State<_SubWidget> {
                         },
                         builder: (_, __) {
                           final HostedShow? updatedShow = context.read<ShowDetailCubit>().currentShowDetail;
+                          final TextStyle? metadataTextStyle =
+                              context.textTheme.bodySmall?.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            height: 1,
+                            color: Colors.white.withValues(alpha: 0.6),
+                          );
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -141,51 +146,98 @@ class _SubWidgetState extends State<_SubWidget> {
                                 child: CoverPicWithTopRightMoreIcon(
                                     imgPath: updatedShow?.coverUrl ?? '',
                                     onMoreTapped: () async {
-                                      final SelectedProgramAction? foo =
-                                          await showProgramOptions(
+                                      // Owner actions for your own show.
+                                      final String sid =
+                                          updatedShow?.showId ?? '';
+                                      await showOwnerShowOptions(
                                         context: context,
-                                        toggleFollowingCubit:
-                                            context.read<ToggleFollowingCubit>(),
-                                        targetUserName:
-                                            updatedShow?.host?.username ?? '',
-                                        targetUserId: updatedShow?.host?.userId ?? '',
+                                        showId: sid,
+                                        title: updatedShow?.title ?? '',
+                                        coverUrl: updatedShow?.coverUrl,
+                                        onEditShow: updatedShow == null
+                                            ? null
+                                            : () async {
+                                                final dynamic result = await context.pushNamed(
+                                                  ATRoutes.editShowForm,
+                                                  extra: updatedShow,
+                                                );
+                                                if (result is HostedShow && context.mounted) {
+                                                  context.read<ShowDetailCubit>().updateShowLocally(result);
+                                                }
+                                              },
+                                        onViewScheduled: () =>
+                                            context.pushNamed(
+                                          ATRoutes.scheduledEpisodesScreen,
+                                          extra: ScheduledEpisodesArgs(
+                                            showId: sid,
+                                            coverUrl: updatedShow?.coverUrl,
+                                            showTitle: updatedShow?.title,
+                                            showHost: updatedShow?.host,
+                                            showCommunity:
+                                                updatedShow?.community,
+                                          ),
+                                        ),
                                       );
                                     }),
                               ),
                               const SizedBox(height: 24),
                             
-                              if(hasEpisodes) ...<Widget>[
-                                ExistingEpisodesIndicator(
-                                  activeEpisode: updatedShow?.episodes?.first.copyWith(
-                                    showId: updatedShow.showId,
-                                    parentShowTitle: updatedShow.title
-                                  )
+                              ExistingEpisodesIndicator(
+                                episodeCount: widget.hostedShow.episodeCount ?? 0,
+                                // Opens the same page as the "View scheduled
+                                // episodes" option in the owner menu.
+                                onTappOverride: () => context.pushNamed(
+                                  ATRoutes.scheduledEpisodesScreen,
+                                  extra: ScheduledEpisodesArgs(
+                                    showId: updatedShow?.showId ??
+                                        widget.hostedShow.showId ??
+                                        '',
+                                    coverUrl: updatedShow?.coverUrl ??
+                                        widget.hostedShow.coverUrl,
+                                    showTitle: updatedShow?.title ??
+                                        widget.hostedShow.title,
+                                    showHost: updatedShow?.host ??
+                                        widget.hostedShow.host,
+                                    showCommunity: updatedShow?.community ??
+                                        widget.hostedShow.community,
+                                  ),
                                 ),
-                                const SizedBox(height: 12),
-                              ],
+                                activeEpisode: updatedShow?.episodes?.isNotEmpty == true
+                                  ? updatedShow!.episodes!.first.copyWith(
+                                      showId: updatedShow.showId,
+                                      parentShowTitle: updatedShow.title
+                                    )
+                                  : null,
+                              ),
+                              const SizedBox(height: 12),
                               
                               Text(
                                 maxLines: 2,
                                 updatedShow?.title ?? '',
                                 overflow: TextOverflow.clip,
                                 style: context.textTheme.displayMedium?.copyWith(
-                                  fontSize: ATSizes.size24,
-                                  fontWeight: ATFontWeights.w600,
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  height: 34 / 26,
                                 ),
                               ),
                               const SizedBox(height: 12),
                               Row(
                                 spacing: 20,
                                 children: <Widget>[
-                                  if(isLive) const LiveIndicatorWithAnimatinWifiIcon(),
+                                  if(isLive) LiveIndicatorWithAnimatinWifiIcon(
+                                    textStyle: metadataTextStyle,
+                                  ),
                                   RenderCommunityName(communityName: updatedShow?.community?.name)
                                 ],
                               ),
                               const SizedBox(height: 40),
                               Text(
                                 ATStrings.hashtags,
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
+                                style: context.textTheme.titleMedium?.copyWith(
+                                  fontSize: ATSizes.size17,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               Divider(
                                 color: ATColors.white.withValues(alpha: 0.1),
@@ -195,19 +247,28 @@ class _SubWidgetState extends State<_SubWidget> {
                               const SizedBox(height: 30),
                               Text(
                                 ATStrings.hostedBy,
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
+                                style: context.textTheme.titleMedium?.copyWith(
+                                  fontSize: ATSizes.size17,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               Divider(
                                 color: ATColors.white.withValues(alpha: 0.1),
+                              ),
+                              TileWithLeadingImage(
+                                padding: const EdgeInsets.symmetric(vertical: 9),
+                                title: updatedShow?.host?.username ?? '',
+                                subtitle: 'Host',
+                                diameter: 40,
+                                leadingImagePath: updatedShow?.host?.profilePicture ?? '',
                               ),
                               ...(updatedShow?.coHosts ?? <CoHost>[]).map(
                                 (CoHost cohost) => TileWithLeadingImage(
                                   padding: const EdgeInsets.symmetric(vertical: 9),
                                   title: cohost.username ?? '',
                                   subtitle: 'Host',
-                                  diameter: 42,
-                                  leadingImagePath: cohost.profilePicture ?? ATImgStrings.jpeg1,
+                                  diameter: 40,
+                                  leadingImagePath: cohost.profilePicture ?? '',
                                 )
                               ),
                               const SizedBox(height: 30),
@@ -234,24 +295,17 @@ class _SubWidgetState extends State<_SubWidget> {
                               // const SizedBox( height: 35),
                               Text(
                                 'About Show',
-                                style: context.textTheme.bodySmall
-                                    ?.copyWith(fontSize: ATSizes.size17),
+                                style: context.textTheme.titleMedium?.copyWith(
+                                  fontSize: ATSizes.size17,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               Divider(
                                 color: ATColors.white.withValues(alpha: 0.1),
                               ),
-                              ReadMoreText(
-                                updatedShow?.description ?? '',
-                                trimMode: TrimMode.Length,
-                                trimExpandedText: ATStrings.showLess,
-                                trimCollapsedText: ATStrings.showMore,
-                                colorClickableText: ATColors.white,
-                                trimLength: 100,
-                                style: TextStyle(
-                                  color: ATColors.white.withValues(alpha: 0.6),
-                                  fontSize: ATSizes.size14,
-                                  fontWeight: ATFontWeights.w500,
-                                ),
+                              AnimatedExpandableText(
+                                text: updatedShow?.description ?? '',
+                                trimLines: 4,
                               ),
                               const SizedBox(height: 150),
                               // Text(
@@ -269,18 +323,19 @@ class _SubWidgetState extends State<_SubWidget> {
                     ),
                   ),
                 ),
-              ),
-            ],
+              );
+            },
           ),
-
+          // Same button treatment (width, fade backing, styling) as the
+          // program-detail modal.
           bottomSheet: ATBlurredBgBtn(
+            btnTitle: hasEpisodes ? 'Add Episode' : 'Create Episode',
             onPressed: () {
               context.pushNamed(
                 ATRoutes.createEpisodeForm,
-                extra: widget.hostedShow.showId ?? ''
+                extra: widget.hostedShow,
               );
             },
-            btnTitle: hasEpisodes ? 'Add Episode' : 'Create Episode',
           ),
         ),
       );

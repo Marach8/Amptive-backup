@@ -19,35 +19,43 @@ class ATFilterWidget<B extends BlocBase<String>> extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<B, String>(
       builder: (_, String state) {
-        final Characters characters = title.trim().characters;
+        final String text = title.trim();
+        final String query = state.trim();
+
+        // Emphasize the contiguous run that matches the query (the global
+        // standard), rather than colouring every letter that appears in it.
+        final TextStyle? matchStyle = style?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: ATColors.white,
+        );
+
+        final List<InlineSpan> spans = <InlineSpan>[];
+        if (padLeft != null) spans.add(TextSpan(text: padLeft, style: style));
+
+        final int matchIndex = query.isEmpty
+            ? -1
+            : text.toLowerCase().indexOf(query.toLowerCase());
+        if (matchIndex < 0) {
+          spans.add(TextSpan(text: text, style: style));
+        } else {
+          final int end = matchIndex + query.length;
+          if (matchIndex > 0) {
+            spans.add(TextSpan(
+                text: text.substring(0, matchIndex), style: style));
+          }
+          spans.add(TextSpan(
+              text: text.substring(matchIndex, end), style: matchStyle));
+          if (end < text.length) {
+            spans.add(TextSpan(text: text.substring(end), style: style));
+          }
+        }
+
+        if (padRight != null) spans.add(TextSpan(text: padRight, style: style));
 
         return Text.rich(
-          TextSpan(
-            children: <InlineSpan>[
-              if (padLeft != null)
-                TextSpan(
-                  text: padLeft,
-                  style: style,
-                ),
-              ...characters.map(
-                (String char) {
-                  final bool shouldHighlightString =
-                      state.toLowerCase().contains(char.toLowerCase());
-                  return TextSpan(
-                    text: char,
-                    style: shouldHighlightString
-                        ? style?.copyWith(color: ATColors.hex307FE2)
-                        : style,
-                  );
-                },
-              ),
-              if (padRight != null)
-                TextSpan(
-                  text: padRight,
-                  style: style,
-                ),
-            ],
-          ),
+          TextSpan(children: spans),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         );
       },
     );

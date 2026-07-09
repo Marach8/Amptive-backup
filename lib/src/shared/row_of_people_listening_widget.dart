@@ -11,16 +11,20 @@ class PeopleListeningWidget extends StatelessWidget {
       this.pictureDiameter,
       this.showNumberInsideContainer = false,
       this.viewerProfileUrls,
-      this.totalViewerCount});
+      this.totalViewerCount,
+      this.animateAvatarChanges = false});
 
   final double? pictureDiameter;
   final bool showNumberInsideContainer;
+  final bool animateAvatarChanges;
   final List<String>? viewerProfileUrls;
   final int? totalViewerCount;
 
   List<String> get _viewerImages {
     if (viewerProfileUrls != null && viewerProfileUrls!.isNotEmpty) {
-      return viewerProfileUrls!.take(4).toList();
+      final int count = totalViewerCount ?? 0;
+      final int visibleCount = count < 4 ? count : 4;
+      return viewerProfileUrls!.take(visibleCount).toList();
     }
     return <String>[
       // ATImgStrings.jpeg1,
@@ -44,8 +48,10 @@ class PeopleListeningWidget extends StatelessWidget {
         ATOverlappingImages(
           imgPaths: _viewerImages,
           imgSize: pictureDiameter ?? 35,
-          overlapOffset: 25,
-          borderWidth: 1,
+          overlapOffset: 15,
+          borderWidth: 2,
+          borderColor: ATColors.containerGradientColorB,
+          animateChanges: animateAvatarChanges,
         ),
         showNumberInsideContainer && _displayCount > 0
             ? Positioned(

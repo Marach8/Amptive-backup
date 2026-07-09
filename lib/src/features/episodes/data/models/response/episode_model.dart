@@ -69,7 +69,7 @@ class Episode extends Equatable{
           ?.map((dynamic e) => HashTag.fromJson(e as Map<String, dynamic>))
           .toList(),
       handRaising: json['hand_raising'],
-      whispers: json['whispers'],
+      whispers: json['whispers'] ?? json['allow_whispers'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       priceOverride: json['price_override'],
@@ -81,6 +81,8 @@ class Episode extends Equatable{
   Episode copyWith({
     String? showId,
     String? parentShowTitle,
+    Host? host,
+    Community? community,
   }) {
     return Episode(
       episodeId: episodeId,
@@ -104,9 +106,9 @@ class Episode extends Equatable{
       commentCount: commentCount,
       goingCount: goingCount,
       durationSeconds: durationSeconds,
-      host: host,
+      host: host ?? this.host,
       coHosts: coHosts,
-      community: community,
+      community: community ?? this.community,
       tags: tags,
       handRaising: handRaising,
       createdAt: createdAt,

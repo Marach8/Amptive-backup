@@ -1,24 +1,29 @@
 class ATEndpoints {
   const ATEndpoints._();
 
-  static const String baseUrl = 'https://amptive.onrender.com';
-  static const String wsBaseUrl = 'wss://amptive.onrender.com';
+  static const String baseUrl = 'https://amptive-staging.getamptive.com';
+  static const String wsBaseUrl = 'wss://amptive-staging.getamptive.com';
   // websockets
   static const String wsUsers = '$wsBaseUrl/api/v1/ws/user';
   static const String wsStream = '$wsBaseUrl/api/v1/ws/stream/';
-
 
   static const String checkIdentityAvailability =
       '/api/v1/auth/check-availability';
   static const String sendOtp = '/api/v1/auth/init';
   static const String verifyOtp = '/api/v1/auth/verify-otp';
   static const String login = '/api/v1/auth/login';
+  static const String refreshToken = '/api/v1/auth/refresh';
   static const String resetPasswordOtp = '/api/v1/auth/forgot-password';
   static const String verifyresetPasswordOtp =
       '/api/v1/auth/verify-password-reset-otp';
   static const String register = '/api/v1/auth/register';
   static const String uploadImage = '/api/v1/extras/upload-image';
   static const String communities = '/api/v1/communities/';
+  static const String myCommunities = '/api/v1/communities/my-communities';
+  static String joinCommunity(String communityId) =>
+      '/api/v1/communities/$communityId/join';
+  static String leaveCommunity(String communityId) =>
+      '/api/v1/communities/$communityId/leave';
   static const String resetPassword = '/api/v1/auth/reset-password';
   static const String users = '/api/v1/shows/users';
   static const String homeFeed = '/api/v1/shows/feed/home';
@@ -42,6 +47,7 @@ class ATEndpoints {
   static const String searchUsers = '/api/v1/search/users';
   static const String unifiedSearch = '/api/v1/search';
   static const String searchShows = '/api/v1/search/shows';
+  static const String searchEpisodes = '/api/v1/search/episodes';
   static const String searchEvents = '/api/v1/search/events';
   static const String searchHashtags = '/api/v1/search/hashtags';
   static const String searchSuggestions = '/api/v1/search/suggestions';
@@ -53,7 +59,7 @@ class ATEndpoints {
   static const String getTransactionHistory = '/api/v1/payments/transactions';
   static const String fundWallet = '/api/v1/payments/wallet/fund';
   static const String getWalletBalance = '/api/v1/payments/wallet/balance';
-  static String verifyPayment ='/api/v1/payments/verify';
+  static String verifyPayment = '/api/v1/payments/verify';
   static const String createProfessionalProfile = '/api/v1/users/me/profile';
 
   // static String getStreamTokenEndpoint(String streamId) =>

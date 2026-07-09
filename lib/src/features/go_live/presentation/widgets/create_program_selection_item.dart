@@ -1,5 +1,6 @@
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/shared/markdown_text.dart';
 import 'package:flutter/material.dart';
 
 class CreateProgramSelectionItem extends StatelessWidget {
@@ -10,12 +11,14 @@ class CreateProgramSelectionItem extends StatelessWidget {
     this.trailing,
     this.leading,
     this.descStyle,
+    this.isMarkdown = false,
   });
 
   final VoidCallback onTap;
   final Widget? trailing, leading;
   final String description;
   final TextStyle? descStyle;
+  final bool isMarkdown;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +31,30 @@ class CreateProgramSelectionItem extends StatelessWidget {
         children: <Widget>[
           leading ??
               Expanded(
-                child: Text(
-                  description,
-                  style: descStyle ??
-                      context.textTheme.bodySmall?.copyWith(
-                        color: ATColors.white.withValues(alpha: 0.4),
+                child: isMarkdown
+                    ? Text.rich(
+                        TextSpan(
+                          children: buildMarkdownSpans(
+                            text: description,
+                            base: descStyle ??
+                                context.textTheme.bodySmall!.copyWith(
+                                  color: ATColors.white.withValues(alpha: 0.4),
+                                ),
+                            editable: false,
+                          ),
+                        ),
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    : Text(
+                        description,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        style: descStyle ??
+                            context.textTheme.bodySmall?.copyWith(
+                              color: ATColors.white.withValues(alpha: 0.4),
+                            ),
                       ),
-                ),
               ),
           const SizedBox(
             width: 10,

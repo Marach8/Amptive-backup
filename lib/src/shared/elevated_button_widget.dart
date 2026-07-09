@@ -71,6 +71,7 @@ class ATPlainElevatedBtn extends StatelessWidget {
     this.fgColor,
     this.child,
     this.style,
+    this.side,
     this.isLoading = false,
   });
 
@@ -81,6 +82,7 @@ class ATPlainElevatedBtn extends StatelessWidget {
   final Color? bgColor, fgColor;
   final Widget? child;
   final TextStyle? style;
+  final BorderSide? side;
   final bool isLoading;
 
   @override
@@ -93,9 +95,10 @@ class ATPlainElevatedBtn extends StatelessWidget {
               padding: padding,
               foregroundColor: fgColor,
               backgroundColor: bgColor,
+              side: side,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30)),
-              fixedSize: Size(width ?? context.screenWidth, height ?? 54)),
+              fixedSize: Size(width ?? context.screenWidth, height ?? 56)),
           child: isLoading
               ? ATLoadingIndicator(
                   color: fgColor ?? ATColors.white,

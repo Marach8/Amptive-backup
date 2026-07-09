@@ -16,6 +16,11 @@ class EpisodesRepoImpl implements EpisodesRepo {
 
   final NetworkService networkService;
 
+  static final Map<String, Episode> episodeCache = {};
+  static final Set<String> fetchingEpisodes = {};
+
+  static Episode? getCachedEpisode(String episodeId) => episodeCache[episodeId];
+
   @override
   Future<ApiResponse<Episode>> createEpisode({
     required String showId,
@@ -43,15 +48,37 @@ class EpisodesRepoImpl implements EpisodesRepo {
     required String showId,
     required String episodeId,
   }) async {
+    // The endpoint is `shows/<showId>/episodes/<episodeId>`; without both ids
+    // it collapses to `shows/episodes/<id>` and 404s. Bail early.
+    if (showId.isEmpty || episodeId.isEmpty) {
+      return Unsuccessful<Episode>(
+        error: OtherExceptions('Missing show or episode id', null),
+      );
+    }
+
+    if (episodeCache.containsKey(episodeId)) {
+      return Successful<Episode>(data: episodeCache[episodeId]!);
+    }
+    
+    if (fetchingEpisodes.contains(episodeId)) {
+      return Unsuccessful<Episode>(error: OtherExceptions('Fetching in progress', null));
+    }
+
     try {
+      fetchingEpisodes.add(episodeId);
       final Response<dynamic> response = await networkService.get(
         '${ATEndpoints.shows}$showId/episodes/$episodeId',
       );
 
       final Episode episodeResponse =
           Episode.fromJson(response.data);
+          
+      episodeCache[episodeId] = episodeResponse;
+      fetchingEpisodes.remove(episodeId);
+      
       return Successful<Episode>(data: episodeResponse);
     } catch (e) {
+      fetchingEpisodes.remove(episodeId);
       log('Fetch episode error: $e');
       return Unsuccessful<Episode>(
         error: ATException.resolveException(e),

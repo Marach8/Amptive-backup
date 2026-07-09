@@ -36,7 +36,7 @@ class _AddProfilePictureScreenState extends State<AddProfilePictureScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: ATColors.hex0D0D0D,
+      backgroundColor: ATColors.black,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
         child: _isLoading

@@ -16,11 +16,25 @@ class ShowsRepoImpl implements ShowsRepo {
 
   final NetworkService networkService;
 
+  static final Map<String, HostedShow> showCache = {};
+  static final Set<String> fetchingShows = {};
+
+  static HostedShow? getCachedShow(String showId) => showCache[showId];
+
   @override
   Future<ApiResponse<HostedShow>> fetchShow({
     required String showId,
   }) async {
+    if (showCache.containsKey(showId)) {
+      return Successful<HostedShow>(data: showCache[showId]!);
+    }
+    
+    if (fetchingShows.contains(showId)) {
+      return Unsuccessful<HostedShow>(error: OtherExceptions('Fetching in progress', null));
+    }
+
     try {
+      fetchingShows.add(showId);
       final Response<dynamic> response = await networkService.get(
         '${ATEndpoints.shows}$showId',
       );
@@ -28,8 +42,13 @@ class ShowsRepoImpl implements ShowsRepo {
       final HostedShow showResponse = HostedShow.fromJson(
         response.data as Map<String, dynamic>,
       );
+      
+      showCache[showId] = showResponse;
+      fetchingShows.remove(showId);
+      
       return Successful<HostedShow>(data: showResponse);
     } catch (e) {
+      fetchingShows.remove(showId);
       log('Fetch show error: $e');
       return Unsuccessful<HostedShow>(
         error: ATException.resolveException(e),
@@ -60,6 +79,40 @@ class ShowsRepoImpl implements ShowsRepo {
   }
 
   @override
+  Future<ApiResponse<HostedShow>> updateShow({
+    required String showId,
+    required CreateShowPayload payload,
+  }) async {
+    try {
+      // The update endpoint only accepts the mutable fields (title,
+      // description, cover art, tags, co-hosts, pricing). Sending immutable
+      // ones (category, community, hand_raising) crashes it with a 500.
+      final Map<String, dynamic> body = <String, dynamic>{
+        'title': payload.title,
+        'description': payload.description,
+        'cover_url': payload.coverUrl,
+        'price': payload.price,
+        'tag_ids': payload.tagIds,
+        'co_host_ids': payload.coHostIds,
+        'co_hosts': payload.coHostIds,
+      };
+      final Response<dynamic> response = await networkService.patch(
+        '${ATEndpoints.shows}$showId',
+        data: body,
+      );
+      final HostedShow showResponse = HostedShow.fromJson(response.data);
+      // Keep the cache in sync with the edited show.
+      showCache[showId] = showResponse;
+      return Successful<HostedShow>(data: showResponse);
+    } catch (e) {
+      log('Update show error: $e');
+      return Unsuccessful<HostedShow>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
   Future<ApiResponse<HostedShowsResponseModel>> fetchHostedShows({
     required int page,
     required int pageSize,
@@ -83,6 +136,35 @@ class ShowsRepoImpl implements ShowsRepo {
     } catch (e) {
       log('Get shows error: $e');
       return Unsuccessful<HostedShowsResponseModel>(
+        error: ATException.resolveException(e),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResponse<HostedShow>> cancelShow({
+    required String showId,
+    required String reason,
+  }) async {
+    try {
+      final Response<dynamic> response = await networkService.post(
+        '${ATEndpoints.shows}$showId/cancel',
+        data: <String, dynamic>{
+          'reason': reason,
+        },
+      );
+
+      final HostedShow showResponse = HostedShow.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+      
+      // Update cache
+      showCache[showId] = showResponse;
+
+      return Successful<HostedShow>(data: showResponse);
+    } catch (e) {
+      log('Cancel show error: $e');
+      return Unsuccessful<HostedShow>(
         error: ATException.resolveException(e),
       );
     }

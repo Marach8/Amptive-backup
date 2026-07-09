@@ -11,6 +11,7 @@ import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -57,10 +58,10 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> with ATValidators {
             child: Scaffold(
               appBar: ATAppBar(
                 leading: const ATBackBtn(),
-                titleText: widget.title,
+                titleText: widget.title ?? 'Sign Up',
               ),
               body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(15),
                 child: Form(
                   key: _formKey,
@@ -146,9 +147,10 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> with ATValidators {
                                       const SizedBox.shrink(),
                                     LoadingState<bool>() =>
                                       const ATLoadingIndicator(size: 20),
-                                    SuccessState<bool>() => Icon(
-                                        Icons.check,
-                                        color: ATColors.successColor,
+                                    SuccessState<bool>() => const ATImgLoader(
+                                        imgPath: 'assets/images/svg_images/success_check.svg',
+                                        width: 20,
+                                        height: 20,
                                       ),
                                     FailureState<bool>() => Icon(
                                         Icons.close,
@@ -265,6 +267,13 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> with ATValidators {
                                     }
                                   : null,
                               btnTitle: ATStrings.verify_fone,
+                              bgColor: Colors.white,
+                              fgColor: Colors.black,
+                              style: context.textTheme.bodyMedium?.copyWith(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
                             );
                           },
                         );

@@ -16,6 +16,12 @@ abstract class DiscoverRepo {
     required int pageSize,
   });
 
+  Future<ApiResponse<CommunitiesResponseModel>> fetchMyCommunities();
+
+  Future<ApiResponse<bool>> joinCommunity({required String communityId});
+
+  Future<ApiResponse<bool>> leaveCommunity({required String communityId});
+
   Future<ApiResponse<AllUsersResponseModel>> fetchAllUsers({
     required int page,
     required int pageSize,
@@ -31,9 +37,9 @@ abstract class DiscoverRepo {
     required String displayName,
   });
   Future<ApiResponse<TrendingTagsResponseModel>> fetchTrendingTags({
-  required int limit,
-  String? tagType,
-});
+    required int limit,
+    String? tagType,
+  });
 
   Future<ApiResponse<SearchUsersResponseModel>> searchUsers({
     required String query,
@@ -46,7 +52,6 @@ abstract class DiscoverRepo {
     required String query,
     required String sortBy,
   });
-
 
   Future<ApiResponse<SearchShowsResponseModel>> searchShows({
     required String query,
@@ -70,6 +75,15 @@ abstract class DiscoverRepo {
     String? hostId,
   });
 
+  /// Episode-type events (created under a show) live in their own search
+  /// index — `/search/events` only covers standalone events.
+  Future<ApiResponse<SearchEventsResponseModel>> searchEpisodes({
+    required String query,
+    required int page,
+    required int pageSize,
+    required String sortBy,
+  });
+
   Future<ApiResponse<SearchHashtagsResponseModel>> searchHashtags({
     required String query,
     required int page,
@@ -80,6 +94,4 @@ abstract class DiscoverRepo {
   Future<ApiResponse<dynamic>> searchSuggestions({
     required String query,
   });
-
-
 }

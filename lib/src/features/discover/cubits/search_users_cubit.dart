@@ -4,7 +4,8 @@ import 'package:amptive/src/features/discover/data/repository/discover_repo.dart
 import 'package:amptive/src/features/discover/data/repository/discover_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SearchUsersCubit extends Cubit<ATAppState<SearchUsersResponseModel>> {
+class SearchUsersCubit extends Cubit<ATAppState<SearchUsersResponseModel>>
+    with SafeEmit<ATAppState<SearchUsersResponseModel>> {
   SearchUsersCubit({DiscoverRepo? mockDiscoverRepo})
       : discoverRepo = mockDiscoverRepo ?? DiscoverRepoImpl(),
         super(const InitialState<SearchUsersResponseModel>());
@@ -21,12 +22,13 @@ class SearchUsersCubit extends Cubit<ATAppState<SearchUsersResponseModel>> {
 
 
   Future<void> searchUsers(String query) async {
-    if (query.isEmpty) {
+    // The API requires q >= 3 chars for user search.
+    if (query.trim().length < 3) {
       emit(const InitialState<SearchUsersResponseModel>());
       return;
     }
     
-    emit(const LoadingState<SearchUsersResponseModel>());
+    emit(LoadingState<SearchUsersResponseModel>(currentData: currentSearchData));
 
     try {
       final ApiResponse<SearchUsersResponseModel> response =

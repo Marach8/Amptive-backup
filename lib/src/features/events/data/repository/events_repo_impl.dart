@@ -16,11 +16,27 @@ class EventsRepoImpl implements EventsRepo {
 
   final NetworkService networkService;
 
+  static final Map<String, HostedEvent> eventCache = {};
+  static final Set<String> fetchingEvents = {};
+
+  static HostedEvent? getCachedEvent(String eventId) => eventCache[eventId];
+
   @override
   Future<ApiResponse<HostedEvent>> fetchEvent({
     required String eventId,
   }) async {
+    if (eventCache.containsKey(eventId)) {
+      return Successful<HostedEvent>(data: eventCache[eventId]!);
+    }
+    
+    if (fetchingEvents.contains(eventId)) {
+      // Return a pseudo-loading/unsuccessful if currently fetching, though ideally wait.
+      // For prefetching, the result doesn't matter immediately.
+      return Unsuccessful<HostedEvent>(error: OtherExceptions('Fetching in progress', null));
+    }
+
     try {
+      fetchingEvents.add(eventId);
       final Response<dynamic> response = await networkService.get(
         '${ATEndpoints.events}$eventId',
       );
@@ -28,8 +44,13 @@ class EventsRepoImpl implements EventsRepo {
       final HostedEvent eventResponse = HostedEvent.fromJson(
         response.data as Map<String, dynamic>,
       );
+      
+      eventCache[eventId] = eventResponse;
+      fetchingEvents.remove(eventId);
+      
       return Successful<HostedEvent>(data: eventResponse);
     } catch (e) {
+      fetchingEvents.remove(eventId);
       log('Fetch event error: $e');
       return Unsuccessful<HostedEvent>(
         error: ATException.resolveException(e),

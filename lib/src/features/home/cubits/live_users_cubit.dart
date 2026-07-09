@@ -4,7 +4,8 @@ import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LiveUsersCubit extends Cubit<ATAppState<LiveUsersResponseModel>> {
+class LiveUsersCubit extends Cubit<ATAppState<LiveUsersResponseModel>>
+    with SafeEmit<ATAppState<LiveUsersResponseModel>> {
   LiveUsersCubit({HomeRepo? mockHomeRepo})
       : homeRepo = mockHomeRepo ?? HomeRepoImpl(),
         super(const InitialState<LiveUsersResponseModel>());

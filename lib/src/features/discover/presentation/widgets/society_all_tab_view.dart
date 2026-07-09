@@ -1,245 +1,258 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/discover/presentation/views/discover_page_view.dart';
-import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
-import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
-import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
-import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
-import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
+import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../config/utils/image_strings.dart';
-import '../../../../config/utils/other_strings.dart';
-import '../../../../shared/custom_container_widget.dart';
-import 'top_creator_widget.dart';
-import 'render_trending_hashtag.dart';
 import 'hashtag_heading_row.dart';
+import 'render_trending_hashtag.dart';
+import 'top_creator_widget.dart';
+
+enum CommunityFeedMode { all, shows, events }
+
+void _openCommunityItem(BuildContext context, HomeFeedItem item) {
+  FocusManager.instance.primaryFocus?.unfocus();
+  final bool isLive = item.status?.toLowerCase() == 'live';
+  final String route = isLive
+      ? item.contentType == 'standalone'
+          ? ATRoutes.liveEventDetailed
+          : ATRoutes.liveShowDetailed
+      : ATRoutes.scheduleDetailed;
+  context.pushNamed(route, extra: item);
+}
 
 class SocietyAllTabView extends StatelessWidget {
-  const SocietyAllTabView({super.key, this.communityId});
+  const SocietyAllTabView({
+    super.key,
+    this.communityId,
+    required this.communityName,
+  });
+
   final String? communityId;
+  final String communityName;
+
+  @override
+  Widget build(BuildContext context) => CommunityFeedSections(
+        communityName: communityName,
+        mode: CommunityFeedMode.all,
+      );
+}
+
+class CommunityFeedSections extends StatelessWidget {
+  const CommunityFeedSections({
+    super.key,
+    required this.communityName,
+    required this.mode,
+  });
+
+  final String communityName;
+  final CommunityFeedMode mode;
+
+  bool _sameCommunity(HomeFeedItem item) =>
+      item.communityName?.trim().toLowerCase() ==
+      communityName.trim().toLowerCase();
+
+  bool _isShow(HomeFeedItem item) => item.contentType == 'episode';
+  bool _isEvent(HomeFeedItem item) => item.contentType == 'standalone';
+  bool _isPaid(HomeFeedItem item) =>
+      item.showType?.toLowerCase() == 'paid' || (item.price ?? 0) > 0;
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<HomeFeedCubit, ATAppState<HomeFeedResponseModel>>(
+      builder: (BuildContext context, ATAppState<HomeFeedResponseModel> state) {
+        final List<HomeFeedItem> allItems =
+            context.read<HomeFeedCubit>().currentHomeFeedData?.homeFeedItems ??
+                <HomeFeedItem>[];
+        final List<HomeFeedItem> communityItems =
+            allItems.where(_sameCommunity).toList();
+
+        if (communityItems.isEmpty) {
+          if (state is InitialState<HomeFeedResponseModel> ||
+              state is LoadingState<HomeFeedResponseModel>) {
+            // Same spinner as the "view all communities" screen — not a
+            // skeleton.
+            return const SizedBox(
+              height: 180,
+              child: Center(
+                child: CupertinoActivityIndicator(
+                  radius: 14,
+                  color: Colors.white,
+                ),
+              ),
+            );
+          }
+          if (state is FailureState<HomeFeedResponseModel>) {
+            return Center(
+              child: IconButton(
+                onPressed: () => context.read<HomeFeedCubit>().fetchHomeFeed(),
+                icon: const Icon(Icons.refresh),
+              ),
+            );
+          }
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 80),
+            child: Text(
+              'Nothing has been published in $communityName yet.',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: ATColors.hexC2C2C2,
+                  ),
+            ),
+          );
+        }
+
+        final List<HomeFeedItem> shows = communityItems.where(_isShow).toList();
+        final List<HomeFeedItem> events =
+            communityItems.where(_isEvent).toList();
+
+        // A tab whose own category is empty gets a proper empty state
+        // instead of a blank page.
+        final List<HomeFeedItem> modeItems = switch (mode) {
+          CommunityFeedMode.all => communityItems,
+          CommunityFeedMode.shows => shows,
+          CommunityFeedMode.events => events,
+        };
+        if (modeItems.isEmpty) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 80),
+            child: Text(
+              mode == CommunityFeedMode.shows
+                  ? 'No shows in $communityName yet.'
+                  : 'No events in $communityName yet.',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: ATColors.hexC2C2C2,
+                  ),
+            ),
+          );
+        }
+
+        final List<Widget> sections = <Widget>[];
+
+        void addCards(String title, List<HomeFeedItem> items) {
+          if (items.isEmpty) return;
+          if (sections.isNotEmpty) {
+            sections.add(const SeparatorDivider());
+            sections.add(const SizedBox(height: 35));
+          }
+          sections.add(HastagHeadingRow(
+            title: title,
+            viewAllOnpressed: () => context.pushNamed(
+              ATRoutes.TRENDING_SOCIETY_SCREEN,
+              extra: <String, dynamic>{'title': title, 'items': items},
+            ),
+          ));
+          sections.add(const SizedBox(height: 10));
+          sections.add(_CommunityContentRow(items: items));
+        }
+
+        if (mode == CommunityFeedMode.all) {
+          final List<HomeFeedItem> trending = List<HomeFeedItem>.from(
+            communityItems,
+          )..sort((HomeFeedItem a, HomeFeedItem b) =>
+              (b.score ?? 0).compareTo(a.score ?? 0));
+          addCards(ATStrings.TRENDING, trending);
+          addCards(ATStrings.PAID_SHOWS, shows.where(_isPaid).toList());
+          addCards(ATStrings.FREE_SHOWS,
+              shows.where((HomeFeedItem item) => !_isPaid(item)).toList());
+
+          if (sections.isNotEmpty) {
+            sections.add(const SeparatorDivider());
+            sections.add(const SizedBox(height: 35));
+          }
+          sections.add(_CommunityCreators(items: communityItems));
+
+          addCards(ATStrings.PAID_EVENTS, events.where(_isPaid).toList());
+          addCards(ATStrings.FREE_EVENTS,
+              events.where((HomeFeedItem item) => !_isPaid(item)).toList());
+        } else if (mode == CommunityFeedMode.shows) {
+          addCards(ATStrings.TRENDING, shows);
+          addCards(ATStrings.PAID_SHOWS, shows.where(_isPaid).toList());
+          addCards(ATStrings.FREE_SHOWS,
+              shows.where((HomeFeedItem item) => !_isPaid(item)).toList());
+        } else {
+          addCards(ATStrings.TRENDING, events);
+          addCards(ATStrings.PAID_EVENTS, events.where(_isPaid).toList());
+          addCards(ATStrings.FREE_EVENTS,
+              events.where((HomeFeedItem item) => !_isPaid(item)).toList());
+        }
+
+        sections.add(const SizedBox(height: 50));
+        return Column(children: sections);
+      },
+    );
+  }
+}
+
+class _CommunityContentRow extends StatelessWidget {
+  const _CommunityContentRow({required this.items});
+
+  final List<HomeFeedItem> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 180,
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.only(left: 15),
+        scrollDirection: Axis.horizontal,
+        itemCount: items.length,
+        itemBuilder: (BuildContext context, int index) {
+          final HomeFeedItem item = items[index];
+          final bool isLive = item.status?.toLowerCase() == 'live';
+          return RenderTrendingHashTag(
+            trendingPicture: item.thumbnailUrl ??
+                item.coverUrl ??
+                item.showCoverUrl ??
+                ATImgStrings.createShowPlaceholder,
+            title: item.title ?? item.showTitle,
+            creatorName: item.hostName ?? 'Creator',
+            creatorAvatar:
+                item.hostProfileImageUrl ?? ATImgStrings.noAvatarImage,
+            statusLabel: isLive ? 'LIVE' : 'Scheduled',
+            isPaid:
+                item.showType?.toLowerCase() == 'paid' || (item.price ?? 0) > 0,
+            onTap: () => _openCommunityItem(context, item),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _CommunityCreators extends StatelessWidget {
+  const _CommunityCreators({required this.items});
+
+  final List<HomeFeedItem> items;
+
+  @override
+  Widget build(BuildContext context) {
+    final Map<String, HomeFeedItem> creators = <String, HomeFeedItem>{};
+    for (final HomeFeedItem item in items) {
+      final String key = item.hostId ?? item.hostName ?? '';
+      if (key.isNotEmpty) creators.putIfAbsent(key, () => item);
+    }
+    if (creators.isEmpty) return const SizedBox.shrink();
+
+    final List<HomeFeedItem> creatorItems = creators.values.toList();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-
-        HastagHeadingRow(
-          title: ATStrings.TRENDING,
-          viewAllOnpressed: () =>
-              context.pushNamed(ATRoutes.TRENDING_SOCIETY_SCREEN),
-        ),
-        const SizedBox(height: 10),
-
-        BlocBuilder<HostedShowsCubit, ATAppState<HostedShowsResponseModel>>(
-          builder: (_, ATAppState<HostedShowsResponseModel> state) {
-            return switch (state) {
-              InitialState<HostedShowsResponseModel>() =>
-                const SizedBox.shrink(),
-              LoadingState<HostedShowsResponseModel>() ||
-              FailureState<HostedShowsResponseModel>() ||
-              SuccessState<HostedShowsResponseModel>() =>
-                Builder(builder: (_) {
-                  final HostedShowsResponseModel? showsData =
-                      context.read<HostedShowsCubit>().currentHostedShowsData;
-                  final List<HostedShow> shows =
-                      showsData?.hostedShows ?? <HostedShow>[];
-                  final List<HostedShow> communityShows = communityId != null
-                      ? shows
-                          .where((HostedShow e) =>
-                              e.community?.communityId == communityId)
-                          .toList()
-                      : <HostedShow>[];
-
-                  if (communityShows.isEmpty) {
-                    if (state is LoadingState<HostedShowsResponseModel>) {
-                      return const SizedBox(
-                        height: 120,
-                        child: DiscoverPageCommunitiesShimmer(),
-                      );
-                    }
-                    if (state is FailureState<HostedShowsResponseModel>) {
-                      return Center(
-                        child: IconButton(
-                          icon: const Icon(Icons.refresh),
-                          onPressed: () => context
-                              .read<HostedShowsCubit>()
-                              .fetchHostedShows(),
-                        ),
-                      );
-                    }
-                    return const Text(
-                        'No trending shows available in this community.');
-                  }
-
-                  return SizedBox(
-                    height: 180,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: communityShows.length,
-                      itemBuilder: (_, int index) => RenderTrendingHashTag(
-                        trendingPicture: communityShows[index].coverUrl ??
-                            ATImgStrings.weCanDoHardThingsBgImage,
-                        title: communityShows[index].title,
-                      ),
-                    ),
-                  );
-                }),
-            };
-          },
-        ),
-
-        const SeparatorDivider(),
-        const SizedBox(height: 40),
-
-        HastagHeadingRow(title: ATStrings.PAID_SHOWS, viewAllOnpressed: () {}),
-        const SizedBox(height: 10),
-
-        BlocBuilder<HostedShowsCubit, ATAppState<HostedShowsResponseModel>>(
-          builder: (_, ATAppState<HostedShowsResponseModel> state) {
-            return switch (state) {
-              InitialState<HostedShowsResponseModel>() =>
-                const SizedBox.shrink(),
-              LoadingState<HostedShowsResponseModel>() ||
-              FailureState<HostedShowsResponseModel>() ||
-              SuccessState<HostedShowsResponseModel>() =>
-                Builder(builder: (_) {
-                  final HostedShowsResponseModel? showsData =
-                      context.read<HostedShowsCubit>().currentHostedShowsData;
-                  final List<HostedShow> shows =
-                      showsData?.hostedShows ?? <HostedShow>[];
-                  final List<HostedShow> paidShows = shows
-                      .where(
-                        (HostedShow e) => e.showType == 'paid',
-                      )
-                      .toList();
-                  final List<HostedShow> communityPaidShows =
-                      communityId != null
-                          ? paidShows
-                              .where((HostedShow e) =>
-                                  e.community?.communityId == communityId)
-                              .toList()
-                          : <HostedShow>[];
-
-                  if (communityPaidShows.isEmpty) {
-                    if (state is LoadingState<HostedShowsResponseModel>) {
-                      return const SizedBox(
-                          height: 120, child: DiscoverPageCommunitiesShimmer());
-                    }
-                    if (state is FailureState<HostedShowsResponseModel>) {
-                      return Center(
-                        child: IconButton(
-                          icon: const Icon(Icons.refresh),
-                          onPressed: () => context
-                              .read<HostedShowsCubit>()
-                              .fetchHostedShows(),
-                        ),
-                      );
-                    }
-                    return const Text(
-                        'No paid shows available in this community.');
-                  }
-
-                  return SizedBox(
-                    height: 180,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: communityPaidShows.length,
-                      itemBuilder: (_, int index) => RenderTrendingHashTag(
-                        trendingPicture: communityPaidShows[index].coverUrl ??
-                            ATImgStrings.OFFICE_LADIES,
-                        title: communityPaidShows[index].title,
-                      ),
-                    ),
-                  );
-                }),
-            };
-          },
-        ),
-
-        const SeparatorDivider(),
-        const SizedBox(height: 40),
-
-        HastagHeadingRow(title: ATStrings.FREE_SHOWS, viewAllOnpressed: () {}),
-        const SizedBox(height: 10),
-
-        BlocBuilder<HostedShowsCubit, ATAppState<HostedShowsResponseModel>>(
-          builder: (_, ATAppState<HostedShowsResponseModel> state) {
-            return switch (state) {
-              InitialState<HostedShowsResponseModel>() =>
-                const SizedBox.shrink(),
-              LoadingState<HostedShowsResponseModel>() ||
-              FailureState<HostedShowsResponseModel>() ||
-              SuccessState<HostedShowsResponseModel>() =>
-                Builder(builder: (_) {
-                  final HostedShowsResponseModel? showsData =
-                      context.read<HostedShowsCubit>().currentHostedShowsData;
-                  final List<HostedShow> shows =
-                      showsData?.hostedShows ?? <HostedShow>[];
-                  final List<HostedShow> freeShows = shows
-                      .where(
-                        (HostedShow e) => e.showType == 'free',
-                      )
-                      .toList();
-                  final List<HostedShow> communityFreeShows =
-                      communityId != null
-                          ? freeShows
-                              .where((HostedShow e) =>
-                                  e.community?.communityId == communityId)
-                              .toList()
-                          : <HostedShow>[];
-
-                  if (communityFreeShows.isEmpty) {
-                    if (state is LoadingState<HostedShowsResponseModel>) {
-                      return const SizedBox(
-                          height: 120, child: DiscoverPageCommunitiesShimmer());
-                    }
-                    if (state is FailureState<HostedShowsResponseModel>) {
-                      return Center(
-                        child: IconButton(
-                          icon: const Icon(Icons.refresh),
-                          onPressed: () => context
-                              .read<HostedShowsCubit>()
-                              .fetchHostedShows(),
-                        ),
-                      );
-                    }
-                    return const Text(
-                        'No free shows available in this community.');
-                  }
-
-                  return SizedBox(
-                    height: 180,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: communityFreeShows.length.clamp(0, 10),
-                      itemBuilder: (_, int index) => RenderTrendingHashTag(
-                        trendingPicture: communityFreeShows[index].coverUrl ??
-                            ATImgStrings.JOE_POMP_SHOW,
-                        title: communityFreeShows[index].title,
-                      ),
-                    ),
-                  );
-                }),
-            };
-          },
-        ),
-
-        const SeparatorDivider(),
-        const SizedBox(height: 40),
-
-        // ==================== POPULAR CREATORS ====================
-        ATContainer(
+        Padding(
           padding: const EdgeInsets.only(left: 15),
-          alignment: Alignment.centerLeft,
-          child: Text(ATStrings.POPULAR_CREATORS,
-              style: Theme.of(context).textTheme.bodyLarge),
+          child: Text(
+            ATStrings.POPULAR_CREATORS,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
         ),
         const SizedBox(height: 10),
         SizedBox(
@@ -247,146 +260,18 @@ class SocietyAllTabView extends StatelessWidget {
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: (_, __) =>
-                const TopCreatorWidget(picture: ATImgStrings.MAN_PHOTO),
+            itemCount: creatorItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              final HomeFeedItem creator = creatorItems[index];
+              return TopCreatorWidget(
+                picture:
+                    creator.hostProfileImageUrl ?? ATImgStrings.noAvatarImage,
+                creatorName: creator.hostName ?? 'Creator',
+                onTap: () => _openCommunityItem(context, creator),
+              );
+            },
           ),
         ),
-
-        const SeparatorDivider(),
-        const SizedBox(height: 35),
-
-        // ==================== PAID EVENTS ====================
-        HastagHeadingRow(title: ATStrings.PAID_EVENTS, viewAllOnpressed: () {}),
-        const SizedBox(height: 10),
-
-        BlocBuilder<HostedEventsCubit, ATAppState<HostedEventsResponseModel>>(
-          builder: (_, ATAppState<HostedEventsResponseModel> state) {
-            return switch (state) {
-              InitialState<HostedEventsResponseModel>() =>
-                const SizedBox.shrink(),
-              LoadingState<HostedEventsResponseModel>() ||
-              FailureState<HostedEventsResponseModel>() ||
-              SuccessState<HostedEventsResponseModel>() =>
-                Builder(builder: (_) {
-                  final HostedEventsResponseModel? eventsData =
-                      context.read<HostedEventsCubit>().currentHostedEventsData;
-
-                  final List<HostedEvent> events =
-                      eventsData?.hostedEvents ?? <HostedEvent>[];
-
-                  final List<HostedEvent> paidEvents = events
-                      .where(
-                        (HostedEvent e) => e.showType == 'paid',
-                      )
-                      .toList();
-
-                  if (paidEvents.isEmpty) {
-                    if (state is LoadingState<dynamic>) {
-                      return const SizedBox(
-                          height: 120, child: DiscoverPageCommunitiesShimmer());
-                    }
-                    if (state is FailureState<dynamic>) {
-                      return Center(
-                        child: IconButton(
-                          icon: const Icon(Icons.refresh),
-                          onPressed: () => context
-                              .read<HostedEventsCubit>()
-                              .fetchHostedEvents(),
-                        ),
-                      );
-                    }
-                    return const Text(
-                        'No paid events available in this community.');
-                  }
-
-                  return SizedBox(
-                    height: 180,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: paidEvents.length,
-                      itemBuilder: (_, int index) {
-                        return RenderTrendingHashTag(
-                          trendingPicture: paidEvents[index].coverUrl ??
-                              ATImgStrings.weCanDoHardThingsBgImage,
-                          title: paidEvents[index].title,
-                        );
-                      },
-                    ),
-                  );
-                }),
-            };
-          },
-        ),
-
-        const SeparatorDivider(),
-        const SizedBox(height: 35),
-
-        // ==================== FREE EVENTS ====================
-        HastagHeadingRow(title: ATStrings.FREE_EVENTS, viewAllOnpressed: () {}),
-        const SizedBox(height: 10),
-
-        BlocBuilder<HostedEventsCubit, ATAppState<HostedEventsResponseModel>>(
-          builder: (_, ATAppState<HostedEventsResponseModel> state) {
-            return switch (state) {
-              InitialState<HostedEventsResponseModel>() =>
-                const SizedBox.shrink(),
-              LoadingState<HostedEventsResponseModel>() ||
-              FailureState<HostedEventsResponseModel>() ||
-              SuccessState<HostedEventsResponseModel>() =>
-                Builder(builder: (_) {
-                  final HostedEventsResponseModel? eventsData =
-                      context.read<HostedEventsCubit>().currentHostedEventsData;
-                  final List<HostedEvent> events =
-                      eventsData?.hostedEvents ?? <HostedEvent>[];
-
-                  final List<HostedEvent> freeEvents = events
-                      .where(
-                        (HostedEvent e) => e.showType == 'free',
-                      )
-                      .toList();
-
-                  if (freeEvents.isEmpty) {
-                    if (state is LoadingState<dynamic>) {
-                      return const SizedBox(
-                          height: 120, child: DiscoverPageCommunitiesShimmer());
-                    }
-                    if (state is FailureState<dynamic>) {
-                      return Center(
-                        child: IconButton(
-                          icon: const Icon(Icons.refresh),
-                          onPressed: () => context
-                              .read<HostedEventsCubit>()
-                              .fetchHostedEvents(),
-                        ),
-                      );
-                    }
-                    return const Text(
-                        'No free events available in this community.');
-                  }
-
-                  return SizedBox(
-                    height: 180,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: freeEvents.length,
-                      itemBuilder: (_, int index) {
-                        return RenderTrendingHashTag(
-                          trendingPicture: freeEvents[index].coverUrl ??
-                              ATImgStrings.weCanDoHardThingsBgImage,
-                          title: freeEvents[index].title,
-                        );
-                      },
-                    ),
-                  );
-                }),
-            };
-          },
-        ),
-
-        const SizedBox(height: 50),
       ],
     );
   }
@@ -396,7 +281,6 @@ class SeparatorDivider extends StatelessWidget {
   const SeparatorDivider({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Divider(indent: 15, endIndent: 15, color: ATColors.hex252525);
-  }
+  Widget build(BuildContext context) =>
+      Divider(indent: 15, endIndent: 15, color: ATColors.hex252525);
 }

@@ -6,7 +6,9 @@ import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/cohost_with_check_icon.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
+import 'package:amptive/src/shared/search_filter_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 
 class AvailableCohostsList extends StatelessWidget {
   const AvailableCohostsList({
@@ -38,7 +40,23 @@ class AvailableCohostsList extends StatelessWidget {
             builder: (_) {
               final AllUsersResponseModel? usersData =
                   context.read<AllUsersCubit>().currentUsersData;
-              final List<User> cohosts = usersData?.data ?? <User>[];
+              final List<User> allCohostsRaw = usersData?.data ?? <User>[];
+              final String? currentUserId = context.read<LocalUserDataCubit>().currentUserData?.userId;
+              final List<User> allCohosts = allCohostsRaw.where((User u) => u.userId != currentUserId).toList();
+
+              final bool isSearching =
+                  context.read<SearchkeyCubit>().state.trim().isNotEmpty;
+
+              // Suggestions: show up to 10 users that actually have an avatar
+              // (skip the no-photo ones for now). Search results are shown as
+              // returned.
+              final List<User> cohosts = isSearching
+                  ? allCohosts
+                  : allCohosts
+                      .where((User u) =>
+                          u.profilePicture?.trim().isNotEmpty ?? false)
+                      .take(10)
+                      .toList();
 
               if (cohosts.isEmpty) {
                 if (state is LoadingState<AllUsersResponseModel>) {
@@ -55,10 +73,40 @@ class AvailableCohostsList extends StatelessWidget {
                     icon: const Icon(Icons.refresh),
                   ));
                 }
-                return const Center(child: Text('No cohosts available yet'));
+                // Quiet inline empty state near the top (title + subtext,
+                // like the discover search results) — not a red error drawer.
+                final String query = context.read<SearchkeyCubit>().state.trim();
+                // Full-width, hard top-left so the text starts flush at the
+                // 15px edge — same as the search box, header and list rows.
+                return Container(
+                  width: double.infinity,
+                  alignment: Alignment.topLeft,
+                  padding: const EdgeInsets.fromLTRB(15, 12, 15, 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Nothing to show here right now.',
+                        style: context.textTheme.bodyMedium,
+                      ),
+                      if (query.isNotEmpty) ...<Widget>[
+                        const SizedBox(height: 4),
+                        Text(
+                          'Anyone matching "$query" will appear here.',
+                          style: context.textTheme.labelSmall
+                              ?.copyWith(fontSize: 14),
+                        ),
+                      ],
+                    ],
+                  ),
+                );
               }
 
-              final bool hasMore = usersData?.hasMore ?? false;
+              // Suggestions are capped at 10 — no "load more". Search results
+              // keep their pagination.
+              final bool hasMore =
+                  isSearching ? (usersData?.hasMore ?? false) : false;
               final int count =
                   hasMore ? cohosts.length + 2 : cohosts.length + 1;
 
@@ -70,11 +118,25 @@ class AvailableCohostsList extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10, bottom: 20),
                   itemBuilder: (_, int index) {
                     if (index == 0) {
+                      // Only flip to "People" once real search results are
+                      // shown — not the instant the query changes (which would
+                      // relabel the still-visible suggestions/loading state).
+                      final bool showingSearchResults = context
+                              .read<SearchkeyCubit>()
+                              .state
+                              .trim()
+                              .isNotEmpty &&
+                          state is SuccessState<AllUsersResponseModel>;
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                        child: Text(ATStrings.suggestions,
-                            style: context.textTheme.bodySmall
-                                ?.copyWith(fontSize: ATSizes.size16)),
+                        child: Text(
+                            showingSearchResults
+                                ? 'People'
+                                : ATStrings.suggestions,
+                            style: context.textTheme.bodySmall?.copyWith(
+                              fontSize: ATSizes.size16,
+                              fontWeight: FontWeight.w600,
+                            )),
                       );
                     }
 
@@ -159,7 +221,10 @@ class CohosListInitialLoadingShimmer extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Text(text ?? ATStrings.suggestions,
                 style: context.textTheme.bodySmall
-                    ?.copyWith(fontSize: ATSizes.size16)),
+                    ?.copyWith(
+                      fontSize: ATSizes.size16,
+                      fontWeight: FontWeight.w600,
+                    )),
           );
         }
 

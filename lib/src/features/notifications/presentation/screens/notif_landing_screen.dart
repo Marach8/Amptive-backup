@@ -63,7 +63,8 @@ class _NotificationTabViewContentState
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification scrollInfo) {
-        return context.read<ATNavBarBloc>().ctrlNavVisibility(scrollInfo);
+        context.read<ATNavBarBloc>().ctrlNavVisibility(scrollInfo);
+        return false;
       },
       
       

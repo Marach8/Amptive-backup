@@ -1,7 +1,11 @@
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/font_sizes.dart';
+import '../../../../config/utils/font_weights.dart';
 import '../../../../views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import '../../../../shared/textformfield_widget.dart';
 
@@ -50,46 +54,76 @@ class _SearchFieldWithXSuffixState extends State<SearchFieldWithXSuffix> {
 
   @override
   Widget build(BuildContext context) {
-    return ATTextFormField(
-      controller: _controller,
-      disableBlueBorder: true,
-      isDense: true,
-      onChanged: widget.onChanged,
-      cursorHeight: 20,
-      maxLines: 1,
-      cursorColor: ATColors.white.withValues(alpha: 0.6),
-      contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-      hintText: widget.hintText,
-      fillColor: widget.fillColor,
-      enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: ATColors.transparent)),
-      prefixIcon: Padding(
-        padding: const EdgeInsets.only(left: 12),
-        child: ColorFiltered(
-          colorFilter: ColorFilter.mode(ATColors.white, BlendMode.srcATop),
-          child: const ATImgLoader(
-            height: 25,
-            width: 25,
-            imgPath: ATImgStrings.outlinedSearch,
+    // Styled to match the discover-page search box (minus the Cancel button).
+    return ClipSmoothRect(
+      radius: SmoothBorderRadius(cornerRadius: 14, cornerSmoothing: 0.8),
+      child: ATTextFormField(
+        controller: _controller,
+        disableBlueBorder: true,
+        isDense: true,
+        onChanged: widget.onChanged,
+        cursorHeight: 20,
+        maxLines: 1,
+        cursorColor: ATColors.white.withValues(alpha: 0.6),
+        fillColor: widget.fillColor ?? ATColors.white.withValues(alpha: 0.2),
+        style: TextStyle(
+          color: ATColors.white,
+          fontSize: ATSizes.size16,
+          fontWeight: ATFontWeights.w400,
+        ),
+        hintStyle: TextStyle(
+          color: const Color(0xFFC2C2C2),
+          fontSize: ATSizes.size16,
+          fontWeight: ATFontWeights.w400,
+          letterSpacing: 0,
+        ),
+        hintText: widget.hintText,
+        contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        prefixConstraints: const BoxConstraints.tightFor(width: 33, height: 44),
+        suffixConstraints: const BoxConstraints.tightFor(width: 44, height: 44),
+        // Solid white (#FFFFFF) magnifier.
+        prefixIcon: const Padding(
+          padding: EdgeInsets.only(left: 12, right: 1),
+          child: Center(
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              child: ATImgLoader(
+                height: 20,
+                width: 20,
+                imgPath: ATImgStrings.outlinedSearch,
+              ),
+            ),
           ),
         ),
-      ),
-      suffixIcon: Padding(
-        padding: const EdgeInsets.only(
-          right: 10,
-        ),
-        child: ATAnimatedXFade(
-          condition: _hasInput,
-          secondChild: const SizedBox.shrink(),
-          firstChild: GestureDetector(
-              onTap: () {
-                _controller.clear();
-                if (widget.onClear != null) {
-                  widget.onClear!();
-                }
-              },
-              child: Icon(Icons.close, size: 20, color: ATColors.white)),
+        suffixIcon: Center(
+          child: ATAnimatedXFade(
+            condition: _hasInput,
+            secondChild: const SizedBox.shrink(),
+            firstChild: Semantics(
+              button: true,
+              label: 'Clear search',
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  _controller.clear();
+                  widget.onClear?.call();
+                },
+                child: SizedBox(
+                  width: 44,
+                  height: 44,
+                  child: Center(
+                    child: SvgPicture.asset(
+                      ATImgStrings.searchClearXIcon,
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

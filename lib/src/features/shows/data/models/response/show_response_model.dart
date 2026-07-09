@@ -52,6 +52,7 @@ class HostedShow extends Equatable {
     this.isLive,
     this.community,
     this.episodes,
+    this.handRaising,
   });
 
   factory HostedShow.fromJson(Map<String, dynamic> json) {
@@ -60,10 +61,14 @@ class HostedShow extends Equatable {
       : null;
 
     return HostedShow(
-      showId: json['show_id'],
+      // Search endpoints return 'id' / alternate image keys.
+      showId: json['show_id'] ?? json['id'],
       title: json['title'],
       description: json['description'],
-      coverUrl: json['cover_url'],
+      coverUrl: json['cover_url'] ??
+          json['cover_image'] ??
+          json['thumbnail_url'] ??
+          json['image'],
       category: json['category'],
       showType: json['show_type'],
       price: json['price']?.toDouble(),
@@ -86,6 +91,7 @@ class HostedShow extends Equatable {
       updatedAt: json['updated_at'],
       activeEpisode: activeEpisode,
       episodes: activeEpisode != null ? <Episode>[activeEpisode] : null,
+      handRaising: json['hand_raising'],
     );
   }
 
@@ -103,7 +109,7 @@ class HostedShow extends Equatable {
   final double? price;
   final int? episodeCount, totalViewers, goingCount, followerCount;
   final Host? host;
-  final bool? isLive;
+  final bool? isLive, handRaising;
   final List<CoHost>? coHosts;
   final List<HashTag>? tags;
   final List<Episode>? episodes;
@@ -135,6 +141,7 @@ class HostedShow extends Equatable {
       community: community,
       activeEpisode: activeEpisode,
       episodes: updatedEpisodes,
+      handRaising: handRaising,
     );
   }
 
@@ -163,5 +170,6 @@ class HostedShow extends Equatable {
         isLive,
         community,
         episodes,
+        handRaising,
       ];
 }

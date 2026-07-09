@@ -6,17 +6,20 @@ class ATAnimatedXFade extends StatelessWidget {
       required this.firstChild,
       required this.secondChild,
       required this.condition,
-      this.duration});
+      this.duration,
+      this.fadeCurve,
+      this.sizeCurve});
   final Widget firstChild, secondChild;
   final bool condition;
   final int? duration;
+  final Curve? fadeCurve, sizeCurve;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedCrossFade(
-      firstCurve: Curves.easeIn,
-      secondCurve: Curves.easeIn,
-      sizeCurve: Curves.decelerate,
+      firstCurve: fadeCurve ?? Curves.easeIn,
+      secondCurve: fadeCurve ?? Curves.easeIn,
+      sizeCurve: sizeCurve ?? Curves.decelerate,
       duration: Duration(milliseconds: duration ?? 500),
       firstChild: firstChild,
       secondChild: secondChild,

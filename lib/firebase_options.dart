@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -58,5 +55,14 @@ class DefaultFirebaseOptions {
     messagingSenderId: '423228270595',
     projectId: 'my-amptive',
     storageBucket: 'my-amptive.firebasestorage.app',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBHsaLeA0sHmSusVILmIMFySaarkxoPqQY',
+    appId: '1:423228270595:ios:b65b729ef146552113c636',
+    messagingSenderId: '423228270595',
+    projectId: 'my-amptive',
+    storageBucket: 'my-amptive.firebasestorage.app',
+    iosBundleId: 'com.beevibe.amptive',
   );
 }

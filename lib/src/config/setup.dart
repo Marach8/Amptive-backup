@@ -7,6 +7,7 @@ import 'package:amptive/src/features/calender/cubits/day_view_bloc.dart';
 import 'package:amptive/src/bloc/preference/bloc.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
+import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/services/auth/auth_field_service.dart';
 import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/services/authentication_service.dart';
@@ -37,6 +38,7 @@ import '../features/calender/cubits/selected_calender_date_bloc.dart';
 import '../bloc/main_app/profile/profile_menu/language_bloc.dart';
 import '../bloc/onboarding_bloc/onboarding_bloc.dart';
 import '../services/notification/push_notification_service.dart';
+import '../features/home/cubits/mock_sub_feeds_cubit.dart';
 
 Future<void> setup() async {
   // init firebase
@@ -67,6 +69,9 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AmptivePasswordAuthBloc()),
     BlocProvider(create: (_) => AmptivePreferenceBloc()),
     BlocProvider(create: (_) => ATNavBarBloc()),
+    // Global so the bottom menu (and its unread badge) can be embedded on
+    // pushed pages (community, view-all, …), not just the dashboard.
+    BlocProvider(create: (_) => GetNotificationsCubit()),
     BlocProvider(create: (_) => AmptiveGoLiveSelectCoHostBloc()),
     BlocProvider(
         create: (_) =>
@@ -93,5 +98,8 @@ List<SingleChildWidget> providers() {
     BlocProvider(create: (_) => AccountTypeBloc()),
     BlocProvider(create: (_) => CohostServiceBloc()),
     BlocProvider(create: (_) => HashtagServiceBloc()),
+    BlocProvider(create: (_) => FollowingFeedCubit()),
+    BlocProvider(create: (_) => ScheduledFeedCubit()),
+    BlocProvider(create: (_) => SubscribedFeedCubit()),
   ];
 }

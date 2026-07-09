@@ -13,7 +13,9 @@ class ATBlurredBgBtn extends StatelessWidget {
     this.fgColor,
     this.height,
     this.padding,
+    this.side,
     this.isLoading = false,
+    this.showBackgroundGradient = true,
   });
 
   final VoidCallback? onPressed;
@@ -22,26 +24,37 @@ class ATBlurredBgBtn extends StatelessWidget {
   final Color? bgColor, fgColor;
   final double? height;
   final EdgeInsetsGeometry? padding;
+  final BorderSide? side;
   final bool isLoading;
+  final bool showBackgroundGradient;
 
   @override
   Widget build(BuildContext context) {
     return ATContainer(
       height: height ?? 110,
-      gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            ATColors.hex0D0D0D.withValues(alpha: 0.1),
-            ATColors.hex0D0D0D
-          ]),
+      gradient: showBackgroundGradient
+          ? LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[
+                Colors.transparent,
+                ATColors.hex0D0D0D,
+              ],
+            )
+          : null,
       padding: padding ?? const EdgeInsets.fromLTRB(15, 10, 15, 50),
       child: ATPlainElevatedBtn(
         isLoading: isLoading,
         bgColor: bgColor ?? ATColors.white,
         fgColor: fgColor ?? ATColors.hex0D0D0D,
+        side: side,
         btnTitle: btnTitle,
         onPressed: onPressed,
+        style: context.textTheme.bodyMedium?.copyWith(
+          color: fgColor ?? ATColors.hex0D0D0D,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
         child: child,
       ),
     );

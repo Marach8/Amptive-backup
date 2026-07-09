@@ -14,6 +14,8 @@ class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.bgColor,
       this.titleStyle,
       this.titleText,
+      this.titleSpacing,
+      this.toolbarHeight,
       this.padding,
       this.bottom});
 
@@ -23,6 +25,8 @@ class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? centerTitle;
   final List<Widget>? actions;
   final double? leadingWidth;
+  final double? titleSpacing;
+  final double? toolbarHeight;
   final Color? bgColor;
   final EdgeInsetsGeometry? padding;
   final PreferredSizeWidget? bottom;
@@ -41,6 +45,8 @@ class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
             Text(titleText ?? '',
                 style: titleStyle ?? context.textTheme.bodyMedium),
         leadingWidth: leadingWidth,
+        titleSpacing: titleSpacing,
+        toolbarHeight: toolbarHeight,
         actions: actions,
         bottom: bottom,
       ),
@@ -50,7 +56,7 @@ class ATAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize {
     final double bottomHeight = bottom?.preferredSize.height ?? 0.0;
-    return Size.fromHeight(kToolbarHeight + bottomHeight);
+    return Size.fromHeight((toolbarHeight ?? kToolbarHeight) + bottomHeight);
   }
 }
 

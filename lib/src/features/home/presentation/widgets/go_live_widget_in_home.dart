@@ -14,52 +14,72 @@ class GoLiveWidgetInHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final String? profilePic = context
       .watch<LocalUserDataCubit>().currentUserData?.pictureUrl;
-    return GestureDetector(
+    return ScaleOnPressWidget(
+      scaleDownTo: 0.92,
       onTap: () {
         context.pushNamed(ATRoutes.chooseEventOrShowScreen);
       },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: ATImgLoader(
-                  imgPath: profilePic ?? ATImgStrings.jpeg1,
-                  boxFit: BoxFit.cover,
-                  height: 60,
-                  width: 60,
-                ),
-              ),
-              Positioned(
-                bottom: -5,
-                child: ATContainer(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(0),
-                  height: 20,
-                  width: 20,
-                  radius: 10,
-                  color: ATColors.hex307FE2,
-                  border: Border.all(
-                    color: ATColors.hex0D0D0D,
-                    width: 2,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: ATImgLoader(
+                    imgPath: profilePic ?? ATImgStrings.jpeg1,
+                    boxFit: BoxFit.cover,
+                    height: 60,
+                    width: 60,
                   ),
-                  child: const Icon(Icons.add,
-                  size: 15, applyTextScaling: true),
                 ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(ATStrings.goLive, style: context.textTheme.titleSmall),
-        ],
-      ),
+                Positioned(
+                  bottom: -2,
+                  right: -2,
+                  child: ATContainer(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(0),
+                    height: 24,
+                    width: 24,
+                    radius: 12,
+                    color: Colors.white, // Changed to white
+                    border: Border.all(
+                      color: ATColors.hex0D0D0D, // Kept black border to 'cut out' against background
+                      width: 2,
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        Container(
+                          width: 10,
+                          height: 2.2,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                        Container(
+                          width: 2.2,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(ATStrings.goLive, style: context.textTheme.titleSmall),
+          ],
+        ),
     );
   }
 }

@@ -93,14 +93,32 @@ String normalizePaymentChannel(String method) {
   }
 }
 
-String get toNormalDate {
+  String get toNormalDate {
     if (isEmpty) return '';
     try {
       DateTime dateTime = DateTime.parse(this).toLocal();
       
-return DateFormat('yyyy-MM-dd').format(dateTime);   
- } catch (e) {
+      return DateFormat('yyyy-MM-dd').format(dateTime);   
+    } catch (e) {
       return this;
     }
+  }
+
+  String get stripHtmlAndPreserveNewlines {
+    String parsed = replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), '\n');
+    parsed = parsed.replaceAll(RegExp(r'</p>\s*<p>', caseSensitive: false), '\n\n');
+    parsed = parsed.replaceAll(RegExp(r'</p>', caseSensitive: false), '\n');
+    parsed = parsed.replaceAll(RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true), '');
+    parsed = parsed.replaceAll(RegExp(r'\n{3,}'), '\n\n');
+    
+    parsed = parsed
+        .replaceAll('&nbsp;', ' ')
+        .replaceAll('&amp;', '&')
+        .replaceAll('&quot;', '"')
+        .replaceAll('&#39;', "'")
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>');
+
+    return parsed.trim();
   }
 }

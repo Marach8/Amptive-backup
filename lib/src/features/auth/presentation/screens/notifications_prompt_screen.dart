@@ -356,6 +356,13 @@ class _AnimExperimentState extends State<_SubWidget>
                         context.goNamed(ATRoutes.dashboard);
                       },
                       btnTitle: ATStrings.allow,
+                      bgColor: Colors.white,
+                      fgColor: Colors.black,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                     ),
                     InkWell(
                         onTap: () {

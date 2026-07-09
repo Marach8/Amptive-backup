@@ -4,10 +4,20 @@ import 'package:amptive/src/features/home/data/repository/home_repo.dart';
 import 'package:amptive/src/features/home/data/repository/home_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
+/// Session-long feed cubit shared by the community screens, so re-opening
+/// a community shows cached content instantly instead of a spinner.
+/// Reset on logout so a new account never sees the previous one's feed.
+final HomeFeedCubit communityFeedCubit = HomeFeedCubit();
+
+class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>>
+    with SafeEmit<ATAppState<HomeFeedResponseModel>> {
   HomeFeedCubit({HomeRepo? mockHomeRepo})
       : homeRepo = mockHomeRepo ?? HomeRepoImpl(),
-        super(const InitialState<HomeFeedResponseModel>());
+        super(_cachedData == null
+            ? const InitialState<HomeFeedResponseModel>()
+            : SuccessState<HomeFeedResponseModel>(newData: _cachedData));
+
+  static HomeFeedResponseModel? _cachedData;
 
   final HomeRepo homeRepo;
 
@@ -39,35 +49,48 @@ class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
     emit(LoadingState<HomeFeedResponseModel>(currentData: currentHomeFeedData));
 
     try {
+      final int nextPage = (currentHomeFeedData?.page ?? 0) + 1;
       final ApiResponse<HomeFeedResponseModel> response =
           await homeRepo.fetchHomeFeed(
-        page: (currentHomeFeedData?.page ?? 0) + 1,
+        page: nextPage,
         pageSize: 20,
-        refresh: false,
+        // Force the backend to regenerate its cached feed on the first page
+        // of a session so newly created episodes/events show up; subsequent
+        // pages keep paging the same snapshot.
+        refresh: nextPage == 1,
       );
       response.when(
         successful: (Successful<HomeFeedResponseModel> data) {
-          final List<HomeFeedItem>? oldFeedItems = currentHomeFeedData?.homeFeedItems;
+          final List<HomeFeedItem>? oldFeedItems =
+              currentHomeFeedData?.homeFeedItems;
           final List<HomeFeedItem>? newFeedItems = data.data?.homeFeedItems;
 
-          final List<HomeFeedItem> mergedFeedItems = <HomeFeedItem>[...?oldFeedItems, ...?newFeedItems];
+          final List<HomeFeedItem> mergedFeedItems = <HomeFeedItem>[
+            ...?oldFeedItems,
+            ...?newFeedItems
+          ];
           final HomeFeedResponseModel newData = HomeFeedResponseModel(
             homeFeedItems: mergedFeedItems,
             hasMore: data.data?.hasMore ?? true,
             page: data.data?.page,
             pageSize: data.data?.pageSize,
           );
+          _cachedData = newData;
           emit(SuccessState<HomeFeedResponseModel>(newData: newData));
         },
         unSuccessful: (Unsuccessful<HomeFeedResponseModel> error) {
-          emit(FailureState<HomeFeedResponseModel>(error.error.message));
+          emit(FailureState<HomeFeedResponseModel>(error.error.message,
+              oldData: currentHomeFeedData));
         },
       );
     } catch (e) {
-      emit(FailureState<HomeFeedResponseModel>('Unable to get home feed: $e'));
+      emit(FailureState<HomeFeedResponseModel>('Unable to get home feed: $e',
+          oldData: currentHomeFeedData));
     }
   }
 
+  /// Drops all cached feed data (used on logout).
+  void reset() => emit(const InitialState<HomeFeedResponseModel>());
 
   Future<void> refreshHomeFeed() async {
     if (state is LoadingState<HomeFeedResponseModel>) return;
@@ -82,14 +105,17 @@ class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
       );
       response.when(
         successful: (Successful<HomeFeedResponseModel> data) {
+          _cachedData = data.data;
           emit(SuccessState<HomeFeedResponseModel>(newData: data.data));
         },
         unSuccessful: (Unsuccessful<HomeFeedResponseModel> error) {
-          emit(FailureState<HomeFeedResponseModel>(error.error.message));
+          emit(FailureState<HomeFeedResponseModel>(error.error.message,
+              oldData: currentHomeFeedData));
         },
       );
     } catch (e) {
-      emit(FailureState<HomeFeedResponseModel>('Unable to get home feed: $e'));
+      emit(FailureState<HomeFeedResponseModel>('Unable to get home feed: $e',
+          oldData: currentHomeFeedData));
     }
   }
 }

@@ -4,6 +4,7 @@ class ATRoutes {
   //WELCOME AND ONBOARDING
   static const String postOnboardingScreen = "post_onboarding";
   static const String onboardingScreen = "onboarding";
+  static const String splashScreen = "splash";
 
   //AUTHENTICATION
   static const String emailScreen = "email_auth";
@@ -63,6 +64,8 @@ class ATRoutes {
   static const String listHostedEventsScreen = 'choose_or_create_event';
   static const String programCreationSuccessScreen =
       'create_show_success_screen';
+  static const String stopAiringConfirmationScreen =
+      'stop_airing_confirmation_screen';
   static const String EVENT_SCHEDULED_SCREEN = 'event_scheduled';
   static const String showPreviewScreen = 'show_preview';
   static const String eventPreviewScreen = 'event_preview';
@@ -110,4 +113,7 @@ class ATRoutes {
   static const String walletTransactionsHistoryScreen = 'wallet_transactions';
   static const String scheduleDetailed = 'schedule_detailed_screen';
   static const String goLiveOnboarding = 'go_live_onboarding_screen';
+  static const String scheduledEpisodesScreen = 'scheduled_episodes_screen';
+  static const String episodeScheduleDetail = 'episode_schedule_detail';
+  static const String editShowForm = 'edit_show_form';
 }

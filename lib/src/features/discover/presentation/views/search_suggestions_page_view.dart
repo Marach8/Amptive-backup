@@ -27,8 +27,9 @@ class SearchSuggestionsPageView extends StatelessWidget {
                 Builder(builder: (BuildContext context) {
                   final dynamic suggestionsData =
                       context.read<SearchSuggestionsCubit>().currentSearchData;
-                  final List<String> suggestions =
-                      suggestionsData?.suggestions ?? <String>[];
+                  final List<String> suggestions = suggestionsData is List
+                      ? List<String>.from(suggestionsData)
+                      : <String>[];
                   final String query = searchQuery ?? '';
 
                   return SingleChildScrollView(

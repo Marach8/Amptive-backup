@@ -66,10 +66,15 @@ class HostedEvent extends Equatable {
 
   factory HostedEvent.fromJson(Map<String, dynamic> json) {
     return HostedEvent(
-      eventId: json['event_id'],
+      // Search endpoints return 'id' / alternate image keys; episode-type
+      // events use 'episode_id'.
+      eventId: json['event_id'] ?? json['episode_id'] ?? json['id'],
       title: json['title'],
       description: json['description'],
-      coverUrl: json['thumbnail_url'],
+      coverUrl: json['thumbnail_url'] ??
+          json['cover_url'] ??
+          json['cover_image'] ??
+          json['image'],
       status: json['status'],
       scheduledFor: json['scheduled_for'],
       startedAt: json['started_at'],
@@ -97,7 +102,7 @@ class HostedEvent extends Equatable {
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       handRaising: json['hand_raising'],
-      whispers: json['whispers'],
+      whispers: json['whispers'] ?? json['allow_whispers'],
       category: json['category'],
       price: json['price']?.toDouble(),
       followerCount: json['follower_count'],

@@ -133,7 +133,7 @@ class ATHelperFuncs {
 
   static String formatDate(String isoString) {
     final DateTime parsed = DateTime.parse(isoString);
-    final DateFormat formatter = DateFormat('d MMMM yyyy');
+    final DateFormat formatter = DateFormat('d MMM yyyy');
     return formatter.format(parsed);
   }
 
@@ -195,44 +195,48 @@ class ATHelperFuncs {
   static Future<XFile?> pickImage(ImageSource? imageSource) async {
     if (imageSource == null) return null;
 
-    Permission? permission;
+    final ImagePicker picker = ImagePicker();
 
+    // Camera always needs an explicit permission.
     if (imageSource == ImageSource.camera) {
-      permission = Permission.camera;
-    } else {
-      if (Platform.isAndroid) {
-        final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-        final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        if (androidInfo.version.sdkInt <= 32) {
-          permission = Permission.storage;
-        } else {
-          permission = Permission.photos;
+      final PermissionStatus status = await Permission.camera.request();
+      if (status.isPermanentlyDenied) {
+        openAppSettings();
+        return null;
+      }
+      if (!status.isGranted) return null;
+      return picker.pickImage(
+        source: ImageSource.camera,
+        maxWidth: 1600,
+        maxHeight: 1600,
+        imageQuality: 90,
+      );
+    }
+
+    // Gallery: the OS photo pickers (iOS PHPicker, Android 13+ Photo Picker)
+    // run out-of-process and need no runtime permission — so we open them
+    // directly. Only older Android (<=32) needs the storage permission.
+    if (Platform.isAndroid) {
+      final AndroidDeviceInfo androidInfo =
+          await DeviceInfoPlugin().androidInfo;
+      if (androidInfo.version.sdkInt <= 32) {
+        final PermissionStatus status = await Permission.storage.request();
+        if (status.isPermanentlyDenied) {
+          openAppSettings();
+          return null;
         }
-      } else {
-        permission = Permission.photos;
+        if (!status.isGranted) return null;
       }
     }
 
-    final PermissionStatus permStatus = await permission.request();
-    if (permStatus == PermissionStatus.permanentlyDenied) {
-      openAppSettings();
-      return null;
-    } else if (!permStatus.isGranted) {
-      return null;
-    }
-
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: imageSource);
-
-    // if (pickedFile != null) {
-    //   final file = File(pickedFile.path);
-    //   final sizeInBytes = await file.length();
-    //   final sizeInKB = sizeInBytes / 1024;
-    //   final sizeInMB = sizeInKB / 1024;
-    //   log(sizeInMB.toString());
-    // }
-
-    return pickedFile;
+    // Downsample big gallery photos so the cropper, cropping and colour
+    // extraction are all fast — a cover never needs more than ~1600px.
+    return picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1600,
+      maxHeight: 1600,
+      imageQuality: 90,
+    );
   }
 
   static Future<PermissionStatus> requestUserPermission(

@@ -3,7 +3,6 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
-import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,20 +23,37 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
           final bool isBtnActive = state != null;
           return Scaffold(
             appBar: ATAppBar(
-              leading: const ATXBackBtn(),
-              leadingWidth: 30,
-              padding: const EdgeInsets.fromLTRB(7, 0, 15, 0),
-              title: Text(
-                ATStrings.createShowOrEvent,
-                style: Theme.of(context).textTheme.bodyMedium,
+              centerTitle: true,
+              toolbarHeight: 48,
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              leadingWidth: 44,
+              leading: IconButton(
+                onPressed: () => context.pop(),
+                tooltip: 'Close',
+                iconSize: 24,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(
+                  minWidth: 44,
+                  minHeight: 44,
+                ),
+                icon: const Icon(Icons.close),
               ),
+              title: const SizedBox.shrink(),
             ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+              padding: const EdgeInsets.fromLTRB(15, 2, 15, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Text(
+                    ATStrings.createShowOrEvent,
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  const SizedBox(height: 8),
                   Text(
                     maxLines: 3,
                     ATStrings.chooseToCreateShowOrEvent,
@@ -56,10 +72,11 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
                               .setValue(isSelected ? null : 0),
                           isSelected: state == 0,
                           unselectedImgPath: ATImgStrings.CREATE_SHOW_ICON1,
-                          selectedImgPath: ATImgStrings.CREATE_SHOW_ICON2,
+                          selectedImgPath: ATImgStrings.createShowSelectedArt,
                           title: ATStrings.createShow,
                           subtitle: ATStrings.CREATE_SHOW_DESC,
                           alphabet: 'S',
+                          selectedRotationDegrees: 10.58,
                         ),
                       ),
                       const SizedBox(
@@ -76,6 +93,8 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
                           title: ATStrings.createEvent,
                           subtitle: ATStrings.CREATE_EVENT_DESC,
                           alphabet: 'E',
+                          selectedRotationDegrees: -10.58,
+                          selectedVerticalOffset: 39,
                         ),
                       )
                     ],
@@ -96,6 +115,11 @@ class GoLiveTypeSelectionScreen extends StatelessWidget {
                 btnTitle: ATStrings.cContinue,
                 bgColor: ATColors.white,
                 fgColor: ATColors.black,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: ATColors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
             ),
           );

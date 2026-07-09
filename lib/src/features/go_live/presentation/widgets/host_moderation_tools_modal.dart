@@ -3,6 +3,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:nested/nested.dart';
 import '../../cubits/host_moderation_tools_cubit.dart';
 import '../../../../shared/modal_dismisser.dart';
@@ -61,7 +62,7 @@ class _SubWidget extends StatelessWidget {
             ),
             _CustomRow(
               title: ATStrings.allowComments,
-              icon: Iconsax.message,
+              icon: const Icon(Iconsax.message),
               trailing: BlocConsumer<HostModerationCubit,
                       List<bool>>(
                   listenWhen: (List<bool> prev, List<bool> curr) =>
@@ -100,7 +101,7 @@ class _SubWidget extends StatelessWidget {
             const SizedBox(height: 10),
             _CustomRow(
               title: ATStrings.allowAudienceMic,
-              icon: Icons.mic,
+              icon: const Icon(Icons.mic),
               subtitle: ATStrings.NEED_2_ENABLE_LISTENERS_MIC,
               trailing: BlocConsumer<HostModerationCubit,
                       List<bool>>(
@@ -138,7 +139,10 @@ class _SubWidget extends StatelessWidget {
             const SizedBox(height: 10),
             _CustomRow(
               title: ATStrings.ALLOW_HANDRAISING,
-              icon: Icons.front_hand_outlined,
+              icon: ATImgLoader(
+                imgPath: ATImgStrings.handRaising,
+                height: 24, width: 24,
+              ),
               trailing: BlocConsumer<HostModerationCubit,
                       List<bool>>(
                   listenWhen: (List<bool> prev, List<bool> curr) =>
@@ -150,12 +154,12 @@ class _SubWidget extends StatelessWidget {
                       showAppNotification(
                           context: context,
                           text: ATStrings.ALLOWED_HAND_RAISING,
-                          icon: const Icon(Icons.front_hand_outlined));
+                          icon: ATImgLoader(imgPath: ATImgStrings.handRaising, height: 24, width: 24));
                     } else {
                       showAppNotification(
                           context: context,
                           text: ATStrings.DISABLED_HAND_RAISING,
-                          icon: const Icon(Icons.front_hand_outlined));
+                          icon: ATImgLoader(imgPath: ATImgStrings.handRaising, height: 24, width: 24));
                     }
                   },
                   builder: (_, List<bool> state) {
@@ -183,7 +187,7 @@ class _CustomRow extends StatelessWidget {
       required this.title,
       required this.trailing,
       this.subtitle});
-  final IconData icon;
+  final Widget icon;
   final String title;
   final Widget trailing;
   final String? subtitle;
@@ -194,7 +198,7 @@ class _CustomRow extends StatelessWidget {
       width: context.screenWidth,
       child: Row(
         children: <Widget>[
-          Icon(icon),
+          icon,
           const SizedBox(width: 10),
           Expanded(
             child: Column(

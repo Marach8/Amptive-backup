@@ -86,7 +86,6 @@ abstract class BaseWsService {
         cancelOnError: false,
       );
 
-      _attempt = 0;
       _isConnected = true;
 
       // Start heartbeat with pong verification
@@ -98,6 +97,15 @@ abstract class BaseWsService {
       Future.delayed(Duration(milliseconds: 100), () {
         if (_isConnected && !_isDisposed) {
           onConnected();
+        }
+      });
+
+      // Only reset the attempt counter after 5 seconds of stability.
+      // This prevents infinite connection spam if the server connects and instantly drops 
+      // the connection (e.g., due to an invalid token).
+      Future.delayed(const Duration(seconds: 5), () {
+        if (_isConnected && !_isDisposed) {
+          _attempt = 0;
         }
       });
     } on TimeoutException {

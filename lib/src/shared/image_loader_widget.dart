@@ -12,12 +12,14 @@ class ATImgLoader extends StatelessWidget {
     this.width = 35,
     this.package,
     this.boxFit = BoxFit.contain,
+    this.alignment = Alignment.center,
     this.color,
   });
 
   final String imgPath;
   final String? package;
   final BoxFit boxFit;
+  final Alignment alignment;
   final Color? color;
   final double? height, width;
 
@@ -38,6 +40,7 @@ class ATImgLoader extends StatelessWidget {
         return SvgPicture.network(
           imgPath,
           fit: boxFit,
+          alignment: alignment,
           height: height,
           width: width,
           colorFilter: colorFilter,
@@ -48,9 +51,11 @@ class ATImgLoader extends StatelessWidget {
       return CachedNetworkImage(
         imageUrl: imgPath,
         fit: boxFit,
+        alignment: alignment,
         height: height,
         width: width,
         color: color,
+        filterQuality: FilterQuality.high,
         fadeInDuration: Duration.zero,
         fadeOutDuration: Duration.zero,
         // memCacheHeight: height != null
@@ -70,6 +75,7 @@ class ATImgLoader extends StatelessWidget {
         return SvgPicture.asset(
           imgPath,
           fit: boxFit,
+          alignment: alignment,
           colorFilter: colorFilter,
           height: height,
           width: width,
@@ -79,10 +85,12 @@ class ATImgLoader extends StatelessWidget {
       return Image.asset(
         imgPath,
         fit: boxFit,
+        alignment: alignment,
         height: height,
         width: width,
         color: color,
         package: package,
+        filterQuality: FilterQuality.high,
         errorBuilder: (_, __, ___) =>
             _ImgErrorWidget(width: width, height: height),
       );
@@ -90,6 +98,8 @@ class ATImgLoader extends StatelessWidget {
   }
 }
 
+/// Neutral placeholder for missing/failed images: a dark tile with a subtle
+/// icon, instead of an alarming error glyph.
 class _ImgErrorWidget extends StatelessWidget {
   const _ImgErrorWidget({required this.width, required this.height});
 
@@ -97,10 +107,16 @@ class _ImgErrorWidget extends StatelessWidget {
 
   @override
   Widget build(_) {
-    return SizedBox(
+    return Container(
       height: height,
       width: width,
-      child: Icon(Icons.error, size: height != null ? (height! / 2) : null),
+      color: ATColors.hex252525,
+      alignment: Alignment.center,
+      child: Icon(
+        Icons.image_outlined,
+        color: ATColors.hexB6B6B6.withValues(alpha: 0.6),
+        size: height != null ? (height! * 0.4) : 20,
+      ),
     );
   }
 }

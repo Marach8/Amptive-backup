@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
+import 'package:amptive/src/features/home/cubits/home_feed_cubit.dart';
 
 class LogoutCubit extends Cubit<ATAppState<bool>> {
   LogoutCubit({
@@ -36,6 +37,9 @@ class LogoutCubit extends Cubit<ATAppState<bool>> {
           await localStorageService.remove(ATStrings.accessToken);
           await localStorageService.remove(ATStrings.refreshToken);
           await localStorageService.remove(ATStrings.cachedUserData);
+          // Drop the session-long community feed cache so the next
+          // account never sees this account's feed.
+          communityFeedCubit.reset();
           emit(
             const SuccessState<bool>(
               newData: true,

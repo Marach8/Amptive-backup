@@ -11,3 +11,4 @@ export 'animated_switcher.dart';
 export 'outlined_button_widget.dart';
 export 'custom_container_widget.dart';
 export 'elevated_button_widget.dart';
+export 'scale_on_press_widget.dart';

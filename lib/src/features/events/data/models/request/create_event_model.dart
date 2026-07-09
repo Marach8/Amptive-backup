@@ -35,6 +35,7 @@ class CreateEventPayload {
       'community_id': communityId,
       'tag_ids': tagIds,
       'co_host_ids': coHostIds,
+      'co_hosts': coHostIds,
       'hand_raising': handRaising,
       'allow_whispers': allowWhispers,
       'capacity': capacity,

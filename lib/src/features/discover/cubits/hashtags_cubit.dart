@@ -2,6 +2,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/discover/data/models/response/all_hashtags_response_model.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo_impl.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_hashtags_response_model.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -70,12 +71,9 @@ class AllHashtagsCubit extends Cubit<ATAppState<AllHashtagsResponseModel>> {
 
 
   Future<void> searchHashtags(String query) async {
-    final List<HashTag> allHashtags = currentTagsData?.hashtags ?? <HashTag>[];
-    if (allHashtags.isEmpty) {
-      return;
-    }
+    final String q = query.trim();
 
-    if (query.isEmpty) {
+    if (q.isEmpty) {
       emit(SuccessState<AllHashtagsResponseModel>(
         newData: currentTagsData?.copyWith(
           hashtags: _cachedHashTags,
@@ -84,31 +82,36 @@ class AllHashtagsCubit extends Cubit<ATAppState<AllHashtagsResponseModel>> {
       return;
     }
 
+    if (q.length < 3) return;
+
     emit(LoadingState<AllHashtagsResponseModel>(currentData: currentTagsData)); 
 
-    final List<HashTag> filteredHashtags = allHashtags
-        .where((HashTag hashtag) => 
-          (hashtag.name?.toLowerCase().contains(query.toLowerCase()) ??
-                false) || 
-          (hashtag.displayName?.toLowerCase().contains(query.toLowerCase()) ??
-                false)
-        ).toList();
-
-    if (filteredHashtags.isEmpty) {
-      emit(
-        FailureState<AllHashtagsResponseModel>(
-          'No hashtags found matching "$query".',
-          oldData: currentTagsData,
-        ),
+    try {
+      final ApiResponse<SearchHashtagsResponseModel> response =
+          await discoverRepo.searchHashtags(
+        query: q,
+        page: 1,
+        pageSize: 50,
+        sortBy: 'relevance',
       );
-      return;
+      
+      response.when(
+        successful: (Successful<SearchHashtagsResponseModel> data) {
+          final List<HashTag> hashtags = data.data?.hashtags ?? <HashTag>[];
+          
+          emit(SuccessState<AllHashtagsResponseModel>(
+            newData: currentTagsData?.copyWith(hashtags: hashtags),
+          ));
+        },
+        unSuccessful: (Unsuccessful<SearchHashtagsResponseModel> error) {
+          emit(FailureState<AllHashtagsResponseModel>(error.error.message,
+              oldData: currentTagsData));
+        },
+      );
+    } catch (e) {
+      emit(FailureState<AllHashtagsResponseModel>('Search failed: $e',
+          oldData: currentTagsData));
     }
-
-    final AllHashtagsResponseModel? filteredData = currentTagsData?.copyWith(
-      hashtags: filteredHashtags,
-    );
-
-    emit(SuccessState<AllHashtagsResponseModel>(newData: filteredData));
   }
 
   void resetSearch() => emit(SuccessState<AllHashtagsResponseModel>(

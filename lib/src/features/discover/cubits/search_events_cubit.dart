@@ -5,7 +5,8 @@ import 'package:amptive/src/features/discover/data/repository/discover_repo.dart
 import 'package:amptive/src/features/discover/data/repository/discover_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SearchEventsCubit extends Cubit<ATAppState<SearchEventsResponseModel>> {
+class SearchEventsCubit extends Cubit<ATAppState<SearchEventsResponseModel>>
+    with SafeEmit<ATAppState<SearchEventsResponseModel>> {
   SearchEventsCubit({DiscoverRepo? mockDiscoverRepo})
       : discoverRepo = mockDiscoverRepo ?? DiscoverRepoImpl(),
         super(const InitialState<SearchEventsResponseModel>());
@@ -25,7 +26,7 @@ class SearchEventsCubit extends Cubit<ATAppState<SearchEventsResponseModel>> {
       return;
     }
     
-    emit(const LoadingState<SearchEventsResponseModel>());
+    emit(LoadingState<SearchEventsResponseModel>(currentData: currentSearchData));
 
     try {
       final ApiResponse<SearchEventsResponseModel> response =

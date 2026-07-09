@@ -29,15 +29,17 @@ class _ATOnboardingScreenState extends State<ATOnboardingScreen> {
   Widget build(BuildContext context) {
     return ATAnnotatedRegion(
       child: Scaffold(
+        backgroundColor: ATColors.black,
         body: Column(
           children: <Widget>[
             Expanded(
               child: PageView(
                 controller: _pageCntrl,
+                physics: const ClampingScrollPhysics(),
                 children: const <Widget>[
-                  OnboardingOne(),
-                  OnboardingTwo(),
-                  OnboardingThree(),
+                  ClipRect(child: OnboardingOne()),
+                  ClipRect(child: OnboardingTwo()),
+                  ClipRect(child: OnboardingThree()),
                 ],
               ),
             ),
@@ -68,18 +70,18 @@ class _ATOnboardingScreenState extends State<ATOnboardingScreen> {
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.decelerate),
                     effect: ExpandingDotsEffect(
-                      dotHeight: 8,
-                      dotWidth: 8,
-                      spacing: 4,
+                      dotHeight: 10,
+                      dotWidth: 10,
+                      spacing: 7,
+                      expansionFactor: 2.4,
                       activeDotColor: ATColors.hexD9D9D9,
                       dotColor: ATColors.hex5B5B5B,
                     ),
                   ),
               
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: ATPlainElevatedBtn(
-                      height: 40,
                       onPressed: () {
                         if(_pageCntrl.page == 2) {
                           context.goNamed(ATRoutes.postOnboardingScreen);
@@ -94,24 +96,42 @@ class _ATOnboardingScreenState extends State<ATOnboardingScreen> {
                       btnTitle: 'Next',
                       fgColor: ATColors.black,
                       bgColor: ATColors.white,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-              
-                  InkWell(
-                    onTap: () {
-                      context.goNamed(ATRoutes.postOnboardingScreen);
-                    },
-                    child: Text(
-                      'Skip',
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        fontSize: 14, height: 1.3
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TextButton(
+                      onPressed: () {
+                        context.goNamed(ATRoutes.postOnboardingScreen);
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: ATColors.white,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        minimumSize: const Size(double.infinity, 0), // Absolute minimum height wrapper
+                        alignment: Alignment.topCenter,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text(
+                        'Skip',
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          fontSize: 15, 
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 40), 
+
           ],
         ),
       ),

@@ -95,7 +95,7 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
       ],
       child: ATAnnotatedRegion(
         child: Scaffold(
-          backgroundColor: ATColors.hex0D0D0D,
+          backgroundColor: ATColors.black,
           appBar: ATAppBar(
             titleText: widget.params.title,
             leading: const ATBackBtn(),
@@ -248,6 +248,13 @@ class _ATOTPScreenState extends State<ATOTPScreen> {
                                 }
                               : null,
                           btnTitle: ATStrings.next,
+                          bgColor: Colors.white,
+                          fgColor: Colors.black,
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
                         );
                       },
                     );

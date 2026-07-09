@@ -11,6 +11,7 @@ import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/custom_rebuilder_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -220,7 +221,7 @@ List<Widget> _listOfWidgets = <Widget>[
   const Icon(Icons.settings),
   const Icon(Icons.mic),
   const Icon(Icons.mic),
-  const Icon(Icons.front_hand_outlined),
+  ATImgLoader(imgPath: ATImgStrings.handRaising, height: 24, width: 24),
   const RotatedBox(quarterTurns: -45, child: Icon(Icons.logout)),
   const Text('😎'),
 ];

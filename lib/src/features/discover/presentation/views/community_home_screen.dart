@@ -2,6 +2,7 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
@@ -16,6 +17,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../config/routing/route_strings.dart';
 import '../../../../shared/blurred_header.dart';
+import '../../../main_app_nav_bar.dart';
 
 class ATCommunityScreen extends StatelessWidget {
   const ATCommunityScreen({super.key});
@@ -27,6 +29,8 @@ class ATCommunityScreen extends StatelessWidget {
       child: ATAnnotatedRegion(
         statusBarColor: ATColors.transparent,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          bottomSheet: const AppBottomMenu(),
           body: BlocProvider<BlurredHeaderCubit>(
             create: (_) => BlurredHeaderCubit(),
             child: Builder(builder: (BuildContext blocContext) {
@@ -34,53 +38,61 @@ class ATCommunityScreen extends StatelessWidget {
                 onNotification:
                     blocContext.read<BlurredHeaderCubit>().onScrollNotification,
                 child: CustomScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
+                  ),
                   slivers: <Widget>[
                     SliverPersistentHeader(
                       pinned: true,
                       delegate: ATSliverHDelegate(
                           maxExt: kToolbarHeight +
-                              MediaQuery.paddingOf(context).top,
+                              MediaQuery.paddingOf(context).top +
+                              12,
                           minExt: kToolbarHeight +
-                              MediaQuery.paddingOf(context).top,
-                          child: ATBlurredHeaderWidget(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 4),
-                                  child: ATRoundedBackBtn(
-                                    bgColor: ATColors.transparent,
+                              MediaQuery.paddingOf(context).top +
+                              12,
+                          child: ColoredBox(
+                            color: ATColors.black,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.paddingOf(context).top,
+                                  bottom: 12),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 7),
+                                      child: ATBackBtn(
+                                        alignment: Alignment.centerLeft,
+                                        leadingText: ATStrings.COMMUNITIES,
+                                        leadingStyle: Theme.of(context)
+                                            .textTheme
+                                            .displaySmall
+                                            ?.copyWith(
+                                              fontSize: ATSizes.size26,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  ATStrings.COMMUNITIES,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                const SizedBox(
-                                  width: 30,
-                                )
-                              ],
+                                ],
+                              ),
                             ),
                           )),
                     ),
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: const EdgeInsets.fromLTRB(15, 2, 15, 20),
                         child: Text(
                           maxLines: 3,
                           ATStrings.DISCOVER_COMMUNITIES,
                           style: Theme.of(context)
                               .textTheme
-                              .titleMedium
-                              ?.copyWith(color: ATColors.hexA8A8A8),
+                              .bodySmall
+                              ?.copyWith(color: ATColors.hexC2C2C2),
                         ),
                       ),
                     ),
-                    const SliverToBoxAdapter(
-                        child: SizedBox(
-                      height: 10,
-                    )),
                     BlocConsumer<CommunitiesCubit,
                         ATAppState<CommunitiesResponseModel>>(
                       listener: (BuildContext context,
@@ -138,7 +150,7 @@ class ATCommunityScreen extends StatelessWidget {
 
                               return SliverPadding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
+                                    const EdgeInsets.fromLTRB(15, 0, 15, 120),
                                 sliver: SliverGrid(
                                     delegate: SliverChildListDelegate(
                                       List<Widget>.generate(
@@ -148,14 +160,17 @@ class ATCommunityScreen extends StatelessWidget {
                                           final Community? community =
                                               communities[id];
                                           return CommunityCardWidget(
-                                            // title: community?.name ?? '',
                                             picture: community?.image ??
                                                 ATImgStrings.COMMUNITY_CARD,
+                                            semanticLabel:
+                                                '${community?.name ?? 'Community'} community',
                                             padding: EdgeInsets.zero,
                                             onTap: () => context.pushNamed(
                                               ATRoutes.SOCIETY_SCREEN,
                                               extra: <String, String>{
-                                                'communityId': id
+                                                'communityId': id,
+                                                'communityName':
+                                                    community?.name ?? 'Community',
                                               },
                                             ),
                                           );
@@ -166,8 +181,8 @@ class ATCommunityScreen extends StatelessWidget {
                                         const SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 2,
                                             crossAxisSpacing: 10,
-                                            mainAxisSpacing: 0,
-                                            childAspectRatio: 1.28)),
+                                            mainAxisSpacing: 10,
+                                            childAspectRatio: 170 / 122)),
                               );
                             })
                         };
@@ -190,7 +205,7 @@ class CommunitiesShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 120),
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) =>
@@ -201,7 +216,7 @@ class CommunitiesShimmer extends StatelessWidget {
           crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-          childAspectRatio: 1.28,
+          childAspectRatio: 170 / 122,
         ),
       ),
     );

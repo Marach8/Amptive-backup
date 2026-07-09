@@ -46,6 +46,7 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.all(15),
               child: Column(
                 spacing: 10,
@@ -132,6 +133,13 @@ class _AddNameScreenState extends State<AddNameScreen> with ATValidators {
                   ATPlainElevatedBtn(
                       btnTitle: ATStrings.createAccount,
                       isLoading: state is LoadingState<dynamic>,
+                      bgColor: Colors.white,
+                      fgColor: Colors.black,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                       onPressed: () {
                         if (_formKey.currentState?.validate() == true) {
                           RegistrationData()

@@ -89,7 +89,7 @@ class _OTPField extends StatelessWidget {
       keyboardType: TextInputType.number,
       maxLength: 1,
       textAlignVertical: TextAlignVertical.center,
-      cursorColor: ATColors.hex307FE2,
+      cursorColor: Colors.white,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
         floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -108,7 +108,7 @@ class _OTPField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
-            color: ATColors.hex307FE2,
+            color: ATColors.transparent,
           ),
           borderRadius: BorderRadius.circular(14),
         ),
@@ -129,7 +129,7 @@ class _OTPField extends StatelessWidget {
         ),
       ),
       style: context.textTheme.headlineMedium?.copyWith(
-        fontWeight: ATFontWeights.w400,
+        fontWeight: ATFontWeights.w500,
       ),
       textAlign: TextAlign.center,
     );

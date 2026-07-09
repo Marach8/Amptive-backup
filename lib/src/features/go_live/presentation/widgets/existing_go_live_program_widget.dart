@@ -36,9 +36,14 @@ class ExistingGoLiveProgramWidget extends StatelessWidget {
               height: kst.maxHeight * 0.65,
               width: context.screenWidth,
               clipBehavior: Clip.hardEdge,
-              child: FittedBox(
-                fit: BoxFit.fill,
-                child: ATImgLoader(boxFit: BoxFit.fill, imgPath: imagePic),
+              // Explicit size so the image decodes at display resolution
+              // (the loader's default is 35px → blurry), and cover instead
+              // of fill so it crops rather than stretches.
+              child: ATImgLoader(
+                boxFit: BoxFit.cover,
+                imgPath: imagePic,
+                width: context.screenWidth,
+                height: kst.maxHeight * 0.65,
               ),
             ),
             ATContainer(

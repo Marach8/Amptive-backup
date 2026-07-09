@@ -3,6 +3,7 @@ import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
 class SelectedCoHostsWidget extends StatelessWidget {
@@ -25,6 +26,7 @@ class SelectedCoHostsWidget extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       color: ATColors.white.withValues(alpha: 0.1),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,16 +37,29 @@ class SelectedCoHostsWidget extends StatelessWidget {
               const SizedBox(
                 width: 20,
               ),
-              ATContainer(
+              // Same treatment as the "View community" button.
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: onEdit,
-                radius: 5,
-                color: ATColors.white.withValues(alpha: 0.1),
-                padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                child: Text(
-                  ATStrings.editCohost,
-                  style: context.textTheme.labelSmall?.copyWith(
-                      color: ATColors.white.withValues(alpha: 0.7),
-                      height: 1.1),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: ClipSmoothRect(
+                    radius:
+                        SmoothBorderRadius(cornerRadius: 6, cornerSmoothing: 0.8),
+                    child: ColoredBox(
+                      color: ATColors.white.withValues(alpha: 0.1),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 10),
+                        child: Text(
+                          ATStrings.editCohost,
+                          style: context.textTheme.labelSmall?.copyWith(
+                              color: ATColors.white.withValues(alpha: 0.7),
+                              height: 1.1),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               )
             ],
@@ -55,6 +70,7 @@ class SelectedCoHostsWidget extends StatelessWidget {
           Text(
             '${cohostNames.join(', ')} will be notified',
             maxLines: 5,
+            textAlign: TextAlign.left,
             style: context.textTheme.labelSmall?.copyWith(
               color: ATColors.white.withValues(alpha: 0.6),
               fontSize: ATSizes.size13,
@@ -110,7 +126,9 @@ class _OverlappingCohosts extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: hasUser
                     ? ATImgLoader(
-                        imgPath: cohosts[index].profilePicture ?? '',
+                        imgPath: (cohosts[index].profilePicture?.isNotEmpty ?? false)
+                            ? cohosts[index].profilePicture!
+                            : ATImgStrings.noAvatarImage,
                         height: imgSize,
                         width: imgSize,
                         boxFit: BoxFit.cover,

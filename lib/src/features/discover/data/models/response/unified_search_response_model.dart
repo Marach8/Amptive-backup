@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 class UnifiedSearchResponseModel  {
@@ -28,8 +29,10 @@ class UnifiedSearchResponseModel  {
           ?.map((dynamic e) => HashTag.fromJson(e as Map<String, dynamic>))
           .toList(),
 
+      // Events must parse as events, not shows — parsing them as
+      // HostedShow made every searched event display as a 'Show'.
       events: (data['events']?['items'] as List<dynamic>?)
-          ?.map((dynamic e) => HostedShow.fromJson(e as Map<String, dynamic>))
+          ?.map((dynamic e) => HostedEvent.fromJson(e as Map<String, dynamic>))
           .toList(),
 
       // episodes: (data['episodes']?['items'] as List<dynamic>?)
@@ -41,7 +44,7 @@ class UnifiedSearchResponseModel  {
   final List<User>? users;
   final List<HostedShow>? shows;
   //final List<Episode>? episodes;
-  final List<HostedShow>? events;
+  final List<HostedEvent>? events;
   final List<HashTag>? hashtags;
 
   

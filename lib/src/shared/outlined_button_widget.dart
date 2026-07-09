@@ -33,7 +33,7 @@ class ATOutlinedBtn extends StatelessWidget {
           backgroundColor: bgColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          fixedSize: Size(width ?? context.screenWidth, height ?? 54)),
+          fixedSize: Size(width ?? context.screenWidth, height ?? 56)),
       child: child ?? Text(btnTitle ?? '', style: style),
     );
   }

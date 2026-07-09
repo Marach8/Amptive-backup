@@ -45,13 +45,18 @@ class UserWsService extends BaseWsService {
     _isConnected = false;
   }
 
+  @override
+  Future<void> connect({Duration? connectTimeout}) async {
+    token = await _localStorageService.get(ATStrings.accessToken);
+    if (token == null || token!.isEmpty) {
+      log("User Token not found or empty. Connection Skipped", level: LogLevel.error);
+      return;
+    }
+    await super.connect(connectTimeout: connectTimeout);
+  }
+
   Future<void> connectUser({Duration? connectTimeout}) async {
     if (!isConnected && !isReconnecting) {
-      token = await _localStorageService.get(ATStrings.accessToken);
-      if (token == null) {
-        log("User Token not found. Connection Skipped", level: LogLevel.error);
-        return;
-      }
       await connect(connectTimeout: connectTimeout);
     }
   }

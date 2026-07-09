@@ -22,6 +22,14 @@ class ShowDetailCubit extends Cubit<ATAppState<HostedShow>> {
   };
 
   Future<void> fetchShowDetails() async {
+    final String showId = currentShowDetail?.showId ?? '';
+    
+    final HostedShow? cachedShow = ShowsRepoImpl.getCachedShow(showId);
+    if (cachedShow != null) {
+      emit(SuccessState<HostedShow>(newData: cachedShow));
+      return;
+    }
+
     if (state is LoadingState<HostedShow>) return;
     emit(LoadingState<HostedShow>(currentData: currentShowDetail));
     try {
@@ -64,5 +72,8 @@ class ShowDetailCubit extends Cubit<ATAppState<HostedShow>> {
     final HostedShow? newData = currentShowDetail
       ?.copyEpisodes(episodes);
     emit(SuccessState<HostedShow>(newData: newData));
+  }
+  void updateShowLocally(HostedShow updatedShow) {
+    emit(SuccessState<HostedShow>(newData: updatedShow));
   }
 }

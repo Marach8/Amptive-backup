@@ -1,4 +1,17 @@
 import 'package:amptive/src/config/exception.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+/// Silently drops emits that land after the cubit is closed — e.g. an
+/// in-flight API call completing after the providing widget was disposed.
+/// Without this, late responses crash with
+/// "Bad state: Cannot emit new states after calling close".
+mixin SafeEmit<State> on BlocBase<State> {
+  @override
+  void emit(State state) {
+    if (isClosed) return;
+    super.emit(state);
+  }
+}
 
 //API RESPONSE
 abstract class ApiResponse<T> {

@@ -1,3 +1,6 @@
+import 'package:flutter/gestures.dart';
+import 'package:amptive/src/features/auth/presentation/screens/auth_options_screen.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
@@ -49,10 +52,11 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
         return ATAnnotatedRegion(
           child: Scaffold(
             appBar: ATAppBar(
-                leading: const ATBackBtn(), titleText: widget.title ?? ''),
+                leading: const ATBackBtn(), titleText: widget.title ?? 'Sign Up'),
             body: Form(
               key: _formKey,
               child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,9 +96,10 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
                                       const ATLoadingIndicator(
                                         size: 20,
                                       ),
-                                    SuccessState<bool>() => Icon(
-                                        Icons.check,
-                                        color: ATColors.successColor,
+                                    SuccessState<bool>() => const ATImgLoader(
+                                        imgPath: 'assets/images/svg_images/success_check.svg',
+                                        width: 20,
+                                        height: 20,
                                       ),
                                     FailureState<bool>() => Icon(
                                         Icons.close,
@@ -103,19 +108,63 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
                                   }),
                         ),
                         onChanged: (String text) {
-                          ATHelperFuncs.callDebouncer(
-                              1500,
-                              () => context
-                                  .read<CheckIdentityAvailabilityCubit>()
-                                  .checkIdentityAvailability(
-                                      param: <String, dynamic>{'email': text}));
+                          // Only hit the backend if the email looks structurally valid
+                          final bool looksValid = RegExp(
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                          ).hasMatch(text.trim());
+
+                          if (looksValid) {
+                            ATHelperFuncs.callDebouncer(
+                                1500,
+                                () => context
+                                    .read<CheckIdentityAvailabilityCubit>()
+                                    .checkIdentityAvailability(
+                                        param: <String, dynamic>{'email': text}));
+                          } else {
+                            // Reset the suffix icon while the user is still typing
+                            context.read<CheckIdentityAvailabilityCubit>().reset();
+                          }
                         }),
                     const SizedBox(
                       height: 6,
                     ),
-                    Text(
-                      "This email will be verified in the next step.",
-                      style: context.textTheme.titleSmall,
+                    BlocBuilder<CheckIdentityAvailabilityCubit,
+                        ATAppState<bool>>(
+                      builder: (_, ATAppState<bool> state) {
+                        if (state is FailureState<bool>) {
+                          return RichText(
+                            text: TextSpan(
+                              style: context.textTheme.titleSmall?.copyWith(
+                                color: Colors.white,
+                              ),
+                              children: <InlineSpan>[
+                                const TextSpan(text: 'Email address already exists, try '),
+                                TextSpan(
+                                  text: 'signing in',
+                                  style: const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // Pop back and navigate to the sign-in screen
+                                      context.pop();
+                                      context.pushNamed(
+                                        ATRoutes.authOptionsScreen,
+                                        extra: AuthType.signIn,
+                                      );
+                                    },
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        return Text(
+                          'This email will be verified in the next step.',
+                          style: context.textTheme.titleSmall,
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -169,6 +218,13 @@ class _ATEmailAuthScreenState extends State<ATEmailAuthScreen>
                               }
                             : null,
                         btnTitle: ATStrings.verifyEmail,
+                        bgColor: Colors.white,
+                        fgColor: Colors.black,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
                       );
                     },
                   );

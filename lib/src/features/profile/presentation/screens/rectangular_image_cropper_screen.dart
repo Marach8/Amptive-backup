@@ -25,6 +25,7 @@ class RectImageCropperScreen extends StatefulWidget {
 
 class _CropPageState extends State<RectImageCropperScreen> {
   late final CustomImageCropController controller;
+  bool _cropping = false;
 
   @override
   void initState() {
@@ -48,20 +49,33 @@ class _CropPageState extends State<RectImageCropperScreen> {
               padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
               child: Row(
                 children: <Widget>[
-                  const ATBackBtn(iconSize: 15),
+                  const ATBackBtn(),
                   const Spacer(),
                   ATContainer(
-                    onTap: () async {
-                      final MemoryImage? image = await controller.onCropImage();
-                      if (context.mounted) context.pop(image);
-                    },
-                    padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                    color: ATColors.hex307FE2,
+                    onTap: _cropping
+                        ? null
+                        : () async {
+                            setState(() => _cropping = true);
+                            final MemoryImage? image =
+                                await controller.onCropImage();
+                            if (context.mounted) context.pop(image);
+                          },
+                    padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
+                    color: const Color(0xFFFF0078),
                     radius: 30,
-                    child: Text(
-                      ATStrings.apply,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
+                    child: _cropping
+                        ? const SizedBox(
+                            height: 16,
+                            width: 16,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text(
+                            ATStrings.apply,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
                   )
                 ],
               ),

@@ -21,6 +21,19 @@ class EpisodeDetailCubit extends Cubit<ATAppState<Episode>> {
   };
 
   Future<void> fetchEpisodeDetails() async {
+    final String episodeId = currentEpisodeDetail?.episodeId ?? '';
+    final String showId = currentEpisodeDetail?.showId ?? '';
+
+    // Without both ids the detail endpoint can't be built (it would 404 on
+    // `shows//episodes/<id>`). Keep the already-seeded data instead.
+    if (episodeId.isEmpty || showId.isEmpty) return;
+
+    final Episode? cachedEpisode = EpisodesRepoImpl.getCachedEpisode(episodeId);
+    if (cachedEpisode != null) {
+      emit(SuccessState<Episode>(newData: cachedEpisode.copyWith(parentShowTitle: currentEpisodeDetail?.parentShowTitle)));
+      return;
+    }
+
     if (state is LoadingState<Episode>) return;
     emit(LoadingState<Episode>(currentData: currentEpisodeDetail));
     try {

@@ -12,11 +12,11 @@ class ATModalDismisser extends StatelessWidget {
       alignment: Alignment.center,
       child: ATContainer(
         onTap: onDismissOverride ?? () => Navigator.pop(context),
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        radius: 5,
-        height: 4,
-        width: 30,
-        color: ATColors.white.withValues(alpha: 0.6),
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        radius: 100, // Fully rounded pill shape
+        height: 5,
+        width: 38,
+        color: ATColors.white.withValues(alpha: 0.45), // Softer, premium opacity
         child: const SizedBox.shrink(),
       ),
     );

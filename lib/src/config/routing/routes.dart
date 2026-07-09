@@ -25,7 +25,9 @@ import 'package:amptive/src/features/calender/presentation/screens/calender_land
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
+import 'package:amptive/src/features/episodes/presentation/screens/episode_schedule_detail_screen.dart';
 import 'package:amptive/src/features/episodes/presentation/screens/edit_episode_form_screen.dart';
+import 'package:amptive/src/features/episodes/presentation/screens/scheduled_episodes_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/edit_event_form_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
@@ -46,6 +48,7 @@ import 'package:amptive/src/features/accounts/presentation/screens/account_info_
 import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/update_email_and_phone_no_otp_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/shows/presentation/screens/stop_airing_confirmation_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/list_hosted_events_screen.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/presentation/screens/preview_event_screen.dart';
@@ -54,6 +57,7 @@ import 'package:amptive/src/features/switch_account/presentation/switch_acct/swi
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
+import 'package:amptive/src/features/onboarding/presentation/screens/splash_screen.dart';
 import 'package:custom_image_crop/custom_image_crop.dart'
     show Ratio, CustomCropShape;
 import 'package:flutter/material.dart';
@@ -71,22 +75,25 @@ import '../../features/shows/cubits/hosted_shows_cubit.dart'
     show HostedShowsCubit;
 import '../../features/wallet/wallet_export.dart';
 
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter amptiveAppRouter = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: ATRoutes.dashboard.addSlash,
+  initialLocation: '/',
   //redirect: tempRedirect,
   //initialLocation: ATRoutes.temporaryLoginScreen.addSlash,
   //initialLocation: ATRoutes.ONBOARDING_SCREEN.addSlash,
 
-
   routes: <RouteBase>[
+    GoRoute(
+      name: ATRoutes.splashScreen,
+      path: '/',
+      builder: (_, __) => const ATSplashScreen(),
+    ),
     GoRoute(
         name: ATRoutes.postOnboardingScreen,
         path: ATRoutes.postOnboardingScreen.addSlash,
-        pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+        pageBuilder: (_, __) => ATModalRouteTransition<void>(
               child: const ATPostOnboardingScreen(),
             )),
     GoRoute(
@@ -224,9 +231,20 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.scheduleDetailed,
             path: ATRoutes.scheduleDetailed.addSlash,
-            pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
+            pageBuilder: (_, GoRouterState state) =>
+                ATModalRouteTransition<void>(
               child: ATScheduleDetailedScreen(
                 homeFeedItem: state.extra as HomeFeedItem?,
+              ),
+            ),
+          ),
+          GoRoute(
+            name: ATRoutes.episodeScheduleDetail,
+            path: ATRoutes.episodeScheduleDetail.addSlash,
+            pageBuilder: (_, GoRouterState state) =>
+                ATModalRouteTransition<void>(
+              child: EpisodeScheduleDetailScreen(
+                episode: state.extra as Episode,
               ),
             ),
           ),
@@ -343,16 +361,16 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
               name: ATRoutes.liveShowDetailed,
               path: ATRoutes.liveShowDetailed.addSlash,
-              pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                  beginOffset: const Offset(0.0, 1.0),
-                  child: ATLiveShowDetailedScreen(
+              pageBuilder: (_, GoRouterState state) =>
+                  ATModalRouteTransition<void>(
+                      child: ATLiveShowDetailedScreen(
                     homeFeedItem: state.extra as HomeFeedItem?,
                   ))),
           GoRoute(
               name: ATRoutes.liveEventDetailed,
               path: ATRoutes.liveEventDetailed.addSlash,
-              pageBuilder: (_, GoRouterState state) => ATSlidingRouteTransition<void>(
-                    beginOffset: const Offset(0.0, 1.0),
+              pageBuilder: (_, GoRouterState state) =>
+                  ATModalRouteTransition<void>(
                     child: ATLiveEventDetailedScreen(
                       homeFeedItem: state.extra as HomeFeedItem?,
                     ),
@@ -361,16 +379,18 @@ final GoRouter amptiveAppRouter = GoRouter(
               name: ATRoutes.goLiveOnboarding,
               path: ATRoutes.goLiveOnboarding.addSlash,
               pageBuilder: (_, GoRouterState state) {
-                final LiveProgramData? liveProgramEntryParams = 
-                  state.extra as LiveProgramData?;
+                final LiveProgramData? liveProgramEntryParams =
+                    state.extra as LiveProgramData?;
                 return ATSlidingRouteTransition<void>(
                     child: GoLiveOnboardingScreen(
-                      liveProgramEntryParams: liveProgramEntryParams));
+                        liveProgramEntryParams: liveProgramEntryParams));
               }),
           GoRoute(
             name: ATRoutes.chooseEventOrShowScreen,
             path: ATRoutes.chooseEventOrShowScreen,
-            builder: (_, __) => const GoLiveTypeSelectionScreen(),
+            pageBuilder: (_, __) => ATBottomUpRouteTransition<void>(
+              child: const GoLiveTypeSelectionScreen(),
+            ),
           ),
           GoRoute(
               name: ATRoutes.listHostedShowsScreen,
@@ -393,6 +413,15 @@ final GoRouter amptiveAppRouter = GoRouter(
                     hostedShowsCubit: state.extra as HostedShowsCubit,
                   ))),
           GoRoute(
+              name: ATRoutes.editShowForm,
+              path: ATRoutes.editShowForm.addSlash,
+              pageBuilder: (_, GoRouterState state) =>
+                  ATSlidingRouteTransition<void>(
+                      child: CreateShowFormScreen(
+                    hostedShowsCubit: HostedShowsCubit(),
+                    editableShow: state.extra as HostedShow,
+                  ))),
+          GoRoute(
               name: ATRoutes.createEventFormScreen,
               path: ATRoutes.createEventFormScreen.addSlash,
               pageBuilder: (_, GoRouterState state) =>
@@ -407,7 +436,7 @@ final GoRouter amptiveAppRouter = GoRouter(
               pageBuilder: (_, GoRouterState state) =>
                   ATSlidingRouteTransition<void>(
                       child: CreateEpisodeFormScreen(
-                    showId: state.extra as String,
+                    showData: state.extra as HostedShow,
                   ))),
           GoRoute(
             name: ATRoutes.programCreationSuccessScreen,
@@ -423,9 +452,41 @@ final GoRouter amptiveAppRouter = GoRouter(
             },
           ),
           GoRoute(
+            name: ATRoutes.stopAiringConfirmationScreen,
+            path: ATRoutes.stopAiringConfirmationScreen,
+            pageBuilder: (_, GoRouterState state) {
+              final StopAiringConfirmationScreenParams params =
+                  state.extra as StopAiringConfirmationScreenParams;
+              return ATFadingRouteTransition<bool?>(
+                child: StopAiringConfirmationScreen(
+                  params: params,
+                ),
+              );
+            },
+          ),
+          GoRoute(
             name: ATRoutes.creatorProfileScreen,
             path: ATRoutes.creatorProfileScreen,
             builder: (_, __) => const CreatorProfileScreen(),
+          ),
+          GoRoute(
+            name: ATRoutes.scheduledEpisodesScreen,
+            path: ATRoutes.scheduledEpisodesScreen,
+            builder: (_, GoRouterState state) {
+              final Object? extra = state.extra;
+              if (extra is ScheduledEpisodesArgs) {
+                return ScheduledEpisodesScreen(
+                  showId: extra.showId,
+                  coverUrl: extra.coverUrl,
+                  showTitle: extra.showTitle,
+                  showHost: extra.showHost,
+                  showCommunity: extra.showCommunity,
+                );
+              }
+              return ScheduledEpisodesScreen(
+                showId: extra as String? ?? '',
+              );
+            },
           ),
           GoRoute(
               name: ATRoutes.EDIT_PROFILE,
@@ -673,7 +734,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             path: ATRoutes.showPreviewScreen,
             pageBuilder: (_, GoRouterState state) {
               HostedShow hostedShow = state.extra as HostedShow;
-              return ATSlidingRouteTransition<void>(
+              return ATModalRouteTransition<void>(
                   child: PreviewShowScreen(
                 hostedShow: hostedShow,
               ));
@@ -684,13 +745,12 @@ final GoRouter amptiveAppRouter = GoRouter(
             path: ATRoutes.eventPreviewScreen.addSlash,
             pageBuilder: (_, GoRouterState state) {
               HostedEvent hostedEvent = state.extra as HostedEvent;
-              return ATSlidingRouteTransition<void>(
+              return ATModalRouteTransition<void>(
                   child: PreviewEventScreen(
                 hostedEvent: hostedEvent,
               ));
             },
           ),
-
           GoRoute(
             name: ATRoutes.editEventScreen,
             path: ATRoutes.editEventScreen.addSlash,
@@ -739,12 +799,16 @@ final GoRouter amptiveAppRouter = GoRouter(
           GoRoute(
             name: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
             path: ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN,
-            builder: (_, __) => const ATFollowedPrograms(),
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ATFollowedPrograms(),
+            ),
           ),
           GoRoute(
             name: ATRoutes.COMMUNITY_SCREEN,
             path: ATRoutes.COMMUNITY_SCREEN,
-            builder: (_, __) => const ATCommunityScreen(),
+            pageBuilder: (_, __) => ATSlidingRouteTransition<void>(
+              child: const ATCommunityScreen(),
+            ),
           ),
           GoRoute(
               name: ATRoutes.SOCIETY_SCREEN,
@@ -752,18 +816,34 @@ final GoRouter amptiveAppRouter = GoRouter(
               builder: (_, GoRouterState state) {
                 final Object? extra = state.extra;
                 String? communityId;
+                String? communityName;
                 if (extra is Map<String, dynamic>) {
                   communityId = extra['communityId'] as String?;
+                  communityName = extra['communityName'] as String?;
                 } else if (extra is Map<String, String>) {
                   communityId = extra['communityId'];
+                  communityName = extra['communityName'];
                 }
-                return DiscoverSocietyScreen(communityId: communityId);
+                return DiscoverSocietyScreen(
+                  communityId: communityId,
+                  communityName: communityName,
+                );
               },
               routes: <RouteBase>[
                 GoRoute(
                   name: ATRoutes.TRENDING_SOCIETY_SCREEN,
                   path: ATRoutes.TRENDING_SOCIETY_SCREEN,
-                  builder: (_, __) => const TrendingSocietyScreen(),
+                  builder: (_, GoRouterState state) {
+                    final Object? extra = state.extra;
+                    String? title;
+                    List<HomeFeedItem>? items;
+                    if (extra is Map<String, dynamic>) {
+                      title = extra['title'] as String?;
+                      items = (extra['items'] as List<dynamic>?)
+                          ?.cast<HomeFeedItem>();
+                    }
+                    return TrendingSocietyScreen(title: title, items: items);
+                  },
                 ),
                 GoRoute(
                   name: ATRoutes.TRENDING_HASHTAGS_SCREEN,
@@ -773,7 +853,16 @@ final GoRouter amptiveAppRouter = GoRouter(
                 GoRoute(
                   name: ATRoutes.SOCIETY_HASHTAG_SCREEN,
                   path: ATRoutes.SOCIETY_HASHTAG_SCREEN,
-                  builder: (_, __) => const SocietyHastagScreen(),
+                  builder: (_, GoRouterState state) {
+                    final Object? extra = state.extra;
+                    return SocietyHastagScreen(
+                      hashtagName: extra is Map
+                          ? extra['hashtagName'] as String?
+                          : extra as String?,
+                      showHeaderFlame: extra is Map &&
+                          (extra['isTopThree'] as bool? ?? false),
+                    );
+                  },
                 ),
               ]),
         ]),

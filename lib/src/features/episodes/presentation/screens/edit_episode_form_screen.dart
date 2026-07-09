@@ -1,27 +1,23 @@
 import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui';
 import 'package:amptive/src/features/episodes/cubits/edit_episode_cubit.dart';
+import 'package:amptive/src/features/episodes/cubits/episodes_of_a_show_cubit.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
+import 'package:amptive/src/features/episodes/data/repository/episodes_repo_impl.dart';
 import 'package:amptive/src/features/episodes/presentation/widgets/whispers_permision_modal.dart';
-import 'package:amptive/src/features/events/cubits/edit_event_cubit.dart';
-import 'package:amptive/src/features/events/cubits/start_event_cubit.dart';
-import 'package:amptive/src/features/events/data/models/request/create_event_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
-import 'package:amptive/src/features/events/presentation/widgets/events_audience_access_modal.dart';
-import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
-import 'package:amptive/src/features/events/presentation/widgets/set_event_capacity_modal.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
+import 'package:amptive/src/shared/after_route_transition.dart';
 import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
-import 'package:amptive/src/shared/textformfield_widget.dart';
+import 'package:amptive/src/shared/smooth_text_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nested/nested.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
+import 'package:amptive/src/features/go_live/presentation/widgets/program_form_mesh_background.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import '../../../../shared/rich_text.dart';
 import 'dart:developer' show log;
@@ -31,9 +27,8 @@ import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
-import 'package:amptive/src/features/events/cubits/create_event_cubit.dart';
-import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/global_export.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart' show SingleChildWidget;
 import '../../../../config/utils/dialogs/communities_modal.dart';
@@ -127,7 +122,10 @@ class __SubWidgetState extends State<_SubWidget> {
       subscriptionAmount: widget.editableEpisode.priceOverride ?? 0.01,
     );
     
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    // These lists feed the community/cohost/hashtag pickers, which the user
+    // can't reach for at least a second — fetching them during the page
+    // transition janks the slide, so wait until it settles.
+    runAfterRouteTransition(context, () {
       context.read<CommunitiesCubit>().fetchCommunities();
       context.read<AllUsersCubit>().fetchAllUsers();
       context.read<AllHashtagsCubit>().fetchHashTags();
@@ -152,30 +150,13 @@ class __SubWidgetState extends State<_SubWidget> {
       statusBarColor: ATColors.transparent,
       child: Scaffold(
         body: Builder(builder: (BuildContext blocContext) {
-          return Stack(
-            children: <Widget>[
-              Positioned.fill(
-                child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                  child: BlocBuilder<BgImageCubit, (String, Uint8List?)>(
-                      builder: (_, (String, Uint8List?) state) {
-                    return state.$2 == null
-                        ? ATImgLoader(
-                            boxFit: BoxFit.fill,
-                            imgPath: state.$1,
-                          )
-                        : Image.memory(state.$2!, fit: BoxFit.fill);
-                  }),
-                ),
-              ),
-
-              Container(
-                color: ATColors.hex0D0D0D.withValues(alpha: 0.75),
-                child: NotificationListener<ScrollNotification>(
+          return ProgramFormMeshBackground(
+            child: NotificationListener<ScrollNotification>(
                   onNotification: blocContext
                       .read<BlurredHeaderCubit>()
                       .onScrollNotification,
                   child: NestedScrollView(
+                    key: const PageStorageKey<String>('edit_episode_form'),
                     headerSliverBuilder: (_, __) => <Widget>[
                       SliverPersistentHeader(
                         pinned: true,
@@ -201,20 +182,29 @@ class __SubWidgetState extends State<_SubWidget> {
                                         const EdgeInsets.only(right: 15),
                                     child: InkWell(
                                         onTap: ()async{
-                                          final DateTime? newDate = await context.pushNamed(
+                                          final ScheduleDateResult? result = await context.pushNamed(
                                             ATRoutes.selectScheduleDateScreen,
                                             extra: SelectScheduleDataScreenEntryParams(
                                               selectedBgImage: context.read<BgImageCubit>().state.$2,
+                                              incomingBgImageUrl: context.read<BgImageCubit>().state.$1,
                                               programName: 'Episode',
-                                              incomingBgImageUrl: widget.editableEpisode.thumbnailUrl,
                                               incomingDate: _scheduleDate
                                             )
-                                          ) as DateTime?;
-                                          _scheduleDate = newDate;
+                                          ) as ScheduleDateResult?;
+                                          if(result == null) return; // cancelled
+                                          _scheduleDate = result.removed ? null : result.date;
                                         },
                                         borderRadius:
                                             BorderRadius.circular(30),
-                                        child: const ScheduleIcon()),
+                                        child: SizedBox(
+                                          width: 44,
+                                          height: 44,
+                                          child: Center(
+                                            child: SvgPicture.string(
+                                              ATImgStrings.createEpisodeScheduleIconSvg,
+                                            ),
+                                          ),
+                                        )),
                                   )
                                 ],
                               ),
@@ -225,6 +215,7 @@ class __SubWidgetState extends State<_SubWidget> {
                     ],
 
                     body: SingleChildScrollView(
+                      key: const PageStorageKey<String>('edit_episode_form_body'),
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 120),
                       child: Column(
                         children: <Widget>[
@@ -233,6 +224,10 @@ class __SubWidgetState extends State<_SubWidget> {
                             child: SelectProgramCoverArt(
                               onImageSelected:
                                   blocContext.read<BgImageCubit>().setBgImage,
+                              onImageUrlSelected:
+                                  blocContext.read<BgImageCubit>().setBgImageUrl,
+                              onImageAndUrlSelected:
+                                  blocContext.read<BgImageCubit>().setBgImageAndUrl,
                               initialImage: widget.editableEpisode.thumbnailUrl,
                             ),
                           ),
@@ -245,28 +240,17 @@ class __SubWidgetState extends State<_SubWidget> {
                                       140 - (snapshot.data?.length ?? 0);
                                   return RowWith2Texts(
                                     text1: ATStrings.title,
-                                    text2: '$remaining remaining',
+                                    text2: remaining == 140
+                                        ? ''
+                                        : '${140 - remaining}/140',
                                   );
                                 }),
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                            child: ATTextFormField(
+                            child: ATSmoothTextField(
                               controller: _titleCntrl,
-                              maxLines: 1,
-                              cursorHeight: 20,
-                              hintText:'What is the title of your event?',
-                              prefixIcon: const SizedBox(
-                                width: 12,
-                              ),
-                              hintStyle: context.textTheme.bodySmall?.copyWith(
-                                color: ATColors.white.withValues(alpha: 0.4),
-                              ),
-                              disableBlueBorder: true,
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(14),
-                                  borderSide:
-                                      BorderSide(color: ATColors.transparent)),
+                              hintText: 'What is the title of your event?',
                             ),
                           ),
 
@@ -279,7 +263,9 @@ class __SubWidgetState extends State<_SubWidget> {
                                       4000 - (snapshot.data?.length ?? 0);
                                   return RowWith2Texts(
                                     text1: ATStrings.description,
-                                    text2: '$remaining remaining',
+                                    text2: remaining == 4000
+                                        ? ''
+                                        : '${4000 - remaining}/4000',
                                   );
                                 }),
                           ),
@@ -292,10 +278,15 @@ class __SubWidgetState extends State<_SubWidget> {
                                 descStyle: selectedDescription == 
                                   ATStrings.tellListenersAboutYourShow ? null :
                                     context.textTheme.bodySmall,
+                                isMarkdown: selectedDescription != ATStrings.tellListenersAboutYourShow,
                                 onTap: () async {
                                   final String? enteredDescription =
                                       await enterDescriptionModal(
                                     context: context,
+                                    coverImage: context.read<BgImageCubit>().state.$1,
+                                    coverBytes: context.read<BgImageCubit>().state.$2,
+                                    title: 'Episode Description',
+                                    hintText: 'Give listeners a preview of this episode',
                                     initialDesc: selectedDescription ==
                                             ATStrings.tellListenersAboutYourEvent
                                         ? null
@@ -344,7 +335,15 @@ class __SubWidgetState extends State<_SubWidget> {
                                           selectedCommunity: selectedCommunity!,
                                           onClose: () => setter(
                                               () => selectedCommunity = null),
-                                          onView: () {}));
+                                          onView: () => context.pushNamed(
+                                            ATRoutes.SOCIETY_SCREEN,
+                                            extra: <String, String>{
+                                              'communityId':
+                                                  selectedCommunity?.communityId ?? '',
+                                              'communityName':
+                                                  selectedCommunity?.name ?? '',
+                                            },
+                                          )));
                             }),
                           ),
                           Padding(
@@ -396,10 +395,11 @@ class __SubWidgetState extends State<_SubWidget> {
                                         selectedCohosts: selectedCohosts!
                                     )
                                     : CreateProgramSelectionItem(
-                                        leading: const ATImgLoader(
+                                        leading: ATImgLoader(
                                           height: 20,
                                           width: 20,
                                           imgPath: ATImgStrings.outlinedSearch,
+                                          color: ATColors.white.withValues(alpha: 0.6),
                                         ),
                                         trailing: Flexible(
                                           child: Text(
@@ -547,9 +547,9 @@ class __SubWidgetState extends State<_SubWidget> {
                                   const EdgeInsets.fromLTRB(15, 15, 15, 10),
                               child: Row(
                                 children: <Widget>[
-                                  const Icon(
-                                    Icons.front_hand_outlined,
-                                    size: 18,
+                                  const ATImgLoader(
+                                    imgPath: ATImgStrings.handRaising,
+                                    height: 18, width: 18,
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
@@ -673,8 +673,6 @@ class __SubWidgetState extends State<_SubWidget> {
                     ),
                   ),
                 ),
-              ),
-            ],
           );
         }),
 
@@ -694,18 +692,20 @@ class __SubWidgetState extends State<_SubWidget> {
                         .map((HashTag tag) => tag.id ?? '')
                         .toList(),
                       coHostIds: (selectedCohosts ?? <User>[])
-                        .map((User cohost) => cohost.userId ?? '')
+                        .map((User cohost) => cohost.userId)
                         .toList(),
                       title: _titleCntrl.text.trim(),
                       description: selectedDescription,
                       thumbnailUrl: state.newData!,
                       communityId: selectedCommunity?.communityId ?? '',
-                      category: 'Category',
+                      category: selectedCommunity?.name ?? '',
                       allowWhispers: selectedWhispersPermission == WhispersPermission.allow,
                       showTypeOverride: accessTypeData.accessType 
                         == ProgramAccessType.free ? 'free' : 'paid',
                       allowHandRaising: selectedPermission == HandRaisingPermission.allow,
-                      priceOverride: accessTypeData.subscriptionAmount ?? 0.01,
+                      priceOverride: accessTypeData.accessType == ProgramAccessType.free
+                          ? 0.01
+                          : (accessTypeData.subscriptionAmount ?? 0.01),
                       scheduledFor: _scheduleDate?.toUtc().toIso8601String(),
                     ),
                   );
@@ -725,8 +725,21 @@ class __SubWidgetState extends State<_SubWidget> {
               listener: (_, ATAppState<Episode> state) async{
                 if (state is SuccessState<Episode>) {
                   _activateBtn.value = true;
-                  context.pop(state.newData);
-                } 
+                  // Refresh the caches so the modal and the episode list pick
+                  // up the edit instead of showing stale data.
+                  final Episode? updated = state.newData;
+                  final String episodeId =
+                      updated?.episodeId ?? widget.editableEpisode.episodeId ?? '';
+                  final String showId =
+                      updated?.showId ?? widget.editableEpisode.showId ?? '';
+                  if (episodeId.isNotEmpty && updated != null) {
+                    EpisodesRepoImpl.episodeCache[episodeId] = updated;
+                  }
+                  if (showId.isNotEmpty) {
+                    EpisodesOfAShowCubit.invalidate(showId);
+                  }
+                  context.pop(updated);
+                }
                 else if (state is FailureState<Episode>) {
                   _activateBtn.value = true;
                   showAppNotification2(
@@ -753,8 +766,6 @@ class __SubWidgetState extends State<_SubWidget> {
                     errorMessage = 'Please enter a description';
                   } else if(selectedCommunity == null) {
                     errorMessage = 'Please select a community';
-                  } else if((selectedCohosts ?? <User>[]).isEmpty) {
-                    errorMessage = 'Please select at least 1 cohost';
                   } else if((selectedHashtags ?? <HashTag>[]).isEmpty) {
                     errorMessage = 'Please select at least 1 hashtag';
                   } else if(selectedPermission == null) {

@@ -41,7 +41,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen>
         body: Form(
           key: _formKey,
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(15),
             child: Column(
               spacing: 11,
@@ -53,6 +53,7 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen>
                 ),
                 ATTextFormField(
                   controller: _passwordCntrl,
+                  obscuringCharacter: '●',
                   maxLines: 1,
                   obscureText: !_passwordVisible,
                   hintText: ATStrings.enterYourPassword,
@@ -67,24 +68,19 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen>
                   suffixIcon: IconButton(
                     onPressed: () =>
                         setState(() => _passwordVisible = !_passwordVisible),
-                    icon: Icon(_passwordVisible
-                        ? CupertinoIcons.eye_slash
-                        : CupertinoIcons.eye),
+                    icon: Icon(
+                      _passwordVisible
+                          ? CupertinoIcons.eye_slash
+                          : CupertinoIcons.eye,
+                      color: Colors.white,
+                    ),
                   ),
-                  onChanged: (String text) {
-                    if (text.isEmpty && _showDescription) {
-                      setState(() => _showDescription = false);
-                    } else if (text.isNotEmpty && !_showDescription) {
-                      setState(() => _showDescription = true);
-                    }
-                  },
                 ),
-                if (_showDescription)
-                  Text(
-                    'Your password should be at least 8 characters, must contain at least one upper case letter',
-                    style: context.textTheme.titleSmall,
-                    maxLines: 2,
-                  ),
+                Text(
+                  'Must be 8+ characters, including uppercase, lowercase, and a special character.',
+                  style: context.textTheme.titleSmall,
+                  maxLines: 2,
+                ),
               ],
             ),
           ),
@@ -97,7 +93,8 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen>
             child: AnimatedBuilder(
                 animation: _passwordCntrl,
                 builder: (_, __) {
-                  final bool activate = _passwordCntrl.text.trim().length >= 8;
+                  final bool activate =
+                      validatePassword(_passwordCntrl.text.trim()) == null;
                   return ATPlainElevatedBtn(
                     onPressed: activate
                         ? () {
@@ -109,6 +106,13 @@ class _PasswordAuthScreenState extends State<PasswordAuthScreen>
                           }
                         : null,
                     btnTitle: ATStrings.next,
+                    bgColor: Colors.white,
+                    fgColor: Colors.black,
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
                   );
                 }),
           );

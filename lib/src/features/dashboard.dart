@@ -35,7 +35,6 @@ import '../services/go_live_service/go_live_service.dart';
 import '../services/notification/push_notification_service.dart';
 import 'notifications/presentation/screens/notif_landing_screen.dart';
 
-
 class ATDashboard extends StatelessWidget {
   const ATDashboard({super.key});
 
@@ -46,14 +45,15 @@ class ATDashboard extends StatelessWidget {
         BlocProvider<HomeFeedCubit>(create: (_) => HomeFeedCubit()),
         BlocProvider<LiveUsersCubit>(create: (_) => LiveUsersCubit()),
         BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit()),
-        BlocProvider<RegisterDeviceFCMCubit>(create: (_) => RegisterDeviceFCMCubit()),
-        BlocProvider<GetNotificationsCubit>(create: (_) => GetNotificationsCubit()),
+        BlocProvider<RegisterDeviceFCMCubit>(
+            create: (_) => RegisterDeviceFCMCubit()),
+        // GetNotificationsCubit is provided globally (setup.dart) so the
+        // bottom menu works on pushed pages too.
       ],
       child: _SubWidget(key: dashboardKey),
     );
   }
 }
-
 
 class _SubWidget extends StatefulWidget {
   const _SubWidget({super.key});
@@ -62,16 +62,14 @@ class _SubWidget extends StatefulWidget {
   State<_SubWidget> createState() => DashboardState();
 }
 
-
 final GlobalKey<DashboardState> dashboardKey = GlobalKey<DashboardState>();
 
-class DashboardState extends State<_SubWidget>{  
-  final ScrollController _liveUsersScrollController 
-    = ScrollController();
-  final GlobalKey<NestedScrollViewState> _nestedKey 
-    = GlobalKey<NestedScrollViewState>();
-  final GlobalKey<NestedScrollViewState> _notifNestedKey 
-    = GlobalKey<NestedScrollViewState>();
+class DashboardState extends State<_SubWidget> {
+  final ScrollController _liveUsersScrollController = ScrollController();
+  final GlobalKey<NestedScrollViewState> _nestedKey =
+      GlobalKey<NestedScrollViewState>();
+  final GlobalKey<NestedScrollViewState> _notifNestedKey =
+      GlobalKey<NestedScrollViewState>();
 
   StreamSubscription<RemoteMessage>? _notifSubscription;
 
@@ -85,8 +83,7 @@ class DashboardState extends State<_SubWidget>{
         return MultiBlocProvider(
           providers: <SingleChildWidget>[
             BlocProvider<GoLiveControlsVisibilityBloc>(
-              create: (_) => GoLiveControlsVisibilityBloc()
-            ),
+                create: (_) => GoLiveControlsVisibilityBloc()),
             BlocProvider<HostModerationCubit>(
               create: (_) => HostModerationCubit(),
             ),
@@ -95,20 +92,22 @@ class DashboardState extends State<_SubWidget>{
             ),
             BlocProvider<LiveStreamCubit1>(
               create: (_) => LiveStreamCubit1(
-                myUserId: liveProgramData?.roomParticipantId 
-                  ?? context.read<LocalUserDataCubit>()
-                    .currentUserData?.userId ?? '',
-                initialState: LiveStreamState1(
-                  programCoverUrl: liveProgramData?.coverUrl,
-                  liveStreamId: liveProgramData?.streamId,
-                  roomUrl: liveProgramData?.roomUrl,
-                  roomEntryToken: liveProgramData?.roomEntryToken,
-                  community: liveProgramData?.community,
-                  programTitle: liveProgramData?.programTitle,
-                  programDesc: liveProgramData?.programDesc,
-                  myRole: liveProgramData?.role,
-                )
-              ),
+                  myUserId: liveProgramData?.roomParticipantId ??
+                      context
+                          .read<LocalUserDataCubit>()
+                          .currentUserData
+                          ?.userId ??
+                      '',
+                  initialState: LiveStreamState1(
+                    programCoverUrl: liveProgramData?.coverUrl,
+                    liveStreamId: liveProgramData?.streamId,
+                    roomUrl: liveProgramData?.roomUrl,
+                    roomEntryToken: liveProgramData?.roomEntryToken,
+                    community: liveProgramData?.community,
+                    programTitle: liveProgramData?.programTitle,
+                    programDesc: liveProgramData?.programDesc,
+                    myRole: liveProgramData?.role,
+                  )),
             ),
             BlocProvider<EndLiveProgramCubit>(
               create: (_) => EndLiveProgramCubit(),
@@ -116,26 +115,24 @@ class DashboardState extends State<_SubWidget>{
           ],
           child: LiveProgramOverlay(
             key: liveProgramOverlayKey,
-            onDismissed: (String? dismissReason){
+            onDismissed: (String? dismissReason) {
               removeLiveOverlay();
 
-              if(dismissReason != null){
-                Future<void>.delayed(
-                  const Duration(seconds: 2),
-                  () {
-                    if(mounted){
-                      showAppNotification(
-                        context: context,
-                        icon: const ATImgLoader(
-                          imgPath: ATImgStrings.kickUserOut,
-                          height: 20, width: 20,
-                        ),
-                        text: dismissReason,
-                        bgColor: ATColors.textRedColor,
-                      );
-                    }
+              if (dismissReason != null) {
+                Future<void>.delayed(const Duration(seconds: 2), () {
+                  if (mounted) {
+                    showAppNotification(
+                      context: context,
+                      icon: const ATImgLoader(
+                        imgPath: ATImgStrings.kickUserOut,
+                        height: 20,
+                        width: 20,
+                      ),
+                      text: dismissReason,
+                      bgColor: ATColors.textRedColor,
+                    );
                   }
-                );
+                });
               }
             },
             fullChild: const FullLiveProgramScreen(),
@@ -156,9 +153,11 @@ class DashboardState extends State<_SubWidget>{
   @override
   void initState() {
     super.initState();
+    context.read<ATNavBarBloc>().resetForAuthenticatedDashboard();
     _liveUsersScrollController.addListener(() => _onLiveUsersScrollToEnd());
-      _notifSubscription = GetIt.I<PushNotificationService>().notificationStream
-      .listen((RemoteMessage message) async {
+    _notifSubscription = GetIt.I<PushNotificationService>()
+        .notificationStream
+        .listen((RemoteMessage message) async {
       if (mounted) {
         context.read<ATNavBarBloc>().resetNotificationSession();
         context.read<GetNotificationsCubit>().fetchNotifications(refresh: true);
@@ -171,11 +170,10 @@ class DashboardState extends State<_SubWidget>{
       if (sController != null) {
         sController.addListener(() => _onHomeFeedScrollToEnd(sController));
       }
-     
 
       context.read<HomeFeedCubit>().fetchHomeFeed();
       context.read<LiveUsersCubit>().fetchLiveUsers();
-      
+
       await context.read<LocalUserDataCubit>().initializeCachedData();
       _registerDeviceForPush();
 
@@ -190,7 +188,7 @@ class DashboardState extends State<_SubWidget>{
 
   @override
   void dispose() {
-    _notifSubscription?.cancel(); 
+    _notifSubscription?.cancel();
     removeLiveOverlay();
     super.dispose();
   }
@@ -210,16 +208,19 @@ class DashboardState extends State<_SubWidget>{
       context.read<LiveUsersCubit>().fetchLiveUsers();
     }
   }
+
   void _onNotificationsScrollToEnd() {
-  final ScrollController? controller = _notifNestedKey.currentState?.innerController;
-  if (controller == null) return;
-  
-  const double threshHold = 80;
-  
-  if (controller.position.pixels >= controller.position.maxScrollExtent + threshHold) {
-   context.read<GetNotificationsCubit>().fetchNotifications();
+    final ScrollController? controller =
+        _notifNestedKey.currentState?.innerController;
+    if (controller == null) return;
+
+    const double threshHold = 80;
+
+    if (controller.position.pixels >=
+        controller.position.maxScrollExtent + threshHold) {
+      context.read<GetNotificationsCubit>().fetchNotifications();
+    }
   }
-}
 
   Future<void> _registerDeviceForPush() async {
     final CachedUserData? userData =
@@ -258,16 +259,14 @@ class DashboardState extends State<_SubWidget>{
         canPop: false,
         onPopInvokedWithResult: (bool didPop, _) {
           if (didPop) return;
-          if(_liveProgramOverlay == null){
+          if (_liveProgramOverlay == null) {
             context.pop();
-          }
-          else{
-            final bool isMinimized = liveProgramOverlayKey
-              .currentState?.isMinimized ?? false;
-            if(isMinimized){
+          } else {
+            final bool isMinimized =
+                liveProgramOverlayKey.currentState?.isMinimized ?? false;
+            if (isMinimized) {
               liveProgramOverlayKey.currentState?.dismissLiveProgram();
-            }
-            else{
+            } else {
               liveProgramOverlayKey.currentState?.minimize();
             }
           }
@@ -284,13 +283,14 @@ class DashboardState extends State<_SubWidget>{
                       ),
                       const DiscoverTabView(),
                       const SizedBox(),
-                      NotificationTabView(nestedKey: _notifNestedKey,
-                       onScroll: _onNotificationsScrollToEnd),
+                      NotificationTabView(
+                          nestedKey: _notifNestedKey,
+                          onScroll: _onNotificationsScrollToEnd),
                     ]);
                   }),
               resizeToAvoidBottomInset: false,
               backgroundColor: ATColors.transparent,
-              bottomSheet: const MainAppBottomNav()),
+              bottomSheet: const AppBottomMenu()),
         ),
       ),
     );

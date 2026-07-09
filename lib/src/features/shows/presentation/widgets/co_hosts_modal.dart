@@ -1,9 +1,6 @@
-import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
-import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/search_filter_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +19,9 @@ Future<List<User>?> showAvailableCoHostsModal({
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    backgroundColor: ATColors.hex202020,
+    // Same treatment as the community modal: transparent sheet, corners and
+    // fill come from the ClipRRect + Material inside.
+    backgroundColor: Colors.transparent,
     barrierColor: ATColors.black.withValues(alpha: 0.5),
     builder: (BuildContext dContext) {
       return MultiBlocProvider(
@@ -37,9 +36,20 @@ Future<List<User>?> showAvailableCoHostsModal({
           children: <Widget>[
             DraggableScrollableSheet(
               expand: false,
-              initialChildSize: 0.7,
+              // Open nearly full-height, like the community modal.
+              initialChildSize: 0.94,
+              minChildSize: 0.5,
+              maxChildSize: 0.94,
               builder: (_, ScrollController scrollController) {
-                return _SelectCohostModal(scrollController: scrollController);
+                return ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(30)),
+                  child: Material(
+                    color: const Color(0xFF1C1C1E),
+                    child:
+                        _SelectCohostModal(scrollController: scrollController),
+                  ),
+                );
               },
             ),
             Positioned(
@@ -75,10 +85,16 @@ class _SelectCohostModal extends StatefulWidget {
 }
 
 class _SelectCohostModalState extends State<_SelectCohostModal> {
-  @override 
+  @override
   void initState(){
     super.initState();
     widget.scrollController.addListener(_onCohostsScrollToEnd);
+    // Page through until the Suggestions list has enough users with an avatar.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<AllUsersCubit>().loadSuggestionsWithAvatars();
+      }
+    });
   }
 
   void _onCohostsScrollToEnd() {
@@ -93,19 +109,41 @@ class _SelectCohostModalState extends State<_SelectCohostModal> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const ATModalDismisser(),
+        const SizedBox(height: 10),
+        Center(
+          child: Container(
+            width: 38,
+            height: 5,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.18),
+              borderRadius: BorderRadius.circular(100),
+            ),
+          ),
+        ),
+        const SizedBox(height: 14),
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               const SizedBox(width: 70),
-              Text(ATStrings.addCohost, style: context.textTheme.bodyLarge),
+              Text(
+                ATStrings.addCohost,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: -0.39,
+                ),
+              ),
               BlocBuilder<SelectedCohostsCubit, List<User>>(
                   builder: (_, List<User> selectedCoHosts) {
-                return Text('${selectedCoHosts.length} selected',
-                    style: context.textTheme.titleSmall
-                        ?.copyWith(color: ATColors.hexC2C2C2));
+                return SizedBox(
+                  width: 70,
+                  child: Text('${selectedCoHosts.length} selected',
+                      textAlign: TextAlign.end,
+                      style: context.textTheme.titleSmall
+                          ?.copyWith(color: ATColors.hexC2C2C2)),
+                );
               }),
             ],
           ),
@@ -123,30 +161,24 @@ class _SelectCohostModalState extends State<_SelectCohostModal> {
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-          child: BlocBuilder<AllUsersCubit, ATAppState<AllUsersResponseModel>>(
-              builder: (_, ATAppState<AllUsersResponseModel> state) {
-            final List<User> currentUsers =
-                context.read<AllUsersCubit>().currentUsersData?.data ??
-                    <User>[];
-            final bool disableTextfield = currentUsers.isEmpty;
-
-            return AbsorbPointer(
-              absorbing: disableTextfield,
-              child: SearchFieldWithXSuffix(
-                hintText: ATStrings.searchForCohost,
-                onClear: () {
-                  context.read<SearchkeyCubit>().resetSearch();
-                  context.read<AllUsersCubit>().resetSearch();
-                },
-                onChanged: (String searchKey) {
-                  ATHelperFuncs.callDebouncer(500, () {
-                    context.read<AllUsersCubit>().searchUsers(searchKey);
-                    context.read<SearchkeyCubit>().updateSearchKey(searchKey);
-                  });
-                },
-              ),
-            );
-          }),
+          // Search always stays interactive — it queries the backend directly,
+          // so it must never lock up just because the current results are
+          // empty (which was freezing the field after a no-match search).
+          child: SearchFieldWithXSuffix(
+            hintText: ATStrings.searchForCohost,
+            onClear: () {
+              context.read<SearchkeyCubit>().resetSearch();
+              context.read<AllUsersCubit>().resetSearch();
+            },
+            onChanged: (String searchKey) {
+              // 300ms matches the discover search and the ~250–350ms
+              // global norm for search-as-you-type.
+              ATHelperFuncs.callDebouncer(300, () {
+                context.read<AllUsersCubit>().searchUsers(searchKey);
+                context.read<SearchkeyCubit>().updateSearchKey(searchKey);
+              });
+            },
+          ),
         ),
         const SelectedCohostsRow(),
         Expanded(

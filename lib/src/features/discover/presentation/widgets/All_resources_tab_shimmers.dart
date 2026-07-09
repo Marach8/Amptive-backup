@@ -8,7 +8,7 @@ class UnifiedSearchShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(15),
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       children: const <Widget>[
         _ShowTileShimmer(),   
@@ -27,7 +27,7 @@ class UsersListShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.all(15),
+      padding: EdgeInsets.zero,
       itemCount: 10, // Number of shimmer items to show
       itemBuilder: (_, __) => const _UserTileShimmer(),
     );
@@ -108,7 +108,7 @@ class HashtagsListShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.all(15),
+      padding: EdgeInsets.zero,
       itemCount: 10,
       itemBuilder: (_, __) => const _HashtagsTileShimmer(),
     );
@@ -159,7 +159,7 @@ class ShowsListShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.all(15),
+      padding: EdgeInsets.zero,
       itemCount: 10,
       itemBuilder: (_, __) => const _ShowTileShimmer(),
     );
