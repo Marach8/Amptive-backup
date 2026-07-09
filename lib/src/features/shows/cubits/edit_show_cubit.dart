@@ -1,0 +1,59 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/shows/data/models/request/create_show_model.dart';
+import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
+import 'package:amptive/src/features/shows/data/repository/shows_repo.dart';
+import 'package:amptive/src/features/shows/data/repository/shows_repo_impl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class EditShowCubit extends Cubit<ATAppState<HostedShow>> {
+  EditShowCubit({ShowsRepo? mockShowsRepo})
+      : showsRepo = mockShowsRepo ?? ShowsRepoImpl(),
+        super(const InitialState<HostedShow>());
+
+  final ShowsRepo showsRepo;
+
+  Future<void> editShow({
+    required String showId,
+    required String title,
+    required String description,
+    required String coverUrl,
+    required String category,
+    required String showType,
+    required double price,
+    required List<String> tagIds,
+    required List<String> coHostIds,
+    required String communityId,
+    required bool allowHandRaising,
+  }) async {
+    emit(const LoadingState<HostedShow>());
+    try {
+      final CreateShowPayload payload = CreateShowPayload(
+        title: title,
+        description: description,
+        coverUrl: coverUrl,
+        category: category,
+        showType: showType,
+        price: price,
+        tagIds: tagIds,
+        coHostIds: coHostIds,
+        communityId: communityId,
+        allowHandRaising: allowHandRaising,
+      );
+
+      final ApiResponse<HostedShow> response = await showsRepo.updateShow(
+        showId: showId,
+        payload: payload,
+      );
+      response.when(
+        successful: (Successful<HostedShow> data) {
+          emit(SuccessState<HostedShow>(newData: data.data));
+        },
+        unSuccessful: (Unsuccessful<HostedShow> error) {
+          emit(FailureState<HostedShow>(error.error.message));
+        },
+      );
+    } catch (e) {
+      emit(FailureState<HostedShow>('Unable to update show: $e'));
+    }
+  }
+}
