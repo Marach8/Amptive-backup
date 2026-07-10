@@ -69,10 +69,11 @@ class LiveProgramAudienceView extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          const ATImgLoader(
+                          ATImgLoader(
                             imgPath: ATImgStrings.groupIcon,
-                            height: 20, width: 20,
+                            height: 22, width: 22,
                             boxFit: BoxFit.cover,
+                            color: ATColors.white.withValues(alpha: 0.7),
                           ),
                           const SizedBox(width: 5),
                           Text(
@@ -80,7 +81,7 @@ class LiveProgramAudienceView extends StatelessWidget {
                             style: context.textTheme.bodyMedium?.copyWith(
                               overflow: TextOverflow.fade,
                               fontSize: ATSizes.size13,
-                              color: ATColors.hexC2C2C2
+                              color: ATColors.white.withValues(alpha: 0.7)
                             ),
                           ),
                         ],

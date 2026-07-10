@@ -81,7 +81,7 @@ class LiveProgramHeader extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 4),
         Expanded(
           child: LayoutBuilder(
             builder: (_, BoxConstraints kst) {
@@ -105,7 +105,7 @@ class LiveProgramHeader extends StatelessWidget {
             }
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 4),
         _GiftingAndFollowingRow(
           onGiftsTap: () async{
             final bool? shouldSendGift = await showGiftersModal(

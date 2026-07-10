@@ -20,7 +20,8 @@ class _SliderAnimationStat extends State<GoLiveProgramTitle> with SingleTickerPr
   late final AnimationController _controller;
   double _widthOfItems = 0;
 
-  static const double _pixelsPerSecond = 30;
+  static const double _pixelsPerSecond = 18; // Reduced from 30 for a slower, more readable scroll
+  static const double _spacing = 15; // Reduced from 40 to close the gap between loops
 
   @override
   void initState() {
@@ -28,21 +29,6 @@ class _SliderAnimationStat extends State<GoLiveProgramTitle> with SingleTickerPr
     _childrenKeys = List<GlobalKey>.generate(
         widget.slidingChildren.length, (_) => GlobalKey());
     _controller = AnimationController(vsync: this);
-
-    _controller.addStatusListener((AnimationStatus status) {
-      if (status == AnimationStatus.completed) {
-        // Pause at the end of the scroll for 2 seconds
-        Future<void>.delayed(const Duration(seconds: 2), () {
-          if (mounted) {
-            _controller.reset();
-            // Pause at the beginning for 1.5 seconds before scrolling again
-            Future<void>.delayed(const Duration(milliseconds: 1500), () {
-              if (mounted) _controller.forward();
-            });
-          }
-        });
-      }
-    });
   }
 
   @override
@@ -69,55 +55,94 @@ class _SliderAnimationStat extends State<GoLiveProgramTitle> with SingleTickerPr
 
     if (!mounted) return;
 
-    final double availableWidth = widget.width * 0.5;
+    final double availableWidth = widget.width;
 
     setState(() {
       _widthOfItems = compoundedWidth;
     });
 
     if (compoundedWidth > availableWidth) {
-      final double overflow = compoundedWidth - availableWidth;
-      final double durationSeconds = overflow / _pixelsPerSecond;
+      final double totalScrollDistance = compoundedWidth + _spacing;
+      final double durationSeconds = totalScrollDistance / _pixelsPerSecond;
       _controller.duration = Duration(milliseconds: (durationSeconds * 1000).round());
 
-      // Start initial delay before first scroll
-      Future<void>.delayed(const Duration(seconds: 2), () {
-        if (mounted) _controller.forward();
-      });
+      // Start the infinite loop!
+      _controller.repeat();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final double availableWidth = widget.width * 0.5;
+    final double availableWidth = widget.width;
     final bool overflows = _widthOfItems > availableWidth;
+
+    final double startPadding = 12.0; // Keeps paused text outside the 4% left fade zone
+
+    List<Widget> buildCopy(bool useKeys) {
+      return <Widget>[
+        SizedBox(width: startPadding),
+        ...widget.slidingChildren.indexed.map(
+          ((int, Widget) entry) => SizedBox(
+            key: useKeys ? _childrenKeys[entry.$1] : null,
+            child: entry.$2,
+          ),
+        ),
+      ];
+    }
+
+    Widget marqueeContent = ClipRect(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (BuildContext context, Widget? child) {
+          final double totalScrollDistance = _widthOfItems + startPadding + _spacing;
+          // Translate all the way left until the second copy is exactly where the first one started
+          final double offset = overflows ? -(_controller.value * totalScrollDistance) : 0;
+          return Transform.translate(
+            offset: Offset(offset, 0),
+            child: child,
+          );
+        },
+        child: OverflowBox(
+          maxWidth: double.infinity,
+          alignment: Alignment.centerLeft,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ...buildCopy(true),
+              if (overflows) ...<Widget>[
+                const SizedBox(width: _spacing),
+                ...buildCopy(false), // Second identical copy to create seamless loop
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (overflows) {
+      marqueeContent = ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return const LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: <Color>[
+              Colors.transparent,
+              Colors.white,
+              Colors.white,
+              Colors.transparent,
+            ],
+            stops: <double>[0.0, 0.04, 0.96, 1.0], // 4% fade on both edges
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstIn,
+        child: marqueeContent,
+      );
+    }
 
     return SizedBox(
       height: widget.height,
       width: availableWidth,
-      child: ClipRect(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (BuildContext context, Widget? child) {
-            final double overflow = _widthOfItems - availableWidth;
-            // Only translate if it overflows the available width
-            final double offset = overflows ? -(_controller.value * overflow) : 0;
-            return Transform.translate(
-              offset: Offset(offset, 0),
-              child: child,
-            );
-          },
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: widget.slidingChildren.indexed.map(
-              ((int, Widget) entry) => SizedBox(
-                key: _childrenKeys[entry.$1],
-                child: entry.$2,
-              ),
-            ).toList(),
-          ),
-        ),
-      ),
+      child: marqueeContent,
     );
   }
 }
