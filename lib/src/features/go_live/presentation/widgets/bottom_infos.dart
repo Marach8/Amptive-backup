@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
 import 'package:amptive/src/shared/animated_slide.dart';
 import 'package:amptive/src/shared/rich_text.dart';
@@ -130,3 +131,4 @@ class IsGoingLiveInfo extends StatelessWidget {
         });
   }
 }
+

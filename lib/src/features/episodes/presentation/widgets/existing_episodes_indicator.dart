@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/calender/calender_export.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,10 @@ class ShowOrEventIndicatorWithTitle extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 5,
       children: <Widget>[
-        leading ?? ATImgLoader(imgPath: eventOrShowImgPath),
+        leading ?? ATImgLoader(
+          imgPath: eventOrShowImgPath,
+          height: 20, width: 20,
+        ),
         Text(
           title,
           style: context.textTheme.bodyMedium?.copyWith(

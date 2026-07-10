@@ -74,7 +74,7 @@ class _AudienceViewControlsState extends State<AudienceViewControls> {
   @override
   Widget build(BuildContext context) {
     final String profilePic = context.read<LocalUserDataCubit>()
-      .currentUserData?.pictureUrl ?? '';
+      .currentUserData?.profilePhoto ?? '';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[

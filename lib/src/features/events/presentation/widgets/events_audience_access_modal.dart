@@ -1,5 +1,7 @@
 import 'package:amptive/src/features/events/presentation/widgets/events_subscription_setup_modal.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/audience_access_modal.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/subscription_plan_screen.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,7 +11,6 @@ import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/radio_button.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
-import '../../../switch_account/presentation/switch_acct/switch_acct_export.dart';
 
 
 Future<ProgramAccessTypeSelectionData?> showEventsAudienceAccessTypeModal({
@@ -327,3 +328,4 @@ class _FreeAccessWidget extends StatelessWidget {
     );
   }
 }
+

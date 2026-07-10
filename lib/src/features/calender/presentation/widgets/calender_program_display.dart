@@ -5,6 +5,7 @@ import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 
 class CalenderProgramDisplay extends StatelessWidget {
   const CalenderProgramDisplay({super.key, required this.program});

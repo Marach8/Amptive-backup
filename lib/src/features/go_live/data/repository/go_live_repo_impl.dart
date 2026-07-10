@@ -21,16 +21,32 @@ class GoLiveRepoImpl implements GoLiveRepo {
       final Response<dynamic> response = await networkService.post(
         '${ATEndpoints.livestreams}$contentId/start?include_token=true',
       );
-      
-      final dynamic data = response.data['data'];
-      final dynamic tokenObject = data?['token'];
 
-      final LiveProgramEntryToken entryToken = (
-        roomEntryToken: tokenObject?['token'],
-        roomUrl: tokenObject?['livekit_url'],
-        streamId: data?['livestream_id'] ?? tokenObject?['room'],
-        roomParticipantId: tokenObject?['identity'],
+      final dynamic data = response.data['data'];
+      final dynamic token = data?['token'];
+      final dynamic roomSettings = data?['room_settings'];
+
+      final LiveProgramEntryToken entryToken = LiveProgramEntryToken(
+        roomEntryToken: token?['token'],
+        roomUrl: token?['livekit_url'],
+        streamId: data?['livestream_id'] ?? token?['room'],
+        roomParticipantId: token?['identity'],
+        allowHandRaise: roomSettings?['hand_raising'],
+        allowWhispers: roomSettings?['allow_whispers'],
+        allowAudienceMic: roomSettings?['audience_talk_enabled'],
+        allowComments: roomSettings?['allow_comments']
+
       );
+      
+      // final dynamic data = response.data['data'];
+      // final dynamic tokenObject = data?['token'];
+
+      // final LiveProgramEntryToken entryToken = LiveProgramEntryToken(
+      //   roomEntryToken: tokenObject?['token'],
+      //   roomUrl: tokenObject?['livekit_url'],
+      //   streamId: data?['livestream_id'] ?? tokenObject?['room'],
+      //   roomParticipantId: tokenObject?['identity'],
+      // );
       return Successful<LiveProgramEntryToken>(data: entryToken);
     }
     catch (e) {
@@ -83,17 +99,23 @@ class GoLiveRepoImpl implements GoLiveRepo {
       );
 
       final dynamic data = response.data['data'];
+      final dynamic roomSettings = data?['room_settings'];
 
-      final LiveProgramEntryToken entryToken = (
+      final LiveProgramEntryToken entryToken = LiveProgramEntryToken(
         roomEntryToken: data?['token'],
         roomUrl: data?['livekit_url'],
         streamId: data?['livestream_id'] ?? data?['room'],
         roomParticipantId: data?['identity'],
+        allowHandRaise: roomSettings?['hand_raising'],
+        allowWhispers: roomSettings?['allow_whispers'],
+        allowAudienceMic: roomSettings?['audience_talk_enabled'],
+        allowComments: roomSettings?['allow_comments']
       );
 
       return Successful<LiveProgramEntryToken>(data: entryToken);
-    } catch (e) {
-      log('Get live program entry token error: $e');
+
+    } catch (e, s) {
+      log('Get live program entry token error: $e, $s');
       return Unsuccessful<LiveProgramEntryToken>(
         error: ATException.resolveException(e),
       );

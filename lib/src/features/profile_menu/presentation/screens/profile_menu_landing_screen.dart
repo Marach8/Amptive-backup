@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/logout_cubit.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
@@ -72,7 +72,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                 const MenuHeading(text: ATStrings.ACCT_SETTINGS),
                 MenuItem(
                     leading: const Icon(Icons.account_circle_outlined),
-                    middleText: ATStrings.ACCT,
+                    middleText: ATStrings.account,
                     onTap: () =>
                         context.pushNamed(ATRoutes.accountLandingScreen)),
                 MenuItem(
@@ -97,7 +97,7 @@ class AmptiveProfileMenuScreen extends StatelessWidget {
                       height: 24, width: 24,
                       imgPath: ATImgStrings.subscriberBadge,
                     ),
-                    middleText: ATStrings.SUBSCRIPTION,
+                    middleText: ATStrings.subscription,
                     onTap: () {}),
                 const MenuHeading(text: ATStrings.HELP_SUPPORT),
                 MenuItem(

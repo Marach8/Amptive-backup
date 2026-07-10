@@ -8,33 +8,36 @@ Future<ImageSource?> showImageSourceOptions(
   BuildContext context) async {
     return await showCupertinoModalPopup<ImageSource?>(
       context: context,
-      builder: (BuildContext dialogContext) => CupertinoActionSheet(
-        actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text(
-              ATStrings.photoGallery,
-              textAlign: TextAlign.center,
-              style: context.textTheme.bodyLarge?.copyWith(
-                color: ATColors.hex307FE2,
+      builder: (BuildContext dialogContext) => CupertinoTheme(
+        data: const CupertinoThemeData(),
+        child: CupertinoActionSheet(
+          actions: <Widget>[
+            CupertinoActionSheetAction(
+              child: Text(
+                ATStrings.photoGallery,
+                textAlign: TextAlign.center,
+                style: context.textTheme.bodyLarge?.copyWith(
+                  color: ATColors.hex307FE2,
+                ),
               ),
+              //We want to get from gallery
+              onPressed: () => Navigator.pop(
+                dialogContext, ImageSource.gallery),
             ),
-            //We want to get from gallery
-            onPressed: () => Navigator.pop(
-              dialogContext, ImageSource.gallery),
-          ),
-          CupertinoActionSheetAction(
-            child: Text(
-              ATStrings.camera,
-              textAlign: TextAlign.center,
-              style: context.textTheme.bodyLarge?.copyWith(
-                color: ATColors.hex307FE2,
+            CupertinoActionSheetAction(
+              child: Text(
+                ATStrings.camera,
+                textAlign: TextAlign.center,
+                style: context.textTheme.bodyLarge?.copyWith(
+                  color: ATColors.hex307FE2,
+                ),
               ),
+              //We want to get from camera
+              onPressed: () => Navigator.pop(
+                dialogContext, ImageSource.camera),
             ),
-            //We want to get from camera
-            onPressed: () => Navigator.pop(
-              dialogContext, ImageSource.camera),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 }

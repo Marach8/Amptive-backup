@@ -7,6 +7,7 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/live_program_header.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import '../../../../global_export.dart';
 import '../../go_live_export.dart';
 

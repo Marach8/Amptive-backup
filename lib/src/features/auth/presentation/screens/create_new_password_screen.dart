@@ -1,8 +1,9 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/reset_password_cubit.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
@@ -13,9 +14,9 @@ import 'package:go_router/go_router.dart';
 import '../../../../shared/app_bar_widget.dart';
 
 class CreateNewPasswordScreenParams {
-  CreateNewPasswordScreenParams({required this.email, this.title});
+  CreateNewPasswordScreenParams({required this.email, this.appBarTitle});
 
-  final String? email, title;
+  final String? email, appBarTitle;
 }
 
 class CreateNewPasswordScreen extends StatefulWidget {
@@ -75,7 +76,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen>
         child: Scaffold(
           appBar: ATAppBar(
             leading: const ATBackBtn(),
-            titleText: widget.params.title ?? '',
+            titleText: widget.params.appBarTitle ?? '',
           ),
           body: BlocConsumer<ResetPasswordCubit, ATAppState<String>>(
             listener: (BuildContext context, ATAppState<dynamic> state) {
@@ -96,7 +97,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen>
                       children: <Widget>[
                         Text(
                           ATStrings.createNewPassword,
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          style: context.textTheme.headlineMedium,
                         ),
                         const SizedBox(height: 10),
                         ATTextFormField(
@@ -210,3 +211,4 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen>
     );
   }
 }
+

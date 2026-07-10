@@ -1,6 +1,7 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/data/models/get_notifications_response_model.dart';
@@ -138,7 +139,7 @@ class _NotificationTabViewContentState
                         if (index >= count) {
                           if (state
                               is LoadingState<NotificationsResponseModel>) {
-                            return const _NotificationShimmerItem();
+                            return const _NotificationInitialLoadingShimmer();
                           }
                           return const SizedBox.shrink();
                         }
@@ -294,38 +295,151 @@ class _NotificationInitialLoadingShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      physics: const NeverScrollableScrollPhysics(),
       separatorBuilder: (_, __) => const SizedBox(height: 20),
       itemCount: 10,
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 60),
-      itemBuilder: (_, __) => const _NotificationShimmerItem(),
+      itemBuilder: (_, int index) {
+        const List<Widget> variants = <Widget>[
+          _UserNotifShimmer(),
+          _ProgramNotifShimmer(),
+          _UserNotifShimmer(hasButton: true),
+          _WalletNotifShimmer(),
+          _UserNotifShimmer(),
+          _ProgramNotifShimmer(hasButton: true),
+          _GenericNotifShimmer(),
+          _UserNotifShimmer(),
+          _ProgramNotifShimmer(),
+          _WalletNotifShimmer(),
+        ];
+        return variants[index % variants.length];
+      },
     );
   }
 }
 
-class _NotificationShimmerItem extends StatelessWidget {
-  const _NotificationShimmerItem();
+class _UserNotifShimmer extends StatelessWidget {
+  const _UserNotifShimmer({this.hasButton = false});
+  final bool hasButton;
+
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: <Widget>[
-          ATShimmer(width: 40, height: 40, radius: 30),
-          SizedBox(width: 10),
+          const ATShimmer(width: 40, height: 40, radius: 20),
+          const SizedBox(width: 10),
           Expanded(
-            child: Row(
+            child: LayoutBuilder(builder: (_, BoxConstraints constraints) {
+              return ATShimmer(
+                height: 14,
+                width: ATHelperFuncs.getRandomNumber(
+                    constraints.maxWidth * 0.85),
+                radius: 3,
+              );
+            }),
+          ),
+          if (hasButton) ...<Widget>[
+            const SizedBox(width: 15),
+            const ATShimmer(width: 80, height: 28, radius: 20),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _ProgramNotifShimmer extends StatelessWidget {
+  const _ProgramNotifShimmer({this.hasButton = false});
+  final bool hasButton;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        children: <Widget>[
+          const ATShimmer(width: 40, height: 40, radius: 3),
+          const SizedBox(width: 10),
+          Expanded(
+            child: LayoutBuilder(builder: (_, BoxConstraints constraints) {
+              return ATShimmer(
+                height: 14,
+                width: ATHelperFuncs.getRandomNumber(
+                    constraints.maxWidth * 0.8),
+                radius: 3,
+              );
+            }),
+          ),
+          if (hasButton) ...<Widget>[
+            const SizedBox(width: 15),
+            const ATShimmer(width: 90, height: 28, radius: 20),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _WalletNotifShimmer extends StatelessWidget {
+  const _WalletNotifShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        children: <Widget>[
+          const ATShimmer(width: 40, height: 40, radius: 20),
+          const SizedBox(width: 10),
+          Expanded(
+            child: LayoutBuilder(builder: (_, BoxConstraints constraints) {
+              return ATShimmer(
+                height: 14,
+                width: ATHelperFuncs.getRandomNumber(
+                    constraints.maxWidth * 0.75),
+                radius: 3,
+              );
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _GenericNotifShimmer extends StatelessWidget {
+  const _GenericNotifShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        children: <Widget>[
+          const ATShimmer(width: 40, height: 40, radius: 20),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ATShimmer(height: 10, radius: 3, width: 80),
-                SizedBox(width: 5),
-                ATShimmer(height: 10, radius: 3, width: 120),
-                SizedBox(width: 5),
-                ATShimmer(width: 10, height: 10, radius: 10),
+                ATShimmer(
+                  height: 12,
+                  width: ATHelperFuncs.getRandomNumber(100),
+                  radius: 3,
+                ),
+                const SizedBox(height: 6),
+                ATShimmer(
+                  height: 12,
+                  width: ATHelperFuncs.getRandomNumber(160),
+                  radius: 3,
+                ),
               ],
             ),
           ),
         ],
-      )
+      ),
     );
   }
 }

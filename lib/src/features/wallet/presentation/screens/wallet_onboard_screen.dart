@@ -1,5 +1,6 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -15,6 +16,12 @@ class ATWalletOnboardScreen extends StatefulWidget {
 
 class _ATWalletOnboardScreenState extends State<ATWalletOnboardScreen> {
   bool _shouldShow = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(_) {
     return Builder(builder: (BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/features/auth/cubits/password_reset_otp_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/verify_reset_password_otp_cubit.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/otp_fields_widget.dart';
 import 'package:flutter/gestures.dart';

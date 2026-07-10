@@ -72,7 +72,8 @@ class ATRoundedBackBtn extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         child: InkWell(
           onTap: onTapOverride ?? () => context.pop(),
-          splashColor: splashColor ?? ATColors.white.withValues(alpha: 0.5),
+          splashColor: splashColor 
+            ?? ATColors.white.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(30),
           child: SizedBox(
             height: 30,

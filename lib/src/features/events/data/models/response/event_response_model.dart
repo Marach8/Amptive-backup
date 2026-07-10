@@ -130,8 +130,7 @@ class HostedEvent extends Equatable {
       showType,
       publishedAt,
       createdAt,
-      updatedAt,
-      capacity;
+      updatedAt;
 
   final int? viewerCount,
       peakViewers,
@@ -139,7 +138,8 @@ class HostedEvent extends Equatable {
       commentCount,
       goingCount,
       durationSeconds,
-      followerCount;
+      followerCount,
+      capacity;
   final double? price;
   final Host? host;
   final bool? isLive, handRaising, whispers;

@@ -1,7 +1,7 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/features/onboarding/presentation/widgets/onboarding_illustrations.dart';
 import 'package:amptive/src/features/onboarding/presentation/widgets/onboarding_messages.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

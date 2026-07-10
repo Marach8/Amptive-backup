@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/features/wallet/data/models/fund_wallet_response_model.dart';
+import 'package:amptive/src/features/wallet/data/models/response/fund_wallet_response_model.dart';
 import 'package:amptive/src/features/wallet/data/repository/wallet_repo.dart';
 import 'package:amptive/src/features/wallet/data/repository/wallet_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

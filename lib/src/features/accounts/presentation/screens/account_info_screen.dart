@@ -1,5 +1,7 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/accounts/v_models/select_country_bloc.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/shared/confirmation_alert_dialog.dart';
@@ -7,7 +9,7 @@ import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/shared/cupertino_country_picker.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:country_pickers/country.dart';
@@ -29,18 +31,18 @@ class ATAccountInfoScreen extends StatelessWidget {
         BlocProvider<ATSelectCountryBloc>(create: (_) => ATSelectCountryBloc()),
         BlocProvider<RemoteUserDataCubit>(create: (_) => RemoteUserDataCubit()),
       ],
-      child: BlocListener<RemoteUserDataCubit, ATAppState<UserData>>(
-        listener: (BuildContext context, ATAppState<UserData> state) {
-          if (state is SuccessState<UserData>) {
-            final UserData? data = state.newData;
+      child: BlocListener<RemoteUserDataCubit, ATAppState<ProfileData>>(
+        listener: (BuildContext context, ATAppState<ProfileData> state) {
+          if (state is SuccessState<ProfileData>) {
+            final ProfileData? data = state.newData;
             if (data != null) {
-              final CachedUserData cachedData = CachedUserData(
-                userId: data.id,
+              final ProfileData cachedData = ProfileData(
+                userId: data.userId,
                 email: data.email,
                 username: data.username,
                 dob: data.dob,
                 name: data.name,
-                pictureUrl: data.profilePicture,
+                profilePhoto: data.profilePhoto,
                 bio: data.bio,
                 phoneNumber: data.phoneNumber,
               );
@@ -59,12 +61,12 @@ class ATAccountInfoScreen extends StatelessWidget {
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(15),
-              child: BlocBuilder<LocalUserDataCubit, ATAppState<CachedUserData>>(
-                builder: (BuildContext context, ATAppState<CachedUserData> state) {
-                  if (state is LoadingState<CachedUserData>) {
+              child: BlocBuilder<LocalUserDataCubit, ATAppState<ProfileData>>(
+                builder: (BuildContext context, ATAppState<ProfileData> state) {
+                  if (state is LoadingState<ProfileData>) {
                    return const CircularProgressIndicator(); 
                   }
-                  final CachedUserData? userData =
+                  final ProfileData? userData =
                       context.read<LocalUserDataCubit>().currentUserData;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,9 +162,9 @@ class ATAccountInfoScreen extends StatelessWidget {
                                   selectedCountry = newSelectedCountry;
                                 });
                                 // Using existing updateProfile method from RemoteUserDataCubit
-                                context.read<RemoteUserDataCubit>().updateProfile(
-                                  country: newSelectedCountry.name,
-                                );
+                                // context.read<RemoteUserDataCubit>().updateRemoteUserProfile(
+                                //   country: newSelectedCountry.name,
+                                // );
                               }
                             });
                       }),

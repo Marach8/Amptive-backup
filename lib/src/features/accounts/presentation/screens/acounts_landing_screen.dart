@@ -1,5 +1,5 @@
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class ATAccountLandingScreen extends StatelessWidget {
           leadingWidth: 30,
           padding: EdgeInsets.only(left: 7),
           leading: ATRoundedBackBtn(),
-          titleText: ATStrings.ACCT,
+          titleText: ATStrings.account,
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
