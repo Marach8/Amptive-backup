@@ -2,24 +2,42 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 
 class HomeFeedResponseModel {
   HomeFeedResponseModel({
-    this.homeFeedItems,
+    this.homeFeedProgramsIDs,
+    this.homeFeedProgramsMap,
     this.page,
     this.pageSize,
     this.hasMore,
   });
 
   factory HomeFeedResponseModel.fromJson(Map<String, dynamic> json) {
+    final List<String> homeFeedProgramsIDs = <String>[];
+    final Map<String, HomeFeedItem> homeFeedProgramsMap =
+        <String, HomeFeedItem>{};
+
+    final List<dynamic>? rawItems = json['items'] as List<dynamic>?;
+    if (rawItems != null) {
+      for (final dynamic e in rawItems) {
+        final HomeFeedItem item =
+            HomeFeedItem.fromJson(e as Map<String, dynamic>);
+        final String? itemId = item.id;
+        if (itemId != null) {
+          homeFeedProgramsIDs.add(itemId);
+          homeFeedProgramsMap[itemId] = item;
+        }
+      }
+    }
+
     return HomeFeedResponseModel(
-      homeFeedItems: (json['items'] as List<dynamic>?)
-          ?.map((dynamic e) => HomeFeedItem.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      homeFeedProgramsIDs: homeFeedProgramsIDs,
+      homeFeedProgramsMap: homeFeedProgramsMap,
       page: json['page'],
       pageSize: json['page_size'],
       hasMore: json['has_more'],
     );
   }
 
-  final List<HomeFeedItem>? homeFeedItems;
+  final List<String>? homeFeedProgramsIDs;
+  final Map<String, HomeFeedItem>? homeFeedProgramsMap;
   final int? page, pageSize;
   final bool? hasMore;
 }

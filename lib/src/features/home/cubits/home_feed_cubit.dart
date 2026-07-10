@@ -47,13 +47,26 @@ class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
       );
       response.when(
         successful: (Successful<HomeFeedResponseModel> data) {
-          final List<HomeFeedItem>? oldFeedItems = currentHomeFeedData?.homeFeedItems;
-          final List<HomeFeedItem>? newFeedItems = data.data?.homeFeedItems;
+          final List<String>? currentProgramsIDs = 
+            currentHomeFeedData?.homeFeedProgramsIDs;
+          final Map<String, HomeFeedItem>? currentProgramsMap =
+              currentHomeFeedData?.homeFeedProgramsMap;
+          final List<String>? newProgramsIDs = data.data?.homeFeedProgramsIDs;
+          final Map<String, HomeFeedItem>? newProgramsMap =
+              data.data?.homeFeedProgramsMap;
 
-          final List<HomeFeedItem> mergedFeedItems = <HomeFeedItem>[...?oldFeedItems, ...?newFeedItems];
+          final List<String> mergedProgramIds = newProgramsIDs ?? <String>[];
+          mergedProgramIds.addAll(currentProgramsIDs ?? <String>[]);
+
+          final Map<String, HomeFeedItem> mergedProgramsMap =
+            newProgramsMap ?? <String, HomeFeedItem>{};
+          
+          mergedProgramsMap.addAll(currentProgramsMap ?? <String, HomeFeedItem>{});
+
           final HomeFeedResponseModel newData = HomeFeedResponseModel(
-            homeFeedItems: mergedFeedItems,
-            hasMore: data.data?.hasMore ?? true,
+            homeFeedProgramsIDs: mergedProgramIds,
+            homeFeedProgramsMap: mergedProgramsMap,
+            hasMore: data.data?.hasMore,
             page: data.data?.page,
             pageSize: data.data?.pageSize,
           );
@@ -63,8 +76,9 @@ class HomeFeedCubit extends Cubit<ATAppState<HomeFeedResponseModel>> {
           emit(FailureState<HomeFeedResponseModel>(error.error.message));
         },
       );
-    } catch (e) {
-      emit(FailureState<HomeFeedResponseModel>('Unable to get home feed: $e'));
+    } catch (_) {
+      emit(const FailureState<HomeFeedResponseModel>(
+        'Unable to get home feed'));
     }
   }
 
