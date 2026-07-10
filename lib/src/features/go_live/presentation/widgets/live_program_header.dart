@@ -11,10 +11,12 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'host_end_show_dialog.dart';
 import 'listeners_modal.dart';
 import 'gifters_modal.dart';
+import '../../../home/presentation/widgets/appbar_drop_down.dart';
 
 
 class LiveProgramHeader extends StatelessWidget {
@@ -34,33 +36,47 @@ class LiveProgramHeader extends StatelessWidget {
     
     return Row(
       children: <Widget>[
-        audienceMinimizeIcon ?? ATStringsDropDown(
-          items: const <String>['End Live', 'Minimize'],
-          onSelected: (String selected){
-            if(selected == 'End Live'){
-              hostEndProgramModal(
-                context: context,
-                endLiveProgramCubit: context.read<EndLiveProgramCubit>(),
-                noOfGifts: context.read<LiveStreamCubit1>().state.giftIds?.length ?? 0,
-                noOfListeners: context.read<LiveStreamCubit1>().state.allParticipants?.length ?? 0,
-                programCoverUrl: programCoverUrl ?? '',
-                programId: context.read<LiveStreamCubit1>().state.liveStreamId ?? '',
-              );
-            }
-            else if(selected == 'Minimize'){
-              liveProgramOverlayKey.currentState?.minimize();
-            }
-          },
-          child: Container(
-            height: 35, width: 35,
-            decoration: BoxDecoration(
-              color: ATColors.hexECO404.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(30)
-            ),
-            child: Icon(
-              Icons.logout,
-              color: ATColors.hexECO404,
-              size: 20,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: audienceMinimizeIcon ?? ATGlassDropDown(
+            offset: const Offset(0, 50),
+            items: <ATGlassDropdownItem>[
+              ATGlassDropdownItem(
+                title: 'Minimize',
+                iconWidget: const Icon(Icons.keyboard_arrow_down, size: 20, color: Colors.white),
+                onTap: () {
+                  liveProgramOverlayKey.currentState?.minimize();
+                },
+              ),
+              ATGlassDropdownItem(
+                title: 'End Live',
+                textColor: const Color(0xFFFF3B30),
+                iconWidget: const Icon(Icons.close, size: 20, color: Color(0xFFFF3B30)),
+                onTap: () {
+                  hostEndProgramModal(
+                    context: context,
+                    endLiveProgramCubit: context.read<EndLiveProgramCubit>(),
+                    noOfGifts: context.read<LiveStreamCubit1>().state.giftIds?.length ?? 0,
+                    noOfListeners: context.read<LiveStreamCubit1>().state.allParticipants?.length ?? 0,
+                    programCoverUrl: programCoverUrl ?? '',
+                    programId: context.read<LiveStreamCubit1>().state.liveStreamId ?? '',
+                  );
+                },
+              ),
+            ],
+            child: Container(
+              height: 35, width: 35,
+              decoration: BoxDecoration(
+                color: ATColors.white.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(30)
+              ),
+              child: Center(
+                child: SvgPicture.string(
+                  ATImgStrings.liveHeaderEndLiveIconSvg,
+                  height: 18,
+                  width: 18,
+                ),
+              ),
             ),
           ),
         ),
@@ -155,75 +171,100 @@ class _GiftingAndFollowingRowState extends State<_GiftingAndFollowingRow> {
         },
         child: Row(
           children: <Widget>[
-            Stack(
-              clipBehavior: Clip.none,
-              children: <Widget>[
-                ATContainer(
-                  onTap: () {
-                    if(hasNewGifts){
-                      setState(() {
-                        hasNewGifts = false;
-                      });
-                    }
-                    widget.onGiftsTap?.call();
-                  },
-                  radius: _pillRadius,
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if(hasNewGifts){
+                  setState(() {
+                    hasNewGifts = false;
+                  });
+                }
+                widget.onGiftsTap?.call();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: <Widget>[
+                    ATContainer(
+                      onTap: () {
+                        if(hasNewGifts){
+                          setState(() {
+                            hasNewGifts = false;
+                          });
+                        }
+                        widget.onGiftsTap?.call();
+                      },
+                      radius: _pillRadius,
+                      padding: _pillPadding,
+                      color: ATColors.white.withValues(alpha: 0.1),
+                      splashColor: ATColors.white.withValues(alpha: 0.15),
+                      highlightColor: ATColors.transparent,
+                      child: Row(
+                        children: <Widget>[
+                          ATImgLoader(
+                            imgPath: ATImgStrings.liveHeaderGiftIconPngAsset,
+                            height: _pillIconSize, width: _pillIconSize,
+                            boxFit: BoxFit.cover,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Gift',
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              overflow: TextOverflow.fade,
+                              fontSize: ATSizes.size14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if(hasNewGifts)Positioned(
+                      top: -2, right: 4,
+                      child: CircleAvatar(
+                        radius: 4,
+                        backgroundColor: ATColors.hexECO404
+                      )
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: 5),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: widget.onParticipantsTap,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: ATContainer(
+                  onTap: widget.onParticipantsTap,
                   padding: _pillPadding,
+                  radius: _pillRadius,
                   color: ATColors.white.withValues(alpha: 0.1),
+                  splashColor: ATColors.white.withValues(alpha: 0.15),
+                  highlightColor: ATColors.transparent,
                   child: Row(
                     children: <Widget>[
-                      const ATImgLoader(
-                        imgPath: ATImgStrings.hostGiftingIcon,
-                        height: _pillIconSize, width: _pillIconSize,
-                        boxFit: BoxFit.cover,
+                      SvgPicture.asset(
+                        ATImgStrings.liveHeaderUser2IconSvgAsset,
+                        height: _pillIconSize,
+                        width: _pillIconSize,
                       ),
                       const SizedBox(width: 6),
-                      Text(
-                        'Gift',
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          overflow: TextOverflow.fade,
-                          fontSize: ATSizes.size14
-                        ),
+                      BlocSelector<LiveStreamCubit1, LiveStreamState1, int>(
+                        selector: (LiveStreamState1 state) => state.viewerCount,
+                        builder: (_, int viewerCount) {
+                          return Text(
+                            _formatViewerCount(viewerCount),
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              overflow: TextOverflow.fade,
+                              fontSize: ATSizes.size14,
+                            ),
+                          );
+                        }
                       ),
                     ],
                   ),
                 ),
-                if(hasNewGifts)Positioned(
-                  top: -2, right: 4,
-                  child: CircleAvatar(
-                    radius: 4,
-                    backgroundColor: ATColors.hexECO404
-                  )
-                )
-              ],
-            ),
-            const SizedBox(width: 10),
-            ATContainer(
-              onTap: widget.onParticipantsTap,
-              padding: _pillPadding,
-              radius: _pillRadius,
-              color: ATColors.white.withValues(alpha: 0.1),
-              child: Row(
-                children: <Widget>[
-                  const ATImgLoader(
-                    imgPath: ATImgStrings.userIcon,
-                    height: _pillIconSize,
-                    width: _pillIconSize,
-                  ),
-                  const SizedBox(width: 6),
-                  BlocSelector<LiveStreamCubit1, LiveStreamState1, int>(
-                    selector: (LiveStreamState1 state) => state.viewerCount,
-                    builder: (_, int viewerCount) {
-                      return Text(
-                        _formatViewerCount(viewerCount),
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          overflow: TextOverflow.fade,
-                          fontSize: ATSizes.size14
-                        ),
-                      );
-                    }
-                  ),
-                ],
               ),
             ),
           ],
@@ -234,11 +275,6 @@ class _GiftingAndFollowingRowState extends State<_GiftingAndFollowingRow> {
 
   String _formatViewerCount(int? count) {
     if (count == null) return "0";
-    if (count >= 1000000) {
-      return '${(count / 1000000).toStringAsFixed(1)}M';
-    } else if (count >= 1000) {
-      return '${(count / 1000).toStringAsFixed(1)}k';
-    }
-    return count.toString();
+    return count.compactFormat;
   }
 }

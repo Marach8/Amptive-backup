@@ -145,6 +145,8 @@ class ATImgStrings {
   static const String WIRE_TRANSFER = '$_pngPath/wiretransfer.png';
   static const String PAPER_PLANE = '$_pngPath/paper plane.png';
   static const String hostGiftingIcon = '$_pngPath/host_gift.png';
+  static const String liveHeaderGiftIconPngAsset = '$_pngPath/gift_extracted.png';
+  static const String liveHeaderUser2IconSvgAsset = '$_svgPath/user 2.svg';
   static const String ONBOARD_NOTIF_IMG1 = '$_pngPath/image 5.png';
   static const String ONBOARD_NOTIF_IMG2 = '$_pngPath/image 5 (1).png';
   static const String ONBOARD_NOTIF_IMG3 = '$_pngPath/image 5 (2).png';
@@ -195,11 +197,24 @@ class ATImgStrings {
 </defs>
 </svg>''';
 
+  /// Listener/user icon used in the live header viewer-count pill.
+  static const String liveHeaderUserIconSvg =
+      '''<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.5 13.125V11.875C12.5 11.212 12.2366 10.5761 11.7678 10.1072C11.2989 9.63839 10.663 9.375 10 9.375H5C4.33696 9.375 3.70107 9.63839 3.23223 10.1072C2.76339 10.5761 2.5 11.212 2.5 11.875V13.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.5 6.875C8.88071 6.875 10 5.75571 10 4.375C10 2.99429 8.88071 1.875 7.5 1.875C6.11929 1.875 5 2.99429 5 4.375C5 5.75571 6.11929 6.875 7.5 6.875Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>''';
+
   static const String episodeIconSvg =
       '''<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="0.000183105" width="19.2263" height="19.2263" rx="9.61314" fill="#FF6482"/>
 <path d="M11.1268 7.58618C11.0964 7.25239 10.9614 6.99294 10.7217 6.80784C10.485 6.61971 10.1466 6.52564 9.70664 6.52564C9.41533 6.52564 9.17257 6.56357 8.97837 6.63943C8.78416 6.71529 8.63851 6.81998 8.54141 6.9535C8.44431 7.08398 8.39424 7.23418 8.3912 7.40411C8.38513 7.5437 8.41244 7.66659 8.47313 7.7728C8.53686 7.879 8.62789 7.97307 8.74623 8.055C8.86761 8.1339 9.01326 8.20369 9.18319 8.26438C9.35312 8.32507 9.54429 8.37817 9.7567 8.42369L10.5578 8.60575C11.019 8.70589 11.4257 8.83941 11.7776 9.0063C12.1327 9.1732 12.4301 9.37195 12.6698 9.60257C12.9125 9.83319 13.0961 10.0987 13.2205 10.3991C13.3449 10.6995 13.4087 11.0363 13.4117 11.4096C13.4087 11.9983 13.26 12.5035 12.9656 12.9253C12.6713 13.3471 12.248 13.6703 11.6957 13.8948C11.1465 14.1194 10.4835 14.2316 9.70664 14.2316C8.92678 14.2316 8.24707 14.1148 7.66749 13.8811C7.08791 13.6475 6.63729 13.2925 6.31564 12.8161C5.99399 12.3396 5.82861 11.7373 5.81951 11.009H7.977C7.99521 11.3094 8.07562 11.5598 8.21824 11.7601C8.36086 11.9603 8.55658 12.1121 8.8054 12.2152C9.05726 12.3184 9.34857 12.37 9.67933 12.37C9.98277 12.37 10.2407 12.329 10.4531 12.2471C10.6686 12.1652 10.8339 12.0514 10.9492 11.9057C11.0646 11.7601 11.1237 11.5932 11.1268 11.405C11.1237 11.229 11.0691 11.0788 10.9629 10.9544C10.8567 10.827 10.6928 10.7177 10.4713 10.6267C10.2528 10.5326 9.97367 10.4461 9.63381 10.3673L8.65975 10.1397C7.85259 9.95457 7.21687 9.65567 6.7526 9.24299C6.28833 8.82727 6.05771 8.2659 6.06074 7.55887C6.05771 6.98232 6.21247 6.47709 6.52502 6.04316C6.83756 5.60923 7.26997 5.27089 7.82224 5.02814C8.37451 4.78538 9.00416 4.664 9.71119 4.664C10.4334 4.664 11.06 4.7869 11.591 5.03269C12.1251 5.27544 12.5393 5.61682 12.8336 6.05682C13.128 6.49681 13.2782 7.0066 13.2843 7.58618H11.1268Z" fill="white" fill-opacity="0.8"/>
 </svg>''';
+
+  static const String liveHeaderEndLiveIconSvg =
+      '''<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15.6359 6.06576L14.3631 4.79297L8.81197 10.3441L3.26086 4.79297L1.98807 6.06576L8.81197 12.8897L15.6359 6.06576Z" fill="white"/>
+</svg>''';
+
   static const String createEpisodeScheduleIconSvg =
       '''<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M13.3335 1.66797V5.0013" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
