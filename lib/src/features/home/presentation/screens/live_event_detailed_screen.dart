@@ -28,7 +28,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
-import '../../../../shared/row_of_people_listening_widget.dart';
 import '../widgets/whispers_list.dart';
 import '../../data/models/response/home_feed_response_model.dart';
 
@@ -67,8 +66,10 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
         final bool iAmACohost = (widget.homeFeedItem?.cohosts ?? <User>[]).any(
           (User cohost) => cohost.userId == myUserId,
         );
+        final bool iHavePaid = widget.homeFeedItem?.requesterHasPaid ?? false;
 
-        _canJoinNotifier.value = isMyProgram || iAmACohost || isFreeProgram;
+        _canJoinNotifier.value = isMyProgram || iAmACohost
+          || iHavePaid || isFreeProgram;
 
         if(_allowWhispers){
           context.read<LiveWhispersCubit>().fetchWhispers(
@@ -359,9 +360,9 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
             if(state is SuccessState<LiveProgramEntryToken>){
               final ProfileData? userData = context
                 .read<LocalUserDataCubit>().currentUserData;
-              final String? userId = userData?.userId;
-              final bool hasTestedMic = userData?.hasTestedMic == true;
-              final bool isHost = userId == widget.homeFeedItem?.hostId;
+              final String? myUserId = userData?.userId;
+              final bool iHaveTestedMic = userData?.hasTestedMic == true;
+              final bool iAmTheHost = myUserId == widget.homeFeedItem?.hostId;
             
               final LiveProgramData liveProgramData = LiveProgramData(
                 roomEntryToken: state.newData?.roomEntryToken ?? '',
@@ -375,7 +376,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                 programId: widget.homeFeedItem?.id ?? '',
                 coverUrl: widget.homeFeedItem?.coverUrl
                   ?? widget.homeFeedItem?.thumbnailUrl ?? '',
-                role: isHost
+                role: iAmTheHost
                   ? ParticipantRole.host
                   : ParticipantRole.audience,
                 community: widget.homeFeedItem?.community,
@@ -383,10 +384,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                 programDesc: 'New program'
               );
               
-              if(!isHost || hasTestedMic){
-                context.pop(liveProgramData);
-              }
-              else{
+              if(iAmTheHost && !iHaveTestedMic){
                 await context.pushNamed(
                   ATRoutes.goLiveOnboarding,
                   extra: liveProgramData,
@@ -395,6 +393,9 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                 if(context.mounted){
                   context.pop(liveProgramData);
                 }
+              }
+              else{
+                context.pop(liveProgramData);
               }
             }
             else if(state is FailureState<LiveProgramEntryToken>){

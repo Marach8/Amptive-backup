@@ -43,6 +43,8 @@ class HomeFeedItem {
     this.score,
     this.requesterFollowsHost,
     this.requesterIsGoing,
+    this.requesterHasPaid,
+    this.requesterIsSubscribed,
     this.livestreamId,
     this.avatarUrls,
     this.showId,
@@ -75,6 +77,8 @@ class HomeFeedItem {
       scheduledFor: json['scheduled_for'],
       score: json['score'],
       requesterFollowsHost: json['requester_follows_host'],
+      requesterHasPaid: json['requester_has_paid'],
+      requesterIsSubscribed: json['requester_is_subscribed'],
       requesterIsGoing: json['requester_is_going'],
       livestreamId: json['livestream_id'],
       avatarUrls: (json['avatar_urls'] as List<dynamic>?)
@@ -115,6 +119,8 @@ class HomeFeedItem {
     String? scheduledFor,
     double? score,
     bool? requesterFollowsHost,
+    bool? requesterHasPaid,
+    bool? requesterIsSubscribed,
     bool? requesterIsGoing,
     String? livestreamId,
     List<String>? avatarUrls,
@@ -147,6 +153,9 @@ class HomeFeedItem {
       score: score ?? this.score,
       requesterFollowsHost:
           requesterFollowsHost ?? this.requesterFollowsHost,
+      requesterHasPaid: requesterHasPaid ?? this.requesterHasPaid,
+      requesterIsSubscribed: requesterIsSubscribed
+        ?? this.requesterIsSubscribed,
       requesterIsGoing:
           requesterIsGoing ?? this.requesterIsGoing,
       livestreamId: livestreamId ?? this.livestreamId,
@@ -184,7 +193,7 @@ class HomeFeedItem {
   final double? price, score;
   final int? viewerCount, goingCount, episodeNumber;
   final bool? requesterFollowsHost, requesterIsGoing,
-    allowWhispers;
+    allowWhispers, requesterHasPaid, requesterIsSubscribed;
   final List<String>? avatarUrls, hashTagNames;
   final List<User>? cohosts;
   final Community? community;

@@ -48,14 +48,25 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
   @override 
   void initState(){
     super.initState();
-    _canJoinNotifier.value = 
-      widget.homeFeedItem?.programType == ProgramType.free;
     _allowWhispers = widget.homeFeedItem?.allowWhispers ?? false;
-    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_){
         if(!mounted) return;
+        final String? myUserId = context.read<LocalUserDataCubit>()
+          .currentUserData?.userId;
+        final bool isFreeProgram = widget.homeFeedItem?.programType 
+          == ProgramType.free;
+        final bool isMyProgram = widget.homeFeedItem?.hostId == myUserId;
+          
+        final bool iAmACohost = (widget.homeFeedItem?.cohosts ?? <User>[]).any(
+          (User cohost) => cohost.userId == myUserId,
+        );
+        final bool iHavePaid = widget.homeFeedItem?.requesterHasPaid ?? false;
+
+        _canJoinNotifier.value = isMyProgram || iAmACohost
+          || iHavePaid || isFreeProgram;
+
         if(_allowWhispers){
           context.read<LiveWhispersCubit>().fetchWhispers(
             livestreamId: widget.homeFeedItem?.livestreamId ?? '');
@@ -234,8 +245,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                                 colorClickableText: ATColors.white,
                                 trimLength: 100,
                                 style: TextStyle(
-                                  color:
-                                      ATColors.white.withValues(alpha: 0.6),
+                                  color: ATColors.white.withValues(alpha: 0.6),
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -263,9 +273,9 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
             if(state is SuccessState<LiveProgramEntryToken>){
               final ProfileData? userData = context
                 .read<LocalUserDataCubit>().currentUserData;
-              final String? userId = userData?.userId;
-              final bool hasTestedMic = userData?.hasTestedMic == true;
-              final bool isHost = userId == widget.homeFeedItem?.hostId;
+              final String? myUserId = userData?.userId;
+              final bool iHaveTestedMic = userData?.hasTestedMic == true;
+              final bool iAmTheHost = myUserId == widget.homeFeedItem?.hostId;
             
               final LiveProgramData liveProgramData = LiveProgramData(
                 roomEntryToken: state.newData?.roomEntryToken ?? '',
@@ -279,7 +289,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                 programId: widget.homeFeedItem?.id ?? '',
                 coverUrl: widget.homeFeedItem?.coverUrl
                   ?? widget.homeFeedItem?.thumbnailUrl ?? '',
-                role: isHost
+                role: iAmTheHost
                   ? ParticipantRole.host
                   : ParticipantRole.audience,
                 community: widget.homeFeedItem?.community,
@@ -287,10 +297,7 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                 programDesc: 'New program'
               );
               
-              if(!isHost || hasTestedMic){
-                context.pop(liveProgramData);
-              }
-              else{
+              if(iAmTheHost && !iHaveTestedMic){
                 await context.pushNamed(
                   ATRoutes.goLiveOnboarding,
                   extra: liveProgramData,
@@ -299,6 +306,9 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                 if(context.mounted){
                   context.pop(liveProgramData);
                 }
+              }
+              else{
+                context.pop(liveProgramData);
               }
             }
             else if(state is FailureState<LiveProgramEntryToken>){

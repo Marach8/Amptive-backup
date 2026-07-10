@@ -44,7 +44,8 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
 
         if(isLive)GestureDetector(
           onTap: ()async{
-            final bool isEvent = homeFeedItem?.programCategory == ProgramCategory.standalone;
+            final bool isEvent = homeFeedItem?.programCategory
+              == ProgramCategory.standalone;
 
             LiveProgramData? liveProgramData;
             if(isEvent){
