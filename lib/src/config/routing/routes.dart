@@ -379,11 +379,14 @@ final GoRouter amptiveAppRouter = GoRouter(
               name: ATRoutes.goLiveOnboarding,
               path: ATRoutes.goLiveOnboarding.addSlash,
               pageBuilder: (_, GoRouterState state) {
-                final LiveProgramData? liveProgramEntryParams =
-                    state.extra as LiveProgramData?;
+                final Object? extra = state.extra;
                 return ATSlidingRouteTransition<void>(
                     child: GoLiveOnboardingScreen(
-                        liveProgramEntryParams: liveProgramEntryParams));
+                  liveProgramEntryParams:
+                      extra is LiveProgramData ? extra : null,
+                  pendingEpisode:
+                      extra is PendingGoLiveEpisode ? extra : null,
+                ));
               }),
           GoRoute(
             name: ATRoutes.chooseEventOrShowScreen,

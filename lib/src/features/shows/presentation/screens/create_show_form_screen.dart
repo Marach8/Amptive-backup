@@ -19,7 +19,6 @@ import 'package:amptive/src/shared/annotated_region__widget.dart';
 import 'package:amptive/src/shared/divider_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/smooth_text_field.dart';
-import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
@@ -87,6 +86,7 @@ class _SubWidget extends StatefulWidget {
 
 class __SubWidgetState extends State<_SubWidget> {
   late final TextEditingController _titleCntrl;
+  final ScrollController _formScrollController = ScrollController();
   final StreamController<String> _titleStreamCntrl = StreamController<String>();
   final StreamController<String> _descStreamCntrl = StreamController<String>();
 
@@ -151,6 +151,7 @@ class __SubWidgetState extends State<_SubWidget> {
 
   @override
   void dispose() {
+    _formScrollController.dispose();
     _titleCntrl.dispose();
     _titleStreamCntrl.close();
     _launchShowBtnNotifier.dispose();
@@ -200,7 +201,7 @@ class __SubWidgetState extends State<_SubWidget> {
         .where((String id) => id.isNotEmpty && !id.startsWith('new_'))
         .toList();
     final List<String> coHostIds = (selectedCohosts ?? <User>[])
-        .map((User cohost) => cohost.userId ?? '')
+        .map((User cohost) => cohost.userId)
         .toList();
     final String showType =
         accessTypeData.accessType == ProgramAccessType.free ? 'free' : 'paid';
@@ -257,7 +258,6 @@ class __SubWidgetState extends State<_SubWidget> {
                 onNotification:
                     blocContext.read<BlurredHeaderCubit>().onScrollNotification,
                 child: NestedScrollView(
-                  key: const PageStorageKey<String>('create_show_form'),
                   headerSliverBuilder: (_, __) => <Widget>[
                     SliverPersistentHeader(
                       pinned: true,
@@ -289,7 +289,8 @@ class __SubWidgetState extends State<_SubWidget> {
                     ),
                   ],
                   body: SingleChildScrollView(
-                    key: const PageStorageKey<String>('create_show_form_body'),
+                    controller: _formScrollController,
+                    primary: false,
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 100),
                     child: Column(
                       children: <Widget>[
@@ -764,8 +765,8 @@ class __SubWidgetState extends State<_SubWidget> {
 
                     if (context.mounted) {
                       if (onPressedResult == ButtonPressed.elevatedBtn) {
-                        context
-                            .pushReplacementNamed(ATRoutes.createEpisodeForm, extra: state.newData);
+                        context.pushReplacementNamed(ATRoutes.createEpisodeForm,
+                            extra: state.newData);
                       } else if (onPressedResult == ButtonPressed.textBtn) {
                         context.pushReplacementNamed(ATRoutes.showPreviewScreen,
                             extra: state.newData);
@@ -825,7 +826,8 @@ class __SubWidgetState extends State<_SubWidget> {
                             } else if ((selectedHashtags ?? <HashTag>[])
                                 .isEmpty) {
                               errorMessage = 'Please select at least 1 hashtag';
-                            } else if (!_isEditing && selectedPermission == null) {
+                            } else if (!_isEditing &&
+                                selectedPermission == null) {
                               errorMessage =
                                   'Please choose whether to allow hand-raising for this show';
                             } else if (accessTypeData.accessType == null) {
@@ -851,9 +853,7 @@ class __SubWidgetState extends State<_SubWidget> {
                                 context.read<BgImageCubit>().state.$2;
                             if (coverBytes != null) {
                               // New/changed cover — upload it first.
-                              context
-                                  .read<UploadImageCubit>()
-                                  .uploadBytesImage(
+                              context.read<UploadImageCubit>().uploadBytesImage(
                                     bytes: coverBytes,
                                     purpose: 'cover-art',
                                   );

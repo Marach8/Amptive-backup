@@ -98,8 +98,8 @@ class ATXBackBtn extends StatelessWidget {
         splashColor: ATColors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(30),
         child: const SizedBox(
-          height: 44,
-          width: 44,
+          height: 48,
+          width: 48,
           child: Icon(Icons.close),
         ),
       ),

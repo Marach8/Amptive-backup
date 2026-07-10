@@ -264,6 +264,8 @@ class ATStrings {
   static const String users13andOlderWarning =
       "Only users 13 and older may use this app";
   static const String done = 'Done';
+  static const String soundsGood = 'Sounds good';
+  static const String retry = 'Retry';
 
   static const String noteAboutProfilePic =
       "Note that this will appear on your profile.";

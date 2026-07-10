@@ -81,7 +81,6 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return ClipSmoothRect(
@@ -93,6 +92,7 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
         radius: 0,
         color: ATColors.transparent,
         onTap: () async {
+          FocusScope.of(context).unfocus(disposition: UnfocusDisposition.scope);
           final CoverImagePickerResult? selection =
               await showCoverImagePickerSheet(
             context,
@@ -132,9 +132,11 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
 
             if (croppedImage != null) {
               if (widget.onImageAndUrlSelected != null) {
-                widget.onImageAndUrlSelected!(ATImgStrings.createShowPlaceholder, croppedImage.bytes);
+                widget.onImageAndUrlSelected!(
+                    ATImgStrings.createShowPlaceholder, croppedImage.bytes);
               } else {
-                widget.onImageUrlSelected?.call(ATImgStrings.createShowPlaceholder);
+                widget.onImageUrlSelected
+                    ?.call(ATImgStrings.createShowPlaceholder);
                 widget.onImageSelected(croppedImage.bytes);
               }
               setState(() {
@@ -150,9 +152,11 @@ class _SelectProgramCoverArtState extends State<SelectProgramCoverArt> {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            ((selectedCoverPath ?? widget.initialImage) != null && 
-             ((selectedCoverPath ?? widget.initialImage)!.startsWith('http') || 
-              (selectedCoverPath ?? widget.initialImage)!.startsWith('assets')))
+            ((selectedCoverPath ?? widget.initialImage) != null &&
+                    ((selectedCoverPath ?? widget.initialImage)!
+                            .startsWith('http') ||
+                        (selectedCoverPath ?? widget.initialImage)!
+                            .startsWith('assets')))
                 ? ATImgLoader(
                     imgPath: selectedCoverPath ?? widget.initialImage!,
                     boxFit: BoxFit.cover,

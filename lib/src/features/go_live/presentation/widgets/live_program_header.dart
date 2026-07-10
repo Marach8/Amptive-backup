@@ -136,16 +136,15 @@ class _GiftingAndFollowingRow extends StatefulWidget {
 class _GiftingAndFollowingRowState extends State<_GiftingAndFollowingRow> {
   bool hasNewGifts = false;
 
+  // Shared pill metrics so both header pills stay visually identical and in
+  // line with the app's other pills.
+  static const EdgeInsets _pillPadding = EdgeInsets.fromLTRB(12, 7, 12, 7);
+  static const double _pillIconSize = 18;
+  static const double _pillRadius = 30;
+
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      // boxShadow: <BoxShadow>[
-      //   BoxShadow(
-      //     color: ATColors.black,
-      //     blurRadius: 35, spreadRadius: 20,
-      //     offset: const Offset(-20, 0)
-      //   )
-      // ],
       child: BlocListener<LiveStreamCubit1, LiveStreamState1>(
         listenWhen: (LiveStreamState1 prev, LiveStreamState1 cur)
           => prev.giftIds != cur.giftIds,
@@ -168,19 +167,19 @@ class _GiftingAndFollowingRowState extends State<_GiftingAndFollowingRow> {
                     }
                     widget.onGiftsTap?.call();
                   },
-                  radius: 30,
-                  padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                  radius: _pillRadius,
+                  padding: _pillPadding,
                   color: ATColors.white.withValues(alpha: 0.1),
                   child: Row(
                     children: <Widget>[
                       const ATImgLoader(
                         imgPath: ATImgStrings.hostGiftingIcon,
-                        height: 20, width: 20,
+                        height: _pillIconSize, width: _pillIconSize,
                         boxFit: BoxFit.cover,
                       ),
-                      const SizedBox(width: 5),
+                      const SizedBox(width: 6),
                       Text(
-                        "Gift",
+                        'Gift',
                         style: context.textTheme.bodyMedium?.copyWith(
                           overflow: TextOverflow.fade,
                           fontSize: ATSizes.size14
@@ -201,24 +200,25 @@ class _GiftingAndFollowingRowState extends State<_GiftingAndFollowingRow> {
             const SizedBox(width: 10),
             ATContainer(
               onTap: widget.onParticipantsTap,
-              padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
-              radius: 30,
+              padding: _pillPadding,
+              radius: _pillRadius,
               color: ATColors.white.withValues(alpha: 0.1),
               child: Row(
                 children: <Widget>[
                   const ATImgLoader(
                     imgPath: ATImgStrings.userIcon,
-                    height: 15,
-                    width: 15,
+                    height: _pillIconSize,
+                    width: _pillIconSize,
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: 6),
                   BlocSelector<LiveStreamCubit1, LiveStreamState1, int>(
                     selector: (LiveStreamState1 state) => state.viewerCount,
                     builder: (_, int viewerCount) {
                       return Text(
                         _formatViewerCount(viewerCount),
                         style: context.textTheme.bodyMedium?.copyWith(
-                          overflow: TextOverflow.fade, fontSize: 14
+                          overflow: TextOverflow.fade,
+                          fontSize: ATSizes.size14
                         ),
                       );
                     }

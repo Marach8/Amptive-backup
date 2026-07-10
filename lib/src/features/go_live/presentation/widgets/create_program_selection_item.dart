@@ -23,7 +23,10 @@ class CreateProgramSelectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ATContainer(
-      onTap: onTap,
+      onTap: () {
+        FocusScope.of(context).unfocus(disposition: UnfocusDisposition.scope);
+        onTap();
+      },
       padding: const EdgeInsets.all(15),
       radius: 14,
       color: ATColors.white.withValues(alpha: 0.1),

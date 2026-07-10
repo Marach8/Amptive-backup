@@ -82,7 +82,7 @@ class ExistingEpisodesIndicator extends StatelessWidget {
             height: 20,
           ),
           Text(
-            '$episodeCount Scheduled Episode${episodeCount == 1 ? '' : 's'}',
+            '$episodeCount Episode${episodeCount == 1 ? '' : 's'}',
             style: context.textTheme.bodyMedium?.copyWith(
               fontSize: ATSizes.size15,
               fontWeight: ATFontWeights.w600,

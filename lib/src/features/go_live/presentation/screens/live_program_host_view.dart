@@ -22,19 +22,10 @@ class LiveProgramHostView extends StatelessWidget {
 
     return Stack(
         children: <Widget>[
-          Positioned.fill(
-            child: ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-              child: ATImgLoader(
-                imgPath: programCoverUrl ?? '',
-                boxFit: BoxFit.fill,
-                height: context.screenHeight,
-                width: context.screenWidth,
-              )
-            ),
-          ),
+          // Background (cover mesh, full-bleed) is supplied by the parent
+          // FullLiveProgramScreen so it reaches behind the status bar.
           ColoredBox(
-            color: ATColors.hex0D0D0D.withValues(alpha: 0.9),
+            color: ATColors.transparent,
             child: Stack(
               children: <Widget>[
                 Column(
@@ -135,7 +126,11 @@ class LiveProgramHostView extends StatelessWidget {
                   
                     return AnimatedContainer(
                       duration: const Duration(milliseconds: 300),
-                      color: bottomInset == 0 ? ATColors.black : ATColors.hex2C2F33,
+                      // Transparent when the keyboard is down so the cover mesh
+                      // shows through; solid only behind the keyboard.
+                      color: bottomInset == 0
+                          ? ATColors.transparent
+                          : ATColors.hex2C2F33,
                       padding: EdgeInsets.fromLTRB(15, 5, 15, extraSpace),
                       child: const HostModerationControls(),
                     );

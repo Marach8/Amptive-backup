@@ -4,6 +4,9 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/dominant_color_extractor.dart';
+import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/mesh_gradient_background.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/end_live_program_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
@@ -53,7 +56,9 @@ class LiveProgramOverlayState extends State<LiveProgramOverlay>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(mounted){
         context.read<LiveStreamCubit1>().connect();
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        // edgeToEdge keeps the status bar (time/network/battery) visible over
+        // the mesh; immersiveSticky was hiding it entirely.
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       }
     });
 
@@ -180,10 +185,12 @@ class FullLiveProgramScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ParticipantRole? myRole = 
+    final ParticipantRole? myRole =
       context.read<LiveStreamCubit1>().state.myRole;
     final String myUserId = context.read<LocalUserDataCubit>()
       .currentUserData?.userId ?? '';
+    final String? programCoverUrl =
+      context.read<LiveStreamCubit1>().state.programCoverUrl;
     return MultiBlocListener(
       listeners: <SingleChildWidget>[
         BlocListener<EndLiveProgramCubit, ATAppState<LoadingStage>>(
@@ -240,20 +247,43 @@ class FullLiveProgramScreen extends StatelessWidget {
           },
         ),
       ],
-      child: SafeArea(
-        bottom: false,
-        child: Material(
-          color: ATColors.transparent,
-          child: switch (myRole) {
-            null || ParticipantRole.audience =>
-              const LiveProgramAudienceView(),
-          
-            ParticipantRole.cohost =>
-              const LiveProgramCohostView(),
-          
-            ParticipantRole.host =>
-              const LiveProgramHostView(),
-          },
+      child: ATAnnotatedRegion(
+        statusBarColor: ATColors.transparent,
+        child: Stack(
+          children: <Widget>[
+            // Full-bleed cover mesh — reaches behind the status bar so the top
+            // strip matches the body (same mesh as the episode/event modal).
+            Positioned.fill(
+              child: BlocProvider<DominantColorCubit>(
+                create: (_) => DominantColorCubit()
+                  ..extractColor(
+                      programCoverUrl ?? ATImgStrings.createShowPlaceholder),
+                child: BlocBuilder<DominantColorCubit, DominantColorState>(
+                  builder: (_, DominantColorState colorState) =>
+                      ATMeshGradientBackground(
+                    state: colorState,
+                    child: const SizedBox.expand(),
+                  ),
+                ),
+              ),
+            ),
+            SafeArea(
+              bottom: false,
+              child: Material(
+                color: ATColors.transparent,
+                child: switch (myRole) {
+                  null || ParticipantRole.audience =>
+                    const LiveProgramAudienceView(),
+
+                  ParticipantRole.cohost =>
+                    const LiveProgramCohostView(),
+
+                  ParticipantRole.host =>
+                    const LiveProgramHostView(),
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
