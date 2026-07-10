@@ -5,6 +5,7 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/home/presentation/widgets/row_of_paid_show_and_play_button_widget.dart';
 import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
 import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
@@ -296,6 +297,9 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                 programTitle: widget.homeFeedItem?.title ?? '',
                 programDesc: 'New program'
               );
+
+              final bool visitorPaidForThisProgram =
+                widget.homeFeedItem?.programType == ProgramType.paid;
               
               if(iAmTheHost && !iHaveTestedMic){
                 await context.pushNamed(
@@ -304,11 +308,21 @@ class _LiveShowDetailedScreenState extends State<LiveShowDetailedScreen> {
                 );
                 
                 if(context.mounted){
-                  context.pop(liveProgramData);
+                  context.pop(
+                    ProgramDetailedScreenExitParams(
+                      liveProgramData: liveProgramData,
+                      visitorPaidForThisProgram: visitorPaidForThisProgram,
+                    ),
+                  );
                 }
               }
               else{
-                context.pop(liveProgramData);
+                context.pop(
+                  ProgramDetailedScreenExitParams(
+                    liveProgramData: liveProgramData,
+                    visitorPaidForThisProgram: visitorPaidForThisProgram,
+                  ),
+                );
               }
             }
             else if(state is FailureState<LiveProgramEntryToken>){

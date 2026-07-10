@@ -12,6 +12,7 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/home/presentation/widgets/row_of_paid_show_and_play_button_widget.dart';
 import 'package:amptive/src/features/wallet/cubits/one_time_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/one_time_process_payment_dialog.dart';
@@ -46,7 +47,7 @@ class LiveEventDetailedScreen extends StatefulWidget {
 
 class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
   final ValueNotifier<bool> _canJoinNotifier = ValueNotifier<bool>(false);
-  late bool _allowWhispers;
+  late bool _allowWhispers, _iHavePaidForThisProgram;
 
   @override 
   void initState(){
@@ -61,15 +62,15 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
           .currentUserData?.userId;
         final bool isFreeProgram = widget.homeFeedItem?.programType 
           == ProgramType.free;
-        final bool isMyProgram = widget.homeFeedItem?.hostId == myUserId;
+        final bool iAmTheHost = widget.homeFeedItem?.hostId == myUserId;
           
         final bool iAmACohost = (widget.homeFeedItem?.cohosts ?? <User>[]).any(
           (User cohost) => cohost.userId == myUserId,
         );
-        final bool iHavePaid = widget.homeFeedItem?.requesterHasPaid ?? false;
+        _iHavePaidForThisProgram= widget.homeFeedItem?.requesterHasPaid ?? false;
 
-        _canJoinNotifier.value = isMyProgram || iAmACohost
-          || iHavePaid || isFreeProgram;
+        _canJoinNotifier.value = iAmTheHost || iAmACohost
+          || _iHavePaidForThisProgram || isFreeProgram;
 
         if(_allowWhispers){
           context.read<LiveWhispersCubit>().fetchWhispers(
@@ -383,7 +384,8 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                 programTitle: widget.homeFeedItem?.title ?? '',
                 programDesc: 'New program'
               );
-              
+
+
               if(iAmTheHost && !iHaveTestedMic){
                 await context.pushNamed(
                   ATRoutes.goLiveOnboarding,
@@ -391,11 +393,21 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                 );
                 
                 if(context.mounted){
-                  context.pop(liveProgramData);
+                  context.pop(
+                    ProgramDetailedScreenExitParams(
+                      liveProgramData: liveProgramData,
+                      visitorPaidForThisProgram: _iHavePaidForThisProgram,
+                    ),
+                  );
                 }
               }
               else{
-                context.pop(liveProgramData);
+                context.pop(
+                  ProgramDetailedScreenExitParams(
+                    liveProgramData: liveProgramData,
+                    visitorPaidForThisProgram: _iHavePaidForThisProgram,
+                  ),
+                );
               }
             }
             else if(state is FailureState<LiveProgramEntryToken>){
@@ -406,14 +418,15 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
               );
             }
           },
-          builder: (BuildContext ctx, ATAppState<LiveProgramEntryToken> state) {
+          builder: (BuildContext ctx, 
+          ATAppState<LiveProgramEntryToken> state) {
             return ValueListenableBuilder<bool>(
               valueListenable: _canJoinNotifier,
               builder: (_, bool canJoin, __) {
                 final bool isPaidProgram = canJoin == false;
                 return ATBlurredBgBtn(
                   onPressed: ()async{
-                    if(!canJoin){
+                    if(canJoin){
                       ctx.read<GetLiveProgramEntryTokenCubit>()
                       .getLiveProgramEntryToken(
                         widget.homeFeedItem?.livestreamId ?? '',
@@ -440,6 +453,7 @@ class _LiveEventDetailedScreenState extends State<LiveEventDetailedScreen> {
                       );
 
                       _canJoinNotifier.value = paymentSuccess ?? false;
+                      _iHavePaidForThisProgram = paymentSuccess ?? false;
                     }
                   },
                   isLoading: state is LoadingState<LiveProgramEntryToken>,

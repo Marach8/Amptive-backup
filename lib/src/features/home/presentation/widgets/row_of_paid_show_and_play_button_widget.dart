@@ -7,6 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/extensions/context_extensions.dart';
 
+class ProgramDetailedScreenExitParams {
+  const ProgramDetailedScreenExitParams({
+    this.liveProgramData,
+    this.visitorPaidForThisProgram,
+  });
+
+  final LiveProgramData? liveProgramData;
+  final bool? visitorPaidForThisProgram;
+}
+
 class PaidShowAndPlayBtnWidget extends StatelessWidget {
   const PaidShowAndPlayBtnWidget({
     super.key,
@@ -47,20 +57,21 @@ class PaidShowAndPlayBtnWidget extends StatelessWidget {
             final bool isEvent = homeFeedItem?.programCategory
               == ProgramCategory.standalone;
 
-            LiveProgramData? liveProgramData;
+            ProgramDetailedScreenExitParams? exitParams;
             if(isEvent){
-              liveProgramData = await context.pushNamed(
+              exitParams = await context.pushNamed(
                 ATRoutes.liveEventDetailedScreen,
                 extra: homeFeedItem,
-              ) as LiveProgramData?;
+              ) as ProgramDetailedScreenExitParams?;
             }
             else{
-              liveProgramData = await context.pushNamed(
+              exitParams = await context.pushNamed(
                 ATRoutes.liveShowDetailedScreen,
                 extra: homeFeedItem,
-              ) as LiveProgramData?;
+              ) as ProgramDetailedScreenExitParams?;
             }
 
+            final LiveProgramData? liveProgramData = exitParams?.liveProgramData;
             if (liveProgramData == null) return;
             dashboardKey.currentState
               ?.showLiveStreamOverlay(liveProgramData: liveProgramData);
