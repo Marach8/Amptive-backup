@@ -93,7 +93,7 @@ class LiveProgramHeader extends StatelessWidget {
         _GiftingAndFollowingRow(
           onGiftsTap: () async{
             final bool? shouldSendGift = await showGiftersModal(
-                context: context,
+                context: navigatorKey.currentContext!,
                 canSendGift: audienceMinimizeIcon != null,
                 liveStreamCubit: context.read<LiveStreamCubit1>(),
                 localUserDataCubit: context.read<LocalUserDataCubit>(),

@@ -111,7 +111,6 @@ class ATStringsDropDown extends StatelessWidget {
       constraints: width != null ? BoxConstraints.tightFor(width: width) : null,
       color: ATColors.containerGradientColorB,
       elevation: 0,
-      useRootNavigator: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(color: ATColors.hex2D2D2D, width: 0.5),
