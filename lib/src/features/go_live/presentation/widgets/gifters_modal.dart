@@ -25,7 +25,7 @@ Future<bool?> showGiftersModal({
   return await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      // useRootNavigator: true,
+      useRootNavigator: true,
       useSafeArea: true,
       backgroundColor: ATColors.hex202020.withValues(alpha: 0.9),
       builder: (BuildContext context) {
