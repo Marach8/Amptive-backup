@@ -87,7 +87,7 @@ class ATAuthOptionsScreen extends StatelessWidget {
                     btnName: ATStrings.TWITTER,
                     leading: const Padding(
                       padding: EdgeInsets.only(left: 10),
-                      child: Icon(
+                      child: FaIcon(
                         FontAwesomeIcons.xTwitter,
                         size: 30,
                       ),
