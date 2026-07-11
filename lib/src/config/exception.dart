@@ -57,9 +57,10 @@ class ATException implements Exception {
             err.response?.statusCode ?? 0,
           );
 
-        case DioExceptionType.badResponse:
-        case DioExceptionType.badCertificate:
-        case DioExceptionType.unknown:
+        // case DioExceptionType.badResponse:
+        // case DioExceptionType.badCertificate:
+        // case DioExceptionType.unknown:
+        default:
           String? extractMsg(dynamic data) {
             if (data == null) return null;
             if (data is String) return data;
