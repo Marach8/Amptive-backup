@@ -1,8 +1,10 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/wallet/cubits/fund_wallet_cubit.dart';
 import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
-import 'package:amptive/src/features/wallet/data/models/fund_wallet_response_model.dart';
+import 'package:amptive/src/features/wallet/data/models/response/fund_wallet_response_model.dart';
 import 'package:amptive/src/features/wallet/data/models/response/verify_payment_response_model.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
@@ -28,7 +30,7 @@ Future<bool?> processWalletFundingDialog({
             create: (_) => FundWalletCubit()
               ..fundWallet(
                 amount: amount,
-                channel: paymentMethod.normalizePaymentChannel(paymentMethod),
+                channel: paymentMethod,
                 currency: currency,
               ),
           ),
@@ -63,13 +65,12 @@ Future<bool?> processWalletFundingDialog({
                     );
                   } else if (state
                       is SuccessState<VerifyPaymentResponseModel>) {
-                    final String? status = state.newData?.data?.data?.status;
-                    if (status != 'success') {
+                    final String? status =
+                        state.newData?.data?.transaction?.status;
+                    if (status != 'successful') {
                       showAppNotification2(
                         context: context,
-                        text: state.newData?.data?.data?.gatewayResponse ??
-                            state.newData?.data?.data?.message ??
-                            state.newData?.message ??
+                        text: state.newData?.message ??
                             'Payment was not successful',
                         type: NotificationType.failure,
                       );
@@ -96,24 +97,24 @@ Future<bool?> processWalletFundingDialog({
 
                   final bool paymentVerified =
                       verifyState is SuccessState<VerifyPaymentResponseModel> &&
-                          verifyState.newData?.data?.data?.status == 'success';
+                          verifyState.newData?.data?.transaction?.status ==
+                              'successful';
 
-                  final bool verificationFailed = verifyState
-                          is FailureState<VerifyPaymentResponseModel> ||
-                      (verifyState
-                              is SuccessState<VerifyPaymentResponseModel> &&
-                          verifyState.newData?.data?.data?.status != 'success');
+                  final bool verificationFailed =
+                      verifyState is FailureState<VerifyPaymentResponseModel> ||
+                          (verifyState
+                                  is SuccessState<VerifyPaymentResponseModel> &&
+                              verifyState.newData?.data?.transaction?.status !=
+                                  'successful');
 
                   final String? verificationErrorMessage = verifyState
                           is FailureState<VerifyPaymentResponseModel>
                       ? verifyState.message
                       : (verifyState
                                   is SuccessState<VerifyPaymentResponseModel> &&
-                              verifyState.newData?.data?.data?.status !=
-                                  'success')
-                          ? verifyState.newData?.data?.data?.gatewayResponse ??
-                              verifyState.newData?.data?.data?.message ??
-                              verifyState.newData?.message ??
+                              verifyState.newData?.data?.transaction?.status !=
+                                  'successful')
+                          ? verifyState.newData?.message ??
                               'Payment was not successful'
                           : null;
 

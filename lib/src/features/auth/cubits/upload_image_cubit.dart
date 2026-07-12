@@ -67,6 +67,8 @@ class UploadImageCubit extends Cubit<ATAppState<String>> {
       final ApiResponse<String> response =
           await authRepo.uploadImage(filePath: file.path);
 
+      if(isClosed) return;
+
       await response.when(
         successful: (Successful<String> data) async {
           if (await file?.exists() ?? false) {
@@ -80,7 +82,7 @@ class UploadImageCubit extends Cubit<ATAppState<String>> {
         },
       );
     } catch (e) {
-      emit(FailureState<String>('Unable to upload image: $e'));
+      emit(const FailureState<String>('Unable to upload image'));
     }
   }
 
@@ -93,7 +95,9 @@ class UploadImageCubit extends Cubit<ATAppState<String>> {
     try {
       final ApiResponse<String> response =
           await authRepo.uploadImage(filePath: filepath);
-
+      
+      if(isClosed) return;
+      
       await response.when(
         successful: (Successful<String> data) async {
           emit(SuccessState<String>(newData: data.data));
@@ -103,7 +107,7 @@ class UploadImageCubit extends Cubit<ATAppState<String>> {
         },
       );
     } catch (e) {
-      emit(FailureState<String>('Unable to upload image: $e'));
+      emit(const FailureState<String>('Unable to upload image'));
     }
   }
 }

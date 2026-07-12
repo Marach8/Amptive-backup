@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/other_strings.dart';
-import '../../../../shared/annotated_region__widget.dart';
+import '../../../../shared/annotated_region_widget.dart';
 import '../../../../shared/app_bar_widget.dart';
 import '../../../../shared/back_button.dart';
 import '../../../../shared/elevated_button_widget.dart';

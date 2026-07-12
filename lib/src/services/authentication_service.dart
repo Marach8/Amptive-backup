@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/models/user_model.dart';
 
 import 'api_handler.dart';

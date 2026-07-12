@@ -1,10 +1,11 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async' show StreamController;
-
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -120,11 +121,11 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen>
                         return ATPlainElevatedBtn(
                           onPressed: isAvailable
                               ? () {
-                                  final CachedUserData? currentData = context
+                                  final ProfileData? currentData = context
                                       .read<LocalUserDataCubit>()
                                       .currentUserData;
-                                  final CachedUserData updatedData =
-                                      (currentData ?? const CachedUserData())
+                                  final ProfileData updatedData =
+                                      (currentData ?? const ProfileData())
                                           .copyWith(
                                               username:
                                                   _controller.text.trim());

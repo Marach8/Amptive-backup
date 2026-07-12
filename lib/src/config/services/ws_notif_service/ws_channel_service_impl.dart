@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' show log;
+import 'dart:math' hide log;
+
 import 'package:amptive/src/config/services/ws_notif_service/ws_notif_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -11,6 +13,20 @@ enum WSConnectionStatus {
   reconnecting,
   disconnected,
   failed,
+}
+
+class _PendingAckEntry {
+  _PendingAckEntry({
+    required this.data,
+    required this.raw,
+    required this.retries,
+    required this.timer,
+  });
+
+  final Map<String, dynamic> data;
+  final String raw;
+  int retries;
+  Timer timer;
 }
 
 class WSChannelNotifServiceImpl implements WSNotificationService {
@@ -36,6 +52,8 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
   bool _isManuallyClosed = false;
   bool _isConnecting = false;
 
+  bool get isActive => _isConnecting || _isConnected;
+
   // ─────────────────────────────────────────────
   // Streams
   // ─────────────────────────────────────────────
@@ -59,6 +77,21 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
   Stream<int> get unreadCountStream => _unreadCountController.stream;
 
   // ─────────────────────────────────────────────
+  // Ack retry
+  // ─────────────────────────────────────────────
+  int _ackIdCounter = 0;
+  final Map<String, _PendingAckEntry> _pendingAcks = <String, _PendingAckEntry>{};
+  static const int _ackTimeoutMs = 3000;
+  static const int _maxAckRetries = 3;
+
+  final StreamController<Map<String, dynamic>> _ackFailedController =
+      StreamController<Map<String, dynamic>>.broadcast();
+
+  @override
+  Stream<Map<String, dynamic>> get ackFailedStream =>
+      _ackFailedController.stream;
+
+  // ─────────────────────────────────────────────
   // Queue
   // ─────────────────────────────────────────────
   final List<Map<String, dynamic>> _messageQueue = <Map<String, dynamic>>[];
@@ -72,11 +105,9 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
     _messageQueue.clear();
 
     for (final Map<String, dynamic> msg in snapshot) {
-      try {
-        _channel!.sink.add(jsonEncode(msg));
-      } catch (_) {
-        _messageQueue.add(msg);
-      }
+      final Object? ackId = msg['_ack_id'];
+      if (ackId is String && _pendingAcks.containsKey(ackId)) continue;
+      _sendWithAckTracking(msg, jsonEncode(msg));
     }
   }
 
@@ -84,27 +115,16 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
   // Heartbeat
   // ─────────────────────────────────────────────
   Timer? _heartbeatTimer;
-  DateTime _lastPong = DateTime.now();
 
   void _startHeartbeat() {
     _heartbeatTimer?.cancel();
-    _heartbeatTimer = null;
-    _lastPong = DateTime.now();
+    _pongTimeoutTimer?.cancel();
 
     _heartbeatTimer = Timer.periodic(
-      const Duration(seconds: 20),
+      const Duration(seconds: 25),
       (Timer timer) {
         if (!_isConnected || _channel == null) {
           timer.cancel();
-          return;
-        }
-
-        final Duration sinceLastPong = DateTime.now().difference(_lastPong);
-
-        if (sinceLastPong.inSeconds > 45) {
-          log('Heartbeat timeout → reconnecting');
-          timer.cancel();
-          reconnect(); // calls the overridable public method
           return;
         }
 
@@ -112,17 +132,33 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
           'type': 'ping',
           'ts': DateTime.now().millisecondsSinceEpoch,
         });
+
+        _pongTimeoutTimer?.cancel();
+        _pongTimeoutTimer = Timer(const Duration(seconds: 15), () {
+          log('Ping timeout (15s) — reconnecting');
+          if (_isConnected) reconnect();
+        });
       },
     );
   }
 
-  void _handlePong() => _lastPong = DateTime.now();
+  void _handlePong() {
+    _pongTimeoutTimer?.cancel();
+  }
+
+  String _nextAckId() {
+    _ackIdCounter++;
+    return '${DateTime.now().millisecondsSinceEpoch.toRadixString(36)}-$_ackIdCounter';
+  }
 
   // ─────────────────────────────────────────────
   // Connection
   // ─────────────────────────────────────────────
+  int _lastSeqId = 0;
   int _reconnectAttempt = 0;
+  static const int maxReconnectAttempts = 20;
   Timer? _reconnectTimer;
+  Timer? _pongTimeoutTimer;
   String? _lastUrl;
 
   @override
@@ -130,7 +166,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
     if (_isConnecting) return false;
     _isConnecting = true;
 
-    _lastUrl = wsUrl;
+    _lastUrl = wsUrl.replaceAll(RegExp(r'&?last_seq_id=\d+'), '');
     _isManuallyClosed = false;
     _connectionController.add(WSConnectionStatus.connecting);
 
@@ -154,6 +190,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
 
       _startHeartbeat();
       _flushQueue();
+      _resendPendingAcks();
 
       return true;
     } catch (e) {
@@ -176,7 +213,12 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
 
     log('Reconnecting');
     _isManuallyClosed = false;
-    return connect(wsUrl: _lastUrl!);
+
+    String url = _lastUrl!;
+    if (_lastSeqId > 0) {
+      url += '&last_seq_id=$_lastSeqId';
+    }
+    return connect(wsUrl: url);
   }
 
   // ─────────────────────────────────────────────
@@ -186,6 +228,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
     if (_isManuallyClosed) return;
     log('Socket disconnected');
     _isConnected = false;
+    _cancelPendingAckTimers();
     _connectionController.add(WSConnectionStatus.disconnected);
     _scheduleReconnect();
   }
@@ -193,6 +236,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
   void _handleError(Object error) {
     log('Socket error: $error');
     _isConnected = false;
+    _cancelPendingAckTimers();
     _connectionController.add(WSConnectionStatus.failed);
     _scheduleReconnect();
   }
@@ -204,17 +248,28 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
     if (_isManuallyClosed) return;
 
     _reconnectTimer?.cancel();
+
+    if (_reconnectAttempt >= maxReconnectAttempts) {
+      log('Max reconnect attempts ($maxReconnectAttempts) reached.');
+      _clearPendingAcks();
+      _isConnected = false;
+      _connectionController.add(WSConnectionStatus.failed);
+      return;
+    }
+
     _reconnectAttempt++;
 
-    // 2<<0=2s, 2<<1=4s, 2<<2=8s, 2<<3=16s, 2<<4=32s → clamped to 30s
-    final Duration delay = Duration(
-      seconds: (2 << (_reconnectAttempt.clamp(0, 4))).clamp(2, 30),
-    );
+    // Full-jitter exponential backoff: delay = random(0, min(30s, 1s * 2^attempt))
+    final double maxDelayMs =
+        min(1000 * pow(2, _reconnectAttempt), 30000).toDouble();
+    final int delayMs = Random().nextDouble() * maxDelayMs ~/ 1;
+    final Duration delay = Duration(milliseconds: delayMs);
 
-    log('Scheduled reconnect in ${delay.inSeconds}s (attempt $_reconnectAttempt)');
+    log('Scheduled reconnect in ${delay.inSeconds}s (attempt $_reconnectAttempt/$maxReconnectAttempts)'
+        ' [jitter 0–${maxDelayMs ~/ 1000}s]');
     _connectionController.add(WSConnectionStatus.reconnecting);
 
-    _reconnectTimer = Timer(delay, reconnect); // uses overridable reconnect
+    _reconnectTimer = Timer(delay, reconnect);
   }
 
   // ─────────────────────────────────────────────
@@ -226,6 +281,25 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
       final Map<String, dynamic> parsed = data is String
           ? jsonDecode(data) as Map<String, dynamic>
           : Map<String, dynamic>.from(data as Map<dynamic, dynamic>);
+
+      // Track server-assigned sequence ID for message replay on reconnect
+      final Object? seq = parsed['_seq'];
+      if (seq is int) {
+        _lastSeqId = max(_lastSeqId, seq);
+      }
+
+      // Handle explicit ack from server
+      if (parsed['type'] == 'ack' && parsed['_ack_id'] is String) {
+        _clearAck(parsed['_ack_id'] as String);
+        return;
+      }
+
+      // Dedup on echo: if a broadcast carries our _ack_id, the server already
+      // processed it — no need to wait for the ack message.
+      final Object? echoAckId = parsed['_ack_id'];
+      if (echoAckId is String && _pendingAcks.containsKey(echoAckId)) {
+        _clearAck(echoAckId);
+      }
 
       if (parsed['type'] == 'pong') {
         _handlePong();
@@ -253,20 +327,125 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
   // ─────────────────────────────────────────────
   @override
   void sendMessage(Map<String, dynamic> data) {
-    if (!_isConnected || _channel == null) {
-      _messageQueue.add(data);
-      return;
+    final String? type = data['type'] as String?;
+    final bool needsAck = type != 'ping';
+    if (needsAck) {
+      data['_ack_id'] = _nextAckId();
     }
 
-    try {
-      log('this is the data sent as message: $data');
-      _channel!.sink.add(jsonEncode(data));
-    } catch (e) {
-      log('Send error: $e');
-      _messageQueue.add(data);
+    final String raw = jsonEncode(data);
+
+    if (_isConnected && _channel != null) {
+      _sendWithAckTracking(data, raw);
+    } else {
+      _enqueue(data);
     }
   }
 
+  /// Enqueue a message with dedup for ephemeral types and a max size cap.
+  void _enqueue(Map<String, dynamic> data) {
+    final String? type = data['type'] as String?;
+    if (type == 'reaction' || type == 'ping') {
+      _messageQueue.removeWhere(
+        (Map<String, dynamic> m) => m['type'] == type,
+      );
+    }
+
+    _messageQueue.add(data);
+
+    if (_messageQueue.length > 100) {
+      _messageQueue.removeAt(0);
+    }
+  }
+
+  /// Send raw JSON string with ack tracking. If the message has `_ack_id`,
+  /// registers a pending ack entry with retry timer.
+  void _sendWithAckTracking(Map<String, dynamic> data, String raw) {
+    if (!_isConnected || _channel == null) return;
+
+    try {
+      _channel!.sink.add(raw);
+    } catch (e) {
+      log('Send error: $e');
+      _enqueue(data);
+      return;
+    }
+
+    final Object? ackId = data['_ack_id'];
+    if (ackId is String && !_pendingAcks.containsKey(ackId)) {
+      _pendingAcks[ackId] = _PendingAckEntry(
+        data: data,
+        raw: raw,
+        retries: 0,
+        timer: Timer(
+          Duration(milliseconds: _ackTimeoutMs),
+          () => _retryAck(ackId),
+        ),
+      );
+    }
+  }
+
+  void _clearAck(String ackId) {
+    final _PendingAckEntry? entry = _pendingAcks.remove(ackId);
+    entry?.timer.cancel();
+  }
+
+  void _retryAck(String ackId) {
+    final _PendingAckEntry? entry = _pendingAcks[ackId];
+    if (entry == null) return;
+
+    if (entry.retries >= _maxAckRetries) {
+      _pendingAcks.remove(ackId);
+      log('Ack failed after $_maxAckRetries retries: $ackId');
+      if (!_ackFailedController.isClosed) {
+        _ackFailedController.add(entry.data);
+      }
+      return;
+    }
+
+    entry.retries++;
+    if (_isConnected && _channel != null) {
+      try {
+        _channel!.sink.add(entry.raw);
+      } catch (_) {
+        _enqueue(entry.data);
+      }
+      entry.timer = Timer(
+        Duration(milliseconds: _ackTimeoutMs),
+        () => _retryAck(ackId),
+      );
+    }
+  }
+
+  void _resendPendingAcks() {
+    if (!_isConnected || _channel == null) return;
+
+    final List<MapEntry<String, _PendingAckEntry>> entries =
+        List<MapEntry<String, _PendingAckEntry>>.from(_pendingAcks.entries);
+    for (final MapEntry<String, _PendingAckEntry> entry in entries) {
+      entry.value.timer.cancel();
+      try {
+        _channel!.sink.add(entry.value.raw);
+      } catch (_) {}
+      entry.value.timer = Timer(
+        Duration(milliseconds: _ackTimeoutMs),
+        () => _retryAck(entry.key),
+      );
+    }
+  }
+
+  void _cancelPendingAckTimers() {
+    for (final _PendingAckEntry entry in _pendingAcks.values) {
+      entry.timer.cancel();
+    }
+  }
+
+  void _clearPendingAcks() {
+    _cancelPendingAckTimers();
+    _pendingAcks.clear();
+  }
+
+  /// Internal raw send (bypasses ack tracking — used for ping/pong only).
   void _sendRaw(Map<String, dynamic> data) {
     try {
       _channel?.sink.add(jsonEncode(data));
@@ -281,6 +460,9 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
     _reconnectTimer = null;
     _heartbeatTimer?.cancel();
     _heartbeatTimer = null;
+    _pongTimeoutTimer?.cancel();
+    _pongTimeoutTimer = null;
+    _cancelPendingAckTimers();
 
     await _subscription?.cancel();
     _subscription = null;
@@ -296,8 +478,8 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
   @override
   Future<void> disconnect() async {
     _isManuallyClosed = true;
+    _clearPendingAcks();
     await _cleanupConnection();
-    //_connectionController.add(WSConnectionStatus.disconnected);
   }
 
   @override
@@ -308,9 +490,11 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
 
   @override
   Future<void> dispose() async {
+    _clearPendingAcks();
     await disconnect();
     await _connectionController.close();
     await _messageController.close();
     await _unreadCountController.close();
+    await _ackFailedController.close();
   }
 }

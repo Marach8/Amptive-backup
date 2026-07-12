@@ -372,8 +372,25 @@ class _HomeTopHeaderDelegate extends SliverPersistentHeaderDelegate {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: ATHomeDropDown(
+                      child: ATGlassDropDown(
                         offset: const Offset(0, 56),
+                        items: <ATGlassDropdownItem>[
+                          ATGlassDropdownItem(
+                            title: 'Scheduled',
+                            iconWidget: const Icon(CupertinoIcons.calendar, size: 20, color: Colors.white),
+                            onTap: () => context.pushNamed(ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN),
+                          ),
+                          ATGlassDropdownItem(
+                            title: 'Following',
+                            iconWidget: const Icon(CupertinoIcons.person_crop_circle_badge_checkmark, size: 20, color: Colors.white),
+                            onTap: () => context.pushNamed(ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN),
+                          ),
+                          ATGlassDropdownItem(
+                            title: 'Subscribers',
+                            iconWidget: const Icon(CupertinoIcons.heart, size: 20, color: Colors.white),
+                            onTap: () => context.pushNamed(ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN),
+                          ),
+                        ],
                         child: Padding(
                           padding: const EdgeInsets.only(
                               top: 18.0, bottom: 6.0, left: 8.0, right: 8.0),

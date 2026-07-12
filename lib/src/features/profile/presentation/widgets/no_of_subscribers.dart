@@ -1,3 +1,4 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
@@ -6,17 +7,24 @@ import 'package:amptive/src/features/profile/presentation/widgets/no_of_follower
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../config/utils/extensions/integer_extensions.dart';
+
 class NoOfSubscribers extends StatelessWidget {
   const NoOfSubscribers({
     super.key,
+    required this.noOfSubscribers,
   });
+
+  final int? noOfSubscribers;
 
   @override
   Widget build(BuildContext context) {
+    final String? compactNumber = noOfSubscribers?.compactFormat;
     return InkWell(
       borderRadius: BorderRadius.circular(5),
       splashColor: ATColors.white.withValues(alpha: 0.5),
-      onTap: () => context.pushNamed(ATRoutes.PROFILE_SUBSCRIBERS_SCREEN),
+      onTap: () => context.pushNamed(
+        ATRoutes.profileSubscribersScreen),
       child: Row(
         children: <Widget>[
           CustomPaint(
@@ -27,12 +35,10 @@ class NoOfSubscribers extends StatelessWidget {
               child: Icon(Icons.favorite, color: ATColors.black, size: 12),
             ),
           ),
-          const SizedBox(
-            width: 2,
-          ),
+          const SizedBox(width: 2),
           Text(
-            '150k',
-            style: Theme.of(context)
+            compactNumber ?? '',
+            style: context
                 .textTheme
                 .bodySmall
                 ?.copyWith(fontSize: ATSizes.size16),
@@ -40,7 +46,7 @@ class NoOfSubscribers extends StatelessWidget {
           const SizedBox(width: 5),
           Text(
             ATStrings.subscribers,
-            style: Theme.of(context)
+            style: context
                 .textTheme
                 .bodySmall
                 ?.copyWith(fontSize: ATSizes.size16),

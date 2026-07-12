@@ -17,13 +17,17 @@ Future<String?> selectPaymentMethodDialog(
     {required BuildContext context, required String amount}) {
   final Map<String, String> paymentMethods = <String, String>{
     ATImgStrings.appleIcon: ATStrings.applePay,
-    ATImgStrings.flutterWaveIcon: ATStrings.flutterWave,
+   // ATImgStrings.flutterWaveIcon: ATStrings.flutterWave,
+    ATImgStrings.paystackIcon : ATStrings.paystack,
     ATImgStrings.googleIcon: ATStrings.googlePay,
   };
   return showCupertinoModalPopup<String>(
     context: context,
     barrierColor: ATColors.black,
     builder: (BuildContext dialogContext) {
+      debugPrint('brightness: ${Theme.of(context).brightness}');
+debugPrint('bodyMedium color: ${Theme.of(context).textTheme.bodyMedium?.color}');
+debugPrint('primary: ${Theme.of(context).colorScheme.primary}');
       return BlocProvider<_PaymentMethodBloc>(
         create: (_) => _PaymentMethodBloc(),
         child: Material(

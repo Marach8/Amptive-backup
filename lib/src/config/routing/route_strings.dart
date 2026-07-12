@@ -36,13 +36,13 @@ class ATRoutes {
 
   //MAIN APPLICATION
   static const String dashboard = "main_app_shell";
-  static const String liveShowDetailed = "show_detailed_screen";
-  static const String liveEventDetailed = "event_detailed_screen";
-  static const String SCHEDULED_EVENTS_OR_SHOWS_SCREEN =
+  static const String liveShowDetailedScreen = "show_detailed_screen";
+  static const String liveEventDetailedScreen = "event_detailed_screen";
+  static const String scheduledProgramsScreen =
       'scheduled_events_or_shows';
-  static const String SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN =
+  static const String subscribedProgramsScreen =
       'subscribed_events_or_shows';
-  static const String FOLLOWING_EVENTS_OR_SHOWS_SCREEN =
+  static const String followingProgramsScreen =
       'following_events_or_shows';
   static const String COMMUNITY_SCREEN = 'community_screen';
   static const String SOCIETY_SCREEN = 'society_screen';
@@ -50,16 +50,15 @@ class ATRoutes {
   static const String TRENDING_HASHTAGS_SCREEN = 'trending_hashtags_screen';
   static const String SOCIETY_HASHTAG_SCREEN = 'trending_hashtag_full_screen';
   static const String chooseEventOrShowScreen = 'go_live_welcome_screen';
-  static const String creatorProfileScreen = 'creator_profile';
-  static const String PROFILE_MENU_SCREEN = 'profile_menu_screen';
-  static const String PROFILE_FOLLOWING_SCREEN = 'profile_following_screen';
+  static const String mainProfileScreen = 'main_profile_screen';
+  static const String profileMenuScreen = 'profile_menu_screen';
+  static const String profileFollowersScreen = 'profile_following_screen';
   static const String updateEmailScreen = 'update_email_screen';
   static const String updatePhoneNoScreen = 'update_phone_no_screen';
   static const String updateNameScreen = 'update_name_screen';
   static const String updateUsernameScreen = 'update_username_screen';
   static const String updateDOBScreen = 'update_dob_screen';
-  static const String PROFILE_SUBSCRIBERS_SCREEN = 'profile_sub_screen';
-  static const String USER_PROFILE_SCREEN = 'user_profile';
+  static const String profileSubscribersScreen = 'profile_sub_screen';
   static const String listHostedShowsScreen = 'choose_or_create_show';
   static const String listHostedEventsScreen = 'choose_or_create_event';
   static const String programCreationSuccessScreen =
@@ -73,8 +72,8 @@ class ATRoutes {
   static const String editEpisodeScreen = 'edit_episode';
   static const String selectScheduleDateScreen = 'select_schedule_date';
   static const String previewEpisodeScreen = 'episode_preview';
-  static const String COMMUNITY_TASK_SCREEN = 'community_task';
-  static const String PROFILE_PIC_SCREEN = 'profile_picture';
+  static const String communityTaskScreen = 'community_task';
+  static const String profilePicFullViewScreen = 'profile_picture';
   static const String LANGUAGE_SCREEN = 'language_screen';
   static const String CALENDER_SCREEN = 'calender_screen';
   static const String PRIVACY_SCREEN = 'privacy_screen';
@@ -84,18 +83,18 @@ class ATRoutes {
   static const String ACCT_INFO_SCREEN = 'account_infomation_screen';
   static const String accountLandingScreen = 'account_screen';
   static const String enterEmailAndPhoneNoOtpScreen = "enter_email_and_phone_no_otp";
-  static const String EDIT_PROFILE = 'edit_profile';
-  static const String rectImageCropperScreen = 'profile_bg_crop';
-  static const String EDIT_NAME = 'edit_name';
-  static const String EDIT_USERNAME = 'edit_username';
-  static const String EDIT_BIO = 'edit_bio';
-  static const String EDIT_SOCIALS = 'edit_socials';
-  static const String SELECT_ACCT_TYPE = 'switch_account';
-  static const String SELECTED_ACCT = 'creator_landing';
-  static const String SELECT_CAT = 'select_category';
-  static const String creatorSubPlanSetup = 'creator_sub_plan';
-  static const String cohostFeeSetup = 'co_host_fee_setup';
-  static const String CREATOR_SUCCESS = 'creator_success';
+  static const String editProfile = 'edit_profile';
+  static const String imageCropperScreen = 'profile_bg_crop';
+  static const String editNameScreen = 'edit_name';
+  static const String editUsername = 'edit_username';
+  static const String editBio = 'edit_bio';
+  static const String editSocials = 'edit_socials';
+  static const String selectAcctTypeScreen = 'switch_account';
+  static const String selectedAcctOnboardScreen = 'creator_landing';
+  static const String selectCategoriesScreen = 'select_category';
+  static const String subPlanSetupScreen = 'creator_sub_plan';
+  static const String cohostFeeSetupScreen = 'co_host_fee_setup';
+  static const String accountUpgradeSuccessScreen = 'creator_success';
   static const String WALLET_ONBOARDING = 'wallet_landing';
   static const String WALLET_PIN_SETUP = 'wallet_pin_setup';
   static const String securityQuestionScreen = 'security_question';

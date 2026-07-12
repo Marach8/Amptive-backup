@@ -1,4 +1,5 @@
 import '../../../../global_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class NotifTile1 extends StatelessWidget {
@@ -42,7 +43,7 @@ class NotifTile1 extends StatelessWidget {
             decoration: BoxDecoration(
                 color: ATColors.black, borderRadius: BorderRadius.circular(7)),
             child: const ATImgLoader(
-              imgPath: ATImgStrings.AMPTIVE_LOGO,
+              imgPath: ATImgStrings.amptiveLogo,
               boxFit: BoxFit.cover,
             ),
           ),
@@ -150,3 +151,4 @@ class _TitleAndSubTitle extends StatelessWidget {
     );
   }
 }
+

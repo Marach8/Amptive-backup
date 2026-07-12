@@ -1,17 +1,15 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/profile/presentation/widgets/top_creators_communities_modal.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class TopCreatorBadge extends StatelessWidget {
-  const TopCreatorBadge({
-    super.key,
-  });
+  const TopCreatorBadge({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +28,15 @@ class TopCreatorBadge extends StatelessWidget {
           ]),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        spacing: 5,
         children: <Widget>[
-          const ATImgLoader(imgPath: ATImgStrings.TOP_CREATOR_BADGE),
-          const SizedBox(
-            width: 5,
+          const ATImgLoader(
+            imgPath: ATImgStrings.topCreatorIcon,
+            height: 13, width: 13,
           ),
           Text(
-            ATStrings.TOP_CREATORS_IN_SOCIETY,
-            style: Theme.of(context)
+            ATStrings.topCreatorInSociety,
+            style: context
                 .textTheme
                 .bodySmall
                 ?.copyWith(color: ATColors.hexEECEA0, fontSize: ATSizes.size13),

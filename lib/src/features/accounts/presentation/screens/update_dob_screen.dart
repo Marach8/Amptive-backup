@@ -1,9 +1,10 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async' show StreamController;
 import 'package:intl/intl.dart';
 
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -111,11 +112,11 @@ class _UpdateDOBScreenState extends State<UpdateDOBScreen> with ATValidators {
                             // Update LocalUserDataCubit directly
                             final String formattedDate =
                                 DateFormat('yyyy-MM-dd').format(selectedDOB!);
-                            final CachedUserData? currentData = context
+                            final ProfileData? currentData = context
                                 .read<LocalUserDataCubit>()
                                 .currentUserData;
-                            final CachedUserData updatedData =
-                                (currentData ?? const CachedUserData())
+                            final ProfileData updatedData =
+                                (currentData ?? const ProfileData())
                                     .copyWith(dob: formattedDate);
                             context
                                 .read<LocalUserDataCubit>()

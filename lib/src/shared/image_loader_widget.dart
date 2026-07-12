@@ -35,7 +35,7 @@ class ATImgLoader extends StatelessWidget {
         : ColorFilter.mode(color ?? ATColors.transparent, BlendMode.srcIn);
 
     //Network images
-    if (imgPath.startsWith('http://') || imgPath.startsWith('https://')) {
+    if (imgPath.startsWith('http')) {
       if (imageExtension == 'svg') {
         return SvgPicture.network(
           imgPath,

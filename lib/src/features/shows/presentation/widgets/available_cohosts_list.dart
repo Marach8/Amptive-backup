@@ -1,4 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/discover/cubits/users_cubits.dart';
 import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
@@ -233,3 +234,4 @@ class CohosListInitialLoadingShimmer extends StatelessWidget {
     );
   }
 }
+

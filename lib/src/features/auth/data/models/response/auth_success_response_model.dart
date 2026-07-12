@@ -27,6 +27,7 @@ class ATUser {
     this.dob,
     this.name,
     this.followersCount,
+    this.subscribersCount,
     this.pictureUrl, 
     this.phoneNumber,
   });
@@ -41,10 +42,12 @@ class ATUser {
       pictureUrl: json['profile_picture'] as String?,
       followersCount: json['followers_count'],
       phoneNumber: json['phone_number'] as String?,
+      subscribersCount: json['subscribers_count'],
     );
   }
-  final String? id, email, username, dob, name, pictureUrl, phoneNumber;
-  final int ? followersCount;
+  final String? id, email, username, dob, 
+    name, pictureUrl, phoneNumber;
+  final int? followersCount, subscribersCount;
 }
 
 

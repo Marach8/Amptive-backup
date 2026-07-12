@@ -6,6 +6,6 @@ export 'font_weights.dart';
 export 'image_strings.dart';
 export 'other_strings.dart';
 export 'lottie_animation_strings.dart';
-export 'extensions/extensions_export.dart';
+export 'extensions/integer_extensions.dart';
 export 'validator.dart';
 export 'helper_functions.dart';

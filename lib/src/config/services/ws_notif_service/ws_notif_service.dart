@@ -18,4 +18,6 @@ abstract class WSNotificationService{
   void clearUnread();
 
   Future<void> dispose();
+
+  Stream<Map<String, dynamic>> get ackFailedStream;
 }

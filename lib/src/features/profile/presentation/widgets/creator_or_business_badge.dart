@@ -1,31 +1,35 @@
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/features/upgrade_account/presentation/screens/select_acct_type_screen.dart';
 import 'package:flutter/material.dart';
 
-class CreatorOrBizBadge extends StatelessWidget {
-  const CreatorOrBizBadge(
-      {super.key, this.width, this.height, this.radius, this.isCreator = true});
+class AccountUpgradeBadge extends StatelessWidget {
+  const AccountUpgradeBadge({
+    super.key,
+    this.width,
+    this.height,
+    this.radius,
+    required this.accountType,
+  });
   final double? height, width, radius;
-  final bool? isCreator;
+  final AccountType accountType;
 
   @override
   Widget build(BuildContext context) {
-    return ATContainer(
+    return Container(
       height: height,
       width: width,
-      color: ATColors.hexFED601,
-      radius: radius ?? 10,
       padding: const EdgeInsets.fromLTRB(5, 0, 5, 1),
-      border: Border.all(color: ATColors.black, width: 2),
+      decoration: BoxDecoration(
+        color: ATColors.hexFED601,
+        border: Border.all(color: ATColors.black, width: 2),
+        borderRadius: BorderRadius.circular(radius ?? 10),
+      ),
       child: Text(
-        (isCreator ?? false ? ATStrings.CREATOR : ATStrings.BUSINESS)
-            .toUpperCase(),
-        style: Theme.of(context)
-            .textTheme
-            .bodyMedium
-            ?.copyWith(fontSize: ATSizes.size10, color: ATColors.black),
+        accountType.value.toUpperCase(),
+        style: context.textTheme.bodyMedium
+          ?.copyWith(fontSize: ATSizes.size10, color: ATColors.black),
       ),
     );
   }

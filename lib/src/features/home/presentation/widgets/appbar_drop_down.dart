@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:native_liquid_glass/native_liquid_glass.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
@@ -7,16 +8,37 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../../config/utils/extensions/context_extensions.dart';
 
-class ATHomeDropDown extends StatefulWidget {
-  const ATHomeDropDown({super.key, required this.child, this.offset});
+class ATGlassDropdownItem {
+  const ATGlassDropdownItem({
+    required this.title,
+    required this.iconWidget,
+    required this.onTap,
+    this.textColor,
+  });
+
+  final String title;
+  final Widget iconWidget;
+  final VoidCallback onTap;
+  final Color? textColor;
+}
+
+class ATGlassDropDown extends StatefulWidget {
+  const ATGlassDropDown({
+    super.key, 
+    required this.child, 
+    required this.items, 
+    this.offset
+  });
+  
   final Widget child;
+  final List<ATGlassDropdownItem> items;
   final Offset? offset;
 
   @override
-  State<ATHomeDropDown> createState() => _ATHomeDropDownState();
+  State<ATGlassDropDown> createState() => _ATGlassDropDownState();
 }
 
-class _ATHomeDropDownState extends State<ATHomeDropDown>
+class _ATGlassDropDownState extends State<ATGlassDropDown>
     with SingleTickerProviderStateMixin {
   OverlayEntry? _overlayEntry;
   late final AnimationController _animController;
@@ -100,21 +122,17 @@ class _ATHomeDropDownState extends State<ATHomeDropDown>
                   );
                 },
                 child: GlassFilterDropdown(
-                  onFollowingTap: () {
-                    _removeOverlay();
-                    context
-                        .pushNamed(ATRoutes.FOLLOWING_EVENTS_OR_SHOWS_SCREEN);
-                  },
-                  onSubscribersTap: () {
-                    _removeOverlay();
-                    context
-                        .pushNamed(ATRoutes.SUBSCRIBED_EVENTS_OR_SHOWS_SCREEN);
-                  },
-                  onScheduledTap: () {
-                    _removeOverlay();
-                    context
-                        .pushNamed(ATRoutes.SCHEDULED_EVENTS_OR_SHOWS_SCREEN);
-                  },
+                  items: widget.items.map((ATGlassDropdownItem item) {
+                    return ATGlassDropdownItem(
+                      title: item.title,
+                      iconWidget: item.iconWidget,
+                      textColor: item.textColor,
+                      onTap: () {
+                        _removeOverlay();
+                        item.onTap();
+                      },
+                    );
+                  }).toList(),
                 ),
               ),
             ),
@@ -142,30 +160,25 @@ class _ATHomeDropDownState extends State<ATHomeDropDown>
 class GlassFilterDropdown extends StatelessWidget {
   const GlassFilterDropdown({
     super.key,
-    required this.onFollowingTap,
-    required this.onSubscribersTap,
-    required this.onScheduledTap,
+    required this.items,
   });
 
-  static const double width = 175;
-  static const double height = 154; // Increased to fit 3 items
-  static const double borderRadius = 28;
-  static const double frost =
-      35.0; // Increased significantly for heavy distortion/blur
-  static const double depth = 42.46;
+  final List<ATGlassDropdownItem> items;
 
-  final VoidCallback onFollowingTap;
-  final VoidCallback onSubscribersTap;
-  final VoidCallback onScheduledTap;
+  static const double width = 175;
+  static const double borderRadius = 28;
+  static const double frost = 35.0;
+  static const double depth = 42.46;
 
   @override
   Widget build(BuildContext context) {
+    final double height = 16.0 + (items.length * 46.0);
+    
     final Widget menuContent = Stack(
       children: <Widget>[
         Positioned.fill(
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: const Color(0xFF202024).withValues(alpha: 0.34),
               borderRadius: BorderRadius.circular(borderRadius),
               gradient: LinearGradient(
                 begin: Alignment.topRight,
@@ -193,34 +206,14 @@ class GlassFilterDropdown extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: _GlassFilterDropdownRow(
-                    title: 'Scheduled',
-                    iconWidget: const Icon(CupertinoIcons.calendar,
-                        size: 20, color: Colors.white),
-                    onTap: onScheduledTap,
-                  ),
+              children: items.map((ATGlassDropdownItem item) => Expanded(
+                child: _GlassFilterDropdownRow(
+                  title: item.title,
+                  iconWidget: item.iconWidget,
+                  textColor: item.textColor,
+                  onTap: item.onTap,
                 ),
-                Expanded(
-                  child: _GlassFilterDropdownRow(
-                    title: 'Following',
-                    iconWidget: const Icon(
-                        CupertinoIcons.person_crop_circle_badge_checkmark,
-                        size: 20,
-                        color: Colors.white),
-                    onTap: onFollowingTap,
-                  ),
-                ),
-                Expanded(
-                  child: _GlassFilterDropdownRow(
-                    title: 'Subscribers',
-                    iconWidget: const Icon(CupertinoIcons.heart,
-                        size: 20, color: Colors.white),
-                    onTap: onSubscribersTap,
-                  ),
-                ),
-              ],
+              )).toList(),
             ),
           ),
         ),
@@ -254,49 +247,15 @@ class GlassFilterDropdown extends StatelessWidget {
                     shape: LiquidGlassEffectShape.rect,
                     cornerRadius: borderRadius,
                     effect: LiquidGlassEffect.regular,
-                    tint: Colors.black87,
+                    tint: Colors.black38,
                   ),
                   child: menuContent,
                 )
               : ClipRRect(
                   borderRadius: BorderRadius.circular(borderRadius),
                   child: ColoredBox(
-                    color: const Color(
-                        0xFF1C1C1E), // Solid opaque dark grey for Android
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Column(
-                        children: <Widget>[
-                          Expanded(
-                            child: _GlassFilterDropdownRow(
-                              title: 'Scheduled',
-                              iconWidget: const Icon(CupertinoIcons.calendar,
-                                  size: 20, color: Colors.white),
-                              onTap: onScheduledTap,
-                            ),
-                          ),
-                          Expanded(
-                            child: _GlassFilterDropdownRow(
-                              title: 'Following',
-                              iconWidget: const Icon(
-                                  CupertinoIcons
-                                      .person_crop_circle_badge_checkmark,
-                                  size: 20,
-                                  color: Colors.white),
-                              onTap: onFollowingTap,
-                            ),
-                          ),
-                          Expanded(
-                            child: _GlassFilterDropdownRow(
-                              title: 'Subscribers',
-                              iconWidget: const Icon(CupertinoIcons.heart,
-                                  size: 20, color: Colors.white),
-                              onTap: onSubscribersTap,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    color: const Color(0xFF1C1C1E),
+                    child: menuContent,
                   ),
                 ),
         ),
@@ -352,11 +311,13 @@ class _GlassFilterDropdownRow extends StatefulWidget {
     required this.title,
     required this.iconWidget,
     required this.onTap,
+    this.textColor,
   });
 
   final String title;
   final Widget iconWidget;
   final VoidCallback onTap;
+  final Color? textColor;
 
   @override
   State<_GlassFilterDropdownRow> createState() =>
@@ -396,11 +357,10 @@ class _GlassFilterDropdownRowState extends State<_GlassFilterDropdownRow> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.white.withValues(alpha: 0.96),
+                      color: widget.textColor ?? Colors.white.withValues(alpha: 0.96),
                       fontSize: 15, // iOS Context Menu standard
                       fontWeight: FontWeight.w400,
-                      letterSpacing:
-                          -0.24, // iOS San Francisco default tracking
+                      letterSpacing: -0.24, // iOS San Francisco default tracking
                     ),
               ),
             ),
@@ -452,6 +412,7 @@ class ATStringsDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
+      tooltip: '',
       offset: offset ?? const Offset(0, 50),
       onSelected: onSelected,
       constraints: width != null ? BoxConstraints.tightFor(width: width) : null,

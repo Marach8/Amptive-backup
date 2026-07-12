@@ -1,5 +1,8 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/wallet/cubits/transaction_history_cubit.dart';
 import 'package:amptive/src/features/wallet/data/models/models_export.dart';
 import 'package:amptive/src/features/wallet/data/models/response/transaction_history_response_model.dart';
@@ -14,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
-import '../../../../shared/annotated_region__widget.dart';
+import '../../../../shared/annotated_region_widget.dart';
 
 class ATWalletLandingScreenWrapper extends StatelessWidget {
   const ATWalletLandingScreenWrapper({super.key});
@@ -52,13 +55,15 @@ class _WalletLandingScreenState extends State<_WalletLandingScreen> {
       context.read<WalletBalanceCubit>().fetchWalletBalance();
       context.read<TransactionHistoryCubit>().fetchTransactionHistory();
     });
-    
-    }
+  }
+
+
+  
     
   @override
   Widget build(BuildContext context) {
     bool shouldShowCommingSoon = false;
-     final CachedUserData? userData =
+     final ProfileData? userData =
         context.read<LocalUserDataCubit>().currentUserData;
 
      return ATAnnotatedRegion(
@@ -141,7 +146,7 @@ class _WalletLandingScreenState extends State<_WalletLandingScreen> {
                return Column(
                   children: List.generate(2, (_) => const Padding(
                     padding: EdgeInsets.only(bottom: 10),
-                    child: TransactionHistoryItem(), // ← the single tile shimmer, not the full ListView
+                    child: TransactionHistoryItem(), // â† the single tile shimmer, not the full ListView
                   )),
                 );
               }
@@ -216,3 +221,4 @@ class _WalletLandingScreenState extends State<_WalletLandingScreen> {
     
   }
 }
+

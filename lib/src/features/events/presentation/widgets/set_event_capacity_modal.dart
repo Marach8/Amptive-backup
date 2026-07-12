@@ -2,18 +2,17 @@ import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
-
-
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 
 
-Future<String?> showEventCapacitySelectionDialog({
+Future<int?> showEventCapacitySelectionDialog({
   required BuildContext context,
-  required String? currentCapacity,
+  required int? currentCapacity,
 }) async {
-  return await showModalBottomSheet<String>(
+  return await showModalBottomSheet<int>(
       context: context,
       useSafeArea: true,
       isScrollControlled: true,
@@ -42,7 +41,7 @@ class _SubPlanWidget extends StatefulWidget {
     required this.scrollController,
   });
 
-  final String? currentCapacity;
+  final int? currentCapacity;
   final ScrollController scrollController;
 
   @override
@@ -57,7 +56,8 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
   void initState() {
     super.initState();
     _capacityCntrl = TextEditingController(
-      text: widget.currentCapacity
+      text: widget.currentCapacity == null ? ''
+        : widget.currentCapacity.toString()
     );
   }
 
@@ -132,7 +132,7 @@ class _AddSubPlanWidgetState extends State<_SubPlanWidget> {
                   fgColor: ATColors.black,
                   bgColor: ATColors.white,
                   onPressed: shouldSet ? () {
-                    context.pop(value.text.trim());
+                    context.pop(int.tryParse(value.text.trim()));
                   }
                 : null,
                 btnTitle: ATStrings.setCapacity);

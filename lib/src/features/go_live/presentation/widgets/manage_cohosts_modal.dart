@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
@@ -10,6 +11,7 @@ import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/shared/search_filter_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -162,7 +164,7 @@ class _ResendInviteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CachedUserData? currUserData = context
+    final ProfileData? currUserData = context
       .read<LocalUserDataCubit>().currentUserData;
 
     

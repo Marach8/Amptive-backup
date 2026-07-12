@@ -8,7 +8,7 @@ import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/wallet/bloc/recent_receipients_bloc.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/transaction_amount_screen.dart'
     show TransactionAmountScreenParams, TransactionType;
-import 'package:amptive/src/shared/annotated_region__widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';

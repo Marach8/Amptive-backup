@@ -52,7 +52,7 @@ mixin ATValidators {
 
   String? validatePassword(String? password) {
     final RegExp regex =
-        RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$');
+        RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$');
 
     if (password == null || password.isEmpty) {
       return ATStrings.emptyField;

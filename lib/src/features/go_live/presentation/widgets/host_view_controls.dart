@@ -89,7 +89,7 @@ class _HostModerationControlsState extends State<HostModerationControls> {
   @override
   Widget build(BuildContext context) {
     final String profilePic = context.read<LocalUserDataCubit>()
-      .currentUserData?.pictureUrl ?? '';
+      .currentUserData?.profilePhoto ?? '';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -112,7 +112,7 @@ class _HostModerationControlsState extends State<HostModerationControls> {
               onTap: () {
                 showHostModerationToolsDialog(
                   context: context,
-                  hostModeratioCubit: context.read<HostModerationCubit>(),
+                  liveStreamCubit: context.read<LiveStreamCubit1>(),
                 );
               },
               child: const Icon(Icons.settings, size: 20),

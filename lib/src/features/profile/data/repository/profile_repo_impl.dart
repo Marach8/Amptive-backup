@@ -1,3 +1,4 @@
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:developer';
 
 import 'package:amptive/src/config/api_response_and_app_state.dart';
@@ -5,9 +6,9 @@ import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/exception.dart';
 import 'package:amptive/src/config/services/network_service/dio_network_service_impl.dart';
 import 'package:amptive/src/config/services/network_service/network_service.dart';
-import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/profile/data/models/followers_response_model.dart';
-import 'package:amptive/src/features/profile/data/models/request/create_professional_profile_request.dart';
+import 'package:amptive/src/features/profile/data/models/request/upgrade_account_data.dart';
 import 'package:amptive/src/features/profile/data/repository/profile_repo.dart';
 import 'package:dio/dio.dart';
 
@@ -18,56 +19,39 @@ class ProfileRepoImpl implements ProfileRepo {
   final NetworkService networkService;
 
   @override
-  Future<ApiResponse<UserProfileResponseModel>> fetchUserProfile() async {
+  Future<ApiResponse<ProfileData>> fetchUserProfile() async {
     try {
       final Response<dynamic> response =
           await networkService.get(ATEndpoints.getUserprofile);
-      final UserProfileResponseModel userProfile = UserProfileResponseModel.fromJson(response.data);
-      return Successful<UserProfileResponseModel>(data: userProfile);
+      final ProfileData userProfile = ProfileData
+        .fromRemoteJson(response.data['data']);
+      return Successful<ProfileData>(data: userProfile);
     } catch (e) {
       log('Error in getting user profile');
-      return Unsuccessful<UserProfileResponseModel>(
-          
+      return Unsuccessful<ProfileData>(
           error: ATException.resolveException(e));
     }
   }
 
   @override
-Future<ApiResponse<dynamic>> updateUserProfile({
-  String? profilePicture,
-  String? name,
-  String? username,
-  String? bio,
-  String? country,
-  String? coverPhoto,
-  String? xUrl,
-  String? instagramUrl,
-  String? linkedinUrl,
-  String? websiteUrl,
-}) async {
-  try {
-    final Map<String, dynamic> body = <String, dynamic>{};
-    
-    if (profilePicture != null) body["profile_picture"] = profilePicture;
-    if (name != null) body["name"] = name;
-    if (username != null) body["username"] = username;
-    if (bio != null) body["bio"] = bio;
-    if (country != null) body["country"] = country;
-    if (coverPhoto != null) body["cover_photo"] = coverPhoto;
-    if (xUrl != null) body["x_url"] = xUrl;
-    if (instagramUrl != null) body["instagram_url"] = instagramUrl;
-    if (linkedinUrl != null) body["linkedin_url"] = linkedinUrl;
-    if (websiteUrl != null) body["website_url"] = websiteUrl;
+  Future<ApiResponse<ProfileData>> updateUserProfile({
+    required ProfileData userProfileData,
+  }) async {
+    try {
+      final Map<String, dynamic> body = userProfileData.toRemoteJson();
 
-    final Response<dynamic> response = await networkService.patch(
-      ATEndpoints.updateUserProfile,
-      data: body,
-    );
-    return Successful<dynamic>(data: response.data);
-  } catch (e) {
-    return Unsuccessful<dynamic>(error: ATException.resolveException(e));
+      final Response<dynamic> response = await networkService.patch(
+        ATEndpoints.myself,
+        data: body,
+      );
+      final ProfileData updatedProfile = 
+        ProfileData.fromRemoteJson(response.data['data']);
+      return Successful<ProfileData>(data: updatedProfile);
+    } catch (e) {
+      return Unsuccessful<ProfileData>(
+        error: ATException.resolveException(e));
+    }
   }
-}
 
 
   
@@ -85,15 +69,18 @@ Future<ApiResponse<dynamic>> updateUserProfile({
           'page_size': pageSize,
         },
       );
-      return Successful<FollowersResponseModel>(data: FollowersResponseModel.fromJson(response.data));
+      return Successful<FollowersResponseModel>(
+        data: FollowersResponseModel.fromJson(response.data));
     } catch (e) {
       log('Error in getting followers');
-      return Unsuccessful<FollowersResponseModel>(error: ATException.resolveException(e));
+      return Unsuccessful<FollowersResponseModel>(
+        error: ATException.resolveException(e));
     }
   }
 
   @override
-Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> param}) async {
+Future<ApiResponse<String>> sendEmailAndPhoneOtp(
+  {required Map<String, dynamic> param}) async {
   try {
     final Response<dynamic> response = await networkService.patch(
       ATEndpoints.updateEmailAndPhone,
@@ -126,13 +113,13 @@ Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> 
   }
 
   @override
-  Future<ApiResponse<dynamic>> createProfessionalProfile({
-    required ProfessionalProfileData param,
+  Future<ApiResponse<dynamic>> upgradeAccount({
+    required UpgradeProfileData param,
   }) async {
     try {
       final Response<dynamic> response = await networkService.post(
-        ATEndpoints.createProfessionalProfile,
-        data: param,
+        ATEndpoints.upgradeAccount,
+        data: param.toJson(),
       );
 
       return Successful<dynamic>(data: response.data);
@@ -143,5 +130,4 @@ Future<ApiResponse<String>> sendEmailAndPhoneOtp({required Map<String, dynamic> 
       );
     }
   }
-
 }

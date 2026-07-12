@@ -20,12 +20,10 @@ void main() async {
   await _initializeRedirect();
 
   runApp(
-    MaterialApp(
-      home: MultiBlocProvider(
-        providers: providers(),
-        //child: const LivestreamPage(),
-        child: const AmptiveApp(),
-      ),
+    MultiBlocProvider(
+      providers: providers(),
+      //child: const LivestreamPage(),
+      child: const AmptiveApp(),
     ),
   );
 
@@ -42,10 +40,7 @@ void main() async {
 
 Future<void> _initializeRedirect() async {
   const FlutterSecureStorage storage = FlutterSecureStorage();
-  await storage.write(
-    key: ATStrings.shouldRedirect,
-    value: true.toString()
-  );
+  await storage.write(key: ATStrings.shouldRedirect, value: true.toString());
 }
 
 class AmptiveApp extends StatefulWidget {
@@ -75,8 +70,7 @@ class _AmptiveAppState extends State<AmptiveApp> {
           providers: <SingleChildWidget>[
             BlocProvider<LocalUserDataCubit>(
                 create: (_) => LocalUserDataCubit()),
-            BlocProvider<AuthGuardCubit>
-              .value(value: authGuardCubit),
+            BlocProvider<AuthGuardCubit>.value(value: authGuardCubit),
           ],
           child: MaterialApp.router(
             scaffoldMessengerKey: scaffoldMessengerKey,
