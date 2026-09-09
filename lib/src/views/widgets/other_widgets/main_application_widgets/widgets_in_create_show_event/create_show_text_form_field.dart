@@ -21,7 +21,7 @@ class CreateShowTextFormField extends ATTextFormField {
       this.readOnly = false,
       this.maxLength = 400,
       this.maxLines = 1,
-      this.counterText = ""});
+      this.counterText = ''});
 
   @override
   final bool readOnly;
@@ -52,13 +52,13 @@ class CreateShowTextFormField extends ATTextFormField {
         hintText: hintText,
         hintStyle: TextStyle(
           fontSize: ATSizes.size14,
-          color: ATColors.white.withOpacity(0.4),
+          color: ATColors.white.withValues(alpha: 0.4),
           fontWeight: ATFontWeights.w500,
         ),
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         filled: true,
-        fillColor: ATColors.white.withOpacity(0.1),
+        fillColor: ATColors.white.withValues(alpha: 0.1),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2.w,
@@ -118,11 +118,11 @@ class CreateShowTextFieldTitle extends StatelessWidget {
           width: 1.w,
         )),
         Text(
-          otherInfo ?? "",
+          otherInfo ?? '',
           style: Theme.of(context)
               .textTheme
               .titleSmall
-              ?.copyWith(color: ATColors.white.withOpacity(0.4)),
+              ?.copyWith(color: ATColors.white.withValues(alpha: 0.4)),
         ),
       ],
     );
@@ -150,7 +150,7 @@ class SelectedHashTags extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(10.w),
               decoration: BoxDecoration(
-                color: ATColors.white.withOpacity(0.1),
+                color: ATColors.white.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Row(
@@ -159,7 +159,7 @@ class SelectedHashTags extends StatelessWidget {
                     hashtag.obj.name,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: ATSizes.size10,
-                          color: ATColors.white.withOpacity(0.7),
+                          color: ATColors.white.withValues(alpha: 0.7),
                         ),
                   ),
                   SizedBox(width: 4.w),
@@ -168,7 +168,7 @@ class SelectedHashTags extends StatelessWidget {
                     child: Icon(
                       Icons.close,
                       size: 16,
-                      color: ATColors.white.withOpacity(0.7),
+                      color: ATColors.white.withValues(alpha: 0.7),
                     ),
                   ),
                 ],

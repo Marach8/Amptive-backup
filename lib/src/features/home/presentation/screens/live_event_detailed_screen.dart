@@ -1,18 +1,18 @@
-import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
-import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
-import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
-import 'package:amptive/src/config/utils/dialogs/dialog_export.dart';
-import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
-import 'package:amptive/src/features/home/presentation/widgets/render_live_listeners.dart';
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
+
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/get_live_program_entry_token_cubit.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
+import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
+import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
+import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_live_listeners.dart';
 import 'package:amptive/src/features/home/presentation/widgets/row_of_paid_show_and_play_button_widget.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/features/wallet/cubits/one_time_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/one_time_process_payment_dialog.dart';
@@ -28,9 +28,10 @@ import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:readmore/readmore.dart';
+
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
-import '../widgets/whispers_list.dart';
 import '../../data/models/response/home_feed_response_model.dart';
+import '../widgets/whispers_list.dart';
 
 
 class LiveEventDetailedScreen extends StatefulWidget {

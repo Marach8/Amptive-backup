@@ -1,7 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/wallet/cubits/one_time_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/data/models/response/one_time_payment_response_model.dart';
@@ -9,9 +8,7 @@ import 'package:amptive/src/features/wallet/data/models/response/verify_payment_
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 

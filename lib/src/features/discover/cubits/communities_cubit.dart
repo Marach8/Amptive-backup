@@ -1,9 +1,9 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo_impl.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amptive/src/config/api_response_and_app_state.dart';
 
 class CommunitiesCubit extends Cubit<ATAppState<CommunitiesResponseModel>> {
   CommunitiesCubit({

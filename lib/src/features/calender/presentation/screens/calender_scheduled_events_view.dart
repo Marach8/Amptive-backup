@@ -1,13 +1,14 @@
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/features/calender/cubits/calender_programs_bloc.dart';
 import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/services/go_live_service/go_live_service.dart';
-import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/shared/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+
 import '../widgets/calender_program_display.dart';
 
 class ScheduledEventsView extends StatelessWidget {

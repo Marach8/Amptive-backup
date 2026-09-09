@@ -1,4 +1,6 @@
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/features/discover/cubits/trending_hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/data/models/response/trending_hashtags_response_model.dart';
 import 'package:amptive/src/features/discover/discover_export.dart';
@@ -8,8 +10,6 @@ import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 
 class TrendingHashTagsScreen extends StatelessWidget {
   const TrendingHashTagsScreen({super.key});

@@ -2,6 +2,16 @@ import 'package:amptive/src/features/events/data/models/response/event_response_
 
 class SearchEventsResponseModel {
 
+  const SearchEventsResponseModel({
+    this.query,
+    this.resource,
+    this.events,
+    this.total,
+    this.page,
+    this.pageSize,
+    this.totalPages,
+  });
+
   factory SearchEventsResponseModel.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic> data = json['data'] as Map<String, dynamic>? ?? <String, dynamic>{};
 
@@ -24,14 +34,4 @@ class SearchEventsResponseModel {
   final int? page;
   final int? pageSize;
   final int? totalPages;
-
-  const SearchEventsResponseModel({
-    this.query,
-    this.resource,
-    this.events,
-    this.total,
-    this.page,
-    this.pageSize,
-    this.totalPages,
-  });
 }

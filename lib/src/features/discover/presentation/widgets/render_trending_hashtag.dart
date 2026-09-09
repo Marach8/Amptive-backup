@@ -90,7 +90,7 @@ class PaidIcon extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Text(
-          "P",
+          'P',
           style: Theme.of(context).textTheme.displayMedium?.copyWith(
               color: ATColors.hex0D0D0D, fontWeight: FontWeight.w800),
         ),

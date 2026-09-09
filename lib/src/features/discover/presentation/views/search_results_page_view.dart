@@ -1,6 +1,6 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/discover/cubits/hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/search_events_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/search_hashtags_cubits.dart';

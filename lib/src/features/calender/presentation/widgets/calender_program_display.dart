@@ -1,11 +1,11 @@
 import 'package:amptive/src/config/config_export.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/calender/cubits/calender_programs_bloc.dart';
 import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/shared/show_event_nd_paid_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 
 class CalenderProgramDisplay extends StatelessWidget {
   const CalenderProgramDisplay({super.key, required this.program});

@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
+import 'package:amptive/src/config/utils/logging/app_logger.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ATInterceptorClass extends Interceptor {
@@ -32,8 +30,9 @@ class ATInterceptorClass extends Interceptor {
       if (token != null && token.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $token';
       }
-    } catch (e) {
-      debugPrint(e.toString());
+    } catch (e, st) {
+      AppLogger.instance.error('Failed to attach auth token',
+          error: e, stackTrace: st, tag: 'ATInterceptor');
     }
 
     return handler.next(options);
@@ -62,8 +61,10 @@ class AuthGuardCubit extends Cubit<bool> {
   bool _hasHandledUnAuthentication = false;
 
   void triggerUnauthenticated() {
-    log('This is the value of hasHandledAuth $_hasHandledUnAuthentication');
-    
+    AppLogger.instance.debug(
+        'This is the value of hasHandledAuth $_hasHandledUnAuthentication',
+        tag: 'AuthGuard');
+
     if (_hasHandledUnAuthentication) return;
 
     _hasHandledUnAuthentication = true;

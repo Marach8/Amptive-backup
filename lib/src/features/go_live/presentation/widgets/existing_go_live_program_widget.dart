@@ -48,7 +48,7 @@ class ExistingGoLiveProgramWidget extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     maxLines: 2,
-                    "We Can Do Hard Things",
+                    'We Can Do Hard Things',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Row(

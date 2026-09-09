@@ -1,19 +1,17 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/dialogs/notification/view_cohost_invite.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/data/models/get_notifications_response_model.dart';
-import 'package:amptive/src/config/utils/dialogs/notification/view_cohost_invite.dart';
 import 'package:amptive/src/features/notifications/presentation/widgets/notif_widgets_export.dart';
 import 'package:amptive/src/services/create_show/create_show_service.dart';
-import 'package:amptive/src/services/create_show/create_show_service.dart';
+import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/shimmer.dart';
-import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
-import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NotificationTabView extends StatelessWidget {

@@ -1,9 +1,11 @@
 import 'dart:math';
-import 'package:amptive/src/config/utils/other_strings.dart';
+
 import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../config/utils/extensions/context_extensions.dart';
 import '../../../../config/utils/extensions/integer_extensions.dart';
 
@@ -67,22 +69,22 @@ class RoundedScallopedPainter extends CustomPainter {
     final double scallopRadius = size.width / 10; // Radius of each scallop
 
     for (int i = 0; i < scallopCount; i++) {
-      double theta1 = (2 * pi / scallopCount) * i; // Start angle of the scallop
-      double theta2 =
+      final double theta1 = (2 * pi / scallopCount) * i; // Start angle of the scallop
+      final double theta2 =
           (2 * pi / scallopCount) * (i + 1); // End angle of the scallop
 
       // Points for the scallop curve
-      Offset startPoint = Offset(
+      final Offset startPoint = Offset(
         center.dx + (radius - scallopRadius) * cos(theta1),
         center.dy + (radius - scallopRadius) * sin(theta1),
       );
-      Offset endPoint = Offset(
+      final Offset endPoint = Offset(
         center.dx + (radius - scallopRadius) * cos(theta2),
         center.dy + (radius - scallopRadius) * sin(theta2),
       );
 
       // Control point for smooth curves between scallops
-      Offset controlPoint = Offset(
+      final Offset controlPoint = Offset(
         center.dx + radius * cos((theta1 + theta2) / 2),
         center.dy + radius * sin((theta1 + theta2) / 2),
       );

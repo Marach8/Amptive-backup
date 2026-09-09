@@ -1,23 +1,21 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
-import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/utils_export.dart';
-import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/signup_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
-import 'package:amptive/src/features/auth/data/models/response/auth_success_response_model.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
-import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/progress_stage_loading_widget.dart';
 import 'package:amptive/src/shared/rich_text.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../shared/app_bar_widget.dart';
 
 class AddNameScreen extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/utils/helper_functions.dart';
 import 'package:amptive/src/features/wallet/bloc/wallet_bloc_export.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -58,7 +58,7 @@ Future<String?> selectWithdrawalBankDialog(BuildContext context) {
                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 8),
                     child: Text(
                       maxLines: 2,
-                      "Choose your bank",
+                      'Choose your bank',
                       style: context.textTheme.headlineLarge
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),

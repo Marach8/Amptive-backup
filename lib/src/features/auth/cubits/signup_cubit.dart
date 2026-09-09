@@ -1,20 +1,19 @@
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
 import 'package:amptive/src/features/auth/data/models/response/auth_success_response_model.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum SignupStage {
-  stage1("We are creating your account"),
-  stage2("Join or create live audio events"),
-  stage3("Subscribe and support creators"),
-  stage4("We are creating your account");
+  stage1('We are creating your account'),
+  stage2('Join or create live audio events'),
+  stage3('Subscribe and support creators'),
+  stage4('We are creating your account');
 
   const SignupStage(this.value);
   final String value;

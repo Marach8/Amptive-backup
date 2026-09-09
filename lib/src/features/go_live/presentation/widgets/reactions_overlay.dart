@@ -1,10 +1,7 @@
-import 'dart:math';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amptive/src/livestream/livestream.dart';
-import '../../go_live_export.dart';
 
 class ReactionsOverlay extends StatefulWidget {
   const ReactionsOverlay({super.key});
@@ -32,7 +29,7 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
   Widget build(BuildContext context) {
     return BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
       builder: (BuildContext context, LiveStreamState1 state) {
-        final int currentCount = 2;
+        const int currentCount = 2;
 
         // Only trigger animation when a NEW reaction is added
         if (currentCount > _previousReactionCount && currentCount > 0) {

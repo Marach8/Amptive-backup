@@ -1,10 +1,8 @@
-import 'package:amptive/example_stream.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/services/network_service/interceptor.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/services/notification/push_notification_service.dart';
 import 'package:amptive/src/services/websocket/user_ws_service.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

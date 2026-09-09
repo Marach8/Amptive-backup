@@ -1,8 +1,8 @@
-import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/data/repository/episodes_repo.dart';
 import 'package:amptive/src/features/episodes/data/repository/episodes_repo_impl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EpisodeDetailCubit extends Cubit<ATAppState<Episode>> {
   EpisodeDetailCubit({

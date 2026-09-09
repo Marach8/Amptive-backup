@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:developer' as developer show log;
 import 'package:livekit_client/livekit_client.dart';
 
@@ -23,14 +24,14 @@ class MediaService {
 
   bool _disposed = false;
 
-  final _remoteAudioController = StreamController<RemoteAudioTrack>.broadcast();
-  final _participantJoinedController =
+  final StreamController<RemoteAudioTrack> _remoteAudioController = StreamController<RemoteAudioTrack>.broadcast();
+  final StreamController<RemoteParticipant> _participantJoinedController =
   StreamController<RemoteParticipant>.broadcast();
-  final _participantLeftController =
+  final StreamController<RemoteParticipant> _participantLeftController =
   StreamController<RemoteParticipant>.broadcast();
-  final _activeSpeakersController =
+  final StreamController<List<Participant<TrackPublication<Track>>>> _activeSpeakersController =
   StreamController<List<Participant>>.broadcast();
-  final _mediaStateController = StreamController<MediaStateChange>.broadcast();
+  final StreamController<MediaStateChange> _mediaStateController = StreamController<MediaStateChange>.broadcast();
 
   // ── Public streams ─────────────────────────────────────────────────────
 
@@ -98,12 +99,12 @@ class MediaService {
 
       // ── Media Snapshot ────────────────────────────────────────────────
       // Attach any remote audio tracks already present when joining.
-      for (final participant in _room!.remoteParticipants.values) {
+      for (final RemoteParticipant participant in _room!.remoteParticipants.values) {
         _processExistingTracks(participant);
       }
 
       // Emit initial active speakers if any.
-      final activeSpeakers = _room!.activeSpeakers;
+      final UnmodifiableListView<Participant<TrackPublication<Track>>> activeSpeakers = _room!.activeSpeakers;
       if (activeSpeakers.isNotEmpty) {
         _activeSpeakersController.add(activeSpeakers);
       }
@@ -157,9 +158,9 @@ class MediaService {
 
   /// Toggles the local microphone between enabled and disabled.
   Future<void> toggleMute() async {
-    final lp = _room?.localParticipant;
+    final LocalParticipant? lp = _room?.localParticipant;
     if (lp == null) return;
-    final current = lp.isMicrophoneEnabled();
+    final bool current = lp.isMicrophoneEnabled();
     await lp.setMicrophoneEnabled(!current);
     _log('Audio toggled: ${!current}');
   }
@@ -209,8 +210,8 @@ class MediaService {
   }
 
   void _onTrackSubscribed(TrackSubscribedEvent event) {
-    final track = event.track;
-    final participant = event.participant;
+    final Track track = event.track;
+    final RemoteParticipant participant = event.participant;
 
     if (track is RemoteAudioTrack) {
       _log('Remote audio track subscribed from ${participant.identity}');
@@ -220,7 +221,7 @@ class MediaService {
   }
 
   void _onParticipantConnected(ParticipantConnectedEvent event) {
-    final participant = event.participant;
+    final RemoteParticipant participant = event.participant;
     _log('Participant joined: ${participant.identity}');
     _participantJoinedController.add(participant);
     _processExistingTracks(participant);
@@ -236,8 +237,8 @@ class MediaService {
   }
 
   void _processExistingTracks(RemoteParticipant participant) {
-    for (final pub in participant.audioTrackPublications) {
-      final track = pub.track;
+    for (final RemoteTrackPublication<RemoteAudioTrack> pub in participant.audioTrackPublications) {
+      final RemoteAudioTrack? track = pub.track;
       if (pub.subscribed && track is RemoteAudioTrack) {
         _remoteAudioController.add(track);
         _emitMediaStateChange(participant.identity, MediaType.audio, !track.muted);

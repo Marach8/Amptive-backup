@@ -19,18 +19,18 @@ List<CardData> _removedItems = <CardData>[];
 
 final List<CardData> _notifies = <CardData>[
   CardData(
-      "The HonestBunch is live now!",
-      "Join the live show happening now:\nFrom Ghetto To Glory Featuring Daddy Showkey. Tap to listen and engage.",
-      ""),
+      'The HonestBunch is live now!',
+      'Join the live show happening now:\nFrom Ghetto To Glory Featuring Daddy Showkey. Tap to listen and engage.',
+      ''),
   CardData(
-      "New Subscriber!", "joseph has just subscribed to your channel!", ""),
+      'New Subscriber!', 'joseph has just subscribed to your channel!', ''),
   CardData(
-      "New Payment for The Rest is Football show",
-      "dubhem has just paid for access to your event The Rest is Football show.",
-      ""),
-  CardData("New Follower!", "nonye is now following you. ", ""),
+      'New Payment for The Rest is Football show',
+      'dubhem has just paid for access to your event The Rest is Football show.',
+      ''),
+  CardData('New Follower!', 'nonye is now following you. ', ''),
   CardData(
-      "New Subscriber!", "joseph has just subscribed to your channel!", ""),
+      'New Subscriber!', 'joseph has just subscribed to your channel!', ''),
 ];
 
 class AmptiveNotificationAnimationWidget extends StatefulWidget {
@@ -84,17 +84,17 @@ class _AmptiveNotificationAnimationWidgetState
   }
 
   Widget _buildItem(CardData item, Animation<double> animation, int index) {
-    double baseWidth = 300.0; // Fixed width for the top card
-    double widthReductionFactor =
+    const double baseWidth = 300.0; // Fixed width for the top card
+    const double widthReductionFactor =
         20.0; // Reduction in width for each subsequent card
 
-    double width = (index == 0)
+    final double width = (index == 0)
         ? baseWidth
         : baseWidth - (index * widthReductionFactor).clamp(0, baseWidth - 50);
 
-    double blurAmount = index * 0.8; // Increase blur by 0.8 for each item
+    final double blurAmount = index * 0.8; // Increase blur by 0.8 for each item
 
-    Tween<Offset> offset =
+    final Tween<Offset> offset =
         Tween(begin: const Offset(0, -1), end: const Offset(0, 0));
 
     return SlideTransition(
@@ -139,7 +139,7 @@ class _AmptiveNotificationAnimationWidgetState
   void _removeTopNotification() {
     if (_notifies.isNotEmpty) {
       const int removeIndex = 0;
-      CardData removedItem = _notifies.removeAt(removeIndex);
+      final CardData removedItem = _notifies.removeAt(removeIndex);
       _removedItems.add(removedItem);
       _listKey.currentState?.removeItem(
         removeIndex,
@@ -171,7 +171,7 @@ class CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double sf = itemWidth / 300;
+    final double sf = itemWidth / 300;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 11 * sf, vertical: 10.h),
       decoration: ShapeDecoration(

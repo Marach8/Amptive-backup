@@ -1,5 +1,5 @@
-import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/list_hosted_events_screen.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';

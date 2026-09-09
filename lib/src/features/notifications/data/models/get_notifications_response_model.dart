@@ -13,7 +13,7 @@ class NotificationsResponseModel {
   });
 
   factory NotificationsResponseModel.fromJson(Map<String, dynamic> json) {
-       final dataObj = json['data'] as Map<String, dynamic>? ?? <String, dynamic>{};
+       final Map<String, dynamic> dataObj = json['data'] as Map<String, dynamic>? ?? <String, dynamic>{};
     final List<dynamic> notificationsList = (dataObj['notifications'] as List? ?? <dynamic>[]);
     return NotificationsResponseModel(
       notifications: notificationsList

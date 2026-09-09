@@ -1,14 +1,14 @@
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/features/wallet/cubits/transaction_history_cubit.dart';
+import 'package:amptive/src/features/wallet/cubits/wallet_balance_cubit.dart';
 import 'package:amptive/src/features/wallet/data/models/models_export.dart';
 import 'package:amptive/src/features/wallet/data/models/response/transaction_history_response_model.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
-import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/wallet/cubits/wallet_balance_cubit.dart';
 import 'package:amptive/src/features/wallet/presentation/widgets/wallets_widget_export.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
+
 import '../../../../shared/annotated_region_widget.dart';
 
 class ATWalletLandingScreenWrapper extends StatelessWidget {

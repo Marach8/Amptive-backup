@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:amptive/src/config/utils/logging/app_logger.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/src/response.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import '../../config/config_export.dart';
 import '../../config/endpoints.dart';
 import '../../config/services/network_service/dio_network_service_impl.dart';
 import '../../config/services/network_service/network_service.dart';
@@ -21,40 +21,39 @@ class PushNotificationService {
 
   Future<void> init() async {
     // Request permission (iOS mainly)
-    NotificationSettings settings = await _messaging.requestPermission();
+    final NotificationSettings settings = await _messaging.requestPermission();
 
-    print('Permission: ${settings.authorizationStatus}');
+    AppLogger.instance.info('Permission: ${settings.authorizationStatus}',
+        tag: 'PushNotification');
 
     // Get FCM token
-    String? token = await _messaging.getToken();
-    print("FCM Token: $token");
+    final String? token = await _messaging.getToken();
+    AppLogger.instance.info('FCM Token: $token', tag: 'PushNotification');
 
-    String? result = await saveToken(token!);
+    final String? result = await saveToken(token!);
 
-    if(result == null){
-      log("Token save failed", level: LogLevel.error);
+    if (result == null) {
+      AppLogger.instance.error('Token save failed', tag: 'PushNotification');
       return;
     }
 
     // Listen for foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      log('>> Got a message: ${message.notification?.title}');
-      log('Got a message: ${message.notification?.body}');
-      log('Got a message: ${message.data} <<');
-      log('>> Foreground Message Received: ${message.notification?.title}');
-      _messageStreamController.add(message); 
-      log("Does the stream have listeners? ${_messageStreamController.hasListener}");
-    
+      AppLogger.instance.info('Got a message: ${message.notification?.title}',
+          tag: 'PushNotification');
+      _messageStreamController.add(message);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      log('>> Notification Tapped: ${message.notification?.title}');
-      _messageStreamController.add(message); 
+      AppLogger.instance.info('Notification Tapped: ${message.notification?.title}',
+          tag: 'PushNotification');
+      _messageStreamController.add(message);
     });
- 
+
 
     // Token refresh
     _messaging.onTokenRefresh.listen((String newToken) {
-      log("New token: $newToken");
+      AppLogger.instance.info('New token: $newToken',
+          tag: 'PushNotification');
     });
   }
 
@@ -64,23 +63,24 @@ class PushNotificationService {
 
   Future<String?> saveToken(String token) async {
     try {
-      String? deviceIdentifier = await _getDeviceIdentifier();
+      final String? deviceIdentifier = await _getDeviceIdentifier();
 
-      final registerDeviceModel = RegisterDeviceModel(
+      final RegisterDeviceModel registerDeviceModel = RegisterDeviceModel(
           fcmToken: token,
           deviceName: deviceIdentifier,
           platform: _getPlatform());
 
-      final res = await _networkService.post(
+      final Response<dynamic> res = await _networkService.post(
         ATEndpoints.fcmRegisterDevice,
         data: registerDeviceModel.toJson(),
       );
 
-      log("Token FCM Saved >>>>");
+      AppLogger.instance.info('Token FCM Saved', tag: 'PushNotification');
 
       return res.data['message'];
-    } catch (e) {
-      log('Save token error: $e', level: LogLevel.error);
+    } catch (e, st) {
+      AppLogger.instance.error('Save token error',
+          error: e, stackTrace: st, tag: 'PushNotification');
       return null;
     }
   }
@@ -113,9 +113,5 @@ class PushNotificationService {
       return iosInfo.name;
     }
     return null;
-  }
-
-  void log(String message, {LogLevel level = LogLevel.debug}) {
-    developer.log(message, name: "PushNotificationService", level: level.value);
   }
 }

@@ -1,6 +1,7 @@
-import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:amptive/src/features/discover/presentation/views/search_results_page_view.dart';
+import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../../../features/discover/presentation/views/recent_searches_page_view.dart';
 
 class AmptiveRecentSearchesAndTabsView extends StatefulWidget {
@@ -43,7 +44,7 @@ class _AmptiveRecentSearchesAndTabsViewState
     return ValueListenableBuilder(
         valueListenable: _showTabs,
         builder: (_, bool value, __) {
-          int index = value ? 1 : 0;
+          final int index = value ? 1 : 0;
           final List<Widget> listOfWidgets = <Widget>[
             RecentSearchesView(
               key: UniqueKey(),

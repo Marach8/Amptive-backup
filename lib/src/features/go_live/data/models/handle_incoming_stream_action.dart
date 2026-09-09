@@ -71,11 +71,11 @@ LiveStreamState1 reduceIncomingStreamAction({
   return switch (type) {
     LiveEventType.initial => () {
       String? hostId;
-      List<String> cohostsIds = <String>[];
+      final List<String> cohostsIds = <String>[];
 
       final Map<String, LivestreamParticipant> allParticipantsMap
         = <String, LivestreamParticipant>{};
-      List<String> allParticipantsIds = <String>[];
+      final List<String> allParticipantsIds = <String>[];
 
       final List<dynamic> participantsJson = 
         wsJson['participants'] ?? <dynamic>[];
@@ -120,7 +120,7 @@ LiveStreamState1 reduceIncomingStreamAction({
           LivestreamParticipant.fromJson(wsJson);
 
       OrganizersIDs? organizersIds = stateSnapshot.organizersIds;
-      List<String> allParticipantsIds = stateSnapshot
+      final List<String> allParticipantsIds = stateSnapshot
         .allParticipantsIds ?? <String>[];
 
       final bool isExistingParticipant = 
@@ -169,9 +169,9 @@ LiveStreamState1 reduceIncomingStreamAction({
         final List<String>? allParticipantsIds = 
           stateSnapshot.allParticipantsIds;
         OrganizersIDs? organizersIds = stateSnapshot.organizersIds;
-        List<String>? raisedHandsIds = stateSnapshot.raisedHandsIds;
-        List<String>? unMutedParticipantIds = stateSnapshot.unMutedParticipantIds;
-        List<String>? activeSpeakerIds = stateSnapshot.activeSpeakerIds;
+        final List<String>? raisedHandsIds = stateSnapshot.raisedHandsIds;
+        final List<String>? unMutedParticipantIds = stateSnapshot.unMutedParticipantIds;
+        final List<String>? activeSpeakerIds = stateSnapshot.activeSpeakerIds;
 
         organizersIds = (
           hostId: organizersIds?.hostId == leaverId
@@ -253,7 +253,7 @@ LiveStreamState1 reduceIncomingStreamAction({
         final String action = wsJson['action'] ?? '';
         final List<String> raisedHandsIds = List<String>
           .from(stateSnapshot.raisedHandsIds ?? <String>[]);
-        List<String> unMutedParticipantIds = List<String>
+        final List<String> unMutedParticipantIds = List<String>
           .from(stateSnapshot.unMutedParticipantIds ?? <String>[]);
 
         if (action == 'raise') {

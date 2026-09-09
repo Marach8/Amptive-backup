@@ -1,5 +1,4 @@
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
-import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 
 enum StreamStatus {
   waiting,
@@ -51,8 +50,8 @@ class InitialState {
   });
 
   factory InitialState.fromJson(Map<String, dynamic> json) {
-    final participantsJson = json['participants'] as List<dynamic>? ?? [];
-    final handQueueJson = json['hand_queue'] as List<dynamic>? ?? [];
+    final List<dynamic> participantsJson = json['participants'] as List<dynamic>? ?? <dynamic>[];
+    final List<dynamic> handQueueJson = json['hand_queue'] as List<dynamic>? ?? <dynamic>[];
     return InitialState(
       participants: participantsJson
           .map((p) => LivestreamParticipant.fromJson(p as Map<String, dynamic>))
@@ -207,15 +206,15 @@ class MediaStateChangedEvent implements SignalingEvent {
 
 /// Represents a change in media state (audio/video enabled/disabled)
 class MediaStateChange {
-  final String identity;
-  final MediaType type;
-  final bool enabled;
 
   const MediaStateChange({
     required this.identity,
     required this.type,
     required this.enabled,
   });
+  final String identity;
+  final MediaType type;
+  final bool enabled;
 
   @override
   String toString() =>

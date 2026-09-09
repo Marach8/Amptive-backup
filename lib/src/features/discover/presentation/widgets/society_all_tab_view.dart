@@ -1,10 +1,9 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/features/discover/presentation/views/discover_page_view.dart';
 import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
-import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
 import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +13,9 @@ import 'package:go_router/go_router.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../config/utils/other_strings.dart';
 import '../../../../shared/custom_container_widget.dart';
-import 'top_creator_widget.dart';
-import 'render_trending_hashtag.dart';
 import 'hashtag_heading_row.dart';
+import 'render_trending_hashtag.dart';
+import 'top_creator_widget.dart';
 
 class SocietyAllTabView extends StatelessWidget {
   const SocietyAllTabView({super.key, this.communityId});

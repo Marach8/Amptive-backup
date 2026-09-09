@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 extension ExtString on String {
   bool get isValidEmail {
     final RegExp emailRegExp =
-        RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+        RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+');
     return emailRegExp.hasMatch(this);
   }
 
@@ -21,7 +21,7 @@ extension ExtString on String {
   }
 
   bool get isValidPhone {
-    final RegExp phoneRegExp = RegExp(r"^\+?0[0-9]{10}$");
+    final RegExp phoneRegExp = RegExp(r'^\+?0[0-9]{10}$');
     return phoneRegExp.hasMatch(this);
   }
 
@@ -45,7 +45,7 @@ extension ExtString on String {
   String get toLocalTime {
     if (isEmpty) return 'Just now';
     try {
-      DateTime dateTime = DateTime.parse(this).toLocal();
+      final DateTime dateTime = DateTime.parse(this).toLocal();
       return DateFormat.jm().format(dateTime);
     } catch (e) {
       return 'Just now';
@@ -60,9 +60,9 @@ extension ExtString on String {
         normalizedDate = '${normalizedDate}Z';
       }
 
-      DateTime dateTime = DateTime.parse(normalizedDate).toLocal();
-      DateTime now = DateTime.now();
-      Duration diff = now.difference(dateTime);
+      final DateTime dateTime = DateTime.parse(normalizedDate).toLocal();
+      final DateTime now = DateTime.now();
+      final Duration diff = now.difference(dateTime);
 
       if (diff.inDays > 365) return '${(diff.inDays / 365).floor()}y';
       if (diff.inDays > 30) return '${(diff.inDays / 30).floor()}mo';
@@ -94,7 +94,7 @@ extension ExtString on String {
   String get toNormalDate {
     if (isEmpty) return '';
     try {
-      DateTime dateTime = DateTime.parse(this).toLocal();
+      final DateTime dateTime = DateTime.parse(this).toLocal();
 
       return DateFormat('yyyy-MM-dd').format(dateTime);
     } catch (e) {

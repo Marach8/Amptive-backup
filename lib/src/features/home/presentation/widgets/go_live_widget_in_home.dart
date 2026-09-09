@@ -1,10 +1,7 @@
-import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/shared/shimmer.dart';
-import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:flutter/material.dart';
+import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 

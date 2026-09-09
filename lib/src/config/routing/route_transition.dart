@@ -1,7 +1,4 @@
-import 'dart:async';
-import 'package:amptive/src/config/config_export.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class ATSlidingRouteTransition<T> extends CustomTransitionPage<T> {
@@ -12,7 +9,7 @@ class ATSlidingRouteTransition<T> extends CustomTransitionPage<T> {
   }) : super(
           transitionsBuilder:
               (_, Animation<double> animation, __, Widget child) {
-            Animation<Offset> tween = Tween<Offset>(
+            final Animation<Offset> tween = Tween<Offset>(
                     begin: beginOffset ?? const Offset(1.0, 0.0),
                     end: Offset.zero)
                 .animate(
@@ -34,7 +31,7 @@ class ATFadingRouteTransition<T> extends CustomTransitionPage<T> {
       : super(
           transitionsBuilder:
               (_, Animation<double> animation, __, Widget child) {
-            Animation<double> tween = Tween<double>(
+            final Animation<double> tween = Tween<double>(
               begin: beginOffset ?? 0.0,
               end: 1.0,
             ).animate(CurvedAnimation(parent: animation, curve: Curves.easeIn));

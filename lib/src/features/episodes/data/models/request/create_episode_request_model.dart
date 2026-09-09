@@ -33,7 +33,7 @@ class CreateEpisodePayload {
       'price_override': priceOverride,
       'tag_ids': tagIds,
       'co_host_ids': coHostIds,
-      "community_id": communityId,
+      'community_id': communityId,
       'hand_raising': allowHandRaising,
       'whispers': allowWhispers,
     };

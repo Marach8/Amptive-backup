@@ -1,10 +1,10 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
@@ -55,7 +55,7 @@ class _GiftTravelItemState extends State<GiftTravelItem>
 
     // fade in at start, stay, fade out at end
     _fadeAnimation = TweenSequence<double>(
-      [
+      <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(tween: Tween<double>(begin: 0.0, end: 1.0), weight: 10),
         TweenSequenceItem<double>(tween: ConstantTween<double>(1.0), weight: 75),
         TweenSequenceItem<double>(tween: Tween<double>(begin: 1.0, end: 0.0), weight: 15),
@@ -186,7 +186,7 @@ class _GiftOverlayOKayState extends State<GiftOverlayOKay>
   Widget build(BuildContext context) {
     return BlocBuilder<LiveStreamCubit1, LiveStreamState1>(
       builder: (BuildContext context, LiveStreamState1 state) {
-        final int currentCount = 2;
+        const int currentCount = 2;
 
         if (currentCount > _previousGiftCount && currentCount > 0) {
           _controller.forward(from: 0);
@@ -202,8 +202,8 @@ class _GiftOverlayOKayState extends State<GiftOverlayOKay>
           builder: (_, __) {
             final double progress = _controller.value;
 
-            final double startY = 0.6;
-            final double endY = 0.2;
+            const double startY = 0.6;
+            const double endY = 0.2;
             final double y = startY + (endY - startY) * progress;
             final double opacity = 1.0 - (progress * 0.3);
 
@@ -217,7 +217,7 @@ class _GiftOverlayOKayState extends State<GiftOverlayOKay>
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
+                      colors: <Color>[Color(0xFFFFD700), Color(0xFFFFA500)],
                     ),
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: <BoxShadow>[
@@ -228,21 +228,21 @@ class _GiftOverlayOKayState extends State<GiftOverlayOKay>
                       ),
                     ],
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
                         'Hello',
-                        style: const TextStyle(fontSize: 32),
+                        style: TextStyle(fontSize: 32),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
                             'Hello',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -250,7 +250,7 @@ class _GiftOverlayOKayState extends State<GiftOverlayOKay>
                           ),
                           Text(
                             'Hello',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 12,
                             ),

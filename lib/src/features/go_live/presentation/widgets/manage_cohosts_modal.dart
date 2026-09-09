@@ -1,20 +1,16 @@
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
+
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
-import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
-import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/manage_cohost_tabs.dart';
-import 'package:amptive/src/features/go_live/presentation/widgets/search_cohost_field.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/features/profile/presentation/widgets/profile_screen_tabs.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/shared/circle_avatar.dart';
-import 'package:amptive/src/shared/modal_dismisser.dart';
+import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/shared/search_filter_widget.dart';
+import 'package:amptive/src/shared/modal_dismisser.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
 Future<void> showManageCohostsModal({
@@ -116,20 +112,20 @@ class _ManageCohostsState extends State<_ManageCohosts> {
                         ),
                       ),
 
-                      Expanded(
+                      const Expanded(
                         child: TabBarView(
                           children: <Widget>[
                             InvitedCohostsTab(
-                              invitedCohosts: [],
+                              invitedCohosts: <User>[],
                             ),
                             AcceptedCohostsTab(
-                              acceptedCohosts: [],
+                              acceptedCohosts: <User>[],
                             ),
                             DeclinedCohostsTab(
-                              declinedCohosts: [],
+                              declinedCohosts: <User>[],
                             ),
                             IgnoredCohostsTab(
-                              ignoredCohosts: [],
+                              ignoredCohosts: <User>[],
                             ),
                           ],
                         )

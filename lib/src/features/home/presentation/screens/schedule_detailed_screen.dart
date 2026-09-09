@@ -1,21 +1,22 @@
 import 'dart:ui';
+
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/features/home/cubits/going_cubit.dart';
+import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
+import 'package:amptive/src/shared/blurred_header.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/render_hashtags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amptive/src/features/home/cubits/going_cubit.dart';
-import 'package:amptive/src/features/home/data/models/response/going_status.dart';
-import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
+
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
-import 'package:amptive/src/shared/render_hashtags.dart';
-import 'package:amptive/src/shared/blurred_header.dart';
 import '../widgets/event_or_show_card.dart';
 import '../widgets/people_listening.dart';
 
@@ -131,7 +132,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 30),
                         if ((homeFeedItem?.avatarUrls?.isNotEmpty ?? false) ||
-                            (homeFeedItem?.goingCount ?? 0) > 0) ...[
+                            (homeFeedItem?.goingCount ?? 0) > 0) ...<Widget>[
                           Text(
                             '${homeFeedItem?.goingCount ?? 0} Listening',
                             style: Theme.of(context)
@@ -154,11 +155,11 @@ class ATScheduleDetailedScreen extends StatelessWidget {
             ],
           ),
           bottomSheet: BlocBuilder<GoingCubit, dynamic>(
-                  builder: (context, state) {
-                    final goingCubit = context.read<GoingCubit>();
-                    final isGoing =
+                  builder: (BuildContext context, state) {
+                    final GoingCubit goingCubit = context.read<GoingCubit>();
+                    final bool isGoing =
                         goingCubit.currentGoingStatus?.isGoing ?? false;
-                    final goingCount =
+                    final int goingCount =
                         goingCubit.currentGoingStatus?.goingCount ?? 0;
 
                     return ATContainer(
@@ -196,7 +197,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              if (isGoing) ...[
+                              if (isGoing) ...<Widget>[
                                 Icon(
                                   Icons.check,
                                   color: ATColors.hex0D0D0D,
@@ -214,7 +215,7 @@ class ATScheduleDetailedScreen extends StatelessWidget {
                                   fontWeight: ATFontWeights.w600,
                                 ),
                               ),
-                              if (isGoing && goingCount > 0) ...[
+                              if (isGoing && goingCount > 0) ...<Widget>[
                                 const SizedBox(width: 8),
                                 Container(
                                   padding: const EdgeInsets.symmetric(

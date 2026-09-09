@@ -13,12 +13,12 @@ class AuthFieldService {
   AuthFieldService._(this.authenticationService);
   final AuthenticationService authenticationService;
   ValidationModel _password =
-      ValidationModel(null, "Your password should be at least 8 characters.");
+      ValidationModel(null, 'Your password should be at least 8 characters.');
 
   // validation model for authentication form fields
   ValidationModel _email = ValidationModel(null, null);
   ValidationModel _customEmailStatus =
-      ValidationModel("This email will be verified in the next step.", null);
+      ValidationModel('This email will be verified in the next step.', null);
 
   ValidationModel _name = ValidationModel(null, null);
   ValidationModel _username = ValidationModel(null, null);
@@ -74,7 +74,7 @@ class AuthFieldService {
   Future<bool> processEmail() async {
     final String? email = _email.value;
     if (await authenticationService.checkUniqueEmail(email!)) {
-      _customEmailStatus = ValidationModel("This email already exist!.", null);
+      _customEmailStatus = ValidationModel('This email already exist!.', null);
       return false;
     } else {
       // send otp
@@ -88,7 +88,7 @@ class AuthFieldService {
     if (val != null && val.isValidEmail) {
       _email = ValidationModel(val, null);
       _customEmailStatus = ValidationModel(
-          "This email will be verified in the next step.", null);
+          'This email will be verified in the next step.', null);
     } else if (val == null || val.isEmpty) {
       _email = ValidationModel(null, 'Required');
       _customEmailStatus = ValidationModel(null, null);
@@ -104,7 +104,7 @@ class AuthFieldService {
       _password = ValidationModel(val, null);
     } else if (val == null || val.length < 8) {
       _password = ValidationModel(
-          null, "Your password should be at least 8 characters.");
+          null, 'Your password should be at least 8 characters.');
     } else {
       _password = ValidationModel(null,
           'Password must contain an uppercase, lowercase, numeric digit and special character');
@@ -113,7 +113,7 @@ class AuthFieldService {
 
   Future<bool> validateUsername(String? val) async {
     await authenticationService
-        .checkUniqueEmail("email@emmil.com"); // to be removed
+        .checkUniqueEmail('email@emmil.com'); // to be removed
     if (val != null && !val.isValidUsername) {
       _username = ValidationModel(null,
           'Username must contain only small cap letters, numbers, periods, and underscores.');

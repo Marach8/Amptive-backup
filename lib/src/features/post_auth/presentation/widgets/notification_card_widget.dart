@@ -1,5 +1,6 @@
-import '../../../../global_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+
+import '../../../../global_export.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class NotifTile1 extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/config/utils/logging/app_logger.dart';
 import 'package:amptive/src/models/user_model.dart';
 
 import 'api_handler.dart';
@@ -24,8 +24,9 @@ class AuthenticationService {
             profilePicture: null,
             name: '');
       }
-    } catch (e) {
-      print(e.toString());
+    } catch (e, st) {
+      AppLogger.instance.error('Failed to register user',
+          error: e, stackTrace: st, tag: 'AuthenticationService');
     }
     return null;
   }
@@ -46,8 +47,9 @@ class AuthenticationService {
           name: '',
         );
       }
-    } catch (e) {
-      print(e.toString());
+    } catch (e, st) {
+      AppLogger.instance.error('Failed to log in user',
+          error: e, stackTrace: st, tag: 'AuthenticationService');
     }
     return null;
   }
@@ -61,7 +63,7 @@ class AuthenticationService {
   }
 
   Future<bool> checkUniqueEmail(String email) async {
-    bool exist = await _apiHandler.checkEmailExists(email);
+    final bool exist = await _apiHandler.checkEmailExists(email);
     return exist;
   }
 
@@ -71,6 +73,6 @@ class AuthenticationService {
 
   Future<bool> checkUniqueUsername(String usr) async {
     await Future.delayed(const Duration(seconds: 3));
-    return usr == "peter";
+    return usr == 'peter';
   }
 }

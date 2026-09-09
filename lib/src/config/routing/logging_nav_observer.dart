@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/logging/app_logger.dart';
+
 class LoggingNavigatorObserver extends NavigatorObserver {
   List<String?> routeStack = <String?>[];
 
@@ -33,7 +35,8 @@ class LoggingNavigatorObserver extends NavigatorObserver {
 
   void _logStack() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      debugPrint('Current navigation stack: $routeStack');
+      AppLogger.instance.debug('Current navigation stack: $routeStack',
+          tag: 'Navigation');
     });
   }
 }

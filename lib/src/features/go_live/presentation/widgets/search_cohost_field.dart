@@ -1,9 +1,10 @@
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../config/utils/colors.dart';
-import '../../../../views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import '../../../../shared/textformfield_widget.dart';
+import '../../../../views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 
 class SearchFieldWithXSuffix extends StatefulWidget {
   const SearchFieldWithXSuffix({

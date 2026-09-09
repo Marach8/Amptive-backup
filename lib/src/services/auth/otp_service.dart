@@ -1,3 +1,5 @@
+import 'package:amptive/src/config/utils/logging/app_logger.dart';
+
 class OtpService {
   factory OtpService() => _instance;
   OtpService._();
@@ -23,10 +25,16 @@ class OtpService {
 
   Future<bool> validateOtp() async {
     // send http request to validate otp
-    int otp = otpModel.getOTP();
-    print(otp);
-    await Future.delayed(const Duration(seconds: 2), () {});
-    return true;
+    final int otp = otpModel.getOTP();
+    AppLogger.instance.debug('Validating OTP', tag: 'OtpService');
+    try {
+      await Future.delayed(const Duration(seconds: 2), () {});
+      return true;
+    } catch (e, st) {
+      AppLogger.instance.error('Failed to validate OTP',
+          error: e, stackTrace: st, tag: 'OtpService');
+      return false;
+    }
   }
 }
 
@@ -49,7 +57,7 @@ class OTPModel {
 
   int getOTP() {
     if (isOTPValid) {
-      String temp = pin1! + pin2! + pin3! + pin4!;
+      final String temp = pin1! + pin2! + pin3! + pin4!;
       return int.parse(temp);
     }
 

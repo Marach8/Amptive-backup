@@ -71,7 +71,7 @@ class FlutterSecureStorageServiceImpl implements ATLocalStorageService {
     } else if (T == double) {
       return double.parse(valueString) as T;
     } else if (T == bool) {
-      return (valueString.toLowerCase() == "true") as T;
+      return (valueString.toLowerCase() == 'true') as T;
     } else {
       return json.decode(valueString) as T;
     }

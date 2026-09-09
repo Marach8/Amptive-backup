@@ -1,9 +1,5 @@
-import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
-import 'package:amptive/src/global_export.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/global_export.dart';
 
 class GiftPickerDialog extends StatefulWidget {
   const GiftPickerDialog({super.key});
@@ -25,7 +21,7 @@ class _GiftPickerDialogState extends State<GiftPickerDialog> {
   String? _selectedGiftId;
   int _quantity = 1;
 
-  static const List<_GiftItem> _availableGifts = [
+  static const List<_GiftItem> _availableGifts = <_GiftItem>[
     _GiftItem(id: '1', name: 'Rose', emoji: '🌹', price: 10),
     _GiftItem(id: '2', name: 'Heart', emoji: '❤️', price: 20),
     _GiftItem(id: '3', name: 'Star', emoji: '⭐', price: 50),
@@ -71,8 +67,8 @@ class _GiftPickerDialogState extends State<GiftPickerDialog> {
               ),
               itemCount: _availableGifts.length,
               itemBuilder: (_, int index) {
-                final gift = _availableGifts[index];
-                final isSelected = _selectedGiftId == gift.id;
+                final _GiftItem gift = _availableGifts[index];
+                final bool isSelected = _selectedGiftId == gift.id;
                 return GestureDetector(
                   onTap: () => setState(() => _selectedGiftId = gift.id),
                   child: Container(
@@ -157,7 +153,7 @@ class _GiftPickerDialogState extends State<GiftPickerDialog> {
                 ),
                 child: Text(
                   _selectedGiftId != null
-                      ? 'Send ${_availableGifts.firstWhere((g) => g.id == _selectedGiftId).emoji} x$_quantity'
+                      ? 'Send ${_availableGifts.firstWhere((_GiftItem g) => g.id == _selectedGiftId).emoji} x$_quantity'
                       : 'Select a gift',
                   style: const TextStyle(
                     color: Colors.white,

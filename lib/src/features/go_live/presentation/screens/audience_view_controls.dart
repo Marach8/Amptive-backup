@@ -1,8 +1,6 @@
 import 'dart:developer' show log;
 
-import 'package:amptive/src/features/go_live/presentation/widgets/gifters_modal.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/go_live/cubits/livestream_bloc.dart';
 import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:amptive/src/global_export.dart';
@@ -11,9 +9,7 @@ import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../bloc/main_app/go_live_bloc/host_view/cohosts_display_bloc.dart';
-import '../../../../services/go_live_service/go_live_service.dart';
+
 import '../../go_live_export.dart';
 
 

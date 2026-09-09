@@ -1,16 +1,14 @@
-import 'package:amptive/src/features/events/presentation/widgets/events_subscription_setup_modal.dart';
+import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/features/events/presentation/widgets/events_subscription_setup_modal.dart';
 import 'package:amptive/src/features/shows/presentation/widgets/audience_access_modal.dart';
 import 'package:amptive/src/features/upgrade_account/presentation/screens/subscription_plan_screen.dart';
-import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:go_router/go_router.dart';
-
-
-import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
-import 'package:amptive/src/shared/divider_widget.dart';
-import 'package:amptive/src/shared/radio_button.dart';
 import 'package:amptive/src/global_export.dart';
+import 'package:amptive/src/shared/divider_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:amptive/src/shared/modal_dismisser.dart';
+import 'package:amptive/src/shared/radio_button.dart';
+import 'package:go_router/go_router.dart';
 
 
 Future<ProgramAccessTypeSelectionData?> showEventsAudienceAccessTypeModal({

@@ -1,20 +1,21 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
 import 'package:amptive/src/features/auth/data/models/request/registration_data.dart';
 import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
-import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
+
 import '../../../../shared/app_bar_widget.dart';
 
 class ATEmailSignUpScreen extends StatefulWidget {
@@ -115,7 +116,7 @@ class _ATEmailSignUpScreenState extends State<ATEmailSignUpScreen>
                       height: 6,
                     ),
                     Text(
-                      "This email will be verified in the next step.",
+                      'This email will be verified in the next step.',
                       style: context.textTheme.titleSmall,
                     ),
                   ],

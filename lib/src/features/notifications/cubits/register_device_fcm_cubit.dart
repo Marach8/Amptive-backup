@@ -25,8 +25,8 @@ class RegisterDeviceFCMCubit extends Cubit<ATAppState<bool>> {
       }
 
       final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-       String deviceName = "Unknown Device";
-      String platform = "unknown";
+       String deviceName = 'Unknown Device';
+      String platform = 'unknown';
 
       if (Platform.isAndroid) {
         final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;

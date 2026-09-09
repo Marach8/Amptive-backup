@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:flutter/material.dart';
@@ -9,18 +8,18 @@ import './src/livestream/livestream.dart';
 // ── Design tokens ────────────────────────────────────────────────────────────
 
 class _C {
-  static const bg = Color(0xFF0A0A0F);
-  static const surface = Color(0xFF13131A);
-  static const surfaceHigh = Color(0xFF1C1C27);
-  static const border = Color(0xFF252535);
-  static const accent = Color(0xFF6C63FF);
-  static const accentDim = Color(0x336C63FF);
-  static const live = Color(0xFFFF4757);
-  static const green = Color(0xFF2ED573);
-  static const amber = Color(0xFFFFAA00);
-  static const textPrimary = Color(0xFFEEEEF5);
-  static const textSecondary = Color(0xFF8888AA);
-  static const textDim = Color(0xFF44445A);
+  static const Color bg = Color(0xFF0A0A0F);
+  static const Color surface = Color(0xFF13131A);
+  static const Color surfaceHigh = Color(0xFF1C1C27);
+  static const Color border = Color(0xFF252535);
+  static const Color accent = Color(0xFF6C63FF);
+  static const Color accentDim = Color(0x336C63FF);
+  static const Color live = Color(0xFFFF4757);
+  static const Color green = Color(0xFF2ED573);
+  static const Color amber = Color(0xFFFFAA00);
+  static const Color textPrimary = Color(0xFFEEEEF5);
+  static const Color textSecondary = Color(0xFF8888AA);
+  static const Color textDim = Color(0xFF44445A);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -29,8 +28,8 @@ class LivestreamPage extends StatefulWidget {
   const LivestreamPage({
     super.key,
     this.isHost = true,
-    this.streamId = "fc037ee3-4e4f-4927-8ed6-42fd6f825491",
-    this.contentId = "65f3b7f0-c6fa-4e3f-a272-2e1f5d06df15",
+    this.streamId = 'fc037ee3-4e4f-4927-8ed6-42fd6f825491',
+    this.contentId = '65f3b7f0-c6fa-4e3f-a272-2e1f5d06df15',
   });
 
   final String? streamId;
@@ -47,9 +46,9 @@ class _LivestreamPageState extends State<LivestreamPage>
   late AnimationController _pulseController;
   late AnimationController _waveController;
 
-  final _chatInput = TextEditingController();
-  final _chatScrollController = ScrollController();
-  final _chatFocus = FocusNode();
+  final TextEditingController _chatInput = TextEditingController();
+  final ScrollController _chatScrollController = ScrollController();
+  final FocusNode _chatFocus = FocusNode();
 
   bool _joining = false;
   String? _error;
@@ -150,14 +149,14 @@ class _LivestreamPageState extends State<LivestreamPage>
   }
 
   void _sendChat(String msg) {
-    final trimmed = msg.trim();
+    final String trimmed = msg.trim();
     if (trimmed.isEmpty) return;
     _controller.sendChat(trimmed);
     _chatInput.clear();
   }
 
   void _toggleHandRaise() {
-    final id = _controller.mediaService.localParticipant?.identity;
+    final String? id = _controller.mediaService.localParticipant?.identity;
     if (id == null) return;
     if (_controller.state.handQueue.contains(id)) {
       _controller.lowerHand();
@@ -176,8 +175,8 @@ class _LivestreamPageState extends State<LivestreamPage>
     return StreamBuilder<LivestreamState>(
       stream: _controller.stateStream,
       initialData: _controller.state,
-      builder: (context, snapshot) {
-        final state = snapshot.requireData;
+      builder: (BuildContext context, AsyncSnapshot<LivestreamState> snapshot) {
+        final LivestreamState state = snapshot.requireData;
 
         if (state.status == StreamStatus.ended) return _buildEndedScreen();
         if (state.status == StreamStatus.error) {
@@ -197,10 +196,10 @@ class _LivestreamPageState extends State<LivestreamPage>
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             _PulsingOrb(controller: _pulseController, size: 80, color: _C.accent),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               'Joining stream…',
               style: TextStyle(color: _C.textSecondary, fontSize: 15,
                   letterSpacing: 0.5),
@@ -220,12 +219,12 @@ class _LivestreamPageState extends State<LivestreamPage>
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Container(
                   width: 64, height: 64,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: _C.live.withOpacity(0.12),
+                    color: _C.live.withValues(alpha: 0.12),
                   ),
                   child: const Icon(Icons.wifi_off_rounded,
                       color: _C.live, size: 28),
@@ -254,12 +253,12 @@ class _LivestreamPageState extends State<LivestreamPage>
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Container(
               width: 72, height: 72,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: _C.live.withOpacity(0.1),
+                color: _C.live.withValues(alpha: 0.1),
               ),
               child: const Icon(Icons.stop_rounded, color: _C.live, size: 32),
             ),
@@ -289,7 +288,7 @@ class _LivestreamPageState extends State<LivestreamPage>
       backgroundColor: _C.bg,
       body: SafeArea(
         child: Column(
-          children: [
+          children: <Widget>[
             _buildTopBar(state),
             Expanded(
               child: _chatExpanded
@@ -306,13 +305,13 @@ class _LivestreamPageState extends State<LivestreamPage>
   // ── Top bar ───────────────────────────────────────────────────────────────
 
   Widget _buildTopBar(LivestreamState state) {
-    final isLive = state.status == StreamStatus.live;
+    final bool isLive = state.status == StreamStatus.live;
 
     return Container(
       height: 52,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
-        children: [
+        children: <Widget>[
           // Back
           _IconBtn(
             icon: Icons.arrow_back_ios_new_rounded,
@@ -321,7 +320,7 @@ class _LivestreamPageState extends State<LivestreamPage>
           const SizedBox(width: 12),
 
           // LIVE badge
-          if (isLive) ...[
+          if (isLive) ...<Widget>[
             _LiveBadge(controller: _pulseController),
             const SizedBox(width: 10),
           ],
@@ -335,7 +334,7 @@ class _LivestreamPageState extends State<LivestreamPage>
                   color: _C.textSecondary, fontSize: 13)),
 
           // Participant count
-          if (state.participantCount > 0) ...[
+          if (state.participantCount > 0) ...<Widget>[
             const SizedBox(width: 12),
             const Icon(Icons.people_outline_rounded,
                 size: 14, color: _C.textSecondary),
@@ -350,8 +349,8 @@ class _LivestreamPageState extends State<LivestreamPage>
           // Mute toggle
           StreamBuilder<MediaStateChange>(
             stream: _controller.mediaService.onMediaStateChanged,
-            builder: (context, _) {
-              final on = _controller.mediaService.isAudioEnabled;
+            builder: (BuildContext context, _) {
+              final bool on = _controller.mediaService.isAudioEnabled;
               return _IconBtn(
                 icon: on ? Icons.mic_rounded : Icons.mic_off_rounded,
                 color: on ? _C.textPrimary : _C.live,
@@ -368,9 +367,9 @@ class _LivestreamPageState extends State<LivestreamPage>
                 borderRadius: BorderRadius.circular(12)),
             icon: const Icon(Icons.add_reaction_outlined,
                 color: _C.textSecondary, size: 20),
-            onSelected: (e) => _controller.sendReaction(e),
-            itemBuilder: (_) => ['🔥', '❤️', '👍', '😂', '🎉']
-                .map((e) => PopupMenuItem(
+            onSelected: (String e) => _controller.sendReaction(e),
+            itemBuilder: (_) => <String>['🔥', '❤️', '👍', '😂', '🎉']
+                .map((String e) => PopupMenuItem(
               value: e,
               child: Text(e, style: const TextStyle(fontSize: 20)),
             ))
@@ -378,7 +377,7 @@ class _LivestreamPageState extends State<LivestreamPage>
           ),
 
           // End stream (host)
-          if (widget.isHost) ...[
+          if (widget.isHost) ...<Widget>[
             const SizedBox(width: 4),
             _IconBtn(
               icon: Icons.stop_circle_outlined,
@@ -395,7 +394,7 @@ class _LivestreamPageState extends State<LivestreamPage>
 
   Widget _buildStagePanel(LivestreamState state) {
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 8),
         // Visualizer
         Expanded(
@@ -404,19 +403,19 @@ class _LivestreamPageState extends State<LivestreamPage>
         ),
 
         // Participants strip
-        if (state.participants.isNotEmpty) ...[
+        if (state.participants.isNotEmpty) ...<Widget>[
           const SizedBox(height: 8),
           _buildParticipantStrip(state),
         ],
 
         // Hand queue (host)
-        if (widget.isHost && state.handQueue.isNotEmpty) ...[
+        if (widget.isHost && state.handQueue.isNotEmpty) ...<Widget>[
           const SizedBox(height: 8),
           _buildHandQueue(state),
         ],
 
         // Reactions ticker
-        if (state.reactions.isNotEmpty) ...[
+        if (state.reactions.isNotEmpty) ...<Widget>[
           const SizedBox(height: 4),
           _buildReactionsTicker(state),
         ],
@@ -432,20 +431,20 @@ class _LivestreamPageState extends State<LivestreamPage>
   // ── Audio visualizer ──────────────────────────────────────────────────────
 
   Widget _buildVisualizer(LivestreamState state) {
-    final remote = state.remoteLevel;
-    final local = state.localLevel;
-    final speaking = remote > 0.04;
+    final double remote = state.remoteLevel;
+    final double local = state.localLevel;
+    final bool speaking = remote > 0.04;
 
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           // Main orb
           AnimatedBuilder(
             animation: _pulseController,
-            builder: (context, _) {
-              final pulse = _pulseController.value;
-              final scale = speaking
+            builder: (BuildContext context, _) {
+              final double pulse = _pulseController.value;
+              final double scale = speaking
                   ? 1.0 + remote * 0.25 * pulse
                   : 1.0 + 0.04 * pulse;
 
@@ -453,17 +452,17 @@ class _LivestreamPageState extends State<LivestreamPage>
                 scale: scale,
                 child: Stack(
                   alignment: Alignment.center,
-                  children: [
+                  children: <Widget>[
                     // Outer glow ring
                     Container(
                       width: 170,
                       height: 170,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        boxShadow: [
+                        boxShadow: <BoxShadow>[
                           BoxShadow(
                             color: (speaking ? _C.accent : _C.textDim)
-                                .withOpacity(speaking
+                                .withValues(alpha: speaking
                                 ? 0.35 * pulse
                                 : 0.1 * pulse),
                             blurRadius: 40,
@@ -480,7 +479,7 @@ class _LivestreamPageState extends State<LivestreamPage>
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: (speaking ? _C.accent : _C.border)
-                              .withOpacity(speaking ? 0.6 : 0.4),
+                              .withValues(alpha: speaking ? 0.6 : 0.4),
                           width: 1.5,
                         ),
                       ),
@@ -493,9 +492,9 @@ class _LivestreamPageState extends State<LivestreamPage>
                         shape: BoxShape.circle,
                         color: _C.surface,
                         gradient: RadialGradient(
-                          colors: [
+                          colors: <Color>[
                             speaking
-                                ? _C.accent.withOpacity(0.18)
+                                ? _C.accent.withValues(alpha: 0.18)
                                 : _C.surfaceHigh,
                             _C.surface,
                           ],
@@ -503,7 +502,7 @@ class _LivestreamPageState extends State<LivestreamPage>
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           Icon(
                             speaking ? Icons.mic_rounded : Icons.mic_none_rounded,
                             size: 36,
@@ -543,7 +542,7 @@ class _LivestreamPageState extends State<LivestreamPage>
     return SizedBox(
       width: 220,
       child: Row(
-        children: [
+        children: <Widget>[
           SizedBox(
             width: 32,
             child: Text(label,
@@ -576,8 +575,8 @@ class _LivestreamPageState extends State<LivestreamPage>
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: state.participants.length,
         separatorBuilder: (_, __) => const SizedBox(width: 10),
-        itemBuilder: (_, i) {
-          final p = state.participants[i];
+        itemBuilder: (_, int i) {
+          final LivestreamParticipant p = state.participants[i];
           return _ParticipantAvatar(participant: p);
         },
       ),
@@ -591,12 +590,12 @@ class _LivestreamPageState extends State<LivestreamPage>
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: _C.amber.withOpacity(0.08),
+        color: _C.amber.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: _C.amber.withOpacity(0.25)),
+        border: Border.all(color: _C.amber.withValues(alpha: 0.25)),
       ),
       child: Row(
-        children: [
+        children: <Widget>[
           const Icon(Icons.back_hand_outlined, color: _C.amber, size: 16),
           const SizedBox(width: 8),
           Expanded(
@@ -604,13 +603,13 @@ class _LivestreamPageState extends State<LivestreamPage>
               spacing: 6,
               runSpacing: 4,
               children: state.handQueue
-                  .map((id) => GestureDetector(
+                  .map((String id) => GestureDetector(
                 onTap: () => _controller.approveHandRaise(id),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _C.amber.withOpacity(0.15),
+                    color: _C.amber.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(id,
@@ -629,7 +628,7 @@ class _LivestreamPageState extends State<LivestreamPage>
   // ── Reactions ticker ──────────────────────────────────────────────────────
 
   Widget _buildReactionsTicker(LivestreamState state) {
-    final recent = state.reactions.reversed.take(5).toList();
+    final List<Reaction> recent = state.reactions.reversed.take(5).toList();
     return SizedBox(
       height: 32,
       child: ListView.builder(
@@ -637,8 +636,8 @@ class _LivestreamPageState extends State<LivestreamPage>
         padding: const EdgeInsets.symmetric(horizontal: 16),
         reverse: true,
         itemCount: recent.length,
-        itemBuilder: (_, i) {
-          final r = recent[i];
+        itemBuilder: (_, int i) {
+          final Reaction r = recent[i];
           return Padding(
             padding: const EdgeInsets.only(right: 8),
             child: Container(
@@ -662,7 +661,7 @@ class _LivestreamPageState extends State<LivestreamPage>
   // ── Chat preview (collapsed state) ───────────────────────────────────────
 
   Widget _buildChatPreview(LivestreamState state) {
-    final preview = state.messages.reversed.take(3).toList().reversed.toList();
+    final List<ChatMessage> preview = state.messages.reversed.take(3).toList().reversed.toList();
 
     return GestureDetector(
       onTap: () => setState(() => _chatExpanded = true),
@@ -676,9 +675,9 @@ class _LivestreamPageState extends State<LivestreamPage>
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Row(
-              children: [
+              children: <Widget>[
                 const Icon(Icons.chat_bubble_outline_rounded,
                     size: 13, color: _C.textDim),
                 const SizedBox(width: 6),
@@ -693,9 +692,9 @@ class _LivestreamPageState extends State<LivestreamPage>
                     size: 14, color: _C.textDim),
               ],
             ),
-            if (preview.isNotEmpty) ...[
+            if (preview.isNotEmpty) ...<Widget>[
               const SizedBox(height: 8),
-              ...preview.map((m) => _ChatLine(message: m)),
+              ...preview.map((ChatMessage m) => _ChatLine(message: m)),
             ] else
               const Padding(
                 padding: EdgeInsets.only(top: 6),
@@ -712,12 +711,12 @@ class _LivestreamPageState extends State<LivestreamPage>
 
   Widget _buildChatPanel(LivestreamState state) {
     return Column(
-      children: [
+      children: <Widget>[
         // Header
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Row(
-            children: [
+            children: <Widget>[
               const Text('Chat',
                   style: TextStyle(
                       color: _C.textPrimary,
@@ -743,7 +742,7 @@ class _LivestreamPageState extends State<LivestreamPage>
             padding: const EdgeInsets.symmetric(
                 horizontal: 16, vertical: 4),
             itemCount: state.messages.length,
-            itemBuilder: (_, i) =>
+            itemBuilder: (_, int i) =>
                 _ChatLine(message: state.messages[i], full: true),
           ),
         ),
@@ -754,8 +753,8 @@ class _LivestreamPageState extends State<LivestreamPage>
   // ── Bottom bar ────────────────────────────────────────────────────────────
 
   Widget _buildBottomBar(LivestreamState state) {
-    final localId = _controller.mediaService.localParticipant?.identity;
-    final isHandRaised =
+    final String? localId = _controller.mediaService.localParticipant?.identity;
+    final bool isHandRaised =
         localId != null && state.handQueue.contains(localId);
 
     return Container(
@@ -765,7 +764,7 @@ class _LivestreamPageState extends State<LivestreamPage>
         border: Border(top: BorderSide(color: _C.border)),
       ),
       child: Row(
-        children: [
+        children: <Widget>[
           // Hand raise (viewers only)
           if (!widget.isHost)
             _IconBtn(
@@ -814,7 +813,7 @@ class _LivestreamPageState extends State<LivestreamPage>
             child: Container(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: _C.accent,
               ),
@@ -839,7 +838,7 @@ class _LivestreamPageState extends State<LivestreamPage>
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               const Icon(Icons.stop_circle_outlined,
                   color: _C.live, size: 36),
               const SizedBox(height: 14),
@@ -856,7 +855,7 @@ class _LivestreamPageState extends State<LivestreamPage>
               ),
               const SizedBox(height: 24),
               Row(
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: _PillButton(
                       label: 'Cancel',
@@ -907,10 +906,10 @@ class _PulsingOrb extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: color.withOpacity(0.15 + 0.1 * controller.value),
-          boxShadow: [
+          color: color.withValues(alpha: 0.15 + 0.1 * controller.value),
+          boxShadow: <BoxShadow>[
             BoxShadow(
-              color: color.withOpacity(0.3 * controller.value),
+              color: color.withValues(alpha: 0.3 * controller.value),
               blurRadius: 20,
               spreadRadius: 4,
             ),
@@ -933,16 +932,16 @@ class _LiveBadge extends StatelessWidget {
       animation: controller,
       builder: (_, __) => Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           Container(
             width: 6,
             height: 6,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: _C.live,
-              boxShadow: [
+              boxShadow: <BoxShadow>[
                 BoxShadow(
-                  color: _C.live.withOpacity(0.6 * controller.value),
+                  color: _C.live.withValues(alpha: 0.6 * controller.value),
                   blurRadius: 4,
                   spreadRadius: 1,
                 ),
@@ -980,7 +979,7 @@ class _IconBtn extends StatelessWidget {
       child: Container(
         width: 36,
         height: 36,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: _C.surfaceHigh,
         ),
@@ -1031,9 +1030,9 @@ class _ParticipantAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         Stack(
-          children: [
+          children: <Widget>[
             // Container(
             //   width: 40,
             //   height: 40,
@@ -1098,7 +1097,7 @@ class _ChatLine extends StatelessWidget {
       padding: EdgeInsets.only(bottom: full ? 10 : 4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           if (full)
             Container(
               width: 28,
@@ -1112,7 +1111,7 @@ class _ChatLine extends StatelessWidget {
               child: const Center(
                 child: Text(
                   'foo',
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: _C.textPrimary, fontSize: 11,
                       fontWeight: FontWeight.w600),
                 ),
@@ -1123,7 +1122,7 @@ class _ChatLine extends StatelessWidget {
               maxLines: full ? null : 1,
               overflow: full ? TextOverflow.visible : TextOverflow.ellipsis,
               text: TextSpan(
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: '${message.senderName}  ',
                     style: const TextStyle(

@@ -85,8 +85,8 @@ class HalfMoonPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double w = size.width;
-    double h = size.height;
+    final double w = size.width;
+    final double h = size.height;
 
     final Paint paint = Paint()
       ..color = color
@@ -106,11 +106,11 @@ class HalfMoonPainter extends CustomPainter {
         ),
         radius: Radius.circular(w * 0.5));
     if (stretchedMode) {
-      double controlPointY = animation.value * -w * 0.6;
+      final double controlPointY = animation.value * -w * 0.6;
       path.quadraticBezierTo(w * 0.6, controlPointY, w * 0.75, 0);
     } else {
       if (animation.value != 0) {
-        double controlPointY = animation.value * -w * 0.5;
+        final double controlPointY = animation.value * -w * 0.5;
         path.quadraticBezierTo(w * 0.6, controlPointY, w * 0.75, 0);
       }
     }

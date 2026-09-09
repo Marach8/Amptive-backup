@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:amptive/src/config/utils/constants.dart';
+import 'package:amptive/src/services/auth/otp_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 

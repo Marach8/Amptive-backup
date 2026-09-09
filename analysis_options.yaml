@@ -14,19 +14,22 @@ linter:
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
   # included above or to enable additional rules. A list of all available lints
   # and their documentation is published at https://dart.dev/lints.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
   rules:
+    # Enforce typed API surfaces throughout the codebase.
     - always_specify_types
     - always_declare_return_types
     - eol_at_end_of_file
     - sort_constructors_first
     - sort_unnamed_constructors_first
     - prefer_const_constructors
+    - prefer_const_declarations
+    - prefer_const_literals
+    - prefer_final_locals
+    - prefer_single_quotes
+    - unnecessary_overrides
+    - use_super_parameters
+    - directives_ordering
+    - avoid_print
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

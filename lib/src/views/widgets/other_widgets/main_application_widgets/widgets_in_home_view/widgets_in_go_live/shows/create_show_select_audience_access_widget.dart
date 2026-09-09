@@ -14,7 +14,7 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
     return ATContainer(
       radius: 14,
       padding: const EdgeInsets.fromLTRB(17, 15, 17, 15),
-      color: ATColors.white.withOpacity(0.1),
+      color: ATColors.white.withValues(alpha: 0.1),
       child: AmptiveRebuilderWidget(
         shouldDispose: true,
         notifier: selectAudienceAccessNotifier,
@@ -24,11 +24,11 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
             children: <Widget>[
               Text(
                 selectedAudienceAccess.isEmpty
-                    ? "Select who can access this show"
+                    ? 'Select who can access this show'
                     : selectedAudienceAccess,
                 style: selectedAudienceAccess.isEmpty
                     ? Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: ATColors.white.withOpacity(0.4),
+                          color: ATColors.white.withValues(alpha: 0.4),
                         )
                     : Theme.of(context).textTheme.bodySmall,
               ),
@@ -40,7 +40,7 @@ class AmptiveCreateShowSelectAudienceAccessWidget extends StatelessWidget {
                 child: Icon(
                   Icons.arrow_forward_ios,
                   size: 20.w,
-                  color: ATColors.white.withOpacity(0.4),
+                  color: ATColors.white.withValues(alpha: 0.4),
                 ),
               ),
             ],

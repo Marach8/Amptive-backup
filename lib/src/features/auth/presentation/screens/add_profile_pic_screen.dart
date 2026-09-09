@@ -1,43 +1,30 @@
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
-import 'dart:async';
-import 'dart:developer';
-
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
-import 'package:amptive/src/features/profile/presentation/screens/image_cropper_screen.dart';
-import 'package:amptive/src/shared/annotated_region_widget.dart';
-import 'package:amptive/src/shared/app_bar_widget.dart';
-import 'package:amptive/src/shared/back_button.dart';
-import 'package:amptive/src/shared/loading_indicator.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nested/nested.dart';
-
-import '../../../../config/utils/font_sizes.dart';
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
+import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'package:amptive/src/features/profile/presentation/screens/image_cropper_screen.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
-import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../config/utils/colors.dart';
+import 'package:nested/nested.dart';
+
+import '../../../../config/routing/route_strings.dart';
 import '../../../../config/utils/dialogs/app_notification_dialog.dart';
-import '../../../../config/utils/font_weights.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../config/utils/other_strings.dart';
-import '../../../../config/routing/route_strings.dart';
 
 class AddProfilePictureScreen extends StatefulWidget {
   const AddProfilePictureScreen({super.key});

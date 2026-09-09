@@ -27,7 +27,7 @@ class AmptivePaidEventModel extends StatelessWidget {
           SizedBox(
             width: 135,
             child: Text(
-              "Config 2024",
+              'Config 2024',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
@@ -40,7 +40,7 @@ class AmptivePaidEventModel extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    "P",
+                    'P',
                     style: Theme.of(context)
                         .textTheme
                         .displayMedium

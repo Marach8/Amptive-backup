@@ -1,14 +1,16 @@
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/profile/presentation/screens/image_cropper_screen.dart';
-import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/image_source_selection_dialog.dart';
 import 'package:custom_image_crop/custom_image_crop.dart'
-    show Ratio, CustomCropShape;
+    show Ratio;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../../../../shared/custom_container_widget.dart';
 
 class SelectProgramCoverArt extends StatefulWidget {

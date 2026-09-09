@@ -21,11 +21,11 @@ class ATHelperFuncs {
   static bool platformIsAndroid() => Platform.isAndroid;
 
   static String enter4DigitSentFrom(String location) {
-    return "Enter the 4 digit code we just sent to your $location";
+    return 'Enter the 4 digit code we just sent to your $location';
   }
 
   static String codeHasBeenSentResendIn(int time) {
-    return "Code has been sent. You can send another in $time";
+    return 'Code has been sent. You can send another in $time';
   }
 
   static void hideAnyMountedSnackbar(BuildContext context) =>
@@ -81,9 +81,9 @@ class ATHelperFuncs {
     final List<String> timeList = <String>[];
 
     for (int index = 0; index < 24; index++) {
-      DateTime time = DateTime(2025, 3, 12, index);
+      final DateTime time = DateTime(2025, 3, 12, index);
 
-      String formattedTime = DateFormat('hh:00 a').format(time).toLowerCase();
+      final String formattedTime = DateFormat('hh:00 a').format(time).toLowerCase();
 
       timeList.add(formattedTime);
     }
@@ -190,7 +190,7 @@ class ATHelperFuncs {
       final int daysInMonth = getDaysInMonth(year, month);
       final int firstWeekday = getFirstWeekday(year, month);
 
-      List<List<DateTime?>> calendarWeeks = <List<DateTime?>>[];
+      final List<List<DateTime?>> calendarWeeks = <List<DateTime?>>[];
       List<DateTime?> currentWeek = <DateTime?>[];
 
       for (int i = 0; i < firstWeekday; i++) {
@@ -273,7 +273,7 @@ class ATHelperFuncs {
 
   static Future<PermissionStatus> requestUserPermission(
       Permission permType) async {
-    PermissionStatus status = await permType.status;
+    final PermissionStatus status = await permType.status;
 
     if (status.isGranted || status.isPermanentlyDenied || status.isRestricted) {
       return status;

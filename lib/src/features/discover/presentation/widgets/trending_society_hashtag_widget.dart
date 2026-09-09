@@ -1,6 +1,7 @@
-import 'package:amptive/src/features/discover/presentation/widgets/render_trending_hashtag.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/features/discover/presentation/widgets/render_trending_hashtag.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/font_sizes.dart';
 import '../../../../shared/circle_avatar.dart';
@@ -36,7 +37,7 @@ class TrendingSocietyHashtagWidget extends StatelessWidget {
           return SizedBox(
             width: kst.maxWidth,
             child: Text(
-              "Former CIA Agent on The Name",
+              'Former CIA Agent on The Name',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           );

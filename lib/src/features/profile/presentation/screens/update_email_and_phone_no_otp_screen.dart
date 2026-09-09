@@ -3,8 +3,6 @@ import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
-import 'package:amptive/src/features/auth/cubits/verify_otp_cubit.dart';
 import 'package:amptive/src/features/profile/cubits/update_email_and_phone_number_cubit.dart';
 import 'package:amptive/src/features/profile/cubits/verify_email_and_phone_no_otp_cubit.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';

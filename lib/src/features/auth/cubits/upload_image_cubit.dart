@@ -1,9 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
-import 'dart:io';
-import 'dart:typed_data';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 class UploadImageCubit extends Cubit<ATAppState<String>> {

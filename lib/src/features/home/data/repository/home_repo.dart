@@ -2,10 +2,9 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
 import 'package:amptive/src/features/home/data/models/response/going_status.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
+import 'package:amptive/src/features/home/data/models/response/live_listeners_response_model.dart';
 import 'package:amptive/src/features/home/data/models/response/live_users_response_model.dart';
 import 'package:amptive/src/features/home/data/models/response/whispers_response_model.dart';
-
-import 'package:amptive/src/features/home/data/models/response/live_listeners_response_model.dart';
 
 abstract class HomeRepo {
   Future<ApiResponse<FollowingStatus>> unFollowTargetUser({

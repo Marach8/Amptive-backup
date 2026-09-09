@@ -11,7 +11,7 @@ class TransactionHistoryResponseModel {
     Map<String, dynamic> json,
   ) {
     final Map<String, dynamic> data =
-        json['data'] as Map<String, dynamic>? ?? {};
+        json['data'] as Map<String, dynamic>? ?? <String, dynamic>{};
 
     final List<dynamic> transactionsList =
         data['transactions'] as List? ?? <dynamic>[];

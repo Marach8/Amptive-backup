@@ -5,9 +5,9 @@ import 'package:intl/intl.dart' show DateFormat;
 class Validators {
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return "Required";
+      return 'Required';
     } else if (EmailValidator.validate(value)) {
-      return "Invalid Email";
+      return 'Invalid Email';
     } else {
       return null;
     }

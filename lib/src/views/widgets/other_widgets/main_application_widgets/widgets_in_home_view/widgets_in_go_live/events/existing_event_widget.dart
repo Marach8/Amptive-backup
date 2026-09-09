@@ -48,7 +48,7 @@ class AmptiveExistingEventWidget extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   maxLines: 2,
-                  "We Can Do Hard Things",
+                  'We Can Do Hard Things',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Row(

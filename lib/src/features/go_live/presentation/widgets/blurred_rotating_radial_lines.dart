@@ -1,6 +1,7 @@
 import 'dart:math' hide log;
-import 'package:amptive/src/global_export.dart';
+
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/global_export.dart';
 
 class RotatingRadialLines extends StatefulWidget {
   const RotatingRadialLines({

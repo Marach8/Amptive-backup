@@ -1,19 +1,20 @@
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
-import 'package:amptive/src/shared/overlapping_widgets.dart';
-import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/shared/live_indicators.dart';
-import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/features/home/presentation/widgets/row_of_paid_show_and_play_button_widget.dart';
+import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
+import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
+import 'package:amptive/src/shared/live_indicators.dart';
+import 'package:amptive/src/shared/overlapping_widgets.dart';
 import 'package:amptive/src/shared/row_of_people_listening_widget.dart';
 import 'package:amptive/src/shared/shimmer.dart';
-import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../config/utils/colors.dart';
 import 'program_actions_modal.dart';
 

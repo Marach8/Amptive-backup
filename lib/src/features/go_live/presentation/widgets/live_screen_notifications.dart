@@ -1,16 +1,12 @@
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/features/go_live/cubits/livestream_cubit1.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
-import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../config/utils/extensions/context_extensions.dart';
-import '../../../../config/utils/other_strings.dart';
-import '../../../../models/go_live_notification_model.dart';
+
 import '../../../../config/utils/colors.dart';
+import '../../../../config/utils/extensions/context_extensions.dart';
 import '../../../../config/utils/image_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../../../../shared/circular_image.dart';
-import '../../../../shared/custom_container_widget.dart';
 import '../../../../shared/image_loader_widget.dart';
 
 class SpeakingNotification extends StatelessWidget {

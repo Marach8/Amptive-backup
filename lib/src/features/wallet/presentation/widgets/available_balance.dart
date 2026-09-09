@@ -1,14 +1,11 @@
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
+import 'dart:developer';
+
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/features/wallet/cubits/transaction_history_cubit.dart';
 import 'package:amptive/src/features/wallet/cubits/wallet_balance_cubit.dart';
 import 'package:amptive/src/features/wallet/data/models/response/wallet_balance_response_model.dart';
@@ -20,7 +17,6 @@ import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'dart:developer';
 
 class AvailableBalanceWidget extends StatelessWidget {
   const AvailableBalanceWidget({
@@ -49,9 +45,9 @@ class AvailableBalanceWidget extends StatelessWidget {
         FailureState<WalletBalanceResponseModel>() ||
         SuccessState<WalletBalanceResponseModel>() =>
           Builder(builder: (_) {
-            WalletBalanceResponseModel? walletbalance =
+            final WalletBalanceResponseModel? walletbalance =
                 context.read<WalletBalanceCubit>().currentWalletBalance;
-            WalletBalance? balance = walletbalance?.data;
+            final WalletBalance? balance = walletbalance?.data;
             return ATContainer(
                 color: ATColors.white.withValues(alpha: 0.05),
                 padding: const EdgeInsets.all(15),

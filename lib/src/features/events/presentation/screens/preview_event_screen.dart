@@ -1,27 +1,23 @@
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:ui';
+
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
-import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
-import 'package:amptive/src/features/go_live/go_live_export.dart';
-import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
-import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
-import 'package:amptive/src/features/home/data/models/following_status.dart';
-import 'package:amptive/src/features/home/presentation/widgets/event_or_show_card.dart';
-import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
-import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
 import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
+import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
+import 'package:amptive/src/features/home/presentation/widgets/program_actions_modal.dart';
+import 'package:amptive/src/features/home/presentation/widgets/render_community_name.dart';
 import 'package:amptive/src/global_export.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
-import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
+
 import '../../../../shared/list_tile_with_leading_picture_widget.dart';
 import '../../../../shared/sliver_header_delegate.dart';
 

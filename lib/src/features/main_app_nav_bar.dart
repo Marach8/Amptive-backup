@@ -4,12 +4,12 @@ import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/notifications/cubits/notifications_cubit.dart';
 import 'package:amptive/src/features/notifications/data/models/get_notifications_response_model.dart';
 import 'package:amptive/src/shared/animated_slide.dart';
-import 'package:amptive/src/shared/global_model_objects.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
+import 'package:amptive/src/views/widgets/animation_widgets/common_animation_widgets/animated_crossfade_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import '../shared/custom_container_widget.dart';
 
 class MainAppBottomNav extends StatelessWidget {

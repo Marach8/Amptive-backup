@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:developer' as developer show log;
+
+import 'package:dio/src/response.dart';
 
 import '../../config/endpoints.dart';
 import '../../config/services/network_service/dio_network_service_impl.dart';
@@ -32,7 +33,7 @@ class LivestreamApiService {
   /// not yet LIVE (guest guard).
   Future<LivestreamToken> fetchToken(String streamId) async {
     try {
-      final res = await _networkService.post(
+      final Response<dynamic> res = await _networkService.post(
         '${ATEndpoints.livestreams}$streamId/token',
       );
 
@@ -51,7 +52,7 @@ class LivestreamApiService {
 
   Future<String> startStream(String contentId) async {
     try {
-      final res = await _networkService.post(
+      final Response<dynamic> res = await _networkService.post(
         '${ATEndpoints.livestreams}$contentId/start',
       );
 
@@ -86,7 +87,7 @@ class LivestreamApiService {
     try {
       await _networkService.post(
         '${ATEndpoints.livestreams}$streamId/react',
-        data: {'emoji': emoji},
+        data: <String, String>{'emoji': emoji},
       );
     } catch (e) {
       throw LivestreamApiException(
@@ -101,8 +102,8 @@ class LivestreamApiService {
   int _extractStatusCode(dynamic error) {
     if (error is Exception) {
       // Try to extract status code from Dio error or other network errors
-      final errorString = error.toString();
-      final statusCodeMatch =
+      final String errorString = error.toString();
+      final RegExpMatch? statusCodeMatch =
           RegExp(r'status code: (\d+)').firstMatch(errorString);
       return int.tryParse(statusCodeMatch?.group(1) ?? '') ?? 500;
     }
@@ -111,10 +112,10 @@ class LivestreamApiService {
 
   String _extractErrorMessage(dynamic error) {
     if (error is Exception) {
-      final errorString = error.toString();
+      final String errorString = error.toString();
 
       // Try to extract message from various error formats
-      final messageMatch =
+      final RegExpMatch? messageMatch =
           RegExp(r'message[:\s]+([^\n]+)').firstMatch(errorString);
       if (messageMatch != null) {
         return messageMatch.group(1)?.trim() ?? errorString;
@@ -123,11 +124,11 @@ class LivestreamApiService {
       // For Dio errors, try to get response data
       if (errorString.contains('DioError')) {
         try {
-          final dataMatch =
+          final RegExpMatch? dataMatch =
               RegExp(r'response: ({.*?})').firstMatch(errorString);
           if (dataMatch != null) {
-            final dataStr = dataMatch.group(1)!;
-            final data = jsonDecode(dataStr) as Map<String, dynamic>;
+            final String dataStr = dataMatch.group(1)!;
+            final Map<String, dynamic> data = jsonDecode(dataStr) as Map<String, dynamic>;
             return data['message'] as String? ??
                 data['detail'] as String? ??
                 data['error'] as String? ??
@@ -147,13 +148,13 @@ class LivestreamApiService {
 }
 
 class LivestreamApiException implements Exception {
-  final int statusCode;
-  final String message;
 
   const LivestreamApiException({
     required this.statusCode,
     required this.message,
   });
+  final int statusCode;
+  final String message;
 
   bool get isForbidden => statusCode == 403;
 

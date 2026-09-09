@@ -2,41 +2,41 @@
 
 class ATRoutes {
   //WELCOME AND ONBOARDING
-  static const String postOnboardingScreen = "post_onboarding";
-  static const String onboardingScreen = "onboarding";
+  static const String postOnboardingScreen = 'post_onboarding';
+  static const String onboardingScreen = 'onboarding';
 
   //AUTHENTICATION
-  static const String emailScreen = "email_auth";
-  static const String select5CommunitiesScreen = "preference";
-  static const String authOptionsScreen = "auth_screen";
-  static const String createPasswordScreen = "password_auth";
-  static const String DOB_AUTH_SCREEN = "dob_auth";
-  static const String ENTER_OTP_SCREEN = "otp";
-  static const String createNewPAsswordScreen = "create_new_password";
-  static const String ADD_NAME_AUTH_SCREEN = "name_auth";
-  static const String ADD_USERNAME_AUTH_SCREEN = "username_auth";
-  static const String dobAuthScreen = "dob_auth";
-  static const String enterOtpScreen = "otp";
-  static const String addNameAuthScreen = "name_auth";
-  static const String addUserNameScreen = "username_auth";
-  static const String phoneAuthScreen = "add_phone_auth";
+  static const String emailScreen = 'email_auth';
+  static const String select5CommunitiesScreen = 'preference';
+  static const String authOptionsScreen = 'auth_screen';
+  static const String createPasswordScreen = 'password_auth';
+  static const String DOB_AUTH_SCREEN = 'dob_auth';
+  static const String ENTER_OTP_SCREEN = 'otp';
+  static const String createNewPAsswordScreen = 'create_new_password';
+  static const String ADD_NAME_AUTH_SCREEN = 'name_auth';
+  static const String ADD_USERNAME_AUTH_SCREEN = 'username_auth';
+  static const String dobAuthScreen = 'dob_auth';
+  static const String enterOtpScreen = 'otp';
+  static const String addNameAuthScreen = 'name_auth';
+  static const String addUserNameScreen = 'username_auth';
+  static const String phoneAuthScreen = 'add_phone_auth';
   static const String temporaryLoginScreen = 'temporary_login';
   static const String phoneLoginScreen = 'phone_login';
   static const String FORGOT_PASSWORD_SCREEN = 'forgot_password';
   static const String PASSWORD_RESET_OTP_SCREEN = 'password_reset_otp';
 
   //POST AUTHENTICATION
-  static const String addProfilePicScreen = "add_profile_pic";
-  static const String CIRCLE_IMG_CROPPER_SCREEN = "crop_image";
-  static const String allowNotificationsScreen = "pre-homepage";
-  static const String createShowFormScreen = "create-show-form";
-  static const String createEventFormScreen = "create-event-form";
-  static const String createEpisodeForm = "create-episode-form";
+  static const String addProfilePicScreen = 'add_profile_pic';
+  static const String CIRCLE_IMG_CROPPER_SCREEN = 'crop_image';
+  static const String allowNotificationsScreen = 'pre-homepage';
+  static const String createShowFormScreen = 'create-show-form';
+  static const String createEventFormScreen = 'create-event-form';
+  static const String createEpisodeForm = 'create-episode-form';
 
   //MAIN APPLICATION
-  static const String dashboard = "main_app_shell";
-  static const String liveShowDetailedScreen = "show_detailed_screen";
-  static const String liveEventDetailedScreen = "event_detailed_screen";
+  static const String dashboard = 'main_app_shell';
+  static const String liveShowDetailedScreen = 'show_detailed_screen';
+  static const String liveEventDetailedScreen = 'event_detailed_screen';
   static const String scheduledProgramsScreen =
       'scheduled_events_or_shows';
   static const String subscribedProgramsScreen =
@@ -79,7 +79,7 @@ class ATRoutes {
   static const String SELECT_COUNTRY_SCREEN = 'select_country_screen';
   static const String ACCT_INFO_SCREEN = 'account_infomation_screen';
   static const String accountLandingScreen = 'account_screen';
-  static const String enterEmailAndPhoneNoOtpScreen = "enter_email_and_phone_no_otp";
+  static const String enterEmailAndPhoneNoOtpScreen = 'enter_email_and_phone_no_otp';
   static const String editProfile = 'edit_profile';
   static const String imageCropperScreen = 'profile_bg_crop';
   static const String editNameScreen = 'edit_name';

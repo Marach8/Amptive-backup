@@ -1,4 +1,3 @@
-import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
@@ -12,10 +11,10 @@ import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+
+import 'gifters_modal.dart';
 import 'host_end_show_dialog.dart';
 import 'listeners_modal.dart';
-import 'gifters_modal.dart';
 
 
 class LiveProgramHeader extends StatelessWidget {
@@ -181,7 +180,7 @@ class _GiftingAndFollowingRowState extends State<_GiftingAndFollowingRow> {
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        "Gift",
+                        'Gift',
                         style: context.textTheme.bodyMedium?.copyWith(
                           overflow: TextOverflow.fade,
                           fontSize: ATSizes.size14
@@ -234,7 +233,7 @@ class _GiftingAndFollowingRowState extends State<_GiftingAndFollowingRow> {
   }
 
   String _formatViewerCount(int? count) {
-    if (count == null) return "0";
+    if (count == null) return '0';
     if (count >= 1000000) {
       return '${(count / 1000000).toStringAsFixed(1)}M';
     } else if (count >= 1000) {

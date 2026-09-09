@@ -5,8 +5,8 @@ class ATStrings {
 
   static const String inter = 'Inter';
 
-  static const String empty = "";
-  static const String hyphen = "-";
+  static const String empty = '';
+  static const String hyphen = '-';
   static const String space = ' ';
   static const String underscore = '_';
   static const String plus = '+';
@@ -32,18 +32,18 @@ class ATStrings {
   static const String liveProgramData = 'live program data';
   static const String bio = 'Bio';
 
-  static const String GO_LIVE_LIKE_NEVER_B4 = "Go Live, Like Never Before";
+  static const String GO_LIVE_LIKE_NEVER_B4 = 'Go Live, Like Never Before';
   static const String READILY_MONETIZE_UR_LIVE_AUDIO_PROGS =
-      "Readily monetize your live audio shows and events according to your unique taste while also creating the best for your subscribers.";
-  static const String experienceItUniquely = "Experience it Uniquely";
+      'Readily monetize your live audio shows and events according to your unique taste while also creating the best for your subscribers.';
+  static const String experienceItUniquely = 'Experience it Uniquely';
   static const String joinTheLargerAudience =
-      "Join the larger audience in experiencing, enjoying and supporting live audio shows and event.";
+      'Join the larger audience in experiencing, enjoying and supporting live audio shows and event.';
   static const String liveAudioAndEventShows =
-      "Live Audio Shows and Events in One Place";
+      'Live Audio Shows and Events in One Place';
   static const String tuneIntoLiveAudioShowsAndEvents =
-      "Tune into live audio shows and events.";
+      'Tune into live audio shows and events.';
   static const String monetizeLiveAudioShowsAndEvents =
-      "Monetizable Live Audio Shows & Events ";
+      'Monetizable Live Audio Shows & Events ';
   static const String enterCodeSentTo =
       'Enter the 4 digit code we just sent to';
   static const String next = 'Next';
@@ -192,7 +192,7 @@ class ATStrings {
       'will be able to follow, subscribe and see your app activities';
   static String unMuteDesc(String text) =>
       "You will be able to see $text's app activities";
-  static String enterLink(String link) => "Enter your $link link";
+  static String enterLink(String link) => 'Enter your $link link';
   static const String isUnblocked = 'is now unblocked';
   static const String IS_UNMUTED = 'is now unmuted';
   static const String transferFunds = 'Transfer Funds';
@@ -263,15 +263,15 @@ class ATStrings {
   static const String confirmPassword = 'Confirm new password';
   static const String enterYourPassword = 'Enter your password...';
 
-  static const String whatIsYourDateOfBirth = "What is your date of birth?";
-  static const String selectDate = "Select Date";
+  static const String whatIsYourDateOfBirth = 'What is your date of birth?';
+  static const String selectDate = 'Select Date';
   static const String users13andOlderWarning =
-      "Only users 13 and older may use this app";
+      'Only users 13 and older may use this app';
   static const String done = 'Done';
 
   static const String noteAboutProfilePic =
-      "Note that this will appear on your profile.";
-  static const String termsOfService = "Terms of Service";
+      'Note that this will appear on your profile.';
+  static const String termsOfService = 'Terms of Service';
   static const String enterYourName = 'Enter your name';
   static const String whatIsYourName = 'What is your name?';
   static const String createAccount = 'Create account';
@@ -283,27 +283,27 @@ class ATStrings {
   static const String byClickingOnCreateAcct =
       'By clicking on ‘Create account’, you agree to the';
 
-  static const String checkerLoading = "Checker is loading...";
+  static const String checkerLoading = 'Checker is loading...';
   static const String correctAnswer = 'Answer is correct';
   static const String INCORRECT_ANS = 'Answer is incorrect!';
-  static const String usernameIsAvailable = "Username is available";
-  static const String whatShouldWeCallYou = "What should we call you?";
+  static const String usernameIsAvailable = 'Username is available';
+  static const String whatShouldWeCallYou = 'What should we call you?';
   static const String ROLE = 'message notifier';
-  static const String ALLOWED_AUD_MIC = "You allowed audience microphone";
-  static const String DISABLED_AUD_MIC = "You disabled audience microphone";
-  static const String allowedComments = "You allowed comments";
-  static const String disabledComments = "You disabled comments";
-  static const String ALLOWED_HAND_RAISING = "You allowed hand raising";
-  static const String DISABLED_HAND_RAISING = "You disabled hand raising";
+  static const String ALLOWED_AUD_MIC = 'You allowed audience microphone';
+  static const String DISABLED_AUD_MIC = 'You disabled audience microphone';
+  static const String allowedComments = 'You allowed comments';
+  static const String disabledComments = 'You disabled comments';
+  static const String ALLOWED_HAND_RAISING = 'You allowed hand raising';
+  static const String DISABLED_HAND_RAISING = 'You disabled hand raising';
   static const String MSG_TITLE = 'message title';
   static const String MSG_CONTENT = 'message content';
   static const String ALLOW_FACE_ID = 'Allow Facial Identification';
   static const String ALLOW_FACE_ID_DESC =
       'Amptive strongly recommends Face ID for added security. Do you wish to proceed?';
 
-  static const String addProfilePicture = "Add a profile picture";
+  static const String addProfilePicture = 'Add a profile picture';
   static const String useYourFavImage =
-      "Use one of your favourite images or a live photo";
+      'Use one of your favourite images or a live photo';
   static const String photoGallery = 'Photo Gallery';
   static const String camera = 'Camera';
   static const String skipForNow = 'Skip for now';
@@ -326,20 +326,20 @@ class ATStrings {
   static const String MORE_SCHEDULE = 'More Schedule';
 
   static const String select5Communities =
-      "Select 5 communities you find interest in.";
+      'Select 5 communities you find interest in.';
   static const String selectedInterestNote =
-      "Your selected interests will be used to personalize you Amptive experience.";
+      'Your selected interests will be used to personalize you Amptive experience.';
 
   static const String personalizingYourExperience =
-      "Personalizing your experience...";
+      'Personalizing your experience...';
 
   static const String countryPickers = 'country_pickers';
   static const String verify_fone = 'Verify phone number';
-  static const String whatIsYourPhoneNumber = "What is your phone number?";
+  static const String whatIsYourPhoneNumber = 'What is your phone number?';
 
   static const String allow = 'Allow';
   static const String dontAllow = "Don't Allow";
-  static const String noThanks = "No thanks";
+  static const String noThanks = 'No thanks';
 
   static const String society = 'Society';
   static const String goLive = 'Go live';
@@ -473,7 +473,7 @@ class ATStrings {
       'Best for podcasters, artists, influencers, public figures etc.';
   static const String businessAcctDesc =
       'Best for brands, organizations, service providers, local businesses etc.';
-  static String setUpAcct(String acct) => "Set up $acct";
+  static String setUpAcct(String acct) => 'Set up $acct';
   static const String links = 'Links';
   static const String LINK = 'Link';
   static const String switchAccount = 'Switch Account Type';

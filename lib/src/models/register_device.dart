@@ -18,7 +18,7 @@ class RegisterDeviceModel {
   final String platform;
 
   Map<String, dynamic> toJson() {
-    return {
+    return <String, dynamic>{
       'fcm_token': fcmToken,
       'device_name': deviceName,
       'platform': platform,

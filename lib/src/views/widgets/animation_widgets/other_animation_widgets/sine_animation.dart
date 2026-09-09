@@ -81,29 +81,29 @@ class SinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
+    final Paint paint = Paint()
       ..color = ATColors.hex307FE2
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
-    double width = size.width;
-    double height = size.height;
-    double centerY = height / 2;
+    final double width = size.width;
+    final double height = size.height;
+    final double centerY = height / 2;
 
-    int index = (controller.value * (amplitudeValues.length - 1)).round();
+    final int index = (controller.value * (amplitudeValues.length - 1)).round();
 
-    double period = width / 1.75; // Adjust the period of the sine wave
-    double scale = 200 / height;
-    double amplitude = (-1 *
+    final double period = width / 1.75; // Adjust the period of the sine wave
+    final double scale = 200 / height;
+    final double amplitude = (-1 *
         scale *
         height /
         amplitudeValues[index]); // Adjust the amplitude of the sine wave
 
-    Path path = Path();
+    final Path path = Path();
     path.moveTo(0, centerY);
 
     for (double x = 0; x <= width; x += 4) {
-      double y = centerY + sin((x / period) * 2 * pi) * amplitude;
+      final double y = centerY + sin((x / period) * 2 * pi) * amplitude;
       path.lineTo(x, y);
     }
 

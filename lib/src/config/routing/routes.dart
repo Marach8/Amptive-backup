@@ -1,64 +1,63 @@
-import 'dart:io';
 import 'package:amptive/src/config/routing/redirect.dart';
 import 'package:amptive/src/config/routing/routing_export.dart';
-import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
-import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
-import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
-import 'package:amptive/src/features/accounts/presentation/screens/update_name_screen.dart';
-import 'package:amptive/src/features/accounts/presentation/screens/update_username_screen.dart';
-import 'package:amptive/src/features/accounts/presentation/screens/update_dob_screen.dart';
-import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
-import 'package:amptive/src/features/auth/presentation/screens/create_new_password_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/forgot_password_email_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/phone_login_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/phone_sign_up_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_dob_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_email_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_name_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_phone_no_screen.dart';
+import 'package:amptive/src/features/accounts/presentation/screens/update_username_screen.dart';
+import 'package:amptive/src/features/auth/cubits/upload_image_cubit.dart';
+import 'package:amptive/src/features/auth/presentation/screens/add_name_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/add_profile_pic_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/add_username_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/auth_options_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/create_new_password_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/create_password_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/dob_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/email_sign_up_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/add_name_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/forgot_password_email_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/create_password_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/add_profile_pic_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/auth_options_screen.dart';
-import 'package:amptive/src/features/auth/presentation/screens/add_username_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/phone_login_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/phone_sign_up_screen.dart';
+import 'package:amptive/src/features/auth/presentation/screens/reset_password_otp_screen.dart';
 import 'package:amptive/src/features/calender/presentation/screens/calender_landing_screen.dart';
+import 'package:amptive/src/features/dashboard.dart';
 import 'package:amptive/src/features/discover/presentation/views/society_screen.dart';
 import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/episodes/presentation/screens/edit_episode_form_screen.dart';
 import 'package:amptive/src/features/events/cubits/event_detail_cubit.dart';
+import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
+import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/events/presentation/screens/edit_event_form_screen.dart';
+import 'package:amptive/src/features/events/presentation/screens/list_hosted_events_screen.dart';
+import 'package:amptive/src/features/events/presentation/screens/preview_event_screen.dart';
 import 'package:amptive/src/features/events/presentation/screens/select_schedule_date_screen.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
-import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/home/cubits/live_listeners_cubit.dart';
 import 'package:amptive/src/features/home/cubits/toggle_following_cubit.dart';
 import 'package:amptive/src/features/home/cubits/validate_ticket_cubit.dart';
 import 'package:amptive/src/features/home/cubits/whispers_cubit.dart';
 import 'package:amptive/src/features/home/data/models/following_status.dart';
+import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
 import 'package:amptive/src/features/home/presentation/screens/following_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/live_show_detailed_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/schedule_detailed_screen.dart';
+import 'package:amptive/src/features/home/presentation/screens/scheduled_screen.dart';
 import 'package:amptive/src/features/home/presentation/screens/subscribed_screen.dart';
-import 'package:amptive/src/features/dashboard.dart';
+import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
 import 'package:amptive/src/features/post_auth/presentation/views/post_auth_prez_export.dart';
 import 'package:amptive/src/features/profile/cubits/remote_user_data_cubit.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_bio_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_name_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/edit_username_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
-import 'package:amptive/src/features/home/presentation/screens/scheduled_screen.dart';
-import 'package:amptive/src/features/home/data/models/response/home_feed_response_model.dart';
-import 'package:amptive/src/features/accounts/presentation/screens/account_info_screen.dart';
-import 'package:amptive/src/features/accounts/presentation/screens/acounts_landing_screen.dart';
 import 'package:amptive/src/features/profile/presentation/screens/update_email_and_phone_no_otp_screen.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
-import 'package:amptive/src/features/events/presentation/screens/list_hosted_events_screen.dart';
-import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
-import 'package:amptive/src/features/events/presentation/screens/preview_event_screen.dart';
-import 'package:amptive/src/features/events/data/models/response/event_response_model.dart';
 import 'package:amptive/src/features/upgrade_account/cubits/select_category_cubit.dart';
 import 'package:amptive/src/features/upgrade_account/cubits/upgrade_account_cubit.dart';
 import 'package:amptive/src/features/upgrade_account/presentation/screens/account_upgrade_success_screen.dart';
@@ -70,13 +69,13 @@ import 'package:amptive/src/features/upgrade_account/presentation/screens/subscr
 import 'package:amptive/src/features/wallet/cubits/one_time_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/cubits/verify_payment_cubit.dart';
 import 'package:amptive/src/features/wallet/presentation/screens/wallet_transactions_history_screen.dart';
-import 'package:amptive/src/features/onboarding/presentation/screens/onboarding_screen.dart';
-import 'package:amptive/src/features/onboarding/presentation/screens/post_onboarding_screen.dart';
 import 'package:amptive/src/shared/blurred_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
+
+import '../../features/accounts/presentation/screens/select_country_screen.dart';
 import '../../features/discover/presentation/views/community_home_screen.dart';
 import '../../features/discover/presentation/views/society_hashtag_screen.dart';
 import '../../features/discover/presentation/views/trending_society_screen.dart';
@@ -84,7 +83,6 @@ import '../../features/go_live/go_live_export.dart';
 import '../../features/home/presentation/screens/live_event_detailed_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_landing_screen.dart';
 import '../../features/profile/presentation/screens/edit_socials_screen.dart';
-import '../../features/accounts/presentation/screens/select_country_screen.dart';
 import '../../features/shows/cubits/hosted_shows_cubit.dart'
     show HostedShowsCubit;
 import '../../features/wallet/wallet_export.dart';
@@ -765,7 +763,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.showPreviewScreen,
             path: ATRoutes.showPreviewScreen,
             pageBuilder: (_, GoRouterState state) {
-              HostedShow hostedShow = state.extra as HostedShow;
+              final HostedShow hostedShow = state.extra as HostedShow;
               return ATSlidingRouteTransition<void>(
                   child: PreviewShowScreen(
                 hostedShow: hostedShow,
@@ -776,7 +774,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.eventPreviewScreen,
             path: ATRoutes.eventPreviewScreen.addSlash,
             pageBuilder: (_, GoRouterState state) {
-              HostedEvent hostedEvent = state.extra as HostedEvent;
+              final HostedEvent hostedEvent = state.extra as HostedEvent;
               return ATSlidingRouteTransition<void>(
                   child: MultiBlocProvider(
                     providers: <SingleChildWidget>[
@@ -810,7 +808,7 @@ final GoRouter amptiveAppRouter = GoRouter(
             name: ATRoutes.editEventScreen,
             path: ATRoutes.editEventScreen.addSlash,
             pageBuilder: (_, GoRouterState state) {
-              HostedEvent eventToEdit = state.extra as HostedEvent;
+              final HostedEvent eventToEdit = state.extra as HostedEvent;
               return ATSlidingRouteTransition<void>(
                   child: EditEventFormScreen(
                 editableEvent: eventToEdit,

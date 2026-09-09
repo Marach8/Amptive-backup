@@ -1,17 +1,17 @@
-import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
-import 'package:amptive/src/features/home/cubits/followed_shows_cubit.dart';
-import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
-import 'package:amptive/src/shared/blurred_header.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/shared/annotated_region_widget.dart';
-import 'package:amptive/src/shared/back_button.dart';
-import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/society_events_tab_view.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/society_shows_tab_view.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/society_tabs_widget.dart';
+import 'package:amptive/src/features/events/cubits/hosted_events_cubit.dart';
+import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
+import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/blurred_header.dart';
+import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nested/nested.dart';
+
 import '../../../../config/utils/colors.dart';
 import '../widgets/society_all_tab_view.dart';
 

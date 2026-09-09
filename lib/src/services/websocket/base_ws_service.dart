@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:web_socket_channel/status.dart' as ws_status;
 // import 'dart:developer' as developer show log;
 
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as ws_status;
 
 import '../../config/config_export.dart';
 
 class TimeoutException implements Exception {
-  final String message;
   TimeoutException(this.message);
+  final String message;
   @override
   String toString() => message;
 }
@@ -41,7 +42,7 @@ abstract class BaseWsService {
 
   void onDisconnected() {}
 
-  String buildConnectUrl() => "";
+  String buildConnectUrl() => '';
 
   void onMaxRetriesExceeded() {}
 
@@ -66,14 +67,14 @@ abstract class BaseWsService {
     _isManualDisconnect = false;
     _cleanup(closeSink: true);
 
-    final uri = Uri.parse(buildConnectUrl());
+    final Uri uri = Uri.parse(buildConnectUrl());
     log('Opening WebSocket → $uri');
 
     try {
       _channel = WebSocketChannel.connect(uri);
 
       // Add timeout for connection readiness
-      final timeout = connectTimeout ?? const Duration(seconds: 10);
+      final Duration timeout = connectTimeout ?? const Duration(seconds: 10);
       await _channel!.ready.timeout(timeout, onTimeout: () {
         throw TimeoutException(
             'Connection timed out after ${timeout.inSeconds}s');
@@ -95,7 +96,7 @@ abstract class BaseWsService {
       log('🟢 WebSocket connected.', level: LogLevel.info);
 
       // Wait a moment before calling onConnected to ensure stability
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         if (_isConnected && !_isDisposed) {
           onConnected();
         }
@@ -132,7 +133,7 @@ abstract class BaseWsService {
   }
 
   // Queue for messages sent while disconnected
-  final List<Map<String, dynamic>> _pendingMessages = [];
+  final List<Map<String, dynamic>> _pendingMessages = <Map<String, dynamic>>[];
 
   void send(Map<String, dynamic> data) {
     if (_isDisposed) {
@@ -162,9 +163,9 @@ abstract class BaseWsService {
     if (_pendingMessages.isEmpty) return;
     log('Flushing ${_pendingMessages.length} pending messages',
         level: LogLevel.debug);
-    final messages = List<Map<String, dynamic>>.from(_pendingMessages);
+    final List<Map<String, dynamic>> messages = List<Map<String, dynamic>>.from(_pendingMessages);
     _pendingMessages.clear();
-    for (final data in messages) {
+    for (final Map<String, dynamic> data in messages) {
       if (_isConnected && _channel != null) {
         try {
           _channel!.sink.add(jsonEncode(data));
@@ -183,10 +184,10 @@ abstract class BaseWsService {
     _heartbeatTimer?.cancel();
     _lastPongReceived = DateTime.now();
 
-    _heartbeatTimer = Timer.periodic(Duration(seconds: 25), (timer) {
+    _heartbeatTimer = Timer.periodic(const Duration(seconds: 25), (Timer timer) {
       if (_isConnected && _channel != null && !_isDisposed) {
         // Check if we received pong recently (within 2 heartbeats)
-        final timeSincePong =
+        final Duration timeSincePong =
             DateTime.now().difference(_lastPongReceived ?? DateTime.now());
         if (timeSincePong.inSeconds > 50) {
           log('No pong received for ${timeSincePong.inSeconds}s, reconnecting...',
@@ -230,7 +231,7 @@ abstract class BaseWsService {
 
     // Respond to ping from server
     if (json['type'] == 'ping') {
-      send({'type': 'pong', 'ts': DateTime.now().millisecondsSinceEpoch});
+      send(<String, dynamic>{'type': 'pong', 'ts': DateTime.now().millisecondsSinceEpoch});
       return;
     }
 
@@ -271,8 +272,8 @@ abstract class BaseWsService {
     }
 
     // Exponential back-off: 2s, 4s, 8s, 16s, 30s
-    int delaySeconds = [2, 4, 8, 16, 30][_attempt.clamp(0, 4)];
-    final delay = Duration(seconds: delaySeconds);
+    final int delaySeconds = <int>[2, 4, 8, 16, 30][_attempt.clamp(0, 4)];
+    final Duration delay = Duration(seconds: delaySeconds);
     _attempt++;
 
     log('Reconnect attempt $_attempt/$maxReconnectAttempts in ${delay.inSeconds}s…',

@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
-import '../../models/host.dart';
-import '../../config/utils/image_strings.dart';
 import 'dart:developer' as marach show log;
+
+import 'package:flutter/material.dart';
+
+import '../../config/utils/image_strings.dart';
+import '../../models/host.dart';
 
 class GoLiveService {
   factory GoLiveService() => _instance;
@@ -116,7 +118,7 @@ class GoLiveService {
 }
 
 List<ObjectWithNotifier<Host>> getHostList() {
-  List<ObjectWithNotifier<Host>> hostsList = <ObjectWithNotifier<Host>>[];
+  final List<ObjectWithNotifier<Host>> hostsList = <ObjectWithNotifier<Host>>[];
 
   final Map<String, List<String>> coHostsData = <String, List<String>>{
     ATImgStrings.jpeg1: <String>['Emmanuel Ajah', 'nnanna😍💕'],
@@ -133,9 +135,9 @@ List<ObjectWithNotifier<Host>> getHostList() {
 
   coHostsData.forEach((String pics, List<String> details) {
     if (details.length >= 2) {
-      String name = details[0];
-      String username = details[1];
-      Host host = Host(
+      final String name = details[0];
+      final String username = details[1];
+      final Host host = Host(
           id: 0,
           name: name,
           username: username,

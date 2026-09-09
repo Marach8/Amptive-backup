@@ -1,7 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/discover/discover_export.dart';
-import 'package:amptive/src/features/discover/presentation/widgets/society_all_tab_view.dart'
-    show SeparatorDivider;
 import 'package:amptive/src/features/shows/cubits/hosted_shows_cubit.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../config/utils/image_strings.dart';
 import '../../../../config/utils/other_strings.dart';
-import 'render_trending_hashtag.dart';
-import 'hashtag_heading_row.dart';
 
 class SocietyShowsTabView extends StatelessWidget {
   const SocietyShowsTabView({super.key, this.communityId});

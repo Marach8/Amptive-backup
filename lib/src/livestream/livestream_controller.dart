@@ -2,8 +2,11 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
+import 'package:livekit_client/src/participant/participant.dart';
 import 'package:livekit_client/src/participant/remote.dart';
+import 'package:livekit_client/src/publication/track_publication.dart';
 import 'package:livekit_client/src/track/remote/audio.dart';
+import 'package:livekit_client/src/track/track.dart';
 
 import '../config/config_export.dart';
 import './models/livestream_models.dart';
@@ -30,12 +33,12 @@ class LivestreamController {
   SignalingService? _signaling;
   StreamSubscription<SignalingEvent>? _sigSub;
 
-  final List<StreamSubscription<dynamic>> _mediaSubs = [];
+  final List<StreamSubscription<dynamic>> _mediaSubs = <StreamSubscription<dynamic>>[];
   bool _tornDown = false;
 
   // ── Observable state ───────────────────────────────────────────────────
 
-  final _stateController = StreamController<LivestreamState>.broadcast();
+  final StreamController<LivestreamState> _stateController = StreamController<LivestreamState>.broadcast();
 
   Stream<LivestreamState> get stateStream => _stateController.stream;
 
@@ -76,19 +79,19 @@ class LivestreamController {
 
   void _setupMediaListeners() {
     _mediaSubs.add(
-      _media.onActiveSpeakers.listen((speakers) {
+      _media.onActiveSpeakers.listen((List<Participant<TrackPublication<Track>>> speakers) {
         if (speakers.isEmpty) return;
 
-        final ids = speakers.map((s) => s.identity).toSet();
-        final updated = _state.participants
-            .map((p) => p.copyWith(isSpeaker: ids.contains(p.userId)))
+        final Set<String> ids = speakers.map((Participant<TrackPublication<Track>> s) => s.identity).toSet();
+        final List<LivestreamParticipant> updated = _state.participants
+            .map((LivestreamParticipant p) => p.copyWith(isSpeaker: ids.contains(p.userId)))
             .toList();
 
-        final localSid = _media.room?.localParticipant?.sid;
+        final String? localSid = _media.room?.localParticipant?.sid;
         double? localLevel;
         double? remoteLevel;
 
-        for (final speaker in speakers) {
+        for (final Participant<TrackPublication<Track>> speaker in speakers) {
           if (speaker.sid == localSid) {
             localLevel = speaker.audioLevel;
           } else {
@@ -111,7 +114,7 @@ class LivestreamController {
     );
 
     _mediaSubs.add(
-      _media.onParticipantLeft.listen((participant) {
+      _media.onParticipantLeft.listen((RemoteParticipant participant) {
         _handleParticipantLeft(participant.identity);
       }),
     );
@@ -119,7 +122,7 @@ class LivestreamController {
     _mediaSubs.add(_media.onRemoteAudioTrack.listen(_handleRemoteTrack));
 
     _mediaSubs.add(
-      _media.onMediaStateChanged.listen((change) {
+      _media.onMediaStateChanged.listen((MediaStateChange change) {
         _handleMediaStateChange(
             change.identity, change.type.name, change.enabled);
       }),
@@ -130,7 +133,7 @@ class LivestreamController {
 
   Future<void> startStream(String contentId) async {
     try {
-      final id = await apiService.startStream(contentId);
+      final String id = await apiService.startStream(contentId);
       streamId = id;
     } catch (e) {
       _emit(_state.copyWith(lastError: 'Failed to start stream: $e'));
@@ -174,7 +177,7 @@ class LivestreamController {
 
   Future<void> _handleSignalingEvent(SignalingEvent event) async {
     switch (event) {
-      case InitialStateEvent(:final state):
+      case InitialStateEvent(:final InitialState state):
         _emit(_state.copyWith(
           status: StreamStatus.live,
           participants: state.participants,
@@ -190,7 +193,7 @@ class LivestreamController {
         _emit(_state.copyWith(status: StreamStatus.ended));
         await _tearDown();
 
-      case ErrorEvent(:final code, :final message):
+      case ErrorEvent(:final String code, :final String message):
         _emit(_state.copyWith(
           lastError: '[$code] $message',
           status: StreamStatus.error,
@@ -199,16 +202,16 @@ class LivestreamController {
       case PongEvent():
         _log('Received pong, connection healthy');
 
-      case ParticipantJoinEvent(:final participant):
+      case ParticipantJoinEvent(:final LivestreamParticipant participant):
         _handleParticipantJoined(participant);
 
-      case ParticipantLeaveEvent(:final identity, :final reason):
+      case ParticipantLeaveEvent(:final String identity, :final String? reason):
         if (reason != null) _log('Participant $identity left. Reason: $reason');
         _handleParticipantLeft(identity);
 
-      case ParticipantUpdatedEvent(:final participant):
-        final updated = [
-          for (final p in _state.participants)
+      case ParticipantUpdatedEvent(:final LivestreamParticipant participant):
+        final List<LivestreamParticipant> updated = <LivestreamParticipant>[
+          for (final LivestreamParticipant p in _state.participants)
             if (p.userId == participant.userId) participant else p,
         ];
         _emit(_state.copyWith(participants: updated));
@@ -225,37 +228,37 @@ class LivestreamController {
       // participantCount is now a computed getter on LivestreamState
       // (participants.length), so we no longer need to manage it here.
       // ParticipantCountEvent maps to viewerCount (server-side total).
-      case ParticipantCountEvent(:final count):
+      case ParticipantCountEvent(:final int count):
         _emit(_state.copyWith(viewerCount: count));
 
-      case ChatEvent(:final message):
-        _emit(_state.copyWith(messages: [..._state.messages, message]));
+      case ChatEvent(:final ChatMessage message):
+        _emit(_state.copyWith(messages: <ChatMessage>[..._state.messages, message]));
 
-      case ReactionReceivedEvent(:final reaction):
-        _emit(_state.copyWith(reactions: [..._state.reactions, reaction]));
+      case ReactionReceivedEvent(:final Reaction reaction):
+        _emit(_state.copyWith(reactions: <Reaction>[..._state.reactions, reaction]));
 
-      case GiftReceivedEvent(:final gift):
-        _emit(_state.copyWith(gifts: [..._state.gifts, gift]));
+      case GiftReceivedEvent(:final Gift gift):
+        _emit(_state.copyWith(gifts: <Gift>[..._state.gifts, gift]));
 
-      case HandRaiseEvent(:final identity, :final action):
+      case HandRaiseEvent(:final String identity, :final String action):
         _handleHandRaise(identity, action);
 
-      case ViewerCountEvent(:final count):
+      case ViewerCountEvent(:final int count):
         _emit(_state.copyWith(viewerCount: count));
 
-      case UserMutedEvent(:final identity, :final muted):
+      case UserMutedEvent(:final String identity, :final bool muted):
         _handleUserMuted(identity, muted);
 
-      case UserBannedEvent(:final identity, :final reason):
+      case UserBannedEvent(:final String identity, :final String? reason):
         _handleUserBanned(identity, reason);
 
-      case UserKickedEvent(:final identity, :final reason):
+      case UserKickedEvent(:final String identity, :final String? reason):
         _handleUserKicked(identity, reason);
 
       case MediaStateChangedEvent(
-          :final identity,
-          :final mediaType,
-          :final enabled
+          :final String identity,
+          :final String mediaType,
+          :final bool enabled
         ):
         _handleMediaStateChange(identity, mediaType, enabled);
 
@@ -269,9 +272,9 @@ class LivestreamController {
 
   void _handleParticipantJoined(LivestreamParticipant participant) {
     _log('Participant joined via signaling: ${participant.userId}');
-    if (!_state.participants.any((p) => p.userId == participant.userId)) {
+    if (!_state.participants.any((LivestreamParticipant p) => p.userId == participant.userId)) {
       _emit(_state.copyWith(
-        participants: [..._state.participants, participant],
+        participants: <LivestreamParticipant>[..._state.participants, participant],
       ));
     }
   }
@@ -280,8 +283,8 @@ class LivestreamController {
     // Same: participantCount stays in sync automatically.
     _emit(_state.copyWith(
       participants:
-          _state.participants.where((p) => p.userId != identity).toList(),
-      handQueue: _state.handQueue.where((id) => id != identity).toList(),
+          _state.participants.where((LivestreamParticipant p) => p.userId != identity).toList(),
+      handQueue: _state.handQueue.where((String id) => id != identity).toList(),
     ));
   }
 
@@ -291,12 +294,12 @@ class LivestreamController {
     switch (action) {
       case 'raise':
         if (!_state.handQueue.contains(identity)) {
-          _emit(_state.copyWith(handQueue: [..._state.handQueue, identity]));
+          _emit(_state.copyWith(handQueue: <String>[..._state.handQueue, identity]));
         }
       case 'lower':
       case 'approve':
         _emit(_state.copyWith(
-          handQueue: _state.handQueue.where((i) => i != identity).toList(),
+          handQueue: _state.handQueue.where((String i) => i != identity).toList(),
         ));
       default:
         _log('Unknown hand raise action: $action', level: LogLevel.warn);
@@ -306,8 +309,8 @@ class LivestreamController {
   // ── Moderation handlers ────────────────────────────────────────────────
 
   void _handleUserMuted(String identity, bool muted) {
-    final updated = _state.participants
-        .map((p) => p.userId == identity ? p.copyWith(isMuted: muted) : p)
+    final List<LivestreamParticipant> updated = _state.participants
+        .map((LivestreamParticipant p) => p.userId == identity ? p.copyWith(isMuted: muted) : p)
         .toList();
     _emit(_state.copyWith(participants: updated));
   }
@@ -335,7 +338,7 @@ class LivestreamController {
 
   void _handleMediaStateChange(
       String identity, String mediaType, bool enabled) {
-    final updated = _state.participants.map((p) {
+    final List<LivestreamParticipant> updated = _state.participants.map((LivestreamParticipant p) {
       if (p.userId == identity && mediaType == 'audio') {
         return p.copyWith(isMuted: !enabled);
       }
@@ -368,7 +371,7 @@ class LivestreamController {
     await _sigSub?.cancel();
     _sigSub = null;
 
-    for (final sub in _mediaSubs) {
+    for (final StreamSubscription<dynamic> sub in _mediaSubs) {
       await sub.cancel();
     }
     _mediaSubs.clear();
@@ -392,6 +395,19 @@ class LivestreamController {
 // ── Immutable state snapshot ───────────────────────────────────────────────
 
 class LivestreamState {
+
+  const LivestreamState({
+    this.status = StreamStatus.waiting,
+    this.participants = const <LivestreamParticipant>[],
+    this.viewerCount = 0,
+    this.handQueue = const <String>[],
+    this.messages = const <ChatMessage>[],
+    this.reactions = const <Reaction>[],
+    this.gifts = const <Gift>[],
+    this.lastError,
+    this.localLevel = 0.0,
+    this.remoteLevel = 0.0,
+  });
   final StreamStatus status;
   final List<LivestreamParticipant> participants;
   final int viewerCount;
@@ -402,19 +418,6 @@ class LivestreamState {
   final String? lastError;
   final double localLevel;
   final double remoteLevel;
-
-  const LivestreamState({
-    this.status = StreamStatus.waiting,
-    this.participants = const [],
-    this.viewerCount = 0,
-    this.handQueue = const [],
-    this.messages = const [],
-    this.reactions = const [],
-    this.gifts = const [],
-    this.lastError,
-    this.localLevel = 0.0,
-    this.remoteLevel = 0.0,
-  });
 
   int get participantCount => participants.length;
 

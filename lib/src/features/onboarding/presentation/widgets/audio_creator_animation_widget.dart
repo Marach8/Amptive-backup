@@ -302,7 +302,7 @@ class _RippleAnimationPageState extends State<RippleAnimationPage>
             width: _heightAnimation.value,
             height: _heightAnimation.value,
             decoration: BoxDecoration(
-              color: Colors.blue.withOpacity(0.3),
+              color: Colors.blue.withValues(alpha: 0.3),
               shape: BoxShape.circle,
               border: Border.all(
                 color: Colors.blue,

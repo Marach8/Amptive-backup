@@ -39,7 +39,7 @@ class AmptivePaidShowModel extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    "P",
+                    'P',
                     style: Theme.of(context)
                         .textTheme
                         .displayMedium

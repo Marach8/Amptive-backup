@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/endpoints.dart';
 import 'package:amptive/src/config/services/local_storage_service/flutter_secure_storage_service_impl.dart';
 import 'package:amptive/src/config/services/local_storage_service/storage_service.dart';
-import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 
 import '../../services/websocket/base_ws_service.dart';
@@ -25,7 +25,7 @@ class SignalingService extends BaseWsService {
   final String _streamId;
   final ATLocalStorageService _localStorageService;
 
-  final _controller = StreamController<SignalingEvent>.broadcast();
+  final StreamController<SignalingEvent> _controller = StreamController<SignalingEvent>.broadcast();
 
   // ── Public API ─────────────────────────────────────────────────────────
 
@@ -35,13 +35,13 @@ class SignalingService extends BaseWsService {
   @override
   Future<void> connect({Duration? connectTimeout}) async {
     log('Resolving auth token…');
-    final token = await _localStorageService.get(ATStrings.accessToken);
+    final String? token = await _localStorageService.get(ATStrings.accessToken);
 
     if (token == null || token.isEmpty) {
-      const msg = 'Auth token missing — cannot open signaling connection.';
+      const String msg = 'Auth token missing — cannot open signaling connection.';
       log(msg, level: LogLevel.error);
-      _emitError(SignalingException(msg));
-      throw SignalingException(msg);
+      _emitError(const SignalingException(msg));
+      throw const SignalingException(msg);
     }
 
     // Stash the token so buildConnectUrl() can use it.
@@ -69,7 +69,7 @@ class SignalingService extends BaseWsService {
 
   @override
   void onMessage(Map<String, dynamic> json) {
-    final event = _parseEvent(json);
+    final SignalingEvent event = _parseEvent(json);
     if (event is UnknownEvent) {
       log('Unrecognised type: "${json['type']}"', level: LogLevel.warn);
     }
@@ -80,7 +80,7 @@ class SignalingService extends BaseWsService {
   void onConnected() {
     // Send initial join message to server
     log('Sending join message...');
-    send({
+    send(<String, dynamic>{
       'type': 'join',
       'streamId': _streamId,
     });
@@ -92,48 +92,48 @@ class SignalingService extends BaseWsService {
 
   @override
   void onMaxRetriesExceeded() {
-    const msg = 'Max reconnect attempts reached. Giving up.';
+    const String msg = 'Max reconnect attempts reached. Giving up.';
     log(msg, level: LogLevel.error);
-    _emitError(SignalingException(msg));
+    _emitError(const SignalingException(msg));
   }
 
   // ── Outbound helpers ───────────────────────────────────────────────────
 
   void sendChat(String message) =>
-      send({'type': OutboundMessageType.chat, 'content': message});
+      send(<String, dynamic>{'type': OutboundMessageType.chat, 'content': message});
 
   void sendReaction(String emoji) =>
-      send({'type': OutboundMessageType.reaction, 'content': emoji});
+      send(<String, dynamic>{'type': OutboundMessageType.reaction, 'content': emoji});
 
-  void sendGift(String giftId, int quantity) => send({
+  void sendGift(String giftId, int quantity) => send(<String, dynamic>{
         'type': OutboundMessageType.gift,
         'gift_id': giftId,
         'quantity': quantity,
       });
 
   void raiseHand() =>
-      send({'type': OutboundMessageType.handRaise, 'action': 'raise'});
+      send(<String, dynamic>{'type': OutboundMessageType.handRaise, 'action': 'raise'});
   void lowerHand() =>
-      send({'type': OutboundMessageType.handRaise, 'action': 'lower'});
+      send(<String, dynamic>{'type': OutboundMessageType.handRaise, 'action': 'lower'});
 
-  void approveHandRaise(String identity) => send({
+  void approveHandRaise(String identity) => send(<String, dynamic>{
         'type': OutboundMessageType.handRaise,
         'action': 'approve',
         'identity': identity,
       });
 
-  void sendPing() => send({
+  void sendPing() => send(<String, dynamic>{
         'type': OutboundMessageType.ping,
         'timestamp': DateTime.now().millisecondsSinceEpoch,
       });
 
-  void toggleMedia(String mediaType, bool enabled) => send({
+  void toggleMedia(String mediaType, bool enabled) => send(<String, dynamic>{
         'type': OutboundMessageType.mediaToggle,
         'mediaType': mediaType,
         'enabled': enabled,
       });
 
-  void toggleScreenShare(bool start) => send({
+  void toggleScreenShare(bool start) => send(<String, dynamic>{
         'type': OutboundMessageType.screenShare,
         'action': start ? 'start' : 'stop',
       });
@@ -149,7 +149,7 @@ class SignalingService extends BaseWsService {
   }
 
   SignalingEvent _parseEvent(Map<String, dynamic> json) {
-    final type = json['type'] as String?;
+    final String? type = json['type'] as String?;
 
     return switch (type) {
       SignalingEventType.initial =>

@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+
+import '../../../services/auth/auth_field_service.dart';
 import 'email_auth_events.dart';
 import 'email_auth_states.dart';
-import '../../../services/auth/auth_field_service.dart';
 
 class ATEmailAuthBloc extends Bloc<ATEmailAuthEvent, ATAuthState> {
   ATEmailAuthBloc() : super(InitialAuthState()) {

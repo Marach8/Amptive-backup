@@ -1,30 +1,22 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/discover/cubits/trending_hashtags_cubit.dart';
 import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/trending_hashtags_response_model.dart';
 import 'package:amptive/src/features/discover/discover_export.dart';
-import 'package:amptive/src/features/discover/presentation/views/trending_hashtags_screen.dart';
-import 'package:amptive/src/features/discover/presentation/widgets/follow_unfollow_dropdown.dart';
-import 'package:amptive/src/features/discover/presentation/widgets/horizontal_scroll_cards.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
+
 import '../../../../config/utils/colors.dart';
 import '../../../../config/utils/image_strings.dart';
 import '../../../../config/utils/other_strings.dart';
-import '../widgets/hashtag_heading_row.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/discover_categories_title.dart';
-import '../widgets/community_card_widget.dart';
 import '../../../../views/widgets/other_widgets/main_application_widgets/widgets_in_discover_view/full_discover_view_widgets/more_to_discover_title.dart';
-import '../widgets/hastags_subtitle_row.dart';
-import '../widgets/trending_technology_widget.dart';
-import '../widgets/top_creator_widget.dart';
-import '../widgets/render_trending_hashtag.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
 
 class MainDiscoverView extends StatelessWidget {
   const MainDiscoverView({super.key});

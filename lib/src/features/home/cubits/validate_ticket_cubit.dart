@@ -14,7 +14,7 @@ class ValidateTicketCubit extends Cubit<ATAppState<dynamic>> {
     required String eventId,
     required String ticket
   }) async {
-    emit(LoadingState<dynamic>());
+    emit(const LoadingState<dynamic>());
 
     try {
       final ApiResponse<dynamic> response =

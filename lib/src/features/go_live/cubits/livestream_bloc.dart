@@ -102,7 +102,7 @@ class LivestreamBloc extends Bloc<LivestreamEvent, LivestreamState> {
     Emitter<LivestreamState> emit,
   ) async {
     await _disposeController();
-    emit(LivestreamState(status: StreamStatus.ended));
+    emit(const LivestreamState(status: StreamStatus.ended));
   }
 
   void _onSendChatMessage(

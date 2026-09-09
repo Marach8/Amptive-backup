@@ -2,16 +2,17 @@ import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/features/home/cubits/live_users_cubit.dart';
 import 'package:amptive/src/features/home/data/models/response/live_users_response_model.dart';
+import 'package:amptive/src/shared/live_user_animation.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../config/utils/image_strings.dart';
 import '../../../../shared/image_loader_widget.dart';
 import '../widgets/go_live_widget_in_home.dart';
-import 'package:amptive/src/shared/live_user_animation.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
 
 class RowOfLiveUsers extends StatelessWidget {
   const RowOfLiveUsers({super.key});
@@ -66,7 +67,7 @@ class RowOfLiveUsers extends StatelessWidget {
               );
             }
 
-            bool hasMore = liveUsersData?.hasMore ?? true;
+            final bool hasMore = liveUsersData?.hasMore ?? true;
             final int count =
                 hasMore ? liveUsers.length + 2 : liveUsers.length + 1;
 

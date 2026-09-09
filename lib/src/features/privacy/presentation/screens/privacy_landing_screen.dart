@@ -7,10 +7,11 @@ import 'package:amptive/src/shared/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../bloc/main_app/profile/private_account_bloc.dart';
-import '../../../../config/utils/other_strings.dart';
 import '../../../../config/routing/route_strings.dart';
 import '../../../../config/utils/dialogs/app_notification_dialog.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../../../../shared/switch_widget.dart';
 
 class ATPrivacyScreen extends StatelessWidget {

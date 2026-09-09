@@ -35,10 +35,10 @@ class SetPinData {
   /// Convert to JSON
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      if (newPin != null) "new_pin": newPin,
-      if (confirmNewPin != null) "confirm_new_pin": confirmNewPin,
-      if (securityQuestion != null) "security_question": securityQuestion,
-      if (securityQuestionAnswer != null) "security_question_answer": securityQuestionAnswer,
+      if (newPin != null) 'new_pin': newPin,
+      if (confirmNewPin != null) 'confirm_new_pin': confirmNewPin,
+      if (securityQuestion != null) 'security_question': securityQuestion,
+      if (securityQuestionAnswer != null) 'security_question_answer': securityQuestionAnswer,
       
     };
   }

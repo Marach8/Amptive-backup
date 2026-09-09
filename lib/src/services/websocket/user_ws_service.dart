@@ -49,7 +49,7 @@ class UserWsService extends BaseWsService {
     if (!isConnected && !isReconnecting) {
       token = await _localStorageService.get(ATStrings.accessToken);
       if (token == null) {
-        log("User Token not found. Connection Skipped", level: LogLevel.error);
+        log('User Token not found. Connection Skipped', level: LogLevel.error);
         return;
       }
       await connect(connectTimeout: connectTimeout);

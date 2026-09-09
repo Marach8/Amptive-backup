@@ -1,8 +1,9 @@
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../config/config_export.dart';
 import '../../cubits/day_view_date_time_indicator_cubit.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 
 class CurrentTimeIndicator extends StatelessWidget {
   const CurrentTimeIndicator({super.key});

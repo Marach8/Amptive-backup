@@ -1,25 +1,24 @@
-import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/livestream/livestream.dart';
-import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
-import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/circular_image.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/custom_rebuilder_widget.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
+import 'package:amptive/src/views/widgets/animation_widgets/horiz_slider_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import '../../../../services/go_live_service/go_live_service.dart';
+
 import '../../../../config/utils/colors.dart';
-import '../widgets/reactions_overlay.dart';
+import '../../../../services/go_live_service/go_live_service.dart';
 import '../widgets/gifting_notification.dart';
+import '../widgets/reactions_overlay.dart';
 
 class LiveProgramCohostView extends StatefulWidget {
   const LiveProgramCohostView({super.key});
@@ -163,7 +162,7 @@ class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
                           duration: const Duration(milliseconds: 500),
                           child: ATContainer(
                             onTap: () => _scrollToBottom(),
-                            color: ATColors.white.withOpacity(0.1),
+                            color: ATColors.white.withValues(alpha: 0.1),
                             height: 35,
                             width: 35,
                             boxShape: BoxShape.circle,
@@ -193,7 +192,7 @@ class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
                       controller: TextEditingController(),
                       disableBlueBorder: true,
                       cursorHeight: 20,
-                      cursorColor: ATColors.white.withOpacity(0.6),
+                      cursorColor: ATColors.white.withValues(alpha: 0.6),
                       constraints: const BoxConstraints(maxHeight: 40),
                       contentPadding:
                           const EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -205,7 +204,7 @@ class _LiveProgramCohostViewState extends State<LiveProgramCohostView> {
                     margin: index != 5
                         ? EdgeInsets.only(right: 5.w)
                         : EdgeInsets.zero,
-                    color: ATColors.white.withOpacity(0.1),
+                    color: ATColors.white.withValues(alpha: 0.1),
                     padding: const EdgeInsets.all(5),
                     radius: 30,
                     child: widget);

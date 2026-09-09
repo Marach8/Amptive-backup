@@ -37,7 +37,7 @@ class GoingCubit extends Cubit<ATAppState<GoingStatus>> {
     final bool isCurrentlyGoing = currentGoingStatus?.isGoing ?? false;
     final int currentCount = currentGoingStatus?.goingCount ?? 0;
 
-    final GoingStatus? expectedStatus = GoingStatus(
+    final GoingStatus expectedStatus = GoingStatus(
       isGoing: !isCurrentlyGoing,
       goingCount: isCurrentlyGoing
           ? (currentCount > 0 ? currentCount - 1 : 0)

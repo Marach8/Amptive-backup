@@ -3,23 +3,24 @@ import 'dart:ui';
 
 import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+
 import '../../../services/create_show/create_show_service.dart';
 import '../../../shared/custom_container_widget.dart';
 import '../image_strings.dart';
 import '../other_strings.dart';
-import 'package:amptive/src/shared/elevated_button_widget.dart';
 
 Future<void> selectDateModal(
     BuildContext context, Uint8List? selectedImage) async {
-  CreateShowService service = GetIt.I<CreateShowService>();
+  final CreateShowService service = GetIt.I<CreateShowService>();
 
-  AssetImage? defaultAssetImage =
-      const AssetImage(ATImgStrings.createShowPlaceholder);
-  DateTime now = DateTime.now();
+  const AssetImage defaultAssetImage =
+      AssetImage(ATImgStrings.createShowPlaceholder);
+  final DateTime now = DateTime.now();
 
   DateTime selectedDateTime =
       service.isValidEventDateTime() ? service.eventDateTime! : now;
@@ -41,14 +42,14 @@ Future<void> selectDateModal(
                       selectedImage,
                       fit: BoxFit.cover,
                     )
-                  : Image(
+                  : const Image(
                       image: defaultAssetImage,
                       fit: BoxFit.cover,
                     ),
             ),
             Positioned.fill(
               child: Container(
-                color: ATColors.black.withOpacity(0.6),
+                color: ATColors.black.withValues(alpha: 0.6),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 150.0, sigmaY: 150.0),
                   child: Container(),
@@ -65,7 +66,7 @@ Future<void> selectDateModal(
                       Padding(
                         padding: EdgeInsets.only(left: 60.w, top: 4.h),
                         child: Text(
-                          "Schedule your Event",
+                          'Schedule your Event',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
@@ -76,7 +77,7 @@ Future<void> selectDateModal(
                     padding:
                         EdgeInsets.only(left: 7.w, top: 30.h, bottom: 24.h),
                     child: Text(
-                      "Please select time between three months from today, and one hour from now",
+                      'Please select time between three months from today, and one hour from now',
                       maxLines: null,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: ATColors.hexC2C2C2,

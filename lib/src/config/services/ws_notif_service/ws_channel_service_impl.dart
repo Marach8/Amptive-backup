@@ -378,7 +378,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
         raw: raw,
         retries: 0,
         timer: Timer(
-          Duration(milliseconds: _ackTimeoutMs),
+          const Duration(milliseconds: _ackTimeoutMs),
           () => _retryAck(ackId),
         ),
       );
@@ -411,7 +411,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
         _enqueue(entry.data);
       }
       entry.timer = Timer(
-        Duration(milliseconds: _ackTimeoutMs),
+        const Duration(milliseconds: _ackTimeoutMs),
         () => _retryAck(ackId),
       );
     }
@@ -428,7 +428,7 @@ class WSChannelNotifServiceImpl implements WSNotificationService {
         _channel!.sink.add(entry.value.raw);
       } catch (_) {}
       entry.value.timer = Timer(
-        Duration(milliseconds: _ackTimeoutMs),
+        const Duration(milliseconds: _ackTimeoutMs),
         () => _retryAck(entry.key),
       );
     }

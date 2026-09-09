@@ -1,16 +1,18 @@
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'dart:async' show StreamSubscription, Timer, StreamController;
 import 'dart:io' show Directory, File;
 import 'dart:ui';
+
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
+import 'package:amptive/src/config/utils/logging/app_logger.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
 import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
+import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/data/models/live_program_data.dart';
 import 'package:amptive/src/features/go_live/go_live_export.dart';
-import 'package:amptive/src/features/go_live/data/models/deconstruct_inbound_events.dart';
 import 'package:amptive/src/features/go_live/presentation/screens/live_program_screen.dart';
 import 'package:amptive/src/features/go_live/presentation/widgets/go_live_onboarding_bottom_sheet.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/global_export.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/livestream/livestream.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
@@ -21,6 +23,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 import '../../../../shared/image_loader_widget.dart';
 
 
@@ -125,7 +128,7 @@ class _SubWidgetState extends State<_SubWidget> {
           codec: Codec.aacADTS,
         );
       } catch (e) {
-        debugPrint(e.toString());
+        AppLogger.instance.error(e.toString(), error: e, stackTrace: StackTrace.current, tag: 'GoLiveOnboarding');
       }
     } else if (permStatus.isPermanentlyDenied) {
       openAppSettings();

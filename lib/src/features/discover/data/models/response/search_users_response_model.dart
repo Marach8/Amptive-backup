@@ -10,7 +10,7 @@ class SearchUsersResponseModel {
   });
 
   factory SearchUsersResponseModel.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic> data = json['data'] as Map<String, dynamic>? ?? {};
+    final Map<String, dynamic> data = json['data'] as Map<String, dynamic>? ?? <String, dynamic>{};
     final List<dynamic> usersList = data['items'] as List? ?? <dynamic>[];
     return SearchUsersResponseModel(
       data: usersList

@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:developer' show log;
+
 import 'package:amptive/src/config/services/audio_streaming_service/audio_streaming_service.dart';
-import 'package:livekit_client/livekit_client.dart';
 import 'package:amptive/src/features/go_live/data/models/livestream_state.dart';
+import 'package:livekit_client/livekit_client.dart';
 
 class LiveKitAudioStreamingService implements ATAudioStreamingService {
   factory LiveKitAudioStreamingService() {
@@ -133,7 +134,7 @@ class LiveKitAudioStreamingService implements ATAudioStreamingService {
 
       if (event is ActiveSpeakersChangedEvent) {
         final List<String> speakers = event.speakers.map(
-          (s) => s.identity).toList();
+          (Participant<TrackPublication<Track>> s) => s.identity).toList();
         _activeSpeakersController.add(speakers);
 
         // _emitParticipants(

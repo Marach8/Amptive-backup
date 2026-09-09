@@ -1,9 +1,9 @@
-import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
+import 'package:amptive/src/features/episodes/data/models/response/episode_model.dart';
 import 'package:amptive/src/features/shows/data/models/response/show_response_model.dart';
 import 'package:amptive/src/features/shows/data/repository/shows_repo.dart';
 import 'package:amptive/src/features/shows/data/repository/shows_repo_impl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShowDetailCubit extends Cubit<ATAppState<HostedShow>> {
   ShowDetailCubit({

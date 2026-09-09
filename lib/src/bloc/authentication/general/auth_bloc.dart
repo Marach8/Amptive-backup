@@ -11,7 +11,7 @@ class AmptiveAuthBloc extends Bloc<AmptiveAuthEvent, AmptiveAuthState> {
   AmptiveAuthBloc() : super(InitialAuthState()) {
     on<EditDOBAuthEvent>(
         (EditDOBAuthEvent event, Emitter<AmptiveAuthState> emit) {
-      AuthFieldService service = GetIt.I<AuthFieldService>();
+      final AuthFieldService service = GetIt.I<AuthFieldService>();
       service.setDOB(event.selectedDate);
 
       emit(EditDOBAuthState(dob: service.dob));

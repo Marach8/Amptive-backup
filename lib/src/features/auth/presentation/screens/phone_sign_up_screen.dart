@@ -1,15 +1,15 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
-import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
+import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/check_identity_availability_cubit.dart';
 import 'package:amptive/src/features/auth/cubits/send_otp_cubit.dart';
 import 'package:amptive/src/features/auth/presentation/screens/otp_screen.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
-import 'package:amptive/src/shared/custom_container_widget.dart';
-import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/app_bar_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
+import 'package:amptive/src/shared/custom_container_widget.dart';
+import 'package:amptive/src/shared/elevated_button_widget.dart';
 import 'package:amptive/src/shared/loading_indicator.dart';
 import 'package:amptive/src/shared/textformfield_widget.dart';
 import 'package:country_pickers/country.dart';
@@ -181,7 +181,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> with ATValidators {
                                       color: ATColors.textRedColor,
                                     ),
                                 filled: true,
-                                fillColor: ATColors.hex9E9E9E.withOpacity(0.3),
+                                fillColor: ATColors.hex9E9E9E.withValues(alpha: 0.3),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(14),
                                   borderSide: BorderSide(

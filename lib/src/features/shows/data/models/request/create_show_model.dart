@@ -29,7 +29,7 @@ class CreateShowPayload {
       'price': price,
       'tag_ids': tagIds,
       'co_host_ids': coHostIds,
-      "community_id": communityId,
+      'community_id': communityId,
       'hand_raising': allowHandRaising,
     };
   }

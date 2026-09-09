@@ -4,8 +4,8 @@ import 'package:amptive/src/config/utils/dialogs/app_notification_dialog.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/features/discover/cubits/communities_cubit.dart';
 import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
-import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/features/discover/presentation/widgets/community_card_widget.dart';
+import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
 import 'package:amptive/src/shared/shimmer.dart';
@@ -13,8 +13,9 @@ import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../config/utils/other_strings.dart';
+
 import '../../../../config/routing/route_strings.dart';
+import '../../../../config/utils/other_strings.dart';
 import '../../../../shared/blurred_header.dart';
 
 class ATCommunityScreen extends StatelessWidget {

@@ -1,6 +1,5 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/discover/data/models/response/search_events_response_model.dart';
-import 'package:amptive/src/features/discover/data/models/response/search_shows_response_model.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo.dart';
 import 'package:amptive/src/features/discover/data/repository/discover_repo_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -40,7 +40,7 @@ class CustomLoaderButton extends StatelessWidget {
         height: 25.w,
         child: CircularProgressIndicator(
           color: ATColors.white,
-          backgroundColor: ATColors.white.withOpacity(0.5),
+          backgroundColor: ATColors.white.withValues(alpha: 0.5),
           strokeWidth: 3.w,
         ),
       ),
@@ -79,7 +79,7 @@ class AmptiveLoadingButtonWidget extends StatelessWidget {
           height: 25.w,
           child: CircularProgressIndicator(
             color: ATColors.white,
-            backgroundColor: ATColors.white.withOpacity(0.5),
+            backgroundColor: ATColors.white.withValues(alpha: 0.5),
             strokeWidth: 3.w,
           ),
         ),

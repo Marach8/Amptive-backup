@@ -1,8 +1,9 @@
 import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/image_strings.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/config/utils/helper_functions.dart';
+import 'package:amptive/src/config/utils/image_strings.dart';
+import 'package:amptive/src/config/utils/logging/app_logger.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/elevated_button_widget.dart';
@@ -24,10 +25,14 @@ Future<String?> selectPaymentMethodDialog(
   return showCupertinoModalPopup<String>(
     context: context,
     barrierColor: ATColors.black,
-    builder: (BuildContext dialogContext) {
-      debugPrint('brightness: ${Theme.of(context).brightness}');
-debugPrint('bodyMedium color: ${Theme.of(context).textTheme.bodyMedium?.color}');
-debugPrint('primary: ${Theme.of(context).colorScheme.primary}');
+builder: (BuildContext dialogContext) {
+        AppLogger.instance.debug('brightness: ${Theme.of(context).brightness}',
+            tag: 'PaymentDialog');
+        AppLogger.instance.debug(
+            'bodyMedium color: ${DefaultTextStyle.of(context).style.color}',
+            tag: 'PaymentDialog');
+        AppLogger.instance.debug('primary: ${Theme.of(context).colorScheme.primary}',
+            tag: 'PaymentDialog');
       return BlocProvider<_PaymentMethodBloc>(
         create: (_) => _PaymentMethodBloc(),
         child: Material(

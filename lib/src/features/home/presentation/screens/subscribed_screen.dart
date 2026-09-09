@@ -1,10 +1,11 @@
+import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
-import 'package:amptive/src/config/routing/route_strings.dart';
 import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/refresh_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../config/utils/colors.dart';
 import '../../../../shared/back_button.dart';
 import '../../../../shared/custom_container_widget.dart';

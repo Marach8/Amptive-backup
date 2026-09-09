@@ -1,12 +1,12 @@
 import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/features/discover/presentation/views/discover_page_view.dart';
+import 'package:amptive/src/features/discover/presentation/views/recent_searches_page_view.dart';
+import 'package:amptive/src/features/discover/presentation/views/search_results_page_view.dart';
 import 'package:amptive/src/features/discover/presentation/views/search_suggestions_page_view.dart';
+import 'package:amptive/src/features/discover/presentation/widgets/discover_search_field.dart';
 import 'package:amptive/src/features/main_app_nav_bar.dart';
 import 'package:amptive/src/shared/animated_switcher.dart';
 import 'package:amptive/src/shared/sliver_header_delegate.dart';
-import 'package:amptive/src/features/discover/presentation/views/discover_page_view.dart';
-import 'package:amptive/src/features/discover/presentation/widgets/discover_search_field.dart';
-import 'package:amptive/src/features/discover/presentation/views/recent_searches_page_view.dart';
-import 'package:amptive/src/features/discover/presentation/views/search_results_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -58,10 +58,10 @@ class _DiscoverTabViewState extends State<DiscoverTabView> {
                       : pageState == DiscoverPageState.showRecentSearches
                           ? const RecentSearchesView(key: ValueKey<int>(200))
                           : pageState == DiscoverPageState.showSearchSuggestions
-                              ?  SearchSuggestionsPageView(key: ValueKey<int>(300),
+                              ?  SearchSuggestionsPageView(key: const ValueKey<int>(300),
                               searchQuery: state.$2,)
                               :  SearchResultsPage(
-                                  key: ValueKey<int>(400),
+                                  key: const ValueKey<int>(400),
                                   searchQuery: state.$2,),
                 );
               })),

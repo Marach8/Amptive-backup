@@ -38,12 +38,12 @@ class RegistrationData {
   /// Convert to JSON
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      if (email != null) "email": email,
-      if (phoneNumber != null) "phone_number": phoneNumber,
-      "name": name,
-      "password": password,
-      "dob": dob,
-      "username": username,
+      if (email != null) 'email': email,
+      if (phoneNumber != null) 'phone_number': phoneNumber,
+      'name': name,
+      'password': password,
+      'dob': dob,
+      'username': username,
     };
   }
 

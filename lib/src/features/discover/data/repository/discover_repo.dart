@@ -1,14 +1,14 @@
 import 'package:amptive/src/config/api_response_and_app_state.dart';
-import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
-import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/all_hashtags_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/all_users_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/communities_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/search_events_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/search_hashtags_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/search_shows_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/search_users_response_model.dart';
-import 'package:amptive/src/features/discover/data/models/response/search_hashtags_response_model.dart';
+import 'package:amptive/src/features/discover/data/models/response/trending_hashtags_response_model.dart';
 import 'package:amptive/src/features/discover/data/models/response/unified_search_response_model.dart';
 import 'package:amptive/src/shared/global_model_objects.dart';
-import 'package:amptive/src/features/discover/data/models/response/trending_hashtags_response_model.dart';
 
 abstract class DiscoverRepo {
   Future<ApiResponse<CommunitiesResponseModel>> fetchCommunities({

@@ -8,7 +8,6 @@ import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/refresh_widgets.dart';
 import 'package:amptive/src/shared/shimmer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../shared/back_button.dart';
 import '../widgets/scheduled_program.dart';
 

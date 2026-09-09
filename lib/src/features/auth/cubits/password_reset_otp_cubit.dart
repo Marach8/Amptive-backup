@@ -1,7 +1,7 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo.dart';
 import 'package:amptive/src/features/auth/data/repository/auth_repo_impl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PasswordResetOtpCubit extends Cubit<ATAppState<String>> {
   PasswordResetOtpCubit({

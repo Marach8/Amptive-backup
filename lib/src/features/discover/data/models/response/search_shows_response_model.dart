@@ -2,6 +2,16 @@ import 'package:amptive/src/features/shows/data/models/response/show_response_mo
 
 class SearchShowsResponseModel {
 
+  const SearchShowsResponseModel({
+    this.query,
+    this.resource,
+    this.shows,
+    this.total,
+    this.page,
+    this.pageSize,
+    this.totalPages,
+  });
+
   factory SearchShowsResponseModel.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic> data = json['data'] as Map<String, dynamic>? ?? <String, dynamic>{};
 
@@ -24,14 +34,4 @@ class SearchShowsResponseModel {
   final int? page;
   final int? pageSize;
   final int? totalPages;
-
-  const SearchShowsResponseModel({
-    this.query,
-    this.resource,
-    this.shows,
-    this.total,
-    this.page,
-    this.pageSize,
-    this.totalPages,
-  });
 }

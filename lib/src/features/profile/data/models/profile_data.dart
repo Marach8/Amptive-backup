@@ -208,17 +208,17 @@ class ProfileData extends Equatable {
   Map<String, dynamic> toRemoteJson(){
     final Map<String, dynamic> body = <String, dynamic>{};
 
-    if (profilePhoto != null) body["profile_picture"] = profilePhoto;
-    if (name != null) body["name"] = name;
-    if (username != null) body["username"] = username;
-    if (bio != null) body["bio"] = bio;
-    if (country != null) body["country"] = country;
-    if (coverPhoto != null) body["cover_photo"] = coverPhoto;
-    if (xUrl != null) body["x_url"] = xUrl;
-    if (instagramUrl != null) body["instagram_url"] = instagramUrl;
-    if (linkedinUrl != null) body["linkedin_url"] = linkedinUrl;
-    if (websiteUrl != null) body["website_url"] = websiteUrl;
-    if (accountType != null) body["account_type"] = accountType?.toJson();
+    if (profilePhoto != null) body['profile_picture'] = profilePhoto;
+    if (name != null) body['name'] = name;
+    if (username != null) body['username'] = username;
+    if (bio != null) body['bio'] = bio;
+    if (country != null) body['country'] = country;
+    if (coverPhoto != null) body['cover_photo'] = coverPhoto;
+    if (xUrl != null) body['x_url'] = xUrl;
+    if (instagramUrl != null) body['instagram_url'] = instagramUrl;
+    if (linkedinUrl != null) body['linkedin_url'] = linkedinUrl;
+    if (websiteUrl != null) body['website_url'] = websiteUrl;
+    if (accountType != null) body['account_type'] = accountType?.toJson();
 
     return body;
   }

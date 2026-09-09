@@ -4,9 +4,9 @@ import 'dart:typed_data';
 import 'package:amptive/src/models/hashtag.dart';
 import 'package:flutter/material.dart';
 
+import '../../config/utils/image_strings.dart';
 import '../../models/community.dart';
 import '../../models/host.dart';
-import '../../config/utils/image_strings.dart';
 
 class CreateShowService {
   factory CreateShowService() => _instance;
@@ -144,7 +144,7 @@ class CreateShowService {
     int index = -1;
 
     return names.map((String name) {
-      int id = random.nextInt(1000);
+      final int id = random.nextInt(1000);
       index++;
 
       return UnusedCommunity(
@@ -167,7 +167,7 @@ class CreateShowService {
       return temp.sublist(0, names.length);
     }
 
-    List result = <dynamic>[];
+    final List result = <dynamic>[];
     int index = 0;
 
     while (result.length < names.length) {
@@ -258,7 +258,7 @@ class CreateShowService {
 }
 
 List<ObjectWithNotifier<Host>> getHostList() {
-  List<ObjectWithNotifier<Host>> hostsList = <ObjectWithNotifier<Host>>[];
+  final List<ObjectWithNotifier<Host>> hostsList = <ObjectWithNotifier<Host>>[];
 
   final Map<String, List<String>> coHostsData = <String, List<String>>{
     ATImgStrings.jpeg1: <String>['Emmanuel Ajah', 'nnanna😍💕'],
@@ -276,9 +276,9 @@ List<ObjectWithNotifier<Host>> getHostList() {
   for (int i = 0; i < coHostsData.entries.length; i++) {
     final MapEntry<String, List<String>> item =
         coHostsData.entries.elementAt(i);
-    String name = item.value[0];
-    String username = item.value[1];
-    Host host = Host(
+    final String name = item.value[0];
+    final String username = item.value[1];
+    final Host host = Host(
         id: i,
         name: name,
         username: username,
@@ -292,7 +292,7 @@ List<ObjectWithNotifier<Host>> getHostList() {
 }
 
 List<ATCohost<bool>> getCoHostList() {
-  List<ATCohost<bool>> coHostsList = <ATCohost<bool>>[];
+  final List<ATCohost<bool>> coHostsList = <ATCohost<bool>>[];
 
   final Map<String, List<String>> coHostsData = <String, List<String>>{
     ATImgStrings.jpeg1: <String>['Emmanuel Ajah', 'nnanna😍💕'],
@@ -310,9 +310,9 @@ List<ATCohost<bool>> getCoHostList() {
   for (int i = 0; i < coHostsData.entries.length; i++) {
     final MapEntry<String, List<String>> item =
         coHostsData.entries.elementAt(i);
-    String name = item.value[0];
-    String username = item.value[1];
-    ATCohost<bool> coHost = ATCohost<bool>(
+    final String name = item.value[0];
+    final String username = item.value[1];
+    final ATCohost<bool> coHost = ATCohost<bool>(
       id: i,
       name: name,
       username: username,
@@ -328,7 +328,7 @@ List<ATCohost<bool>> getCoHostList() {
 }
 
 List<ATHashtag<bool>> getHashTagsList() {
-  List<ATHashtag<bool>> hashTagsList = <ATHashtag<bool>>[];
+  final List<ATHashtag<bool>> hashTagsList = <ATHashtag<bool>>[];
 
   final List<String> stringTags = <String>[
     'wecandohardthings',
@@ -357,7 +357,7 @@ List<ATHashtag<bool>> getHashTagsList() {
 }
 
 List<ObjectWithNotifier<Hashtag>> getHashTags() {
-  List<ObjectWithNotifier<Hashtag>> hashTagList =
+  final List<ObjectWithNotifier<Hashtag>> hashTagList =
       <ObjectWithNotifier<Hashtag>>[];
 
   final List<List<String>> availableHashtags = <List<String>>[
@@ -374,8 +374,8 @@ List<ObjectWithNotifier<Hashtag>> getHashTags() {
   ];
 
   for (List<String> element in availableHashtags) {
-    String name = element[0];
-    Hashtag hashTag = Hashtag(name: name);
+    final String name = element[0];
+    final Hashtag hashTag = Hashtag(name: name);
     hashTagList.add(ObjectWithNotifier<Hashtag>(obj: hashTag));
   }
 

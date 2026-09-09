@@ -1,5 +1,3 @@
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/themes/widget_themes/app_bar_theme.dart';
 import 'package:amptive/src/config/themes/widget_themes/bottom_sheet_theme.dart';
 import 'package:amptive/src/config/themes/widget_themes/elevated_button_theme.dart';
@@ -8,6 +6,8 @@ import 'package:amptive/src/config/themes/widget_themes/input_decoration_theme.d
 import 'package:amptive/src/config/themes/widget_themes/outlined_button_theme.dart';
 import 'package:amptive/src/config/themes/widget_themes/text_theme.dart';
 import 'package:amptive/src/config/themes/widget_themes/textbutton_theme.dart';
+import 'package:amptive/src/config/utils/colors.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:flutter/material.dart';
 
 class AmptiveThemeData {

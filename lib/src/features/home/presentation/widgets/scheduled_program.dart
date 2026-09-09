@@ -1,17 +1,17 @@
+import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 import 'package:amptive/src/config/utils/font_sizes.dart';
 import 'package:amptive/src/config/utils/font_weights.dart';
 import 'package:amptive/src/config/utils/image_strings.dart';
 import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
+import 'package:amptive/src/features/shows/data/models/response/followed_shows_response_model.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/list_tile_with_leading_picture_widget.dart';
 import 'package:amptive/src/shared/overlapping_widgets.dart';
-import 'package:amptive/src/features/home/presentation/widgets/with_2_others_widget.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../config/utils/colors.dart';
 import '../../../../shared/image_loader_widget.dart';
-
-import 'package:amptive/src/features/shows/data/models/response/followed_shows_response_model.dart';
-import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
 
 class ScheduledProgram extends StatefulWidget {
   const ScheduledProgram({super.key, this.showItem});
@@ -53,7 +53,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                       ATColors.transparent,
                       ATColors.transparent,
                       ATColors.transparent,
-                      ATColors.containerGradientColorB.withOpacity(0.5),
+                      ATColors.containerGradientColorB.withValues(alpha: 0.5),
                       ATColors.containerGradientColorB,
                       ATColors.containerGradientColorB,
                       ATColors.containerGradientColorB,
@@ -73,7 +73,7 @@ class _ScheduledProgramState extends State<ScheduledProgram> {
                     const SizedBox(height: 10),
                     Text(
                       maxLines: 2,
-                      widget.showItem?.showTitle ?? " ",
+                      widget.showItem?.showTitle ?? ' ',
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
                             fontSize: ATSizes.size24,

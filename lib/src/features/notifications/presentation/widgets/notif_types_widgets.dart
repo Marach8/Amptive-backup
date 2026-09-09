@@ -1,9 +1,10 @@
-import 'package:amptive/src/models/host.dart';
-import 'package:amptive/src/config/utils/colors.dart';
-import 'package:amptive/src/config/utils/font_sizes.dart';
-import 'package:amptive/src/config/utils/other_strings.dart';
 import 'package:amptive/src/config/routing/route_strings.dart';
+import 'package:amptive/src/config/utils/colors.dart';
 import 'package:amptive/src/config/utils/extensions/string_extensions.dart';
+import 'package:amptive/src/config/utils/font_sizes.dart';
+import 'package:amptive/src/config/utils/logging/app_logger.dart';
+import 'package:amptive/src/config/utils/other_strings.dart';
+import 'package:amptive/src/models/host.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
 import 'package:amptive/src/shared/custom_container_widget.dart';
 import 'package:amptive/src/shared/image_loader_widget.dart';
@@ -64,7 +65,7 @@ class NewFollowerNotif extends StatelessWidget {
         ),
         ATContainer(
           onTap: () {
-            debugPrint('Hello');
+            AppLogger.instance.debug('Hello', tag: 'Notifications');
           },
           radius: 20,
           padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -146,7 +147,7 @@ class NewAttendeesNotif extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String firstName = attendees.first.obj.username ?? '';
+    final String firstName = attendees.first.obj.username ?? '';
     final bool oneAttendee = attendees.length == 1;
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -206,7 +207,7 @@ class NewGiftersNotif extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String firstName = gifters.first.obj.username ?? '';
+    final String firstName = gifters.first.obj.username ?? '';
     final bool oneGifter = gifters.length == 1;
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -329,7 +330,7 @@ class ProgramRescheduledNotif extends StatelessWidget {
         ),
         ATContainer(
           onTap: () {
-            debugPrint('Hello');
+            AppLogger.instance.debug('Hello', tag: 'Notifications');
           },
           radius: 20,
           padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),

@@ -26,7 +26,7 @@ class With2OthersWidget extends StatelessWidget {
         padding: EdgeInsets.all(6.h),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6.r),
-            color: ATColors.black.withOpacity(0.7)),
+            color: ATColors.black.withValues(alpha: 0.7)),
         child: Text(_coHostText,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(

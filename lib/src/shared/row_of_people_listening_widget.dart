@@ -56,7 +56,7 @@ class PeopleListeningWidget extends StatelessWidget {
                   height: pictureDiameter ?? 35,
                   width: pictureDiameter ?? 35,
                   boxShape: BoxShape.circle,
-                  child: Text('+${_displayCount}',
+                  child: Text('+$_displayCount',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall

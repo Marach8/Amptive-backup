@@ -1,19 +1,18 @@
-import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/config/api_response_and_app_state.dart';
 import 'package:amptive/src/config/config_export.dart';
 import 'package:amptive/src/config/utils/extensions/context_extensions.dart';
 import 'package:amptive/src/features/auth/cubits/local_user_data_cubit.dart';
-import 'package:amptive/src/features/auth/data/models/response/user_profile_response_model.dart';
+import 'package:amptive/src/features/profile/data/models/profile_data.dart';
 import 'package:amptive/src/features/profile/presentation/screens/profile_views_export.dart';
-import 'package:amptive/src/shared/annotated_region_widget.dart';
 import 'package:amptive/src/shared/back_button.dart';
 import 'package:amptive/src/shared/circle_avatar.dart';
-import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:amptive/src/shared/rich_text.dart';
+import 'package:amptive/src/shared/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
+
 import '../widgets/profile_widgets_export.dart';
 
 class UpgradedProfileView extends StatelessWidget {
@@ -209,7 +208,7 @@ class _ProfileDesc extends StatelessWidget {
         },
         textAlign: TextAlign.center,
         textOnTap: (String index) {
-          if (index == "1") {
+          if (index == '1') {
           }
         },
       ),
